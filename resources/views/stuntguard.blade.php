@@ -17,6 +17,8 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         [x-cloak] { display: none !important; }
@@ -369,6 +371,7 @@
                     dob_display: '',
                     gender: '',
                     age_text: '199 Bulan',
+                    age_month: 16, 
                     category: 'Kategori: 0 – 24 Bulan (MPASI & Golden Age)',
                     weight: '',
                     weight_prev: '9.80',
@@ -448,8 +451,37 @@
                 },
 
                 calculateZScore() {
-                    this.modals.screening = true;
-                    this.initIcons();
+                    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                    // Rapikan data sebelum dikirim agar cocok dengan kolom database
+                    let dataToSend = {
+                        name: this.form.name,
+                        weight: parseFloat(this.form.weight.replace(',', '.')), // Ubah format koma jadi titik (misal '10,20' -> 10.20)
+                        height: parseFloat(this.form.height.replace(',', '.')), // Ubah format koma jadi titik
+                        age: this.form.age_months // Ambil umur dalam bentuk angka
+                    };
+
+                    fetch('/simpan-pengukuran', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                        },
+                        body: JSON.stringify(dataToSend) // Kirim data yang sudah rapi
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.status === 'success') {
+                            console.log(data.message);
+                            this.modals.screening = true;
+                        } else {
+                            alert('Gagal menyimpan data pengukuran');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Gagal mengirim data ke server.');
+                    });
                 }
             }));
         });

@@ -54,23 +54,6 @@
         <!-- MAIN CONTENT -->
         <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-            <!-- Child Tabs -->
-            <div class="flex flex-wrap items-center gap-3 pt-2">
-                <template x-for="(child, index) in childrenList" :key="child.id">
-                    <button @click="selectChild(child.id)"
-                            :class="activeChildId === child.id ? 'bg-[#004d47] text-white shadow-sm' : 'bg-slate-200/70 text-slate-700 hover:bg-slate-300/80'"
-                            class="flex items-center space-x-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all">
-                        <span class="w-2 h-2 rounded-full" :class="activeChildId === child.id ? 'bg-teal-300' : 'bg-slate-400'"></span>
-                        <span x-text="'Anak ' + (index + 1) + ': ' + child.name + ' (' + calculateAgeText(child.dob) + ')'"></span>
-                    </button>
-                </template>
-                <!-- tombol tambah anak baru -->
-                {{-- <button @click="modals.addChild = true" class="flex items-center space-x-1.5 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-[#EBF5F4] text-[#00685f] hover:bg-teal-100/80 transition-colors">
-                    <i data-lucide="user-plus" class="w-4 h-4"></i>
-                    <span>Tambah Profil Bayi Baru</span>
-                </button> --}}
-            </div>
-
             <!-- FORM CARD 1: Data Identitas Balita -->
             <section class="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-8 space-y-6">
                 <!-- Card Header -->
@@ -104,7 +87,7 @@
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1.5">Tanggal Lahir <span class="text-red-500">*</span></label>
                             <div class="relative flex items-center">
-                                <input type="date" x-model="form.dob_display" class="w-full pl-4 pr-11 py-3 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/70 text-slate-900 font-semibold focus:bg-white focus:ring-2 focus:ring-teal-500/30 outline-none transition-all">
+                                <input type="number" x-model="form.age" placeholder="Contoh: 16" class="w-full pl-4 pr-11 py-3 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/70 text-slate-900 font-semibold focus:bg-white focus:ring-2 focus:ring-teal-500/30 outline-none transition-all">
                             </div>
                         </div>
                     </div>
@@ -182,10 +165,6 @@
                         <div class="p-4 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/60 space-y-2">
                             <div class="flex justify-between items-center text-xs font-bold">
                                 <span class="text-slate-700">Berat Badan (BB) <span class="text-red-500">*</span></span>
-                                <span class="text-emerald-600 font-semibold flex items-center space-x-1">
-                                    <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-                                    <span x-text="form.weight_diff">+0.4 kg vs bln lalu</span>
-                                </span>
                             </div>
                             <div class="bg-white rounded-xl p-3 flex justify-between items-center border border-slate-200/80">
                                 <input type="text" x-model="form.weight" class="w-full text-xl sm:text-xl font-bold text-slate-900 bg-transparent outline-none">
@@ -198,10 +177,6 @@
                         <div class="p-4 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/60 space-y-2">
                             <div class="flex justify-between items-center text-xs font-bold">
                                 <span class="text-slate-700">Panjang / Tinggi Badan <span class="text-red-500">*</span></span>
-                                <span class="text-blue-600 font-semibold flex items-center space-x-1">
-                                    <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-                                    <span x-text="form.height_diff">+1.5 cm vs bln lalu</span>
-                                </span>
                             </div>
                             <div class="bg-white rounded-xl p-3 flex justify-between items-center border border-slate-200/80">
                                 <input type="text" x-model="form.height" class="w-full text-xl sm:text-xl font-bold text-slate-900 bg-transparent outline-none">
@@ -249,151 +224,30 @@
             <!-- Action Button -->
             <div class="flex justify-end pt-2">
                 <button @click="calculateZScore()" class="flex items-center space-x-2.5 px-7 py-4 rounded-2xl bg-[#004D47] hover:bg-[#003833] text-white font-bold text-base shadow-lg hover:shadow-xl">
-                    <i data-lucide="calculator" class="w-5 h-5 text-teal-300"></i>
-                    <span>Hitung & Lihat Hasil Skrining</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-teal-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                    </svg>
+                    <span>Simpan Data</span>
                 </button>
             </div>
         </main>
-
-        <!-- Modal Skrining -->
-        <div x-show="modals.screening" x-cloak class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-            <div @click.away="modals.screening = false" class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl p-6 sm:p-8 space-y-5">
-                <div class="flex justify-between items-center pb-3 border-b border-slate-100">
-                    <h3 class="text-xl font-bold text-slate-900 flex items-center space-x-2">
-                        <i data-lucide="activity" class="w-6 h-6 text-[#00685F]"></i>
-                        <span>Hasil Evaluasi Antropometri</span>
-                    </h3>
-                    <button @click="modals.screening = false" class="text-slate-400 hover:text-slate-600">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
-                <div class="p-5 bg-[#F8FAFC] rounded-2xl border border-slate-200/80 space-y-3 text-sm text-slate-700">
-                    <div class="grid grid-cols-2 gap-2 pb-2 border-b border-slate-200/60">
-                        <p><span class="font-semibold text-slate-500">ID Balita:</span> <span class="font-bold text-slate-900" x-text="form.id_balita"></span></p>
-                        <p><span class="font-semibold text-slate-500">Nama Balita:</span> <span class="font-bold text-slate-900" x-text="form.name"></span></p>
-                        <p><span class="font-semibold text-slate-500">NIK:</span> <span class="font-bold text-slate-900" x-text="form.nik"></span></p>
-                        <p><span class="font-semibold text-slate-500">Tgl Lahir:</span> <span class="font-bold text-slate-900" x-text="form.dob_display"></span></p>
-                        <p><span class="font-semibold text-slate-500">Jenis Kelamin:</span> <span class="font-bold text-slate-900" x-text="form.gender"></span></p>
-                        <p><span class="font-semibold text-slate-500">Usia:</span> <span class="font-bold text-slate-900" x-text="form.age_text"></span></p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2 pt-1">
-                        <p><span class="font-semibold text-slate-500">Berat Badan:</span> <span class="font-bold text-slate-900" x-text="form.weight + ' kg'"></span></p>
-                        <p><span class="font-semibold text-slate-500">Tinggi Badan:</span> <span class="font-bold text-slate-900" x-text="form.height + ' cm (' + form.position + ')'"></span></p>
-                        <p><span class="font-semibold text-slate-500">Lingkar Kepala:</span> <span class="font-bold text-slate-900" x-text="form.head_circ + ' cm'"></span></p>
-                        <p><span class="font-semibold text-slate-500">LiLA:</span> <span class="font-bold text-slate-900" x-text="form.lila + ' cm'"></span></p>
-                    </div>
-                </div>
-                <div class="flex justify-end pt-2">
-                    <button @click="modals.screening = false" class="px-6 py-2.5 bg-[#004D47] text-white rounded-xl font-bold transition-colors hover:bg-[#003833]">Tutup</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Tambah Profil Bayi -->
-        {{-- <div x-show="modals.addChild" x-cloak class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-            <div @click.away="modals.addChild = false" class="bg-white rounded-3xl max-w-md w-full shadow-2xl p-6 sm:p-7 space-y-5">
-                <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-                    <h3 class="text-lg font-bold text-slate-900">Tambah Profil Balita Baru</h3>
-                    <button @click="modals.addChild = false" class="text-slate-400 hover:text-slate-600">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
-                <form @submit.prevent="addNewChild()">
-                    <div class="space-y-4 text-left">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Nama Lengkap Balita <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="newChild.name" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-teal-500/30 font-semibold">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Tanggal Lahir <span class="text-red-500">*</span></label>
-                            <input type="date" x-model="newChild.dob" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-teal-500/30 font-semibold">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Jenis Kelamin <span class="text-red-500">*</span></label>
-                            <div class="grid grid-cols-2 gap-3">
-                                <label :class="newChild.gender === 'Laki-laki' ? 'border-teal-500 bg-[#E6F4F1] text-[#00685F] font-bold' : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 font-medium'"
-                                    class="flex items-center justify-center space-x-2 p-2.5 rounded-xl border text-sm cursor-pointer transition-all">
-                                    <input type="radio" name="newGender" value="Laki-laki" x-model="newChild.gender" class="sr-only">
-                                    <i data-lucide="mars" class="w-4 h-4"></i>
-                                    <span>Laki-Laki</span>
-                                </label>
-                                <label :class="newChild.gender === 'Perempuan' ? 'border-teal-500 bg-[#E6F4F1] text-[#00685F] font-bold' : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 font-medium'"
-                                    class="flex items-center justify-center space-x-2 p-2.5 rounded-xl border text-sm cursor-pointer transition-all">
-                                    <input type="radio" name="newGender" value="Perempuan" x-model="newChild.gender" class="sr-only">
-                                    <i data-lucide="venus" class="w-4 h-4"></i>
-                                    <span>Perempuan</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-6 flex justify-end space-x-3">
-                        <button type="button" @click="modals.addChild = false" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-sm hover:bg-slate-200">Batal</button>
-                        <button type="submit" class="px-5 py-2 bg-[#004D47] text-white rounded-xl font-bold text-sm hover:bg-[#003833]">Simpan Profil</button>
-                    </div>
-                </form>
-            </div>
-        </div> --}}
     </div>
 
     <!-- Script Alpine.js Application Logic -->
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('nutriVisualApp', () => ({
-                childrenList: [
-                    {
-                        name: 'ahay',
-                        fullName: 'Aha hay',
-                        nik: '3174091201240003',
-                        dob: '2024-01-12',
-                        dob_display: '12/01/2024',
-                        gender: 'Laki-laki',
-                        age_text: '16 Bulan 4 Hari',
-                        category: 'Kategori: 0 – 24 Bulan (MPASI & Golden Age)',
-                        weight: '10,20',
-                        weight_prev: '9.80',
-                        weight_diff: '+0.4 kg vs bln lalu',
-                        height: '80,2',
-                        height_diff: '+1.5 cm vs bln lalu',
-                        position: 'Terlentang',
-                        head_circ: '46,5',
-                        head_circ_status: 'Normal (Rentang aman: 45.0 – 48.0 cm)',
-                        lila: '15,2',
-                        lila_status: 'Pita Hijau (>12.5 cm – Gizi Cukup)',
-                        measurement_date: '18 Mei 2025'
-                    }
-                ],
-                activeChildId: 'child-1',
+                // 1. Objek form yang disisakan HANYA yang dikirim ke database
                 form: {
-                    id_balita: 'NV-2024-0891',
                     name: '',
                     nik: '',
-                    dob: '',
-                    dob_display: '',
+                    age: '', // Umur dalam bulan (Sangat penting untuk hitung stunting)
                     gender: '',
-                    age_text: '199 Bulan',
-                    age_month: 16, 
-                    category: 'Kategori: 0 – 24 Bulan (MPASI & Golden Age)',
                     weight: '',
-                    weight_prev: '9.80',
-                    weight_diff: '+0.4 kg vs bln lalu',
                     height: '',
-                    height_diff: '+1.5 cm vs bln lalu',
-                    position: '',
+                    position: 'Terlentang',
                     head_circ: '',
-                    head_circ_status: 'Normal (Rentang aman: 45.0 – 48.0 cm)',
-                    lila: '',
-                    lila_status: 'Pita Hijau (>12.5 cm – Gizi Cukup)',
-                    measurement_date: ''
-                },
-                newChild: {
-                    name: '',
-                    dob: '',
-                    gender: 'Laki-laki'
-                },
-                modals: {
-                    screening: false,
-                    addChild: false,
-                    faskes: false
+                    lila: ''
                 },
 
                 initIcons() {
@@ -404,87 +258,50 @@
                     });
                 },
 
-                calculateAgeText(dobString) {
-                    return '16 Bulan';
-                },
-
-                selectChild(id) {
-                    this.activeChildId = id;
-                    const child = this.childrenList.find(c => c.id === id);
-                    if (child) {
-                        this.form = { ...child, name: child.fullName || child.name };
+                simpanData() {
+                    // Validasi ringan di frontend agar umur tidak kosong
+                    if(!this.form.name || !this.form.age || !this.form.weight || !this.form.height) {
+                        alert("Nama, Umur, Berat Badan, dan Tinggi Badan wajib diisi!");
+                        return;
                     }
-                    this.initIcons();
-                },
 
-                addNewChild() {
-                    if (!this.newChild.name) return;
-                    const count = this.childrenList.length + 1;
-                    const newId = 'child-' + count;
-                    const childObj = {
-                        id: newId,
-                        id_balita: 'NV-2024-089' + count,
-                        name: this.newChild.name,
-                        fullName: this.newChild.name,
-                        nik: '317409' + Math.floor(1000000000 + Math.random() * 9000000000),
-                        dob: this.newChild.dob || '2024-01-01',
-                        dob_display: this.newChild.dob ? this.newChild.dob.split('-').reverse().join('/') : '01/01/2024',
-                        gender: this.newChild.gender || 'Laki-laki',
-                        age_text: '12 Bulan',
-                        category: 'Kategori: 0 – 24 Bulan (MPASI & Golden Age)',
-                        weight: '9,50',
-                        weight_prev: '9.10',
-                        weight_diff: '+0.4 kg vs bln lalu',
-                        height: '76,0',
-                        height_diff: '+1.0 cm vs bln lalu',
-                        position: 'Terlentang',
-                        head_circ: '45,0',
-                        head_circ_status: 'Normal (Rentang aman: 44.0 – 47.0 cm)',
-                        lila: '14,5',
-                        lila_status: 'Pita Hijau (>12.5 cm – Gizi Cukup)',
-                        measurement_date: '18 Mei 2025'
-                    };
-                    this.childrenList.push(childObj);
-                    this.selectChild(newId);
-                    this.newChild = { name: '', dob: '', gender: 'Laki-laki' };
-                    this.modals.addChild = false;
-                },
-
-                calculateZScore() {
                     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-                    // Rapikan data sebelum dikirim agar cocok dengan kolom database
-                    let dataToSend = {
-                        name: this.form.name,
-                        weight: parseFloat(this.form.weight.replace(',', '.')), // Ubah format koma jadi titik (misal '10,20' -> 10.20)
-                        height: parseFloat(this.form.height.replace(',', '.')), // Ubah format koma jadi titik
-                        age: this.form.age_months // Ambil umur dalam bentuk angka
-                    };
 
                     fetch('/simpan-pengukuran', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Accept': 'application/json',
                             'X-CSRF-TOKEN': token
                         },
-                        body: JSON.stringify(dataToSend) // Kirim data yang sudah rapi
+                        body: JSON.stringify(this.form)
                     })
                     .then(response => response.json())
                     .then(data => {
                         if(data.status === 'success') {
-                            console.log(data.message);
-                            this.modals.screening = true;
+                            alert('Sip! Data balita berhasil masuk ke Database.');
+
+                            // 2. Kosongkan semua form setelah berhasil
+                            this.form.name = '';
+                            this.form.nik = '';
+                            this.form.age = '';
+                            this.form.gender = '';
+                            this.form.weight = '';
+                            this.form.height = '';
+                            this.form.head_circ = '';
+                            this.form.lila = '';
                         } else {
-                            alert('Gagal menyimpan data pengukuran');
+                            console.error("Error:", data);
+                            alert("Gagal menyimpan. Cek kembali isian form Anda.");
                         }
                     })
                     .catch(error => {
-                        console.error('Error:', error);
-                        alert('Gagal mengirim data ke server.');
+                        console.error('Error Server:', error);
+                        alert('Gagal terhubung ke database.');
                     });
                 }
             }));
         });
     </script>
-</body>
+    </body>
 </html>

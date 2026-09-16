@@ -81,7 +81,7 @@
                     <!-- NIK & Tanggal Lahir -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">NIK / Nomor Buku KIA (Opsional)</label>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">NIK</label>
                             <input type="text" x-model="form.nik" placeholder="Masukan NIK" class="w-full px-4 py-3 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/70 text-slate-900 font-semibold focus:bg-white focus:ring-2 focus:ring-teal-500/30 outline-none transition-all">
                         </div>
                         <div>
@@ -123,7 +123,7 @@
                     </div>
 
                     <!-- Usia Terhitung Banner -->
-                    <div class="mt-4 p-4 rounded-2xl bg-[#EEF2FF] border border-blue-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    {{-- <div class="mt-4 p-4 rounded-2xl bg-[#EEF2FF] border border-blue-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
                                 <i data-lucide="scale" class="w-4 h-4"></i>
@@ -136,7 +136,7 @@
                         <span class="px-3.5 py-1.5 bg-white text-slate-700 font-bold text-xs rounded-xl shadow-xs border border-slate-200/60 self-start sm:self-auto" x-text="form.category">
                             Kategori: 0 – 24 Bulan (MPASI & Golden Age)
                         </span>
-                    </div>
+                    </div> --}}
                 </div>
             </section>
 
@@ -205,7 +205,6 @@
                                 <input type="text" x-model="form.head_circ" class="w-full text-xl font-bold text-slate-900 bg-transparent outline-none">
                                 <span class="text-slate-500 font-semibold text-sm ml-2">cm</span>
                             </div>
-                            <p class="text-[11px] font-bold text-emerald-600" x-text="form.head_circ_status">Normal (Rentang aman: 45.0 – 48.0 cm)</p>
                         </div>
 
                         <!-- LiLA -->
@@ -215,7 +214,6 @@
                                 <input type="text" x-model="form.lila" class="w-full text-xl font-bold text-slate-900 bg-transparent outline-none">
                                 <span class="text-slate-500 font-semibold text-sm ml-2">cm</span>
                             </div>
-                            <p class="text-[11px] font-bold text-emerald-600 flex items-center space-x-1" x-text="'● ' + form.lila_status">● Pita Hijau (&gt;12.5 cm – Gizi Cukup)</p>
                         </div>
                     </div>
                 </div>
@@ -241,11 +239,11 @@
                 form: {
                     name: '',
                     nik: '',
-                    age: '', // Umur dalam bulan (Sangat penting untuk hitung stunting)
+                    age: '',
                     gender: '',
                     weight: '',
                     height: '',
-                    position: 'Terlentang',
+                    position: '',
                     head_circ: '',
                     lila: ''
                 },
@@ -260,8 +258,8 @@
 
                 simpanData() {
                     // Validasi ringan di frontend agar umur tidak kosong
-                    if(!this.form.name || !this.form.age || !this.form.weight || !this.form.height) {
-                        alert("Nama, Umur, Berat Badan, dan Tinggi Badan wajib diisi!");
+                    if(!this.form.name || !this.form.nik || !this.form.age || !this.form.weight || !this.form.height || !this.form.gender || !this.form.position || !this.form.head_circ || !this.form.lila) {
+                        alert("Semua Form Wajib Diisi!");
                         return;
                     }
 
@@ -288,6 +286,7 @@
                             this.form.gender = '';
                             this.form.weight = '';
                             this.form.height = '';
+                            this.form.position = ''; // Terlentang atau Berdiri
                             this.form.head_circ = '';
                             this.form.lila = '';
                         } else {

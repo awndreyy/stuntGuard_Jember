@@ -14,9 +14,14 @@ return new class extends Migration
     Schema::create('pengukurans', function (Blueprint $table) {
         $table->id();
         $table->string('nama_balita');
+        $table->string('nik');
+        $table->string('jenis_kelamin');
         $table->float('berat_badan');
         $table->float('tinggi_badan');
         $table->integer('umur_bulan');
+        $table->string('posisi_badan');
+        $table->float('lingkar_kepala');
+        $table->float('lingkar_lengan');
         $table->timestamps();
     });
 }

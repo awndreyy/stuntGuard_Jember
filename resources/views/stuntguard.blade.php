@@ -82,12 +82,12 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1.5">NIK</label>
-                            <input type="text" x-model="form.nik" placeholder="Masukan NIK" class="w-full px-4 py-3 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/70 text-slate-900 font-semibold focus:bg-white focus:ring-2 focus:ring-teal-500/30 outline-none transition-all">
+                            <input type="number" x-model="form.nik" placeholder="Masukan NIK" class="w-full px-4 py-3 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/70 text-slate-900 font-semibold focus:bg-white focus:ring-2 focus:ring-teal-500/30 outline-none transition-all">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Tanggal Lahir <span class="text-red-500">*</span></label>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Umur  <span class="text-red-500">*</span></label>
                             <div class="relative flex items-center">
-                                <input type="number" x-model="form.age" placeholder="Contoh: 16" class="w-full pl-4 pr-11 py-3 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/70 text-slate-900 font-semibold focus:bg-white focus:ring-2 focus:ring-teal-500/30 outline-none transition-all">
+                                <input type="number" x-model="form.age" placeholder="Contoh: 16 (dalam bulan)" class="w-full pl-4 pr-11 py-3 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/70 text-slate-900 font-semibold focus:bg-white focus:ring-2 focus:ring-teal-500/30 outline-none transition-all">
                             </div>
                         </div>
                     </div>
@@ -183,7 +183,7 @@
                                 <span class="text-slate-500 font-semibold text-base ml-2">cm</span>
                             </div>
                             <!-- Radio Terlentang / Berdiri -->
-                            <div class="flex items-center space-x-4 pt-1 text-xs font-semibold text-slate-700">
+                            {{-- <div class="flex items-center space-x-4 pt-1 text-xs font-semibold text-slate-700">
                                 <label class="flex items-center space-x-1.5 cursor-pointer">
                                     <input type="radio" name="position" value="Terlentang" x-model="form.position" class="w-3.5 h-3.5 text-[#00685F]">
                                     <span>Terlentang (&lt;24 bln)</span>
@@ -192,12 +192,12 @@
                                     <input type="radio" name="position" value="Berdiri" x-model="form.position" class="w-3.5 h-3.5 text-[#00685F]">
                                     <span>Berdiri (&ge;24 bln)</span>
                                 </label>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
                     <!-- Row 2: Lingkar Kepala & LiLA -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {{-- <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- Lingkar Kepala -->
                         <div class="p-4 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/60 space-y-2">
                             <label class="block text-xs font-bold text-slate-700">Lingkar Kepala (Oksipito-frontal)</label>
@@ -215,7 +215,7 @@
                                 <span class="text-slate-500 font-semibold text-sm ml-2">cm</span>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </section>
 
@@ -243,9 +243,6 @@
                     gender: '',
                     weight: '',
                     height: '',
-                    position: '',
-                    head_circ: '',
-                    lila: ''
                 },
 
                 initIcons() {
@@ -286,9 +283,6 @@
                             this.form.gender = '';
                             this.form.weight = '';
                             this.form.height = '';
-                            this.form.position = ''; // Terlentang atau Berdiri
-                            this.form.head_circ = '';
-                            this.form.lila = '';
                         } else {
                             console.error("Error:", data);
                             alert("Gagal menyimpan. Cek kembali isian form Anda.");

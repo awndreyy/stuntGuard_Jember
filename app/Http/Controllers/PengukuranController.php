@@ -18,9 +18,6 @@ class PengukuranController extends Controller
             'berat_badan' => $request->weight,
             'tinggi_badan' => $request->height,
             'umur_bulan' => $request->age,
-            'posisi_badan' => $request->position,
-            'lingkar_kepala' => $request->head_circ,
-            'lingkar_lengan' => $request->lila,
         ]);
 
         return response()->json([

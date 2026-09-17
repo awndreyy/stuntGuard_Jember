@@ -19,9 +19,6 @@ return new class extends Migration
         $table->float('berat_badan');
         $table->float('tinggi_badan');
         $table->integer('umur_bulan');
-        $table->string('posisi_badan');
-        $table->float('lingkar_kepala');
-        $table->float('lingkar_lengan');
         $table->timestamps();
     });
 }

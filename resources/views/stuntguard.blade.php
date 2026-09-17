@@ -121,41 +121,11 @@
                             </label>
                         </div>
                     </div>
-
-                    <!-- Usia Terhitung Banner -->
-                    {{-- <div class="mt-4 p-4 rounded-2xl bg-[#EEF2FF] border border-blue-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
-                                <i data-lucide="scale" class="w-4 h-4"></i>
-                            </div>
-                            <div class="text-sm font-semibold text-slate-800">
-                                <span>Usia Terhitung: </span>
-                                <span class="font-bold text-[#00685F]" x-text="form.age_text">16 Bulan 4 Hari</span>
-                            </div>
-                        </div>
-                        <span class="px-3.5 py-1.5 bg-white text-slate-700 font-bold text-xs rounded-xl shadow-xs border border-slate-200/60 self-start sm:self-auto" x-text="form.category">
-                            Kategori: 0 – 24 Bulan (MPASI & Golden Age)
-                        </span>
-                    </div> --}}
                 </div>
             </section>
 
             <!-- FORM CARD 2: Hasil Pengukuran Baru -->
             <section class="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-8 space-y-6">
-                <!-- Card Header -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-100">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-full bg-[#93C5FD] text-blue-950 font-extrabold flex items-center justify-center text-base shadow-sm">2</div>
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-900">Hasil Pengukuran Baru</h2>
-                            <p class="text-xs font-medium text-slate-500">Catatan fisik terkini untuk pembaruan kurva KMS</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#EEF2FF] text-blue-800 text-xs font-semibold self-start sm:self-auto">
-                        <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-                        <span x-text="'Hari ini, ' + form.measurement_date">Hari ini, 18 Mei 2025</span>
-                    </div>
-                </div>
 
                 <!-- Measurement Grid -->
                 <div class="space-y-4">
@@ -182,40 +152,8 @@
                                 <input type="text" x-model="form.height" class="w-full text-xl sm:text-xl font-bold text-slate-900 bg-transparent outline-none">
                                 <span class="text-slate-500 font-semibold text-base ml-2">cm</span>
                             </div>
-                            <!-- Radio Terlentang / Berdiri -->
-                            {{-- <div class="flex items-center space-x-4 pt-1 text-xs font-semibold text-slate-700">
-                                <label class="flex items-center space-x-1.5 cursor-pointer">
-                                    <input type="radio" name="position" value="Terlentang" x-model="form.position" class="w-3.5 h-3.5 text-[#00685F]">
-                                    <span>Terlentang (&lt;24 bln)</span>
-                                </label>
-                                <label class="flex items-center space-x-1.5 cursor-pointer">
-                                    <input type="radio" name="position" value="Berdiri" x-model="form.position" class="w-3.5 h-3.5 text-[#00685F]">
-                                    <span>Berdiri (&ge;24 bln)</span>
-                                </label>
-                            </div> --}}
                         </div>
                     </div>
-
-                    <!-- Row 2: Lingkar Kepala & LiLA -->
-                    {{-- <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Lingkar Kepala -->
-                        <div class="p-4 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/60 space-y-2">
-                            <label class="block text-xs font-bold text-slate-700">Lingkar Kepala (Oksipito-frontal)</label>
-                            <div class="bg-white rounded-xl p-3 flex justify-between items-center border border-slate-200/80">
-                                <input type="text" x-model="form.head_circ" class="w-full text-xl font-bold text-slate-900 bg-transparent outline-none">
-                                <span class="text-slate-500 font-semibold text-sm ml-2">cm</span>
-                            </div>
-                        </div>
-
-                        <!-- LiLA -->
-                        <div class="p-4 rounded-2xl bg-[#EEF2FF]/70 border border-slate-200/60 space-y-2">
-                            <label class="block text-xs font-bold text-slate-700">Lingkar Lengan Atas (LiLA)</label>
-                            <div class="bg-white rounded-xl p-3 flex justify-between items-center border border-slate-200/80">
-                                <input type="text" x-model="form.lila" class="w-full text-xl font-bold text-slate-900 bg-transparent outline-none">
-                                <span class="text-slate-500 font-semibold text-sm ml-2">cm</span>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </section>
 
@@ -255,7 +193,7 @@
 
                 simpanData() {
                     // Validasi ringan di frontend agar umur tidak kosong
-                    if(!this.form.name || !this.form.nik || !this.form.age || !this.form.weight || !this.form.height || !this.form.gender || !this.form.position || !this.form.head_circ || !this.form.lila) {
+                    if(!this.form.name || !this.form.nik || !this.form.age || !this.form.weight || !this.form.height || !this.form.gender) {
                         alert("Semua Form Wajib Diisi!");
                         return;
                     }

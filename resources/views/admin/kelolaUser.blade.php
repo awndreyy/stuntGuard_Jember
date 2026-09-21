@@ -1,171 +1,170 @@
 <!DOCTYPE html>
 <html lang="id" class="h-full">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ $title ?? 'Kelola User - StuntGuard Jember' }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title ?? 'Kelola User - StuntGuard Jember' }}</title>
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          colors: {
-            teal: {
-              750: '#0f6157',
-              800: '#115e59',
-              900: '#134e4a',
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+                teal: {
+                750: '#0f6157',
+                800: '#115e59',
+                900: '#134e4a',
+                }
             }
-          }
+            }
         }
-      }
-    }
-  </script>
+        }
+    </script>
 
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-    /* Custom subtle scrollbar for tables & sidebars */
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-  </style>
+    <style>
+        body {
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        }
+        /* Custom subtle scrollbar for tables & sidebars */
+        ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+        }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
 
-  <!-- Mobile Overlay -->
-  <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden md:hidden transition-opacity"></div>
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden md:hidden transition-opacity"></div>
 
-  <!-- Left Sidebar (Fixed / Sticky 16:9 Widescreen Sidebar) -->
-  <aside id="sidebar" class="fixed md:sticky top-0 h-screen w-64 bg-white border-r border-slate-200 z-40 flex flex-col justify-between transition-transform duration-300 ease-in-out -translate-x-full md:translate-x-0 shrink-0 shadow-xs">
-    <div class="flex flex-col h-full">
+    <!-- Left Sidebar (Fixed / Sticky 16:9 Widescreen Sidebar) -->
+    <aside id="sidebar" class="fixed md:sticky top-0 h-screen w-64 bg-white border-r border-slate-200 z-40 flex flex-col justify-between transition-transform duration-300 ease-in-out -translate-x-full md:translate-x-0 shrink-0 shadow-xs">
+        <div class="flex flex-col h-full">
 
-      <!-- Top Brand Logo Area -->
-      <div class="h-16 px-5 border-b border-slate-100 flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-teal-800 text-white flex items-center justify-center shadow-sm shadow-teal-900/20">
-            <i data-lucide="shield-check" class="w-5 h-5 stroke-[2.2]"></i>
-          </div>
-          <div>
-            <div class="flex items-center gap-1.5">
-              <span class="font-bold text-base tracking-tight text-teal-800">StuntGuard</span>
-              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-teal-50 text-teal-700 border border-teal-200/60">JEMBER</span>
+            <!-- Top Brand Logo Area -->
+            <div class="h-16 px-5 border-b border-slate-100 flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-teal-800 text-white flex items-center justify-center shadow-sm shadow-teal-900/20">
+                    <i data-lucide="shield-check" class="w-5 h-5 stroke-[2.2]"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                    <span class="font-bold text-base tracking-tight text-teal-800">StuntGuard</span>
+                    <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-teal-50 text-teal-700 border border-teal-200/60">JEMBER</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400 font-medium leading-none mt-0.5">Monitoring Gizi & MPASI</p>
+                </div>
+                </div>
+                <!-- Close button for mobile -->
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+                <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
             </div>
-            <p class="text-[10px] text-slate-400 font-medium leading-none mt-0.5">Monitoring Gizi & MPASI</p>
-          </div>
-        </div>
-        <!-- Close button for mobile -->
-        <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-slate-600 p-1 rounded-lg">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
 
-      <!-- Navigation Menu -->
-      <div class="flex-1 overflow-y-auto px-3.5 py-4 space-y-5">
+            <!-- Navigation Menu -->
+            <div class="flex-1 overflow-y-auto px-3.5 py-4 space-y-5">
 
-        <!-- Group 1: MAIN -->
-        <div>
-          <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Main</span>
-          <nav class="mt-1.5 space-y-1">
-            <a href="{{ url('/') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-              <i data-lucide="layout-dashboard" class="w-4 h-4 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-              <span class="text-xs font-semibold">Dashboard Overview</span>
-            </a>
-          </nav>
-        </div>
+                <!-- Group 1: MAIN -->
+                <div>
+                <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Main</span>
+                    <nav class="mt-1.5 space-y-1">
+                        <a href="{{ url('/') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
+                            <span class="text-xs font-semibold">Dashboard Overview</span>
+                        </a>
+                    </nav>
+                </div>
 
-        <!-- Group 2: MANAJEMEN KONTEN -->
-        <div>
-          <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Manajemen Konten</span>
-          <nav class="mt-1.5 space-y-1">
-            <!-- Kelola Informasi -->
-            <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-              <i data-lucide="book-open" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-              <div class="flex-1">
-                <span class="block text-xs font-semibold">Kelola Informasi</span>
-                <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Edukasi & Trimester</span>
-              </div>
-            </a>
-            <!-- Kelola MPASI -->
-            <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-              <i data-lucide="utensils-crossed" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-              <div class="flex-1">
-                <span class="block text-xs font-semibold">Kelola MPASI</span>
-                <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Resep 6-23 Bulan</span>
-              </div>
-            </a>
-          </nav>
-        </div>
-
-        <!-- Group 3: PENGATURAN SISTEM -->
-        <div>
-          <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Pengaturan Sistem</span>
-          <nav class="mt-1.5 space-y-1">
-            <!-- Kalkulator Gizi -->
-            <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-              <i data-lucide="calculator" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-              <div class="flex-1">
-                <span class="block text-xs font-semibold">Kalkulator Gizi</span>
-                <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Parameter WHO</span>
-              </div>
-            </a>
-            <!-- Kelola User (Active) -->
-            <a href="{{ url('/kelola-user') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl bg-teal-800 text-white shadow-sm shadow-teal-900/15 transition-all">
-              <i data-lucide="users" class="w-4 h-4 mt-0.5 text-teal-100"></i>
-              <div class="flex-1">
-                <span class="block text-xs font-semibold">Kelola User</span>
-                <span class="block text-[10px] text-teal-200 font-normal leading-tight mt-0.5">Pengguna & Akses</span>
-              </div>
-            </a>
-          </nav>
-        </div>
-
-      </div>
-
-      <!-- Footer Info Box inside Sidebar -->
-      <div class="p-3 border-t border-slate-100 shrink-0">
-        <div class="bg-teal-50/80 border border-teal-100 rounded-xl p-2.5 flex items-center gap-2.5">
-          <div class="w-7 h-7 rounded-lg bg-teal-800/10 text-teal-800 flex items-center justify-center shrink-0">
-            <i data-lucide="activity" class="w-3.5 h-3.5"></i>
-          </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="text-[11px] font-semibold text-teal-900">Wilayah Jember</span>
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <!-- Group 2: MANAJEMEN KONTEN -->
+                <div>
+                <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Manajemen Konten</span>
+                <nav class="mt-1.5 space-y-1">
+                    <!-- Kelola Informasi -->
+                    <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
+                    <i data-lucide="book-open" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
+                    <div class="flex-1">
+                        <span class="block text-xs font-semibold">Kelola Informasi</span>
+                        <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Edukasi & Trimester</span>
+                    </div>
+                    </a>
+                    <!-- Kelola MPASI -->
+                    <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
+                    <i data-lucide="utensils-crossed" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
+                    <div class="flex-1">
+                        <span class="block text-xs font-semibold">Kelola MPASI</span>
+                        <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Resep 6-23 Bulan</span>
+                    </div>
+                    </a>
+                </nav>
             </div>
-            <p class="text-[10px] text-teal-700/80 truncate">Sinkron Posyandu Aktif</p>
-          </div>
+
+            <!-- Group 3: PENGATURAN SISTEM -->
+            <div>
+                <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Pengaturan Sistem</span>
+                <nav class="mt-1.5 space-y-1">
+                    <!-- Kalkulator Gizi -->
+                    <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
+                    <i data-lucide="calculator" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
+                    <div class="flex-1">
+                        <span class="block text-xs font-semibold">Kalkulator Gizi</span>
+                        <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Parameter WHO</span>
+                    </div>
+                    </a>
+                    <!-- Kelola User (Active) -->
+                    <a href="{{ url('/kelola-user') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl bg-teal-800 text-white shadow-sm shadow-teal-900/15 transition-all">
+                    <i data-lucide="users" class="w-4 h-4 mt-0.5 text-teal-100"></i>
+                    <div class="flex-1">
+                        <span class="block text-xs font-semibold">Kelola User</span>
+                        <span class="block text-[10px] text-teal-200 font-normal leading-tight mt-0.5">Pengguna & Akses</span>
+                    </div>
+                    </a>
+                </nav>
+            </div>
         </div>
-      </div>
+
+        <!-- Footer Info Box inside Sidebar -->
+        <div class="p-3 border-t border-slate-100 shrink-0">
+            <div class="bg-teal-50/80 border border-teal-100 rounded-xl p-2.5 flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-teal-800/10 text-teal-800 flex items-center justify-center shrink-0">
+                <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+            </div>
+            <div class="min-w-0">
+                <div class="flex items-center gap-1.5">
+                <span class="text-[11px] font-semibold text-teal-900">Wilayah Jember</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                </div>
+                <p class="text-[10px] text-teal-700/80 truncate">Sinkron Posyandu Aktif</p>
+            </div>
+            </div>
+        </div>
     </div>
-  </aside>
+    </aside>
 
-  <!-- Main Content Wrapper (16:9 Full Viewport Height Container) -->
-  <div class="flex-1 flex flex-col h-screen min-w-0 overflow-hidden">
+    <!-- Main Content Wrapper (16:9 Full Viewport Height Container) -->
+    <div class="flex-1 flex flex-col h-screen min-w-0 overflow-hidden">
 
     <!-- Header (Compact 56px Widescreen Header) -->
     <header class="h-14 bg-white border-b border-slate-200 sticky top-0 z-20 px-4 sm:px-6 flex items-center justify-between gap-4 shrink-0">
@@ -251,11 +250,7 @@
               <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Kader</button>
               <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Masyarakat</button>
             </div>
-
-            <button class="p-1.5 rounded-md border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors">
-              <i data-lucide="filter" class="w-4 h-4"></i>
-            </button>
-          </div>
+        </div>
         </div>
 
         <!-- Data Table Container -->
@@ -305,78 +300,81 @@
                   </span>
                 </td>
                 <td class="py-3 px-4 text-center whitespace-nowrap">
-                  <div class="inline-flex items-center justify-center gap-1.5">
-                    <button class="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Lihat Detail">
-                      <i data-lucide="eye" class="w-4 h-4"></i>
-                    </button>
-                    <button class="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors" title="Edit User">
-                      <i data-lucide="pencil" class="w-4 h-4"></i>
-                    </button>
-                    <button class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Hapus User">
-                      <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
-                  </div>
+                    <div class="inline-flex items-center justify-center gap-1.5">
+                        <button class="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Lihat Detail">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        </button>
+                        <button class="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors" title="Edit User">
+                            <i data-lucide="pencil" class="w-4 h-4"></i>
+                        </button>
+                        <button class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Hapus User">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
                 </td>
-              </tr>
-              @empty
-              <tr>
-                <td colspan="5" class="py-6 text-center text-slate-400 text-xs">Belum ada data pengguna.</td>
-              </tr>
-              @endforelse
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" class="py-6 text-center text-slate-400 text-xs">Belum ada data pengguna.</td>
+                </tr>
+                @endforelse
 
             </tbody>
-          </table>
+            </table>
         </div>
 
         <!-- Card Footer (Pagination) -->
         <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 shrink-0">
-          <span>Menampilkan <strong class="font-semibold text-slate-700">1-4</strong> dari <strong class="font-semibold text-slate-700">{{ $totalUsers ?? '2,450' }}</strong> pengguna</span>
+            <span>Menampilkan <strong class="font-semibold text-slate-700">1-4</strong> dari <strong class="font-semibold text-slate-700">{{ $totalUsers ?? '2,450' }}</strong> pengguna</span>
 
-          <div class="flex items-center gap-1.5">
+            <div class="flex items-center gap-1.5">
             <!-- Previous Button -->
             <button class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200/80 bg-white hover:bg-slate-50 text-slate-400 transition-colors text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-              <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
-              <span class="hidden sm:inline">Sebelumnya</span>
+                <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">Sebelumnya</span>
             </button>
 
             <!-- Page Numbers -->
             <div class="flex items-center gap-1">
-              <button class="w-8 h-8 rounded-lg bg-teal-800 text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                <button class="w-8 h-8 rounded-lg bg-teal-800 text-white font-bold text-xs flex items-center justify-center shadow-xs">
                 1
-              </button>
-              <button class="w-8 h-8 rounded-lg text-slate-600 hover:bg-slate-200/60 font-medium text-xs flex items-center justify-center transition-colors">
+                </button>
+                <button class="w-8 h-8 rounded-lg text-slate-600 hover:bg-slate-200/60 font-medium text-xs flex items-center justify-center transition-colors">
                 2
-              </button>
-              <button class="w-8 h-8 rounded-lg text-slate-600 hover:bg-slate-200/60 font-medium text-xs flex items-center justify-center transition-colors">
+                </button>
+                <button class="w-8 h-8 rounded-lg text-slate-600 hover:bg-slate-200/60 font-medium text-xs flex items-center justify-center transition-colors">
                 3
-              </button>
-              <span class="w-6 h-8 text-slate-400 text-xs flex items-center justify-center font-semibold tracking-wider">
+                </button>
+                <span class="w-6 h-8 text-slate-400 text-xs flex items-center justify-center font-semibold tracking-wider">
                 ...
-              </span>
-              <button class="w-8 h-8 rounded-lg text-slate-600 hover:bg-slate-200/60 font-medium text-xs flex items-center justify-center transition-colors">
+                </span>
+                <button class="w-8 h-8 rounded-lg text-slate-600 hover:bg-slate-200/60 font-medium text-xs flex items-center justify-center transition-colors">
                 409
-              </button>
+                </button>
             </div>
 
             <!-- Next Button -->
             <button class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200/80 bg-white hover:bg-slate-100 text-slate-700 transition-colors text-xs font-medium">
-              <span class="hidden sm:inline">Selanjutnya</span>
-              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">Selanjutnya</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </button>
-          </div>
         </div>
+    </div>
 
-      </section>
+    </section>
 
-      <!-- Footer -->
-      <footer class="text-center py-1">
+    <!-- Footer -->
+    <footer class="text-center py-1">
         <span class="text-[10px] text-emerald-800 hidden xl:inline text-center">© 2026 StuntGuard Jember</span>
-      </footer>
+    </footer>
 
     </main>
-  </div>
+</div>
 
-  <script>
+<!-- Modal Tambah User Baru  -->
+@include('components.modalTambahUser')
+
+<script>
     // Initialize Lucide Icons
     lucide.createIcons();
 

@@ -10,9 +10,7 @@ Route::get('/', function () {
     return view('admin.dashboardAdmin');
 });
 
-Route::get('/kelolaUser', function () {
-    return view('admin.kelolaUser');
-});
+Route::get('/kelolaUser', [UserController::class, 'index'])->name('users.index');
 
 Route::resource('users', UserController::class);
 

@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- alpine js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -55,7 +57,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
+<body x-data="userForm()" class="bg-slate-50 text-slate-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
 
     <!-- Mobile Overlay -->
     <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden md:hidden transition-opacity"></div>
@@ -134,7 +136,7 @@
                     </div>
                     </a>
                     <!-- Kelola User (Active) -->
-                    <a href="{{ url('/kelola-user') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl bg-teal-800 text-white shadow-sm shadow-teal-900/15 transition-all">
+                    <a href="{{ url('/kelolaUser') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl bg-teal-800 text-white shadow-sm shadow-teal-900/15 transition-all">
                     <i data-lucide="users" class="w-4 h-4 mt-0.5 text-teal-100"></i>
                     <div class="flex-1">
                         <span class="block text-xs font-semibold">Kelola User</span>
@@ -221,8 +223,8 @@
             Manajemen data pengguna aplikasi, kader posyandu, dan masyarakat.
           </p>
         </div>
-
-        <button class="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm">
+        {{-- Tombol Tambah User --}}
+        <button @click="tambahData()" class="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm">
           <i data-lucide="plus" class="w-4 h-4"></i>
           <span>Tambah User Baru</span>
         </button>
@@ -247,79 +249,69 @@
             <div class="hidden sm:flex items-center bg-slate-100/80 p-0.5 rounded-lg text-[11px] font-medium text-slate-600">
               <button class="px-2.5 py-1 rounded-md bg-white text-teal-900 shadow-2xs font-semibold">Semua</button>
               <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Admin</button>
-              <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Kader</button>
-              <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Masyarakat</button>
+              <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Orangtua</button>
             </div>
         </div>
         </div>
 
         <!-- Data Table Container -->
         <div class="flex-1 overflow-y-auto min-h-0">
-          <table class="w-full text-left border-collapse">
-            <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-xs border-b border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-wider z-10">
-              <tr>
-                <th class="py-3 px-4">Informasi Pengguna</th>
-                <th class="py-3 px-4">Kontak</th>
-                <th class="py-3 px-4">Role / Peran</th>
-                <th class="py-3 px-4">Status</th>
-                <th class="py-3 px-4 text-center">Aksi</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100 text-xs">
-
-              @forelse($usersList ?? [
-                  ['initial' => 'SN', 'nama' => 'Siti Nurhaliza', 'nik' => '3509123456789001', 'email' => 'siti.nur@email.com', 'phone' => '0812-3456-7890', 'role' => 'Masyarakat', 'role_color' => 'blue', 'status' => 'Aktif', 'status_color' => 'emerald', 'bg_initial' => 'teal'],
-                  ['initial' => 'RM', 'nama' => 'Rahmawati', 'nik' => '3509876543210002', 'email' => 'rahmawati.kader@email.com', 'phone' => '0856-7890-1234', 'role' => 'Kader Posyandu', 'role_color' => 'indigo', 'status' => 'Aktif', 'status_color' => 'emerald', 'bg_initial' => 'indigo'],
-                  ['initial' => 'BU', 'nama' => 'Budi Utomo', 'nik' => '3509456123789003', 'email' => 'budi.admin@jember.go.id', 'phone' => '0821-3344-5566', 'role' => 'Administrator', 'role_color' => 'teal', 'status' => 'Aktif', 'status_color' => 'emerald', 'bg_initial' => 'amber'],
-                  ['initial' => 'LM', 'nama' => 'Linda Marlina', 'nik' => '3509988776655004', 'email' => 'linda.m@email.com', 'phone' => '0877-1122-3344', 'role' => 'Masyarakat', 'role_color' => 'blue', 'status' => 'Tidak Aktif', 'status_color' => 'slate', 'bg_initial' => 'slate']
-              ] as $user)
-              <tr class="hover:bg-teal-50/40 transition-colors group">
-                <td class="py-3 px-4 font-medium text-slate-900">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-{{ $user['bg_initial'] ?? 'slate' }}-100 text-{{ $user['bg_initial'] ?? 'slate' }}-800 font-bold text-xs flex items-center justify-center shrink-0">
-                      {{ $user['initial'] ?? strtoupper(substr($user->nama ?? 'U', 0, 1)) }}
-                    </div>
-                    <div>
-                      <span class="block text-xs font-semibold text-slate-800">{{ $user['nama'] ?? $user->nama }}</span>
-                      <span class="block text-[10px] text-slate-400">NIK: {{ $user['nik'] ?? $user->nik }}</span>
-                    </div>
-                  </div>
-                </td>
-                <td class="py-3 px-4">
-                  <span class="block text-xs text-slate-700">{{ $user['email'] ?? $user->email }}</span>
-                  <span class="block text-[10px] text-slate-400">{{ $user['phone'] ?? $user->no_hp }}</span>
-                </td>
-                <td class="py-3 px-4">
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-{{ $user['role_color'] ?? 'slate' }}-50 text-{{ $user['role_color'] ?? 'slate' }}-700 border border-{{ $user['role_color'] ?? 'slate' }}-200/60">
-                    {{ $user['role'] ?? $user->role }}
-                  </span>
-                </td>
-                <td class="py-3 px-4">
-                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-{{ $user['status_color'] ?? 'slate' }}-50 text-{{ $user['status_color'] ?? 'slate' }}-700 border border-{{ $user['status_color'] ?? 'slate' }}-200/60">
-                    <span class="w-1.5 h-1.5 rounded-full bg-{{ $user['status_color'] ?? 'slate' }}-500"></span> {{ $user['status'] ?? $user->status }}
-                  </span>
-                </td>
-                <td class="py-3 px-4 text-center whitespace-nowrap">
-                    <div class="inline-flex items-center justify-center gap-1.5">
-                        <button class="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Lihat Detail">
-                            <i data-lucide="eye" class="w-4 h-4"></i>
-                        </button>
-                        <button class="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors" title="Edit User">
-                            <i data-lucide="pencil" class="w-4 h-4"></i>
-                        </button>
-                        <button class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Hapus User">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="5" class="py-6 text-center text-slate-400 text-xs">Belum ada data pengguna.</td>
-                </tr>
-                @endforelse
-
-            </tbody>
+            <table class="w-full text-left border-collapse">
+                <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-xs border-b border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-wider z-10">
+                    <tr>
+                        <th class="py-3 px-4">Informasi Pengguna</th>
+                        <th class="py-3 px-4">Kontak</th>
+                        <th class="py-3 px-4">Role / Peran</th>
+                        <th class="py-3 px-4 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-xs">
+                    <!-- Looping data $users dari controller -->
+                    @foreach($users as $user)
+                    <tr class="hover:bg-teal-50/40 transition-colors group">
+                        <td class="py-3 px-4 font-medium text-slate-900">
+                            <div class="flex items-center gap-3">
+                                <!-- Lingkaran inisial nama -->
+                                <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-800 font-bold text-xs flex items-center justify-center shrink-0">
+                                    {{ strtoupper(substr($user->name, 0, 2)) }}
+                                </div>
+                                <div>
+                                    <!-- Nama dan NIK asli -->
+                                    <span class="block text-xs font-semibold text-slate-800">{{ $user->name }}</span>
+                                    <span class="block text-[10px] text-slate-400">NIK: {{ $user->nik ?? '-' }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4">
+                            <!-- Email asli -->
+                            <span class="block text-xs text-slate-700">{{ $user->email }}</span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <!-- Role asli (Masyarakat/Kader/Admin) -->
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200/60">
+                                {{ $user->role }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center whitespace-nowrap">
+                            <!-- Tombol Aksi -->
+                            <div class="inline-flex items-center justify-center gap-1.5">
+                                {{-- Edit --}}
+                                <button @click="editData({{ $user }})" class="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors" title="Edit User">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                </button>
+                                {{-- Hapus --}}
+                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin mau menghapus akun {{ $user->name }} ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Hapus User">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
 
@@ -375,22 +367,55 @@
 @include('components.modalTambahUser')
 
 <script>
+    // Form untuk user
+    function userForm() {
+        return {
+            showModal: false,
+            isEdit: false,
+            formAction: '{{ route('users.store') }}', // URL bawaan untuk tambah data
+            formMethod: 'POST',
+            formData: {
+                name: '', nik: '', email: '', role: ''
+            },
+            // Fungsi saat tombol "Tambah User Baru" ditekan
+            tambahData() {
+                this.isEdit = false;
+                this.formAction = '{{ route('users.store') }}';
+                this.formMethod = 'POST';
+                this.formData = { name: '', nik: '', email: '', role: '' };
+                this.showModal = true;
+            },
+            // Fungsi saat ikon "Pensil" di tabel ditekan
+            editData(user) {
+                this.isEdit = true;
+                this.formAction = `/users/${user.id}`; // Arahkan URL ke spesifik ID user
+                this.formMethod = 'PUT'; // Metode wajib Laravel untuk Update
+                this.formData = {
+                    name: user.name,
+                    nik: user.nik,
+                    email: user.email,
+                    role: user.role
+                };
+                this.showModal = true;
+            }
+        };
+    }
+
     // Initialize Lucide Icons
     lucide.createIcons();
 
     // Toggle Mobile Sidebar
     function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('mobile-overlay');
-
-      const isClosed = sidebar.classList.contains('-translate-x-full');
-      if (isClosed) {
-        sidebar.classList.remove('-translate-x-full');
-        overlay.classList.remove('hidden');
-      } else {
-        sidebar.classList.add('-translate-x-full');
-        overlay.classList.add('hidden');
-      }
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobile-overlay');
+        const isClosed = sidebar.classList.contains('-translate-x-full');
+        if (isClosed) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
     }
 
     // format tanggal
@@ -398,9 +423,9 @@
     const today = new Date().toLocaleDateString('id-ID', dateOptions);
     const dateElement = document.getElementById('current-date');
     if (dateElement) {
-      dateElement.innerText = today;
+        dateElement.innerText = today;
     }
-  </script>
+</script>
 
 </body>
 </html>

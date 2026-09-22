@@ -13,8 +13,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return view('admin.kelolaUser', compact('user'));
+        $users = User::latest()->get();
+        return view('admin.kelolaUser', compact('users'));
+
     }
 
     /**
@@ -34,7 +35,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'nik' => 'required|string|size:16|unique:users,nik',// hanya 16 angka
-            'email' => 'required|email|uniqe:users,email',
+            'email' => 'required|email|unique:users,email',
             'role'=> 'required|in:Orang Tua,Administrator',
             'password'=> 'required|min:6',
             ]);
@@ -71,17 +72,20 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //1. cari data user dengan id
-        $user = User::find($id);
+        // Gunakan findOrFail biar kalau ID nggak ketemu, langsung dialihkan ke halaman 404 (lebih aman)
+        $user = User::findOrFail($id);
 
         $request->validate([
             'name'=> 'required|string|max:50',
             'email'=> 'required|email|unique:users,email,'.$id,
         ]);
 
-        //Menimpa data lama dengan yang baru
-        $user->update = $request->name;
+        // PERBAIKAN: Ubah kata 'update' menjadi 'name'
+        $user->name = $request->name;
+
+        $user->nik = $request->nik;
         $user->email = $request->email;
+        $user->role = $request->role;
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
@@ -90,7 +94,6 @@ class UserController extends Controller
         $user->save();
         return redirect()->back()->with('success','Data User berhasil diperbarui');
     }
-
     /**
      * Remove the specified resource from storage.
      */

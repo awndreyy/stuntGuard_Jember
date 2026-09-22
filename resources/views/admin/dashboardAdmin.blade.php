@@ -147,7 +147,7 @@
       </div>
 
       <!-- Footer Info Box inside Sidebar -->
-      <div class="p-3 border-t border-slate-100 shrink-0">
+      {{-- <div class="p-3 border-t border-slate-100 shrink-0">
         <div class="bg-teal-50/80 border border-teal-100 rounded-xl p-2.5 flex items-center gap-2.5">
           <div class="w-7 h-7 rounded-lg bg-teal-800/10 text-teal-800 flex items-center justify-center shrink-0">
             <i data-lucide="activity" class="w-3.5 h-3.5"></i>
@@ -160,7 +160,7 @@
             <p class="text-[10px] text-teal-700/80 truncate">Sinkron Posyandu Aktif</p>
           </div>
         </div>
-      </div>
+      </div> --}}
     </div>
   </aside>
 
@@ -265,9 +265,6 @@
           </div>
           <div class="mt-2.5 flex items-baseline justify-between">
             <span class="text-2xl font-bold text-slate-900 tracking-tight">{{ number_format($totalResep ?? 128) }}</span>
-            <span class="text-[10px] font-semibold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200">
-              Terverifikasi Gizi
-            </span>
           </div>
           <p class="text-[10px] text-slate-400 mt-1">Resep lokal pangan bergizi tinggi</p>
         </div>
@@ -353,12 +350,14 @@
                   </td>
                   <td class="py-2.5 px-4 text-right whitespace-nowrap">
                     <div class="inline-flex items-center gap-1">
-                      <button class="p-1 text-slate-400 hover:text-teal-800 hover:bg-white rounded transition-colors" title="Edit">
-                        <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
-                      </button> <!--tombol edit-->
-                      <button class="p-1 text-slate-400 hover:text-red-600 hover:bg-white rounded transition-colors" title="Hapus">
-                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                      </button> <!--tombol hapus-->
+                            <!--tombol edit-->
+                        <button class="p-1 text-slate-400 hover:text-teal-800 hover:bg-white rounded transition-colors" title="Edit">
+                            <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                        </button>
+                            <!--tombol hapus-->
+                        <button class="p-1 text-slate-400 hover:text-red-600 hover:bg-white rounded transition-colors" title="Hapus">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
                     </div>
                   </td>
                 </tr>
@@ -415,11 +414,11 @@
               <tbody class="divide-y divide-slate-100 text-xs">
 
                 @forelse($logGiziList ?? [
-                  ['initial' => 'R', 'nama' => 'Rayyan Al-Fatih', 'lokasi' => 'Patrang, Jember', 'usia' => '8 Bln', 'status' => 'Normal', 'waktu' => '09:15 WIB', 'type' => 'emerald'],
-                  ['initial' => 'A', 'nama' => 'Azkia Putri', 'lokasi' => 'Sumbersari, Jember', 'usia' => '14 Bln', 'status' => 'Stunting', 'waktu' => '08:40 WIB', 'type' => 'red'],
-                  ['initial' => 'B', 'nama' => 'Bima Arya', 'lokasi' => 'Kaliwates, Jember', 'usia' => '10 Bln', 'status' => 'Wasting', 'waktu' => 'Kemarin', 'type' => 'amber'],
-                  ['initial' => 'C', 'nama' => 'Cantika Dewi', 'lokasi' => 'Arjasa, Jember', 'usia' => '19 Bln', 'status' => 'Normal', 'waktu' => 'Kemarin', 'type' => 'emerald'],
-                  ['initial' => 'D', 'nama' => 'Danendra Rama', 'lokasi' => 'Tanggul, Jember', 'usia' => '7 Bln', 'status' => 'Normal', 'waktu' => 'Kemarin', 'type' => 'emerald']
+                  ['initial' => 'R', 'nama' => 'Rayyan Al-Fatih', 'usia' => '8 Bln', 'status' => 'Normal', 'waktu' => '09:15 WIB', 'type' => 'emerald'],
+                  ['initial' => 'A', 'nama' => 'Azkia Putri', 'usia' => '14 Bln', 'status' => 'Stunting', 'waktu' => '08:40 WIB', 'type' => 'red'],
+                  ['initial' => 'B', 'nama' => 'Bima Arya', 'usia' => '10 Bln', 'status' => 'Wasting', 'waktu' => 'Kemarin', 'type' => 'amber'],
+                  ['initial' => 'C', 'nama' => 'Cantika Dewi', 'usia' => '19 Bln', 'status' => 'Normal', 'waktu' => 'Kemarin', 'type' => 'emerald'],
+                  ['initial' => 'D', 'nama' => 'Danendra Rama', 'usia' => '7 Bln', 'status' => 'Normal', 'waktu' => 'Kemarin', 'type' => 'emerald']
                 ] as $log)
                 <tr class="hover:bg-teal-50/40 transition-colors">
                   <td class="py-2.5 px-4 font-medium text-slate-900">
@@ -429,7 +428,6 @@
                       </div>
                       <div>
                         <span class="block text-xs font-semibold text-slate-800">{{ $log['nama'] ?? $log->nama_anak }}</span>
-                        <span class="block text-[10px] text-slate-400">{{ $log['lokasi'] ?? $log->wilayah }}</span>
                       </div>
                     </div>
                   </td>

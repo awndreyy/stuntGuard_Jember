@@ -148,7 +148,7 @@
         </div>
 
         <!-- Footer Info Box inside Sidebar -->
-        <div class="p-3 border-t border-slate-100 shrink-0">
+        {{-- <div class="p-3 border-t border-slate-100 shrink-0">
             <div class="bg-teal-50/80 border border-teal-100 rounded-xl p-2.5 flex items-center gap-2.5">
             <div class="w-7 h-7 rounded-lg bg-teal-800/10 text-teal-800 flex items-center justify-center shrink-0">
                 <i data-lucide="activity" class="w-3.5 h-3.5"></i>
@@ -161,7 +161,7 @@
                 <p class="text-[10px] text-teal-700/80 truncate">Sinkron Posyandu Aktif</p>
             </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     </aside>
 
@@ -295,11 +295,9 @@
                         <td class="py-3 px-4 text-center whitespace-nowrap">
                             <!-- Tombol Aksi -->
                             <div class="inline-flex items-center justify-center gap-1.5">
-                                {{-- Edit --}}
                                 <button @click="editData({{ $user }})" class="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors" title="Edit User">
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </button>
-                                {{-- Hapus --}}
                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin mau menghapus akun {{ $user->name }} ini?');">
                                     @csrf
                                     @method('DELETE')

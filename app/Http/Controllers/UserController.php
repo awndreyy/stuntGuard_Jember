@@ -94,9 +94,7 @@ class UserController extends Controller
         $user->save();
         return redirect()->back()->with('success','Data User berhasil diperbarui');
     }
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         //cari data user dengan id

@@ -33,7 +33,7 @@ class UserController extends Controller
     {
         // 1. Validasi yang di input
         $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:30',
             'nik' => 'required|string|size:16|unique:users,nik',// hanya 16 angka
             'email' => 'required|email|unique:users,email',
             'role'=> 'required|in:Orang Tua,Administrator',
@@ -76,7 +76,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'name'=> 'required|string|max:50',
+            'name'=> 'required|string|max:30',
             'email'=> 'required|email|unique:users,email,'.$id,
         ]);
 

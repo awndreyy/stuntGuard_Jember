@@ -66,7 +66,7 @@
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Peran / Role <span class="text-red-500">*</span></label>
                     <select name="role" x-model= "formData.role" required class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-800/20 focus:border-teal-800 focus:bg-white transition-all">
                         <option value="" disabled selected>Pilih Peran</option>
-                        <option value="Masyarakat">Orang Tua</option>
+                        <option value="Orang Tua">Orang Tua</option>
                         <option value="Administrator">Administrator</option>
                     </select>
                 </div>

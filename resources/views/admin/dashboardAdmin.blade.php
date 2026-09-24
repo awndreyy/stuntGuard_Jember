@@ -57,157 +57,14 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
 
-  <!-- Mobile Overlay -->
-  <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden md:hidden transition-opacity"></div>
-
-  <!-- Left Sidebar (Fixed / Sticky 16:9 Widescreen Sidebar) -->
-  <aside id="sidebar" class="fixed md:sticky top-0 h-screen w-64 bg-white border-r border-slate-200 z-40 flex flex-col justify-between transition-transform duration-300 ease-in-out -translate-x-full md:translate-x-0 shrink-0 shadow-xs">
-    <div class="flex flex-col h-full">
-
-      <!-- Top Brand Logo Area -->
-      <div class="h-16 px-5 border-b border-slate-100 flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-teal-800 text-white flex items-center justify-center shadow-sm shadow-teal-900/20">
-            <i data-lucide="shield-check" class="w-5 h-5 stroke-[2.2]"></i>
-          </div>
-          <div>
-            <div class="flex items-center gap-1.5">
-              <span class="font-bold text-base tracking-tight text-teal-800">StuntGuard</span>
-              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-teal-50 text-teal-700 border border-teal-200/60">JEMBER</span>
-            </div>
-            <p class="text-[10px] text-slate-400 font-medium leading-none mt-0.5">Monitoring Gizi & MPASI</p>
-          </div>
-        </div>
-        <!-- Close button for mobile -->
-        <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-slate-600 p-1 rounded-lg">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <!-- Navigation Menu -->
-      <div class="flex-1 overflow-y-auto px-3.5 py-4 space-y-5">
-
-        <!-- Group 1: MAIN -->
-        <div>
-          <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Main</span>
-          <nav class="mt-1.5 space-y-1">
-            <a href="{{ url('/') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-teal-800 text-white font-semibold text-xs shadow-sm shadow-teal-900/15 transition-all">
-              <i data-lucide="layout-dashboard" class="w-4 h-4 stroke-[2.2]"></i>
-              <span>Dashboard Overview</span>
-            </a>
-          </nav>
-        </div>
-
-        <!-- Group 2: MANAJEMEN KONTEN -->
-        <div>
-          <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Manajemen Konten</span>
-          <nav class="mt-1.5 space-y-1">
-            <!-- Kelola Informasi -->
-            <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-              <i data-lucide="book-open" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-              <div class="flex-1">
-                <span class="block text-xs font-semibold">Kelola Informasi</span>
-                <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Edukasi & Trimester</span>
-              </div>
-            </a>
-            <!-- Kelola MPASI -->
-            <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-              <i data-lucide="utensils-crossed" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-              <div class="flex-1">
-                <span class="block text-xs font-semibold">Kelola MPASI</span>
-                <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Resep 6-23 Bulan</span>
-              </div>
-            </a>
-          </nav>
-        </div>
-
-        <!-- Group 3: PENGATURAN SISTEM -->
-        <div>
-          <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Pengaturan Sistem</span>
-          <nav class="mt-1.5 space-y-1">
-            <!-- Kalkulator Gizi -->
-            <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-              <i data-lucide="calculator" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-              <div class="flex-1">
-                <span class="block text-xs font-semibold">Kalkulator Gizi</span>
-                <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Parameter WHO</span>
-              </div>
-            </a>
-            <!-- Kelola User -->
-            <a href="{{ url('/kelolaUser') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-              <i data-lucide="users" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-              <div class="flex-1">
-                <span class="block text-xs font-semibold">Kelola User</span>
-                <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Pengguna & Akses</span>
-              </div>
-            </a>
-          </nav>
-        </div>
-
-      </div>
-
-      <!-- Footer Info Box inside Sidebar -->
-      {{-- <div class="p-3 border-t border-slate-100 shrink-0">
-        <div class="bg-teal-50/80 border border-teal-100 rounded-xl p-2.5 flex items-center gap-2.5">
-          <div class="w-7 h-7 rounded-lg bg-teal-800/10 text-teal-800 flex items-center justify-center shrink-0">
-            <i data-lucide="activity" class="w-3.5 h-3.5"></i>
-          </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="text-[11px] font-semibold text-teal-900">Wilayah Jember</span>
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            </div>
-            <p class="text-[10px] text-teal-700/80 truncate">Sinkron Posyandu Aktif</p>
-          </div>
-        </div>
-      </div> --}}
-    </div>
-  </aside>
+  <!-- Sidebar Component -->
+  <x-admin.sidebar />
 
   <!-- Main Content Wrapper (16:9 Full Viewport Height Container) -->
   <div class="flex-1 flex flex-col h-screen min-w-0 overflow-hidden">
 
-    <!-- Header (Compact 56px Widescreen Header) -->
-    <header class="h-14 bg-white border-b border-slate-200 sticky top-0 z-20 px-4 sm:px-6 flex items-center justify-between gap-4 shrink-0">
-
-      <!-- Left: Mobile Toggle + Title + Search -->
-      <div class="flex items-center gap-3 flex-1 max-w-2xl">
-        <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded-lg text-slate-500 hover:text-teal-800 hover:bg-slate-100 focus:outline-none">
-          <i data-lucide="menu" class="w-5 h-5"></i>
-        </button>
-
-        <!-- Search Input -->
-        <div class="relative w-full max-w-md">
-          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-            <i data-lucide="search" class="w-4 h-4"></i>
-          </span>
-          <input type="text" placeholder="Cari data pengguna, resep MPASI..." class="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-800/20 focus:border-teal-800 focus:bg-white transition-all">
-        </div>
-      </div>
-
-      <!-- Right Header Actions -->
-      <div class="flex items-center gap-3 shrink-0">
-        <!-- Date Badge -->
-        <span class="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100/80 border border-slate-200/60 text-[11px] font-medium text-slate-600">
-          <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
-          <span id="current-date">Jumat, 18 Sep 2026</span>
-        </span>
-
-        <!-- Admin Profile -->
-        <div class="flex items-center gap-2 pl-1">
-          <div class="relative">
-            <div class="w-8 h-8 rounded-full bg-teal-800 text-white font-semibold text-xs flex items-center justify-center ring-2 ring-teal-800/20">
-              {{ $userInitials ?? 'AD' }}
-            </div>
-            <span class="absolute bottom-0 right-0 w-2 h-2 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <div class="hidden sm:block text-left">
-            <p class="text-xs font-bold text-slate-800 leading-none">{{ $userName ?? 'Admin Dinkes' }}</p>
-            <p class="text-[10px] text-slate-400 font-medium leading-none mt-0.5">{{ $userRole ?? 'Kab. Jember' }}</p>
-          </div>
-        </div>
-      </div>
-    </header>
+    <!-- Header Component -->
+    <x-admin.header searchPlaceholder="Cari data pengguna, resep MPASI..." />
 
     <!-- Main Content Canvas (16:9 Screen Fit with Zero Vertical Overflow) -->
     <main class="flex-1 overflow-y-auto md:overflow-hidden p-3.5 sm:p-5 flex flex-col gap-3.5 max-w-[1920px] w-full mx-auto">
@@ -325,46 +182,46 @@
                   ['title' => 'Sup Bola Ikan Tenggiri Sayur', 'subtitle' => 'Pangan keluarga padat nutrisi', 'kategori' => '12-23 Bulan', 'tekstur' => 'Menu Keluarga', 'color' => 'emerald'],
                   ['title' => 'Purée Hati Sapi & Labu Kuning', 'subtitle' => 'Tinggi vitamin A & zat besi', 'kategori' => '6-8 Bulan', 'tekstur' => 'Lumat Saring', 'color' => 'blue']
                 ] as $resep)
-                <tr class="hover:bg-teal-50/40 transition-colors group">
-                  <td class="py-2.5 px-4 font-medium text-slate-900">
-                    <div class="flex items-center gap-2">
-                      <div class="w-6.5 h-6.5 rounded-md bg-teal-50 text-teal-800 flex items-center justify-center shrink-0">
-                        <i data-lucide="utensils" class="w-3 h-3"></i>
+                  <tr class="hover:bg-teal-50/40 transition-colors group">
+                    <td class="py-2.5 px-4 font-medium text-slate-900">
+                      <div class="flex items-center gap-2">
+                        <div class="w-6.5 h-6.5 rounded-md bg-teal-50 text-teal-800 flex items-center justify-center shrink-0">
+                          <i data-lucide="utensils" class="w-3 h-3"></i>
+                        </div>
+                        <div>
+                          <span class="block text-xs font-semibold text-slate-800">{{ $resep['title'] ?? $resep->nama_resep }}</span>
+                          <span class="block text-[10px] text-slate-400">{{ $resep['subtitle'] ?? $resep->deskripsi_singkat }}</span>
+                        </div>
                       </div>
-                      <div>
-                        <span class="block text-xs font-semibold text-slate-800">{{ $resep['title'] ?? $resep->nama_resep }}</span>
-                        <span class="block text-[10px] text-slate-400">{{ $resep['subtitle'] ?? $resep->deskripsi_singkat }}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="py-2.5 px-3">
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200/60">
-                      {{ $resep['kategori'] ?? $resep->kategori_usia }}
-                    </span>
-                  </td>
-                  <td class="py-2.5 px-3 text-[11px] text-slate-600">
-                    <span class="inline-flex items-center gap-1.5">
-                      <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                      {{ $resep['tekstur'] ?? $resep->tekstur }}
-                    </span>
-                  </td>
-                  <td class="py-2.5 px-4 text-right whitespace-nowrap">
-                    <div class="inline-flex items-center gap-1">
-                            <!--tombol edit-->
+                    </td>
+                    <td class="py-2.5 px-3">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200/60">
+                        {{ $resep['kategori'] ?? $resep->kategori_usia }}
+                      </span>
+                    </td>
+                    <td class="py-2.5 px-3 text-[11px] text-slate-600">
+                      <span class="inline-flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                        {{ $resep['tekstur'] ?? $resep->tekstur }}
+                      </span>
+                    </td>
+                    <td class="py-2.5 px-4 text-right whitespace-nowrap">
+                      <div class="inline-flex items-center gap-1">
+                        <!-- tombol edit -->
                         <button class="p-1 text-slate-400 hover:text-teal-800 hover:bg-white rounded transition-colors" title="Edit">
-                            <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                          <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                         </button>
-                            <!--tombol hapus-->
+                        <!-- tombol hapus -->
                         <button class="p-1 text-slate-400 hover:text-red-600 hover:bg-white rounded transition-colors" title="Hapus">
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                         </button>
-                    </div>
-                  </td>
-                </tr>
+                      </div>
+                    </td>
+                  </tr>
                 @empty
-                <tr>
-                  <td colspan="4" class="py-4 text-center text-slate-400 text-xs">Belum ada data resep MPASI.</td>
-                </tr>
+                  <tr>
+                    <td colspan="4" class="py-4 text-center text-slate-400 text-xs">Belum ada data resep MPASI.</td>
+                  </tr>
                 @endforelse
 
               </tbody>
@@ -420,39 +277,39 @@
                   ['initial' => 'C', 'nama' => 'Cantika Dewi', 'usia' => '19 Bln', 'status' => 'Normal', 'waktu' => 'Kemarin', 'type' => 'emerald'],
                   ['initial' => 'D', 'nama' => 'Danendra Rama', 'usia' => '7 Bln', 'status' => 'Normal', 'waktu' => 'Kemarin', 'type' => 'emerald']
                 ] as $log)
-                <tr class="hover:bg-teal-50/40 transition-colors">
-                  <td class="py-2.5 px-4 font-medium text-slate-900">
-                    <div class="flex items-center gap-2">
-                      <div class="w-6 h-6 rounded-full bg-slate-100 text-slate-700 font-bold text-[10px] flex items-center justify-center">
-                        {{ $log['initial'] ?? strtoupper(substr($log->nama_anak ?? 'A', 0, 1)) }}
+                  <tr class="hover:bg-teal-50/40 transition-colors">
+                    <td class="py-2.5 px-4 font-medium text-slate-900">
+                      <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-full bg-slate-100 text-slate-700 font-bold text-[10px] flex items-center justify-center">
+                          {{ $log['initial'] ?? strtoupper(substr($log->nama_anak ?? 'A', 0, 1)) }}
+                        </div>
+                        <div>
+                          <span class="block text-xs font-semibold text-slate-800">{{ $log['nama'] ?? $log->nama_anak }}</span>
+                        </div>
                       </div>
-                      <div>
-                        <span class="block text-xs font-semibold text-slate-800">{{ $log['nama'] ?? $log->nama_anak }}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="py-2.5 px-2 text-[11px] font-medium text-slate-600">{{ $log['usia'] ?? $log->usia }}</td>
-                  <td class="py-2.5 px-3">
-                    @if(($log['type'] ?? $log->status_type) == 'emerald' || ($log['status'] ?? '') == 'Normal')
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Normal
-                    </span>
-                    @elseif(($log['type'] ?? $log->status_type) == 'red' || ($log['status'] ?? '') == 'Stunting')
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-100 text-red-800 border border-red-200">
-                      <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span> Stunting
-                    </span>
-                    @else
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 text-amber-900 border border-amber-200">
-                      <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> {{ $log['status'] ?? 'Wasting' }}
-                    </span>
-                    @endif
-                  </td>
-                  <td class="py-2.5 px-4 text-right text-[10px] text-slate-400 whitespace-nowrap">{{ $log['waktu'] ?? $log->created_at }}</td>
-                </tr>
+                    </td>
+                    <td class="py-2.5 px-2 text-[11px] font-medium text-slate-600">{{ $log['usia'] ?? $log->usia }}</td>
+                    <td class="py-2.5 px-3">
+                      @if(($log['type'] ?? $log->status_type) == 'emerald' || ($log['status'] ?? '') == 'Normal')
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                          <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Normal
+                        </span>
+                      @elseif(($log['type'] ?? $log->status_type) == 'red' || ($log['status'] ?? '') == 'Stunting')
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-100 text-red-800 border border-red-200">
+                          <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span> Stunting
+                        </span>
+                      @else
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 text-amber-900 border border-amber-200">
+                          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> {{ $log['status'] ?? 'Wasting' }}
+                        </span>
+                      @endif
+                    </td>
+                    <td class="py-2.5 px-4 text-right text-[10px] text-slate-400 whitespace-nowrap">{{ $log['waktu'] ?? $log->created_at }}</td>
+                  </tr>
                 @empty
-                <tr>
-                  <td colspan="4" class="py-4 text-center text-slate-400 text-xs">Belum ada riwayat pemeriksaan.</td>
-                </tr>
+                  <tr>
+                    <td colspan="4" class="py-4 text-center text-slate-400 text-xs">Belum ada riwayat pemeriksaan.</td>
+                  </tr>
                 @endforelse
 
               </tbody>
@@ -492,10 +349,10 @@
       if (isClosed) {
         sidebar.classList.remove('-translate-x-full');
         overlay.classList.remove('hidden');
-        } else {
+      } else {
         sidebar.classList.add('-translate-x-full');
         overlay.classList.add('hidden');
-    }
+      }
     }
 
     // format tanggal
@@ -503,9 +360,9 @@
     const today = new Date().toLocaleDateString('id-ID', dateOptions);
     const dateElement = document.getElementById('current-date');
     if (dateElement) {
-        dateElement.innerText = today;
+      dateElement.innerText = today;
     }
-    </script>
+  </script>
 
 </body>
 </html>

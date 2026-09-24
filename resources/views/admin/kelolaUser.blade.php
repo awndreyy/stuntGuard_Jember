@@ -13,8 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- alpine js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -57,201 +55,59 @@
         }
     </style>
 </head>
-<body x-data="userForm()" class="bg-slate-50 text-slate-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
+<body class="bg-slate-50 text-slate-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
 
-    <!-- Mobile Overlay -->
-    <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden md:hidden transition-opacity"></div>
-
-    <!-- Left Sidebar (Fixed / Sticky 16:9 Widescreen Sidebar) -->
-    <aside id="sidebar" class="fixed md:sticky top-0 h-screen w-64 bg-white border-r border-slate-200 z-40 flex flex-col justify-between transition-transform duration-300 ease-in-out -translate-x-full md:translate-x-0 shrink-0 shadow-xs">
-        <div class="flex flex-col h-full">
-
-            <!-- Top Brand Logo Area -->
-            <div class="h-16 px-5 border-b border-slate-100 flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-teal-800 text-white flex items-center justify-center shadow-sm shadow-teal-900/20">
-                    <i data-lucide="shield-check" class="w-5 h-5 stroke-[2.2]"></i>
-                </div>
-                <div>
-                    <div class="flex items-center gap-1.5">
-                    <span class="font-bold text-base tracking-tight text-teal-800">StuntGuard</span>
-                    <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-teal-50 text-teal-700 border border-teal-200/60">JEMBER</span>
-                    </div>
-                    <p class="text-[10px] text-slate-400 font-medium leading-none mt-0.5">Monitoring Gizi & MPASI</p>
-                </div>
-                </div>
-                <!-- Close button for mobile -->
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-slate-600 p-1 rounded-lg">
-                <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <!-- Navigation Menu -->
-            <div class="flex-1 overflow-y-auto px-3.5 py-4 space-y-5">
-
-                <!-- Group 1: MAIN -->
-                <div>
-                <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Main</span>
-                    <nav class="mt-1.5 space-y-1">
-                        <a href="{{ url('/') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-                        <i data-lucide="layout-dashboard" class="w-4 h-4 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-                            <span class="text-xs font-semibold">Dashboard Overview</span>
-                        </a>
-                    </nav>
-                </div>
-
-                <!-- Group 2: MANAJEMEN KONTEN -->
-                <div>
-                <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Manajemen Konten</span>
-                <nav class="mt-1.5 space-y-1">
-                    <!-- Kelola Informasi -->
-                    <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-                    <i data-lucide="book-open" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-                    <div class="flex-1">
-                        <span class="block text-xs font-semibold">Kelola Informasi</span>
-                        <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Edukasi & Trimester</span>
-                    </div>
-                    </a>
-                    <!-- Kelola MPASI -->
-                    <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-                    <i data-lucide="utensils-crossed" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-                    <div class="flex-1">
-                        <span class="block text-xs font-semibold">Kelola MPASI</span>
-                        <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Resep 6-23 Bulan</span>
-                    </div>
-                    </a>
-                </nav>
-            </div>
-
-            <!-- Group 3: PENGATURAN SISTEM -->
-            <div>
-                <span class="px-2.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Pengaturan Sistem</span>
-                <nav class="mt-1.5 space-y-1">
-                    <!-- Kalkulator Gizi -->
-                    <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:text-teal-800 hover:bg-slate-50 transition-colors">
-                    <i data-lucide="calculator" class="w-4 h-4 mt-0.5 text-slate-400 group-hover:text-teal-800 transition-colors"></i>
-                    <div class="flex-1">
-                        <span class="block text-xs font-semibold">Kalkulator Gizi</span>
-                        <span class="block text-[10px] text-slate-400 font-normal leading-tight mt-0.5">Parameter WHO</span>
-                    </div>
-                    </a>
-                    <!-- Kelola User (Active) -->
-                    <a href="{{ url('/kelolaUser') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl bg-teal-800 text-white shadow-sm shadow-teal-900/15 transition-all">
-                    <i data-lucide="users" class="w-4 h-4 mt-0.5 text-teal-100"></i>
-                    <div class="flex-1">
-                        <span class="block text-xs font-semibold">Kelola User</span>
-                        <span class="block text-[10px] text-teal-200 font-normal leading-tight mt-0.5">Pengguna & Akses</span>
-                    </div>
-                    </a>
-                </nav>
-            </div>
-        </div>
-
-        <!-- Footer Info Box inside Sidebar -->
-        {{-- <div class="p-3 border-t border-slate-100 shrink-0">
-            <div class="bg-teal-50/80 border border-teal-100 rounded-xl p-2.5 flex items-center gap-2.5">
-            <div class="w-7 h-7 rounded-lg bg-teal-800/10 text-teal-800 flex items-center justify-center shrink-0">
-                <i data-lucide="activity" class="w-3.5 h-3.5"></i>
-            </div>
-            <div class="min-w-0">
-                <div class="flex items-center gap-1.5">
-                <span class="text-[11px] font-semibold text-teal-900">Wilayah Jember</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                </div>
-                <p class="text-[10px] text-teal-700/80 truncate">Sinkron Posyandu Aktif</p>
-            </div>
-            </div>
-        </div> --}}
-    </div>
-    </aside>
+    <!-- Sidebar Component -->
+    <x-admin.sidebar />
 
     <!-- Main Content Wrapper (16:9 Full Viewport Height Container) -->
     <div class="flex-1 flex flex-col h-screen min-w-0 overflow-hidden">
 
-    <!-- Header (Compact 56px Widescreen Header) -->
-    <header class="h-14 bg-white border-b border-slate-200 sticky top-0 z-20 px-4 sm:px-6 flex items-center justify-between gap-4 shrink-0">
-
-      <!-- Left: Mobile Toggle + Title + Search -->
-      <div class="flex items-center gap-3 flex-1 max-w-2xl">
-        <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded-lg text-slate-500 hover:text-teal-800 hover:bg-slate-100 focus:outline-none">
-          <i data-lucide="menu" class="w-5 h-5"></i>
-        </button>
-
-        <!-- Search Input -->
-        <div class="relative w-full max-w-md">
-          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-            <i data-lucide="search" class="w-4 h-4"></i>
-          </span>
-          <input type="text" placeholder="Cari data pengguna, nama, NIK..." class="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-800/20 focus:border-teal-800 focus:bg-white transition-all">
-        </div>
-      </div>
-
-      <!-- Right Header Actions -->
-      <div class="flex items-center gap-3 shrink-0">
-        <!-- Date Badge -->
-        <span class="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100/80 border border-slate-200/60 text-[11px] font-medium text-slate-600">
-          <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
-          <span id="current-date">Jumat, 18 Sep 2026</span>
-        </span>
-
-        <!-- Admin Profile -->
-        <div class="flex items-center gap-2 pl-1">
-          <div class="relative">
-            <div class="w-8 h-8 rounded-full bg-teal-800 text-white font-semibold text-xs flex items-center justify-center ring-2 ring-teal-800/20">
-              {{ $userInitials ?? 'AD' }}
-            </div>
-            <span class="absolute bottom-0 right-0 w-2 h-2 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <div class="hidden sm:block text-left">
-            <p class="text-xs font-bold text-slate-800 leading-none">{{ $userName ?? 'Admin Dinkes' }}</p>
-            <p class="text-[10px] text-slate-400 font-medium leading-none mt-0.5">{{ $userRole ?? 'Kab. Jember' }}</p>
-          </div>
-        </div>
-      </div>
-    </header>
+    <!-- Header Component -->
+    <x-admin.header searchPlaceholder="Cari data pengguna, nama, NIK..." />
 
     <!-- Main Content Canvas (16:9 Screen Fit with Zero Vertical Overflow) -->
     <main class="flex-1 overflow-y-auto md:overflow-hidden p-3.5 sm:p-5 flex flex-col gap-3.5 max-w-[1920px] w-full mx-auto">
 
-      <!-- Top Row: Welcome & Status Bar -->
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 shrink-0">
-        <div>
-          <h1 class="text-lg sm:text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-            Kelola User
-          </h1>
-          <p class="text-xs text-slate-500 mt-0.5">
-            Manajemen data pengguna aplikasi, kader posyandu, dan masyarakat.
-          </p>
+        <!-- Top Row: Welcome & Status Bar -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 shrink-0">
+            <div>
+            <h1 class="text-lg sm:text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+                Kelola User
+            </h1>
+            <p class="text-xs text-slate-500 mt-0.5">
+                Manajemen data pengguna aplikasi, kader posyandu, dan masyarakat.
+            </p>
+            </div>
+            {{-- Tombol Tambah User --}}
+            <button onclick="tambahData()" class="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm cursor-pointer">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Tambah User Baru</span>
+            </button>
         </div>
-        {{-- Tombol Tambah User --}}
-        <button @click="tambahData()" class="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          <span>Tambah User Baru</span>
-        </button>
-      </div>
 
       <!-- User Management Table Section -->
-      <section class="flex-1 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col min-h-0 overflow-hidden">
+        <section class="flex-1 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col min-h-0 overflow-hidden">
 
         <!-- Card Header with Filters -->
         <div class="px-4 py-3 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 shrink-0">
-          <div class="flex items-center gap-2">
-            <div class="w-7 h-7 rounded-lg bg-teal-50 text-teal-800 flex items-center justify-center">
-              <i data-lucide="users" class="w-4 h-4"></i>
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-teal-50 text-teal-800 flex items-center justify-center">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                </div>
+                <div>
+                <h2 class="text-sm font-bold text-slate-900">Daftar Pengguna</h2>
+                </div>
             </div>
-            <div>
-              <h2 class="text-sm font-bold text-slate-900">Daftar Pengguna</h2>
-            </div>
-          </div>
 
-          <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2">
             <!-- Filter Tabs -->
-            <div class="hidden sm:flex items-center bg-slate-100/80 p-0.5 rounded-lg text-[11px] font-medium text-slate-600">
-              <button class="px-2.5 py-1 rounded-md bg-white text-teal-900 shadow-2xs font-semibold">Semua</button>
-              <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Admin</button>
-              <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Orangtua</button>
+                <div class="hidden sm:flex items-center bg-slate-100/80 p-0.5 rounded-lg text-[11px] font-medium text-slate-600">
+                    <button class="px-2.5 py-1 rounded-md bg-white text-teal-900 shadow-2xs font-semibold">Semua</button>
+                    <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Admin</button>
+                    <button class="px-2.5 py-1 rounded-md hover:text-slate-900 transition-colors">Orangtua</button>
+                </div>
             </div>
-        </div>
         </div>
 
         <!-- Data Table Container -->
@@ -295,13 +151,13 @@
                         <td class="py-3 px-4 text-center whitespace-nowrap">
                             <!-- Tombol Aksi -->
                             <div class="inline-flex items-center justify-center gap-1.5">
-                                <button @click="editData({{ $user }})" class="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors" title="Edit User">
+                                <button type="button" onclick="editData(@js($user))" class="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors cursor-pointer" title="Edit User">
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </button>
                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin mau menghapus akun {{ $user->name }} ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Hapus User">
+                                    <button type="submit" class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer" title="Hapus User">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
                                 </form>
@@ -362,41 +218,100 @@
 </div>
 
 <!-- Modal Tambah User Baru  -->
-@include('components.modalTambahUser')
+@include('components.admin.modalTambahUser')
 
 <script>
-    // Form untuk user
-    function userForm() {
-        return {
-            showModal: false,
-            isEdit: false,
-            formAction: '{{ route('users.store') }}', // URL bawaan untuk tambah data
-            formMethod: 'POST',
-            formData: {
-                name: '', nik: '', email: '', role: ''
-            },
-            // Fungsi saat tombol "Tambah User Baru" ditekan
-            tambahData() {
-                this.isEdit = false;
-                this.formAction = '{{ route('users.store') }}';
-                this.formMethod = 'POST';
-                this.formData = { name: '', nik: '', email: '', role: '' };
-                this.showModal = true;
-            },
-            // Fungsi saat ikon "Pensil" di tabel ditekan
-            editData(user) {
-                this.isEdit = true;
-                this.formAction = `/users/${user.id}`; // Arahkan URL ke spesifik ID user
-                this.formMethod = 'PUT'; // Metode wajib Laravel untuk Update
-                this.formData = {
-                    name: user.name,
-                    nik: user.nik,
-                    email: user.email,
-                    role: user.role
-                };
-                this.showModal = true;
-            }
-        };
+    const storeUrl = '{{ route('users.store') }}';
+
+    function openUserModal() {
+        const modal = document.getElementById('userModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+    }
+
+    function closeUserModal() {
+        const modal = document.getElementById('userModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
+
+    // Menutup modal jika klik di luar box container
+    document.addEventListener('DOMContentLoaded', function() {
+        const userModal = document.getElementById('userModal');
+        const modalContainer = document.getElementById('modalContainer');
+        if (userModal && modalContainer) {
+            userModal.addEventListener('click', function(e) {
+                if (!modalContainer.contains(e.target)) {
+                    closeUserModal();
+                }
+            });
+        }
+    });
+
+    // Fungsi saat tombol "Tambah User Baru" ditekan
+    function tambahData() {
+        const form = document.getElementById('userFormElement');
+        const methodInput = document.getElementById('formMethodInput');
+        const modalTitle = document.getElementById('modalTitle');
+        const submitBtnText = document.getElementById('submitBtnText');
+        const passwordInput = document.getElementById('inputPassword');
+        const passwordHint = document.getElementById('passwordHint');
+        const passwordStar = document.getElementById('passwordRequiredStar');
+
+        if (form) {
+            form.action = storeUrl;
+            form.reset();
+        }
+        if (methodInput) methodInput.value = 'POST';
+        if (modalTitle) modalTitle.innerText = 'Tambah User Baru';
+        if (submitBtnText) submitBtnText.innerText = 'Simpan User';
+
+        if (passwordInput) passwordInput.required = true;
+        if (passwordHint) passwordHint.classList.add('hidden');
+        if (passwordStar) passwordStar.classList.remove('hidden');
+
+        document.getElementById('inputName').value = '';
+        document.getElementById('inputNik').value = '';
+        document.getElementById('inputEmail').value = '';
+        document.getElementById('selectRole').value = '';
+        document.getElementById('inputPassword').value = '';
+
+        openUserModal();
+    }
+
+    // Fungsi saat ikon "Pensil" di tabel ditekan
+    function editData(user) {
+        const form = document.getElementById('userFormElement');
+        const methodInput = document.getElementById('formMethodInput');
+        const modalTitle = document.getElementById('modalTitle');
+        const submitBtnText = document.getElementById('submitBtnText');
+        const passwordInput = document.getElementById('inputPassword');
+        const passwordHint = document.getElementById('passwordHint');
+        const passwordStar = document.getElementById('passwordRequiredStar');
+
+        if (form) {
+            form.action = `/users/${user.id}`;
+        }
+        if (methodInput) methodInput.value = 'PUT';
+        if (modalTitle) modalTitle.innerText = 'Edit Data User';
+        if (submitBtnText) submitBtnText.innerText = 'Update User';
+
+        // Isi form data
+        document.getElementById('inputName').value = user.name || '';
+        document.getElementById('inputNik').value = user.nik || '';
+        document.getElementById('inputEmail').value = user.email || '';
+        document.getElementById('selectRole').value = user.role || '';
+        document.getElementById('inputPassword').value = '';
+
+        if (passwordInput) passwordInput.required = false;
+        if (passwordHint) passwordHint.classList.remove('hidden');
+        if (passwordStar) passwordStar.classList.add('hidden');
+
+        openUserModal();
     }
 
     // Initialize Lucide Icons

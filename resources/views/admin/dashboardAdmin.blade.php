@@ -132,7 +132,7 @@
         <section class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3.5 min-h-0">
 
             <!-- Left Panel: Kelola Resep MPASI Terbaru (lg:col-span-7) -->
-            <div class="lg:col-span-7 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col min-h-0 overflow-hidden">
+            <div class="lg:col-span-7 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col min-h-[320px] lg:min-h-0 overflow-hidden">
 
                 <!-- Card Header with Category Tabs -->
                 <div class="px-4 py-3 border-b border-slate-100 flex flex-wrap items-center justify-between gap-2 shrink-0">
@@ -163,14 +163,14 @@
                 </div>
 
                 <!-- Data Table Container -->
-                <div class="flex-1 overflow-y-auto min-h-0">
-                    <table class="w-full text-left border-collapse">
+                <div class="flex-1 overflow-x-auto overflow-y-auto min-h-0">
+                    <table class="w-full text-left border-collapse min-w-[500px]">
                         <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-xs border-b border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-wider z-10">
                             <tr>
-                                <th class="py-2.5 px-4">Judul Resep</th>
-                                <th class="py-2.5 px-3">Kategori</th>
-                                <th class="py-2.5 px-3">Tekstur</th>
-                                <th class="py-2.5 px-4 text-right">Aksi</th>
+                                <th class="py-2.5 px-4 whitespace-nowrap">Judul Resep</th>
+                                <th class="py-2.5 px-3 whitespace-nowrap">Kategori</th>
+                                <th class="py-2.5 px-3 whitespace-nowrap">Tekstur</th>
+                                <th class="py-2.5 px-4 text-right whitespace-nowrap">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 text-xs">
@@ -183,7 +183,7 @@
                             ['title' => 'Purée Hati Sapi & Labu Kuning', 'subtitle' => 'Tinggi vitamin A & zat besi', 'kategori' => '6-8 Bulan', 'tekstur' => 'Lumat Saring', 'color' => 'blue']
                             ] as $resep)
                         <tr class="hover:bg-teal-50/40 transition-colors group">
-                            <td class="py-2.5 px-4 font-medium text-slate-900">
+                            <td class="py-2.5 px-4 font-medium text-slate-900 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
                                     <div class="w-6.5 h-6.5 rounded-md bg-teal-50 text-teal-800 flex items-center justify-center shrink-0">
                                         <i data-lucide="utensils" class="w-3 h-3"></i>
@@ -194,12 +194,12 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="py-2.5 px-3">
+                            <td class="py-2.5 px-3 whitespace-nowrap">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200/60">
                                     {{ $resep['kategori'] ?? $resep->kategori_usia }}
                                 </span>
                             </td>
-                            <td class="py-2.5 px-3 text-[11px] text-slate-600">
+                            <td class="py-2.5 px-3 text-[11px] text-slate-600 whitespace-nowrap">
                                 <span class="inline-flex items-center gap-1.5">
                                     <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
                                     {{ $resep['tekstur'] ?? $resep->tekstur }}
@@ -208,11 +208,11 @@
                             <td class="py-2.5 px-4 text-right whitespace-nowrap">
                                 <div class="inline-flex items-center gap-1">
                                     <!-- tombol edit -->
-                                    <button class="p-1 text-slate-400 hover:text-teal-800 hover:bg-white rounded transition-colors" title="Edit">
+                                    <button class="p-1 text-slate-400 hover:text-teal-800 hover:bg-white rounded transition-colors cursor-pointer" title="Edit">
                                     <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                                     </button>
                                     <!-- tombol hapus -->
-                                    <button class="p-1 text-slate-400 hover:text-red-600 hover:bg-white rounded transition-colors" title="Hapus">
+                                    <button class="p-1 text-slate-400 hover:text-red-600 hover:bg-white rounded transition-colors cursor-pointer" title="Hapus">
                                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                     </button>
                                 </div>
@@ -239,7 +239,7 @@
             </div>
 
             <!-- Right Panel: Log Riwayat Kalkulator Gizi Pengguna (lg:col-span-5) -->
-            <div class="lg:col-span-5 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col min-h-0 overflow-hidden">
+            <div class="lg:col-span-5 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col min-h-[300px] lg:min-h-0 overflow-hidden">
 
             <!-- Card Header -->
             <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between shrink-0">
@@ -258,14 +258,14 @@
             </div>
 
             <!-- Table Container -->
-            <div class="flex-1 overflow-y-auto min-h-0">
-                <table class="w-full text-left border-collapse">
+            <div class="flex-1 overflow-x-auto overflow-y-auto min-h-0">
+                <table class="w-full text-left border-collapse min-w-[380px]">
                 <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-xs border-b border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-wider z-10">
                     <tr>
-                    <th class="py-2.5 px-4">Nama Anak</th>
-                    <th class="py-2.5 px-2">Usia</th>
-                    <th class="py-2.5 px-3">Status Gizi</th>
-                    <th class="py-2.5 px-4 text-right">Waktu</th>
+                    <th class="py-2.5 px-4 whitespace-nowrap">Nama Anak</th>
+                    <th class="py-2.5 px-2 whitespace-nowrap">Usia</th>
+                    <th class="py-2.5 px-3 whitespace-nowrap">Status Gizi</th>
+                    <th class="py-2.5 px-4 text-right whitespace-nowrap">Waktu</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 text-xs">
@@ -278,9 +278,9 @@
                     ['initial' => 'D', 'nama' => 'Danendra Rama', 'usia' => '7 Bln', 'status' => 'Normal', 'waktu' => 'Kemarin', 'type' => 'emerald']
                     ] as $log)
                     <tr class="hover:bg-teal-50/40 transition-colors">
-                        <td class="py-2.5 px-4 font-medium text-slate-900">
+                        <td class="py-2.5 px-4 font-medium text-slate-900 whitespace-nowrap">
                         <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-full bg-slate-100 text-slate-700 font-bold text-[10px] flex items-center justify-center">
+                            <div class="w-6 h-6 rounded-full bg-slate-100 text-slate-700 font-bold text-[10px] flex items-center justify-center shrink-0">
                             {{ $log['initial'] ?? strtoupper(substr($log->nama_anak ?? 'A', 0, 1)) }}
                             </div>
                             <div>
@@ -288,8 +288,8 @@
                             </div>
                         </div>
                         </td>
-                        <td class="py-2.5 px-2 text-[11px] font-medium text-slate-600">{{ $log['usia'] ?? $log->usia }}</td>
-                        <td class="py-2.5 px-3">
+                        <td class="py-2.5 px-2 text-[11px] font-medium text-slate-600 whitespace-nowrap">{{ $log['usia'] ?? $log->usia }}</td>
+                        <td class="py-2.5 px-3 whitespace-nowrap">
                         @if(($log['type'] ?? $log->status_type) == 'emerald' || ($log['status'] ?? '') == 'Normal')
                             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Normal

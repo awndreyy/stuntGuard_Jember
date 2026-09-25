@@ -80,7 +80,7 @@
             </p>
             </div>
             {{-- Tombol Tambah User --}}
-            <button onclick="tambahData()" class="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm cursor-pointer">
+            <button onclick="tambahData()" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm cursor-pointer w-full sm:w-auto">
             <i data-lucide="plus" class="w-4 h-4"></i>
             <span>Tambah User Baru</span>
             </button>
@@ -111,21 +111,21 @@
         </div>
 
         <!-- Data Table Container -->
-        <div class="flex-1 overflow-y-auto min-h-0">
-            <table class="w-full text-left border-collapse">
+        <div class="flex-1 overflow-x-auto overflow-y-auto min-h-0">
+            <table class="w-full text-left border-collapse min-w-[560px]">
                 <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-xs border-b border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-wider z-10">
                     <tr>
-                        <th class="py-3 px-4">Informasi Pengguna</th>
-                        <th class="py-3 px-4">Kontak</th>
-                        <th class="py-3 px-4">Role / Peran</th>
-                        <th class="py-3 px-4 text-center">Aksi</th>
+                        <th class="py-3 px-4 whitespace-nowrap">Informasi Pengguna</th>
+                        <th class="py-3 px-4 whitespace-nowrap">Kontak</th>
+                        <th class="py-3 px-4 whitespace-nowrap">Role / Peran</th>
+                        <th class="py-3 px-4 text-center whitespace-nowrap">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 text-xs">
                     <!-- Looping data $users dari controller -->
                     @foreach($users as $user)
                     <tr class="hover:bg-teal-50/40 transition-colors group">
-                        <td class="py-3 px-4 font-medium text-slate-900">
+                        <td class="py-3 px-4 font-medium text-slate-900 whitespace-nowrap">
                             <div class="flex items-center gap-3">
                                 <!-- Lingkaran inisial nama -->
                                 <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-800 font-bold text-xs flex items-center justify-center shrink-0">
@@ -138,11 +138,11 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="py-3 px-4">
+                        <td class="py-3 px-4 whitespace-nowrap">
                             <!-- Email asli -->
                             <span class="block text-xs text-slate-700">{{ $user->email }}</span>
                         </td>
-                        <td class="py-3 px-4">
+                        <td class="py-3 px-4 whitespace-nowrap">
                             <!-- Role asli (Masyarakat/Kader/Admin) -->
                             <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200/60">
                                 {{ $user->role }}
@@ -170,8 +170,8 @@
         </div>
 
         <!-- Card Footer (Pagination) -->
-        <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 shrink-0">
-            <span>Menampilkan <strong class="font-semibold text-slate-700">1-4</strong> dari <strong class="font-semibold text-slate-700">{{ $totalUsers ?? '2,450' }}</strong> pengguna</span>
+        <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 shrink-0">
+            <span class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-slate-700">1-4</strong> dari <strong class="font-semibold text-slate-700">{{ $totalUsers ?? '2,450' }}</strong> pengguna</span>
 
             <div class="flex items-center gap-1.5">
             <!-- Previous Button -->

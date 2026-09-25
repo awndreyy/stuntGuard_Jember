@@ -160,6 +160,7 @@
                             <span>Tambah</span>
                         </button>
                     </div>
+                </div>
 
                 <!-- Data Table Container -->
                 <div class="flex-1 overflow-y-auto min-h-0">

@@ -86,7 +86,7 @@
             </button>
         </div>
 
-      <!-- User Management Table Section -->
+        <!-- User Management Table Section -->
         <section class="flex-1 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col min-h-0 overflow-hidden">
 
         <!-- Card Header with Filters -->

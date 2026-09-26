@@ -10,6 +10,8 @@ Route::get('/login', function () {return view('auth.login');})->name('login');
 
 Route::get('/register', function () {return view('auth.register');})->name('register');
 
+Route::get('/dashboardGuest', function () {return view('landing.dashboardGuest');})->name('dashboardGuest');
+
 Route::get('/kelolaUser', [UserController::class, 'index'])->name('users.index');
 
 Route::resource('users', UserController::class);

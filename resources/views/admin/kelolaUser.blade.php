@@ -234,7 +234,7 @@
 
             // Ubah tombol ke mode "Tambah Anak"
             if (btnTambah)      btnTambah.setAttribute('onclick', 'tambahAnak()');
-            if (btnTambahLabel) btnTambahLabel.textContent = 'Tambah Anak';
+            if (btnTambahLabel) btnTambahLabel.textContent = 'Tambah Balita Baru';
             if (btnTambahIcon)  btnTambahIcon.setAttribute('data-lucide', 'baby');
         }
         lucide.createIcons();

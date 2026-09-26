@@ -7,55 +7,36 @@
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <script>
-        tailwind.config = {
-        theme: {
-            extend: {
-            fontFamily: {
-                sans: ['Inter', 'sans-serif'],
-            },
-            colors: {
-                teal: {
-                750: '#0f6157',
-                800: '#115e59',
-                900: '#134e4a',
-                }
-            }
-            }
-        }
-        }
-    </script>
-
     <style>
         body {
-        font-family: 'Inter', sans-serif;
-        -webkit-font-smoothing: antialiased;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
         /* Custom subtle scrollbar for tables & sidebars */
         ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
+            width: 5px;
+            height: 5px;
         }
         ::-webkit-scrollbar-track {
-        background: #f1f5f9;
+            background: #f5f5f4;
         }
         ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 9999px;
+            background: #d6d3d1;
+            border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
+            background: #a8a29e;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
+<body class="bg-stone-50 text-stone-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
 
     <!-- Sidebar Component -->
     <x-admin.sidebar />
@@ -72,12 +53,12 @@
         <!-- Top Row: Welcome & Status Bar -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 shrink-0">
             <div>
-                <h1 class="text-lg sm:text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+                <h1 class="text-lg sm:text-xl font-bold tracking-tight text-stone-900 flex items-center gap-2">
                     Kelola User
                 </h1>
             </div>
             {{-- Tombol Tambah (teks berubah sesuai tab aktif) --}}
-            <button id="btn-tambah" onclick="tambahData()" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm cursor-pointer w-full sm:w-auto">
+            <button id="btn-tambah" onclick="tambahData()" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm cursor-pointer w-full sm:w-auto">
                 <i id="btn-tambah-icon" data-lucide="plus" class="w-4 h-4"></i>
                 <span id="btn-tambah-label">Tambah User Baru</span>
             </button>
@@ -87,14 +68,14 @@
         @include('admin.partials.tab-switcher')
 
         {{-- Table Section --}}
-        <section class="flex-1 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col min-h-0 overflow-hidden">
+        <section class="flex-1 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col min-h-0 overflow-hidden">
             @include('admin.partials.table-users')
             @include('admin.partials.table-anak')
         </section>
 
     <!-- Footer -->
     <footer class="text-center py-1">
-        <span class="text-[10px] text-emerald-800 hidden xl:inline text-center">© 2026 StuntGuard Jember</span>
+        <span class="text-[10px] text-rose-700/80 hidden xl:inline text-center">© 2026 StuntGuard Jember</span>
     </footer>
 
     </main>
@@ -204,8 +185,8 @@
         const btnUser = document.getElementById('tab-btn-user');
         const btnAnak = document.getElementById('tab-btn-anak');
 
-        const activeTabCls   = ['text-teal-900', 'font-semibold', 'border-teal-800'];
-        const inactiveTabCls = ['text-slate-500', 'font-medium',  'border-transparent'];
+        const activeTabCls   = ['text-rose-700', 'font-semibold', 'border-rose-700'];
+        const inactiveTabCls = ['text-stone-500', 'font-medium',  'border-transparent'];
 
         // Tombol Tambah
         const btnTambah      = document.getElementById('btn-tambah');
@@ -223,7 +204,7 @@
             // Reset tombol ke mode "Tambah User"
             if (btnTambah)      btnTambah.setAttribute('onclick', 'tambahData()');
             if (btnTambahLabel) btnTambahLabel.textContent = 'Tambah User Baru';
-            if (btnTambahIcon)  btnTambahIcon.setAttribute('data-lucide', 'user-plus');
+            if (btnTambahIcon)  btnTambahIcon.setAttribute('data-lucide', 'plus');
         } else {
             tabAnak.classList.remove('hidden');
             tabUser.classList.add('hidden');

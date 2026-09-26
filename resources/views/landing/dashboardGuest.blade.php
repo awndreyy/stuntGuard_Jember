@@ -40,9 +40,9 @@
             </div>
 
             <!-- Headline -->
-            <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 leading-tight tracking-tight">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 leading-tight tracking-tight">
               Pantau Tumbuh Kembang &amp; Gizi Si Kecil dengan <span class="text-rose-700 italic font-bold">Kasih Sayang</span>
-            </h3>
+            </h1>
 
             <!-- Subtitle -->
             <p class="text-base sm:text-lg text-stone-600 max-w-2xl">

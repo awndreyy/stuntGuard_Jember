@@ -330,7 +330,7 @@
 
         <!-- Footer -->
         <footer class="text-center py-1">
-            <span class="text-[10px] text-emerald-800 hidden xl:inline text-center">© 2026 StuntGuard Jember</span>
+            <span class="text-[10px] text-rose-700/80 hidden xl:inline text-center">© 2026 StuntGuard Jember</span>
         </footer>
 
         </main>

@@ -61,7 +61,7 @@
       <div class="absolute bottom-0 left-0 -ml-8 -mb-8 w-24 h-24 rounded-full bg-emerald-200/20 blur-xl"></div>
 
       <!-- Tombol Kembali -->
-      <a href="{{ url('/dashboardGuest') }}" class="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-20 inline-flex items-center gap-1.5 text-xs font-semibold text-stone-600 hover:text-rose-700 active:scale-95 bg-white/90 hover:bg-white backdrop-blur-xs px-2.5 py-1.5 rounded-lg border border-rose-200/60 shadow-sm transition-all" title="Kembali ke halaman sebelumnya">
+      <a href="{{ url('/') }}" class="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-20 inline-flex items-center gap-1.5 text-xs font-semibold text-stone-600 hover:text-rose-700 active:scale-95 bg-white/90 hover:bg-white backdrop-blur-xs px-2.5 py-1.5 rounded-lg border border-rose-200/60 shadow-sm transition-all" title="Kembali ke halaman sebelumnya">
         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
         <span>Kembali</span>
       </a>

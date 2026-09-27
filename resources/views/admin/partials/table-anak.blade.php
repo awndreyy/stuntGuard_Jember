@@ -31,28 +31,62 @@
                     <th class="py-3 px-4 whitespace-nowrap">Nama Balita</th>
                     <th class="py-3 px-4 whitespace-nowrap">NIK Anak</th>
                     <th class="py-3 px-4 whitespace-nowrap">Nama Orang Tua/Wali</th>
-                    <th class="py-3 px-4 whitespace-nowrap">Jenis Kelamin</th>
+                    <th class="py-3 px-4 whitespace-nowrap">Jenis Kelamin & Usia</th>
                     <th class="py-3 px-4 text-center whitespace-nowrap">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-stone-100 text-xs">
-                {{-- TODO: ganti dengan @foreach($anaks as $anak) saat data tersedia --}}
-                <tr>
-                    <td colspan="5" class="py-16 text-center text-stone-400">
-                        <div class="flex flex-col items-center gap-2">
-                            <i data-lucide="baby" class="w-10 h-10 text-stone-300"></i>
-                            <span class="text-xs font-semibold text-stone-500">Belum ada data anak/balita</span>
-                            <span class="text-[11px] text-stone-400">Data akan muncul setelah orang tua mendaftarkan balita</span>
-                        </div>
-                    </td>
-                </tr>
+                @if(isset($balita) && count($balita) > 0)
+                    @foreach($balita as $anak)
+                    <tr class="hover:bg-rose-50/40 transition-colors group">
+                        <td class="py-3 px-4 font-medium text-stone-900 whitespace-nowrap">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 font-bold text-xs flex items-center justify-center shrink-0">
+                                    {{ strtoupper(substr($anak->nama_balita, 0, 2)) }}
+                                </div>
+                                <div>
+                                    <span class="block text-xs font-semibold text-stone-800">{{ $anak->nama_balita }}</span>
+                                    <span class="block text-[10px] text-stone-400">Lahir: {{ \Carbon\Carbon::parse($anak->tanggal_lahir)->translatedFormat('d M Y') }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 whitespace-nowrap">
+                            <span class="block text-xs text-stone-700">{{ $anak->nik ?? '-' }}</span>
+                        </td>
+                        <td class="py-3 px-4 whitespace-nowrap">
+                            <span class="block text-xs font-medium text-stone-800">{{ $anak->orangTua->name ?? 'Tidak ada data' }}</span>
+                            <span class="block text-[10px] text-stone-400">NIK: {{ $anak->orangTua->nik ?? '-' }}</span>
+                        </td>
+                        <td class="py-3 px-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold {{ $anak->jenis_kelamin === 'Laki-laki' ? 'bg-blue-50 text-blue-700 border border-blue-200/60' : 'bg-rose-50 text-rose-700 border border-rose-200/60' }}">
+                                {{ $anak->jenis_kelamin }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center whitespace-nowrap">
+                            <div class="inline-flex items-center justify-center gap-1.5">
+                                <button type="button" onclick="editBalita(@js($anak))" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors cursor-pointer" title="Edit Balita">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                </button>
+                                <form action="{{ route('balita.destroy', $anak->id_balita) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin mau menghapus data balita {{ $anak->nama_balita }} ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="p-1.5 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer" title="Hapus Balita">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                @else
+                @endif
             </tbody>
         </table>
     </div>
 
     {{-- Card Footer (Pagination) --}}
     <div class="px-4 py-2.5 bg-stone-50 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500 shrink-0">
-        <span class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-stone-700">0</strong> data anak/balita</span>
+        <span class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-stone-700">{{ isset($balita) ? count($balita) : 0 }}</strong> data anak/balita</span>
 
         <div class="flex items-center gap-1.5">
             <button class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-stone-200 bg-white text-stone-400 text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>

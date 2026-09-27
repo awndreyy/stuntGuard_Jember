@@ -8,9 +8,7 @@
         <!-- Top Brand Logo Area -->
         <div class="h-16 px-5 border-b border-stone-100 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-rose-700 text-white flex items-center justify-center shadow-sm">
-                    <i data-lucide="shield-check" class="w-5 h-5 stroke-[2.2]"></i>
-                </div>
+                <img src="{{ asset('images/logoBesar.png') }}" alt="Logo StuntGuard" class="w-9 h-9 rounded-xl object-cover shadow-sm">
                 <div>
                     <div class="flex items-center gap-1.5">
                         <span class="font-bold text-base tracking-tight text-rose-700">StuntGuard</span>
@@ -79,27 +77,27 @@
                         <i data-lucide="users" class="w-4 h-4 mt-0.5 {{ request()->is('kelolaUser*') ? 'text-rose-100' : 'text-stone-400 group-hover:text-rose-700' }} transition-colors"></i>
                         <div class="flex-1">
                             <span class="block text-xs font-semibold">Kelola User</span>
-                            <span class="block text-[10px] {{ request()->is('kelolaUser*') ? 'text-rose-200' : 'text-stone-400' }} font-normal leading-tight mt-0.5">Pengguna & Akses</span>
+                            <span class="block text-[10px] {{ request()->is('kelolaUser*') ? 'text-rose-200' : 'text-stone-400' }} font-normal leading-tight mt-0.5">Pengguna & Balita</span>
                         </div>
                     </a>
                 </nav>
             </div>
         </div>
 
-        <!-- Footer Info Box inside Sidebar -->
+        <!-- Logout Button Area inside Sidebar -->
         <div class="p-3 border-t border-stone-100 shrink-0">
-            <div class="bg-rose-50/80 border border-rose-100 rounded-xl p-2.5 flex items-center gap-2.5">
-                <div class="w-7 h-7 rounded-lg bg-rose-700/10 text-rose-700 flex items-center justify-center shrink-0">
-                    <i data-lucide="activity" class="w-3.5 h-3.5"></i>
-                </div>
-                <div class="min-w-0">
-                    <div class="flex items-center gap-1.5">
-                        <span class="text-[11px] font-semibold text-rose-900">Wilayah Jember</span>
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <form action="{{ route('logout') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin logout?');">
+                @csrf
+                <button type="submit" class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-stone-600 hover:text-rose-700 hover:bg-rose-50 border border-stone-200/80 hover:border-rose-200 transition-all font-semibold text-xs cursor-pointer group">
+                    <div class="w-7 h-7 rounded-lg bg-stone-100 group-hover:bg-rose-100 text-stone-500 group-hover:text-rose-700 flex items-center justify-center transition-colors shrink-0">
+                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
                     </div>
-                    <p class="text-[10px] text-rose-700/80 truncate">Sinkron Posyandu Aktif</p>
-                </div>
-            </div>
+                    <div class="text-left min-w-0">
+                        <span class="block leading-tight text-xs font-semibold">Logout Akun</span>
+                        <span class="block text-[10px] text-stone-400 group-hover:text-rose-600/70 font-normal leading-tight mt-0.5">Keluar dari sistem</span>
+                    </div>
+                </button>
+            </form>
         </div>
     </div>
 </aside>

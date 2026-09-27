@@ -84,6 +84,9 @@
 <!-- Modal Tambah User Baru  -->
 @include('components.admin.modalTambahUser')
 
+<!-- Modal Tambah Balita Baru -->
+@include('components.admin.modalTambahBalita')
+
 <script>
     const storeUrl = '{{ route('users.store') }}';
 
@@ -144,6 +147,8 @@
         document.getElementById('selectRole').value = '';
         document.getElementById('inputPassword').value = '';
 
+        if (typeof updateModalNikCounter === 'function') updateModalNikCounter();
+
         openUserModal();
     }
 
@@ -170,6 +175,8 @@
         document.getElementById('inputEmail').value = user.email || '';
         document.getElementById('selectRole').value = user.role || '';
         document.getElementById('inputPassword').value = '';
+
+        if (typeof updateModalNikCounter === 'function') updateModalNikCounter();
 
         if (passwordInput) passwordInput.required = false;
         if (passwordHint) passwordHint.classList.remove('hidden');
@@ -219,12 +226,6 @@
             if (btnTambahIcon)  btnTambahIcon.setAttribute('data-lucide', 'baby');
         }
         lucide.createIcons();
-    }
-
-    // Placeholder fungsi tambah anak (implementasi modal terpisah)
-    function tambahAnak() {
-        // TODO: buka modal tambah anak
-        alert('Modal tambah anak belum tersedia.');
     }
 
     // Initialize Lucide Icons

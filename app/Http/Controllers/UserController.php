@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Balita;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\models\User;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -14,8 +15,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest()->get();
-        return view('admin.kelolaUser', compact('users'));
+        $balita = Balita::with('orangTua')->latest()->get();
 
+        return view('admin.kelolaUser', compact('users', 'balita'));
     }
 
     /**
@@ -31,21 +33,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validasi yang di input
         $request->validate([
             'name' => 'required|string|max:30',
-            'nik' => 'required|string|size:16|unique:users,nik',// hanya 16 angka
+            'nik' => 'required|string|size:16|unique:users,nik',
             'email' => 'required|email|unique:users,email',
-            'role'=> 'required|in:Orang Tua,Administrator',
-            'password'=> 'required|min:6',
-            ]);
+            'role' => 'required|in:Orang Tua,Admin',
+            'password' => 'required|min:6',
+        ]);
 
         $user = User::create([
-            'name'=> $request->name,
-            'nik'=> $request->nik,
-            'email'=> $request->email,
-            'role'=> $request->role,
-            'password'=> Hash::make($request->password),
+            'name' => $request->name,
+            'nik' => $request->nik,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect()->back()->with('success', 'User Berhasil Ditambahkan');
@@ -76,11 +77,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'name'=> 'required|string|max:30',
-            'email'=> 'required|email|unique:users,email,'.$id,
+            'name' => 'required|string|max:30',
+            'email' => 'required|email|unique:users,email,'.$id,
         ]);
 
-        // PERBAIKAN: Ubah kata 'update' menjadi 'name'
         $user->name = $request->name;
 
         $user->nik = $request->nik;
@@ -92,15 +92,16 @@ class UserController extends Controller
         }
 
         $user->save();
-        return redirect()->back()->with('success','Data User berhasil diperbarui');
+
+        return redirect()->back()->with('success', 'Data User berhasil diperbarui');
     }
 
     public function destroy(string $id)
     {
-        //cari data user dengan id
+        // cari data user dengan id
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->back()->with('success','Data berhasil dihapus');
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 }

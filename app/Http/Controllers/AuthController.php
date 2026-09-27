@@ -37,10 +37,12 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-            if ($user->role === 'Admin' || $user->role === 'Orang Tua') {
+            if ($user->role === 'Admin') {
                 return redirect()->intended('/dashboard-admin')->with('success', 'Selamat datang '.$user->name);
+            } elseif ($user->role === 'Orang Tua') {
+                return redirect()->intended('/dashboard-user')->with('success', 'Selamat datang '.$user->name);
             }
-        }   
+        }
 
         return back()->withErrors([
             'email' => 'Email/NIK atau password yang Anda masukkan salah.',

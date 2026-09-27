@@ -1,9 +1,9 @@
 {{-- resources/views/admin/partials/table-users.blade.php --}}
 {{-- Tabel Data Pengguna --}}
-<div id="tab-user">
+<div id="tab-user" class="flex-1 flex flex-col min-h-0 h-full">
 
     {{-- Card Header with Filters --}}
-    <div class="px-4 py-3 border-b border-stone-100 flex flex-wrap items-center justify-between gap-3 shrink-0">
+    <div class="px-4 py-3 border-b border-stone-100 flex flex-wrap items-center justify-between gap-3 shrink-0 bg-white">
         <div class="flex items-center gap-2">
             <div class="w-7 h-7 rounded-lg bg-rose-100/70 text-rose-700 flex items-center justify-center">
                 <i data-lucide="users" class="w-4 h-4"></i>
@@ -23,10 +23,10 @@
         </div>
     </div>
 
-    {{-- Data Table --}}
+    {{-- Data Table Container (Scrollable Area) --}}
     <div class="flex-1 overflow-x-auto overflow-y-auto min-h-0">
         <table class="w-full text-left border-collapse min-w-[560px]">
-            <thead class="sticky top-0 bg-stone-50/90 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
+            <thead class="sticky top-0 bg-stone-50 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
                 <tr>
                     <th class="py-3 px-4 whitespace-nowrap">Informasi Pengguna</th>
                     <th class="py-3 px-4 whitespace-nowrap">Kontak</th>
@@ -53,7 +53,7 @@
                         <span class="block text-xs text-stone-700">{{ $user->email }}</span>
                     </td>
                     <td class="py-3 px-4 whitespace-nowrap">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold {{ $user->role === 'Administrator' ? 'bg-rose-100/70 text-rose-900' : 'bg-emerald-100 text-emerald-800' }}">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold {{ $user->role === 'Administrator' || $user->role === 'Admin' ? 'bg-rose-100/70 text-rose-900' : 'bg-emerald-100 text-emerald-800' }}">
                             {{ $user->role }}
                         </span>
                     </td>
@@ -77,8 +77,8 @@
         </table>
     </div>
 
-    {{-- Card Footer (Pagination) --}}
-    <div class="px-4 py-2.5 bg-stone-50 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500 shrink-0">
+    {{-- Card Footer (Fixed Bottom Pagination) --}}
+    <div class="px-4 py-2.5 bg-stone-50 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500 shrink-0 mt-auto">
         <span class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-stone-700">1-{{ count($users) }}</strong> dari <strong class="font-semibold text-stone-700">{{ $totalUsers ?? count($users) }}</strong> pengguna</span>
 
         <div class="flex items-center gap-1.5">

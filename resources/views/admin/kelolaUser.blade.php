@@ -64,6 +64,36 @@
             </button>
         </div>
 
+        {{-- Alert Notifikasi Sukses / Error --}}
+        @if (session('success'))
+            <div class="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl flex items-center justify-between gap-2 shrink-0 shadow-xs">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-700 shrink-0"></i>
+                    <span class="font-medium">{{ session('success') }}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-800 p-1 cursor-pointer">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        @endif
+
+        @if (session('error') || $errors->any())
+            <div class="p-3 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-xl flex items-center justify-between gap-2 shrink-0 shadow-xs">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600 shrink-0"></i>
+                    <div>
+                        <span class="font-semibold block">{{ session('error') ?? 'Gagal menyimpan data!' }}</span>
+                        @if ($errors->any())
+                            <span class="text-[11px] text-rose-700 block mt-0.5">{{ $errors->first() }}</span>
+                        @endif
+                    </div>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-rose-600 hover:text-rose-800 p-1 cursor-pointer">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        @endif
+
         {{-- Tab Switcher --}}
         @include('admin.partials.tab-switcher')
 
@@ -202,7 +232,9 @@
 
         if (tab === 'user') {
             tabUser.classList.remove('hidden');
+            tabUser.classList.add('flex');
             tabAnak.classList.add('hidden');
+            tabAnak.classList.remove('flex');
             btnUser.classList.add(...activeTabCls);
             btnUser.classList.remove(...inactiveTabCls);
             btnAnak.classList.add(...inactiveTabCls);
@@ -214,7 +246,9 @@
             if (btnTambahIcon)  btnTambahIcon.setAttribute('data-lucide', 'plus');
         } else {
             tabAnak.classList.remove('hidden');
+            tabAnak.classList.add('flex');
             tabUser.classList.add('hidden');
+            tabUser.classList.remove('flex');
             btnAnak.classList.add(...activeTabCls);
             btnAnak.classList.remove(...inactiveTabCls);
             btnUser.classList.add(...inactiveTabCls);

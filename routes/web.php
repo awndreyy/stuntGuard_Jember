@@ -19,12 +19,14 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register.perform');
 });
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::middleware(['auth'])->group(function(){
+    Route::get('/dashboard-admin', function(){return view('admin.dashboardAdmin');})->name('dashboardAdmin');
 
-Route::get('/kelolaUser', [UserController::class, 'index'])->name('users.index');
+    Route::post('/logout', [AuthController::class,'logout'])->name('logout');
+    Route::get('/kelolaUser', [UserController::class, 'index'])->name('users.index');
 
-Route::resource('users', UserController::class);
-
-Route::resource('balita', BalitaController::class);
+    Route::resource('users', UserController::class)->except(['index','create','show','edit']);
+    Route::resource('balita',BalitaController::class)->except(['create','show','edit']);
+});
 
 Route::post('/simpan-pengukuran', [PengukuranController::class, 'store']);

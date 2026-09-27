@@ -101,7 +101,7 @@
         </div>
       @endif
 
-      <form action="{{ Route::has('register.store') ? route('register.store') : (Route::has('register') ? route('register') : route('users.store')) }}" method="POST" id="registerForm" class="space-y-3.5 sm:space-y-4">
+      <form action="{{ route('register.perform') }}" method="POST" id="registerForm" class="space-y-3.5 sm:space-y-4">
         @csrf
         <input type="hidden" name="role" value="Orang Tua">
 

@@ -32,19 +32,35 @@
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
                         <i data-lucide="user" class="w-4 h-4"></i>
                     </span>
-                    <input type="text" id="inputName" name="name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" required placeholder="Masukkan nama lengkap" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                    <input type="text" id="inputName" name="name" oninput="this.value = this.value.replace(/[^a-zA-Z\s'.]/g, '')" required placeholder="Masukkan nama lengkap" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
                 </div>
             </div>
 
             <!-- NIK -->
             <div>
-                <label class="block text-xs font-semibold text-stone-700 mb-1">NIK (16 Digit) <span class="text-rose-500">*</span></label>
+                <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+                    <label class="block text-xs font-semibold text-stone-700">
+                        Nomor Induk Kependudukan (NIK) <span class="text-rose-500">*</span>
+                    </label>
+                    <span id="nikCounterModal" class="text-[10px] font-medium text-stone-400">0/16 Digit</span>
+                </div>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
-                        <i data-lucide="id-card" class="w-4 h-4"></i>
+                        <i data-lucide="credit-card" class="w-4 h-4"></i>
                     </span>
-                    <input type="number" id="inputNik" name="nik" maxlength="16" required placeholder="3509xxxxxxxxxxxx" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                    <input 
+                        type="text" 
+                        id="inputNik" 
+                        name="nik" 
+                        maxlength="16" 
+                        inputmode="numeric"
+                        pattern="[0-9]{16}"
+                        required 
+                        placeholder="3509xxxxxxxxxxxx (16 Digit)" 
+                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all tracking-wide"
+                    >
                 </div>
+                <p id="nikHelpModal" class="text-[10px] text-stone-400 mt-1">Harus berupa 16 digit angka sesuai KTP</p>
             </div>
 
             <!-- Email -->
@@ -65,7 +81,7 @@
                     <select id="selectRole" name="role" required class="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
                         <option value="" disabled selected>Pilih Peran</option>
                         <option value="Orang Tua">Orang Tua</option>
-                        <option value="Administrator">Administrator</option>
+                        <option value="Admin">Admin</option>
                     </select>
                 </div>
 
@@ -94,3 +110,53 @@
         </form>
     </div>
 </div>
+
+<script>
+    // Live validation & counter untuk NIK pada Modal
+    function updateModalNikCounter() {
+        const nikInput = document.getElementById('inputNik');
+        const nikCounter = document.getElementById('nikCounterModal');
+        const nikHelp = document.getElementById('nikHelpModal');
+
+        if (!nikInput || !nikCounter || !nikHelp) return;
+
+        // Filter hanya angka
+        nikInput.value = nikInput.value.replace(/[^0-9]/g, '');
+        const length = nikInput.value.length;
+
+        nikCounter.textContent = `${length}/16 Digit`;
+
+        if (length === 16) {
+            nikCounter.className = 'text-[10px] font-semibold text-emerald-700';
+            nikHelp.textContent = '✓ Format NIK valid (16 digit)';
+            nikHelp.className = 'text-[10px] text-emerald-700 mt-1';
+        } else if (length > 0) {
+            nikCounter.className = 'text-[10px] font-medium text-amber-600';
+            nikHelp.textContent = `Kurang ${16 - length} digit lagi`;
+            nikHelp.className = 'text-[10px] text-amber-600 mt-1';
+        } else {
+            nikCounter.className = 'text-[10px] font-medium text-stone-400';
+            nikHelp.textContent = 'Harus berupa 16 digit angka sesuai KTP';
+            nikHelp.className = 'text-[10px] text-stone-400 mt-1';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const nikInput = document.getElementById('inputNik');
+        if (nikInput) {
+            nikInput.addEventListener('input', updateModalNikCounter);
+        }
+
+        const userForm = document.getElementById('userFormElement');
+        if (userForm && nikInput) {
+            userForm.addEventListener('submit', function(e) {
+                if (nikInput.value.length !== 16) {
+                    e.preventDefault();
+                    alert('NIK harus berjumlah tepat 16 digit angka!');
+                    nikInput.focus();
+                    return false;
+                }
+            });
+        }
+    });
+</script>

@@ -17,28 +17,39 @@
 
     {{-- CTA Buttons --}}
     <div class="flex items-center gap-2">
-      @if (Route::has('login'))
-        @auth
-          <a href="{{ url('/dashboardUser') }}"
-             class="text-sm font-semibold text-rose-700 border border-rose-700 hover:bg-rose-100/30 px-4 py-2 rounded-full transition-all flex items-center justify-center">
-            Dashboard
-          </a>
-        @else
-          <a href="{{ route('login') }}"
-             class="text-sm font-semibold text-rose-700 border border-rose-700 hover:bg-rose-100/30 px-4 py-2 rounded-full transition-all flex items-center justify-center">
-            Masuk
-          </a>
-          @if (Route::has('register'))
-            <a href="{{ route('register') }}"
-               class="text-sm bg-rose-700 text-white hover:bg-rose-600 font-semibold px-4 py-2 rounded-full shadow-[0_4px_16px_-2px_rgba(178,93,114,0.15)] transition-all flex items-center justify-center">
-              Daftar
-            </a>
-          @endif
-        @endauth
+      @auth
+        {{-- Jika User SUDAH Login: arahkan sesuai role --}}
+        @php
+          $dashboardUrl = in_array(auth()->user()->role, ['Administrator', 'Kader Posyandu']) 
+                          ? url('/kelolaUser') 
+                          : url('/');
+        @endphp
+        
+        <a href="{{ $dashboardUrl }}"
+           class="text-sm font-semibold text-rose-700 border border-rose-700 hover:bg-rose-100/30 px-4 py-2 rounded-full transition-all flex items-center justify-center">
+          Dashboard ({{ Str::limit(auth()->user()->name, 10) }})
+        </a>
+    
+        {{-- Tombol Logout Opsional --}}
+        <form action="{{ route('logout') }}" method="POST" class="inline">
+          @csrf
+          <button type="submit" 
+                  class="text-xs text-slate-500 hover:text-rose-700 px-2 py-2 font-medium transition-colors">
+            Keluar
+          </button>
+        </form>
       @else
-        <a href="#login"    class="text-sm font-semibold text-rose-700 border border-rose-700 hover:bg-rose-100/30 px-4 py-2 rounded-full transition-all flex items-center justify-center">Masuk</a>
-        <a href="#register" class="text-sm bg-rose-700 text-white hover:bg-rose-600 font-semibold px-4 py-2 rounded-full shadow-[0_4px_16px_-2px_rgba(178,93,114,0.15)] transition-all flex items-center justify-center">Daftar</a>
-      @endif
+        {{-- Jika User BELUM Login (Tamu) --}}
+        <a href="{{ route('login') }}"
+           class="text-sm font-semibold text-rose-700 border border-rose-700 hover:bg-rose-100/30 px-4 py-2 rounded-full transition-all flex items-center justify-center">
+          Masuk
+        </a>
+    
+        <a href="{{ route('register') }}"
+           class="text-sm bg-rose-700 text-white hover:bg-rose-600 font-semibold px-4 py-2 rounded-full shadow-[0_4px_16px_-2px_rgba(178,93,114,0.15)] transition-all flex items-center justify-center">
+          Daftar
+        </a>
+      @endauth
     </div>
 
     {{-- Hamburger (Mobile) --}}

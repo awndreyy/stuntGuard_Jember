@@ -105,24 +105,24 @@
         </div>
       @endif
 
-      <form action="{{ Route::has('login') ? route('login') : url('/login') }}" method="POST" class="space-y-4 sm:space-y-5">
+      <form action="{{ route('login.perform') }}" method="POST" class="space-y-4 sm:space-y-5">
         @csrf
 
-        <!-- Email Input -->
+        <!-- Email / NIK Input -->
         <div>
-          <label for="email" class="block text-xs font-semibold text-stone-900 mb-1.5">Email Address</label>
+          <label for="email" class="block text-xs font-semibold text-stone-900 mb-1.5">Email / NIK</label>
           <div class="relative group">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
               <i data-lucide="mail" class="w-4 h-4 {{ $errors->has('email') ? 'text-rose-500' : 'text-stone-600 group-focus-within:text-rose-700' }} transition-colors"></i>
             </div>
             <input
-              type="email"
+              type="text"
               id="email"
               name="email"
               value="{{ old('email') }}"
               required
               autofocus
-              placeholder="nama@email.com"
+              placeholder="nama@email.com atau 16 digit NIK"
               class="input-field w-full pl-10 pr-3.5 py-2.5 text-sm bg-stone-100 border {{ $errors->has('email') ? 'border-rose-300 ring-1 ring-rose-300 bg-rose-50/30' : 'border-rose-200 focus:border-rose-700' }} rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:bg-white transition-all shadow-sm"
             >
           </div>

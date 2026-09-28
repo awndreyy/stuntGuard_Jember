@@ -50,11 +50,11 @@
                         </div>
                     </a>
                     <!-- Kelola MPASI -->
-                    <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-stone-600 hover:text-rose-700 hover:bg-stone-50 transition-colors">
-                        <i data-lucide="utensils-crossed" class="w-4 h-4 mt-0.5 text-stone-400 group-hover:text-rose-700 transition-colors"></i>
+                    <a href="{{ route('admin.mpasi.index') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ request()->is('kelola-mpasi*') ? 'bg-rose-700 text-white shadow-sm' : 'text-stone-600 hover:text-rose-700 hover:bg-stone-50' }} transition-all">
+                        <i data-lucide="utensils-crossed" class="w-4 h-4 mt-0.5 {{ request()->is('kelola-mpasi*') ? 'text-rose-100' : 'text-stone-400 group-hover:text-rose-700' }} transition-colors"></i>
                         <div class="flex-1">
                             <span class="block text-xs font-semibold">Kelola MPASI</span>
-                            <span class="block text-[10px] text-stone-400 font-normal leading-tight mt-0.5">Resep 6-23 Bulan</span>
+                            <span class="block text-[10px] {{ request()->is('kelola-mpasi*') ? 'text-rose-200' : 'text-stone-400' }} font-normal leading-tight mt-0.5">Resep 6-23 Bulan</span>
                         </div>
                     </a>
                 </nav>

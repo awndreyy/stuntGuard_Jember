@@ -29,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/kelolaUser', [UserController::class, 'index'])->name('users.index');
+    Route::get('/kelola-mpasi', function () {
+        return view('admin.kelolaMpasi');
+    })->name('admin.mpasi.index');
 
     Route::resource('users', UserController::class)->except(['index', 'create', 'show', 'edit']);
     Route::resource('balita', BalitaController::class)->except(['create', 'show', 'edit']);

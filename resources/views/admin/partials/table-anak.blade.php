@@ -16,9 +16,9 @@
         <div class="flex items-center gap-2">
             {{-- Filter Jenis Kelamin --}}
             <div class="hidden sm:flex items-center bg-stone-100/80 p-0.5 rounded-lg text-[11px] font-medium text-stone-600">
-                <button class="px-2.5 py-1 rounded-md bg-white text-rose-700 shadow-2xs font-semibold">Semua</button>
-                <button class="px-2.5 py-1 rounded-md hover:text-stone-900 transition-colors">Laki-laki</button>
-                <button class="px-2.5 py-1 rounded-md hover:text-stone-900 transition-colors">Perempuan</button>
+                <button type="button" onclick="filterBalitaGender('all', this)" class="balita-gender-tab px-2.5 py-1 rounded-md bg-white text-rose-700 shadow-2xs font-semibold cursor-pointer transition-colors">Semua</button>
+                <button type="button" onclick="filterBalitaGender('Laki-laki', this)" class="balita-gender-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Laki-laki</button>
+                <button type="button" onclick="filterBalitaGender('Perempuan', this)" class="balita-gender-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Perempuan</button>
             </div>
         </div>
     </div>
@@ -35,10 +35,10 @@
                     <th class="py-3 px-4 text-center whitespace-nowrap">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-stone-100 text-xs">
+            <tbody class="divide-y divide-stone-100 text-xs" id="tableBalitaBody">
                 @if(isset($balita) && count($balita) > 0)
                     @foreach($balita as $anak)
-                    <tr class="hover:bg-rose-50/40 transition-colors group">
+                    <tr class="table-balita-row hover:bg-rose-50/40 transition-colors group" data-gender="{{ $anak->jenis_kelamin }}">
                         <td class="py-3 px-4 font-medium text-stone-900 whitespace-nowrap">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 font-bold text-xs flex items-center justify-center shrink-0">
@@ -78,6 +78,14 @@
                         </td>
                     </tr>
                     @endforeach
+                    <tr id="emptyBalitaFilterRow" class="hidden">
+                        <td colspan="5" class="py-12 text-center text-stone-400">
+                            <div class="flex flex-col items-center gap-2">
+                                <i data-lucide="baby" class="w-8 h-8 text-stone-300"></i>
+                                <span class="text-xs font-semibold text-stone-500">Tidak ada data balita dengan filter ini</span>
+                            </div>
+                        </td>
+                    </tr>
                 @else
                     <tr>
                         <td colspan="5" class="py-16 text-center text-stone-400">
@@ -95,7 +103,7 @@
 
     {{-- Card Footer (Fixed Bottom Pagination) --}}
     <div class="px-4 py-2.5 bg-stone-50 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500 shrink-0 mt-auto">
-        <span class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-stone-700">{{ isset($balita) ? count($balita) : 0 }}</strong> data anak/balita</span>
+        <span id="balitaCountDisplay" class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-stone-700">{{ isset($balita) ? count($balita) : 0 }}</strong> data anak/balita</span>
 
         <div class="flex items-center gap-1.5">
             <button class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-stone-200 bg-white text-stone-400 text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>

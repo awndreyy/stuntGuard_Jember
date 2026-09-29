@@ -24,7 +24,7 @@
         <div class="flex items-center gap-2 pl-1">
             <div class="relative">
                 <div class="w-8 h-8 rounded-full bg-rose-700 text-white font-semibold text-xs flex items-center justify-center ring-2 ring-rose-700/20">
-                    {{ $userInitials ?? 'AD' }}
+                    {{ $userInitials ?? (auth()->check() ? strtoupper(substr(auth()->user()->name, 0, 2)) : 'AD') }}
                 </div>
                 <span class="absolute bottom-0 right-0 w-2 h-2 bg-emerald-500 border-2 border-white rounded-full"></span>
             </div>

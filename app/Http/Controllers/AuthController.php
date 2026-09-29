@@ -38,9 +38,9 @@ class AuthController extends Controller
 
             $user = Auth::user();
             if ($user->role === 'Admin') {
-                return redirect()->intended('/dashboard-admin')->with('success', 'Selamat datang '.$user->name);
+                return redirect()->intended('/dashboardAdmin')->with('success', 'Selamat datang '.$user->name);
             } elseif ($user->role === 'Orang Tua') {
-                return redirect()->intended('/dashboard-user')->with('success', 'Selamat datang '.$user->name);
+                return redirect()->intended('/dashboardUser')->with('success', 'Selamat datang '.$user->name);
             }
         }
 

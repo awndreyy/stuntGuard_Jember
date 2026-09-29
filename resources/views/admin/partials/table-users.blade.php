@@ -30,7 +30,7 @@
                 <tr>
                     <th class="py-3 px-4 whitespace-nowrap">Informasi Pengguna</th>
                     <th class="py-3 px-4 whitespace-nowrap">Kontak</th>
-                    <th class="py-3 px-4 whitespace-nowrap">Role / Peran</th>
+                    <th class="py-3 px-4 whitespace-nowrap">Role</th>
                     <th class="py-3 px-4 text-center whitespace-nowrap">Aksi</th>
                 </tr>
             </thead>

@@ -45,7 +45,7 @@
     <div class="flex-1 flex flex-col h-screen min-w-0 overflow-hidden">
 
     <!-- Header Component -->
-    <x-admin.header searchPlaceholder="Cari data pengguna, nama, NIK..." />
+    <x-admin.header/>
 
     <!-- Main Content Canvas (16:9 Screen Fit with Zero Vertical Overflow) -->
     <main class="flex-1 overflow-y-auto md:overflow-hidden p-3.5 sm:p-5 flex flex-col gap-3.5 max-w-[1920px] w-full mx-auto">

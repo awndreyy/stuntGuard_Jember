@@ -6,6 +6,7 @@ use App\Models\Balita;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -84,19 +85,18 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Gunakan findOrFail biar kalau ID nggak ketemu, langsung dialihkan ke halaman 404 (lebih aman)
         $user = User::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:30',
-            'nik' => 'required|string|size:16|unique:users,nik,'.$user->id,
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'role' => 'required|in:Orang Tua,Admin',
+            'name' => ['required|string|max:30'],
+            'nik' => ['required', 'digits:16', Rule::unique('users', 'nik')->ignore($user->id)],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+            'role' => ['required', 'in:Orang Tua,Admin'],
             'password' => 'nullable|min:6',
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'nik.required' => 'NIK wajib diisi.',
-            'nik.size' => 'NIK harus berjumlah tepat 16 digit.',
+            'nik.digits' => 'NIK harus berjumlah tepat 16 digit.',
             'nik.unique' => 'Gagal! NIK ini sudah digunakan oleh akun lain.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',

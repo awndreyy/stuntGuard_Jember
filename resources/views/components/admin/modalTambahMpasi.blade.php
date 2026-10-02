@@ -23,9 +23,9 @@
             @csrf
             <input type="hidden" name="_method" id="formMethod" value="POST">
 
-            <!-- 1. Judul Resep -->
+            <!-- Nama Resep -->
             <div>
-                <label class="block font-semibold text-stone-700 mb-1">Judul Resep <span class="text-rose-500">*</span></label>
+                <label class="block font-semibold text-stone-700 mb-1">Nama Resep <span class="text-rose-500">*</span></label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
                         <i data-lucide="utensils" class="w-4 h-4"></i>

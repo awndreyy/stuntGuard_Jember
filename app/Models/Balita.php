@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Balita extends Model
 {
@@ -10,8 +11,8 @@ class Balita extends Model
 
     protected $fillable = ['user_id', 'nama_balita', 'nik', 'tanggal_lahir', 'jenis_kelamin'];
 
-    public function orangTua()
+    public function orangTua(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id','id');
     }
 }

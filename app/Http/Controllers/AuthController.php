@@ -103,7 +103,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('login')->with('success', 'Proses register berhasil, silahkan login!');
+        return redirect()->intended('/dashboardUser')->with('success', 'Registrasi berhasil! Selamat datang, ' . $user->name);
     }
 
     // Logout

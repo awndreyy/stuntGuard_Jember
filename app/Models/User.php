@@ -32,6 +32,6 @@ class User extends Authenticatable
 
     public function balitas(): HasMany
     {
-        return $this->hasMany(Balita::class, 'user_id');
+        return $this->hasMany(Balita::class, 'user_id', 'id');
     }
 }

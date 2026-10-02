@@ -1,7 +1,7 @@
 <!-- Modal Tambah / Edit Resep MPASI -->
 <div id="recipeModal" class="fixed inset-0 bg-stone-900/50 backdrop-blur-xs z-50 hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div id="recipeModalContainer" class="bg-white rounded-2xl border border-stone-200 shadow-2xl w-full max-w-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col transition-all duration-200">
-        
+
         <!-- Modal Header -->
         <div class="px-5 py-4 bg-stone-50/90 border-b border-stone-100 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2.5">
@@ -22,7 +22,7 @@
         <form id="recipeForm" action="{{ route('mpasi.store') }}" method="POST" enctype="multipart/form-data" class="flex-1 overflow-y-auto p-5 space-y-4 text-xs">
             @csrf
             <input type="hidden" name="_method" id="formMethod" value="POST">
-            
+
             <!-- 1. Judul Resep -->
             <div>
                 <label class="block font-semibold text-stone-700 mb-1">Judul Resep <span class="text-rose-500">*</span></label>
@@ -80,27 +80,27 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                     <div>
                         <span class="block text-[11px] text-stone-500 mb-1">Energi (kkal)</span>
-                        <input type="number" step="any" id="formKalori" name="kalori" placeholder="185" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+                        <input type="text" inputmode="numeric" maxlength="3" step="any" id="formKalori" name="kalori" placeholder="185" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
                     </div>
                     <div>
                         <span class="block text-[11px] text-stone-500 mb-1">Karbohidrat (gr)</span>
-                        <input type="number" step="0.1" id="formKarbohidrat" name="karbohidrat" placeholder="25.0" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+                        <input type="text" inputmode="numeric" maxlength="4" step="0.1" id="formKarbohidrat" name="karbohidrat" placeholder="25.0" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
                     </div>
                     <div>
                         <span class="block text-[11px] text-stone-500 mb-1">Lemak (gr)</span>
-                        <input type="number" step="0.1" id="formLemak" name="lemak" placeholder="5.2" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+                        <input type="text" inputmode="numeric" maxlength="4" step="0.1" id="formLemak" name="lemak" placeholder="5.2" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
                     </div>
                     <div>
                         <span class="block text-[11px] text-stone-500 mb-1">Protein (gr)</span>
-                        <input type="number" step="0.1" id="formProtein" name="protein" placeholder="7.5" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+                        <input type="text" inputmode="numeric" maxlength="4" step="0.1" id="formProtein" name="protein" placeholder="7.5" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
                     </div>
                     <div>
                         <span class="block text-[11px] text-stone-500 mb-1">Zat Besi (mg)</span>
-                        <input type="number" step="0.1" id="formZatBesi" name="zat_besi" placeholder="2.8" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+                        <input type="text" inputmode="numeric" maxlength="3" step="0.1" id="formZatBesi" name="zat_besi" placeholder="2.8" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
                     </div>
                     <div>
                         <span class="block text-[11px] text-stone-500 mb-1">Seng (mg)</span>
-                        <input type="number" step="0.1" id="formSeng" name="seng" placeholder="1.5" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+                        <input type="text" inputmode="numeric" maxlength="3" step="0.1" id="formSeng" name="seng" placeholder="1.5" class="w-full px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@
                     <label class="block font-semibold text-stone-700">Foto Resep</label>
                     <span class="text-[10px] font-medium text-stone-400">Opsional (File atau Link URL)</span>
                 </div>
-                
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <div>
                         <span class="block text-[11px] text-stone-500 mb-1">Unggah Gambar (JPG/PNG/WebP)</span>

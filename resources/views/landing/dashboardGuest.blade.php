@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>{{ config('app.name', 'StunGuard Jember') }} - Pemantauan Tumbuh Kembang &amp; Gizi Balita</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'StunGuard Jember') }} - Pemantauan Tumbuh Kembang &amp; Gizi Balita</title>
 
-  <!-- Google Fonts & Material Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400..700,0..1&amp;display=swap" rel="stylesheet">
+    <!-- Google Fonts & Material Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400..700,0..1&amp;display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-stone-50 font-sans text-stone-900 min-h-screen flex flex-col">
@@ -32,12 +32,6 @@
         <!-- 1. HERO SECTION -->
         <section class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 pt-space-lg md:pt-space-xl pb-space-xl">
           <div class="max-w-4xl mx-auto flex flex-col items-center text-center gap-4">
-            
-            <!-- Badge -->
-            <div class="inline-flex items-center gap-1 bg-rose-100/70 text-rose-900 px-4 py-1.5 rounded-full shadow-sm">
-              <span class="material-symbols-outlined text-[18px] text-rose-700" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-              <span class="text-xs font-semibold tracking-wide">Inovasi Posyandu Cerdas Kabupaten Jember</span>
-            </div>
 
             <!-- Headline -->
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 leading-tight tracking-tight">
@@ -156,7 +150,7 @@
 
             <!-- Action Submit Button -->
             <div class="sm:col-span-2 lg:col-span-4 flex justify-end mt-space-xs">
-              <button class="w-full sm:w-auto px-10 py-3 rounded-full bg-rose-700 hover:bg-rose-600 text-white hover:text-white text-sm font-bold flex items-center justify-center gap-1 shadow-md transition-all" type="submit">
+              <button class="mb-3 w-full sm:w-auto px-10 py-3 rounded-full bg-rose-700 hover:bg-rose-600 text-white hover:text-white text-sm font-bold flex items-center justify-center gap-1 shadow-md transition-all" type="submit">
                 <span class="material-symbols-outlined text-[20px]">analytics</span>
                 <span>Lihat Hasil Analisis Gizi</span>
               </button>
@@ -208,7 +202,7 @@
           </a>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          
+
           <!-- Card 1: Stunting HPK -->
           <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
             <div class="relative h-44 w-full overflow-hidden">

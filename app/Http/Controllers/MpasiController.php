@@ -46,7 +46,7 @@ class MpasiController extends Controller
             'zat_besi' => 'nullable|numeric|min:0',
             'seng' => 'nullable|numeric|min:0',
             'bahan' => 'required|array|min:1',
-            'bahan.*' => 'nullable|string',
+            'bahan.*' => 'nullable|string|regex:/^[a-zA-Z\s]+$/',
             'cara_pembuatan' => 'required|array|min:1',
             'cara_pembuatan.*' => 'nullable|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:3072',
@@ -60,6 +60,7 @@ class MpasiController extends Controller
             'waktu_memasak.required' => 'Waktu memasak wajib diisi.',
             'porsi.required' => 'Porsi wajib diisi.',
             'bahan.required' => 'Minimal 1 bahan wajib diisi.',
+            'bahan.*.regex' => 'Bahan hanya boleh berisi huruf dan spasi (tidak boleh angka atau simbol).',
             'cara_pembuatan.required' => 'Minimal 1 langkah pembuatan wajib diisi.',
         ]);
 

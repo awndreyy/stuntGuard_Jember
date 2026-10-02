@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -17,37 +18,59 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string',
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
             'password' => 'required|string',
         ], [
-            'email.required' => 'Email atau NIK wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
             'password.required' => 'Password wajib diisi.',
         ]);
 
-        $loginInput = $request->input('email') ?? $request->input('login');
-        $fieldType = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'nik';
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-        $attemptData = [
-            $fieldType => $loginInput,
+        $credentials = [
+            'email' => $request->email,
             'password' => $request->password,
         ];
 
-        if (Auth::attempt($attemptData)) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             $user = Auth::user();
+
             if ($user->role === 'Admin') {
-                return redirect()->intended('/dashboardAdmin')->with('success', 'Selamat datang '.$user->name);
-            } elseif ($user->role === 'Orang Tua') {
-                return redirect()->intended('/dashboardUser')->with('success', 'Selamat datang '.$user->name);
+                return redirect()
+                    ->intended('/dashboardAdmin')
+                    ->with('success', 'Selamat datang ' . $user->name);
             }
+
+            if ($user->role === 'Orang Tua') {
+                return redirect()
+                    ->intended('/dashboardUser')
+                    ->with('success', 'Selamat datang ' . $user->name);
+            }
+
+            Auth::logout();
+
+            return back()
+                ->withErrors([
+                    'email' => 'Role pengguna tidak dikenali.',
+                ])
+                ->withInput();
         }
 
-        return back()->withErrors([
-            'email' => 'Email/NIK atau password yang Anda masukkan salah.',
-        ])->onlyInput('email');
+        return back()
+            ->withErrors([
+                'email' => 'Email atau password salah.',
+            ])
+            ->withInput();
     }
+
 
     // Daftar
     public function showRegister()

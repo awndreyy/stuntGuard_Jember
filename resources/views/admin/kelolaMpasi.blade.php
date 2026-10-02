@@ -449,7 +449,7 @@
                 document.getElementById('formProtein').value = recipe.protein || '';
                 document.getElementById('formZatBesi').value = recipe.zat_besi || '';
                 document.getElementById('formSeng').value = recipe.seng || '';
-                
+
                 if (recipe.gambar && (recipe.gambar.startsWith('http://') || recipe.gambar.startsWith('https://'))) {
                     document.getElementById('formFoto').value = recipe.gambar;
                 } else {
@@ -667,10 +667,10 @@
         function showToast(title, message, type = 'success') {
             const toast = document.getElementById('toastNotification');
             const iconContainer = document.getElementById('toastIcon');
-            
+
             document.getElementById('toastTitle').innerText = title;
             document.getElementById('toastMessage').innerText = message;
-            
+
             if (type === 'error') {
                 iconContainer.className = 'w-6 h-6 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center';
                 iconContainer.innerHTML = '<i data-lucide="alert-circle" class="w-4 h-4"></i>';

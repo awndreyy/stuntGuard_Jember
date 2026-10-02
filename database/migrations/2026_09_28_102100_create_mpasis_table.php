@@ -17,12 +17,12 @@ return new class extends Migration
             $table->enum('kategori_usia', ['6-8', '9-11', '12-23']);
             $table->string('waktu_memasak', 30);
             $table->unsignedTinyInteger('porsi');
-            $table->decimal('kalori', 8, 2)->default(0);
-            $table->decimal('karbohidrat', 8, 2)->default(0);
-            $table->decimal('lemak', 8, 2)->default(0);
-            $table->decimal('protein', 8, 2)->default(0);
-            $table->decimal('zat_besi', 8, 2)->default(0);
-            $table->decimal('seng', 8, 2)->default(0);
+            $table->decimal('kalori', 4, 2)->default(0);
+            $table->decimal('karbohidrat', 4, 2)->default(0);
+            $table->decimal('lemak', 4, 2)->default(0);
+            $table->decimal('protein', 4, 2)->default(0);
+            $table->decimal('zat_besi', 4, 2)->default(0);
+            $table->decimal('seng', 4, 2)->default(0);
             $table->json('bahan');
             $table->json('cara_pembuatan');
             $table->string('gambar', 255)->nullable();

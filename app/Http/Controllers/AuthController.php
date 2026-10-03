@@ -19,8 +19,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string',
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
         ], [
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
@@ -46,13 +46,13 @@ class AuthController extends Controller
             if ($user->role === 'Admin') {
                 return redirect()
                     ->intended('/dashboardAdmin')
-                    ->with('success', 'Selamat datang ' . $user->name);
+                    ->with('success', 'Selamat datang '.$user->name);
             }
 
             if ($user->role === 'Orang Tua') {
                 return redirect()
                     ->intended('/dashboardUser')
-                    ->with('success', 'Selamat datang ' . $user->name);
+                    ->with('success', 'Selamat datang '.$user->name);
             }
 
             Auth::logout();
@@ -71,7 +71,6 @@ class AuthController extends Controller
             ->withInput();
     }
 
-
     // Daftar
     public function showRegister()
     {
@@ -81,10 +80,10 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:30',
-            'nik' => 'required|string|size:16|unique:users,nik',
-            'email' => 'required|email|max:30|unique:users,email',
-            'password' => 'required|min:6',
+            'name' => ['required', 'string', 'max:30'],
+            'nik' => ['required', 'string', 'size:16', 'unique:users,nik'],
+            'email' => ['required', 'email', 'max:30', 'unique:users,email'],
+            'password' => ['required', 'min:6'],
         ], [
             'nik.unique' => 'NIK ini sudah terdaftar dalam sistem.',
             'nik.size' => 'NIK harus berjumlah tepat 16 digit.',
@@ -103,7 +102,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->intended('/dashboardUser')->with('success', 'Registrasi berhasil! Selamat datang, ' . $user->name);
+        return redirect()->intended('/dashboardUser')->with('success', 'Registrasi berhasil! Selamat datang, '.$user->name);
     }
 
     // Logout

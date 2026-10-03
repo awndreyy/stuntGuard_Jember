@@ -30,11 +30,13 @@ class Mpasi extends Model
     protected $casts = [
         'bahan' => 'array',
         'cara_pembuatan' => 'array',
-        'kalori' => 'float',
-        'karbohidrat' => 'float',
-        'lemak' => 'float',
-        'protein' => 'float',
-        'zat_besi' => 'float',
-        'seng' => 'float',
+        'waktu_memasak' => 'integer',
+        'porsi' => 'integer',
+        'kalori' => 'integer',
+        'karbohidrat' => 'integer',
+        'lemak' => 'integer',
+        'protein' => 'integer',
+        'zat_besi' => 'integer',
+        'seng' => 'integer',
     ];
 }

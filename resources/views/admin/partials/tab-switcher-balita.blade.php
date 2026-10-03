@@ -1,4 +1,3 @@
-{{-- resources/views/admin/partials/tab-switcher.blade.php --}}
 {{-- Tab Switcher: Data Pengguna | Data Anak/Balita --}}
 <div class="flex gap-0 border-b border-stone-200 shrink-0" role="tablist">
     <button

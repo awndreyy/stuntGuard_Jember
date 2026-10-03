@@ -35,11 +35,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:30',
-            'nik' => 'required|string|size:16|unique:users,nik',
-            'email' => 'required|email|unique:users,email',
-            'role' => 'required|in:Orang Tua,Admin',
-            'password' => 'required|min:6',
+            'name' => ['required', 'string', 'max:30'],
+            'nik' => ['required', 'string', 'size:16', 'unique:users,nik'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'role' => ['required', 'in:Orang Tua,Admin'],
+            'password' => ['required', 'min:6'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'nik.required' => 'NIK wajib diisi.',

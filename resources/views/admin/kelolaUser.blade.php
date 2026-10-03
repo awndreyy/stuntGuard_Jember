@@ -95,7 +95,7 @@
         @endif
 
         {{-- Tab Switcher --}}
-        @include('admin.partials.tab-switcher')
+        @include('admin.partials.tab-switcher-balita')
 
         {{-- Table Section --}}
         <section class="flex-1 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col min-h-0 overflow-hidden">

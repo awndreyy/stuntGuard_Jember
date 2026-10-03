@@ -96,7 +96,7 @@
         </table>
     </div>
 
-    {{-- Card Footer (Fixed Bottom Pagination) --}}
+    {{-- Card Footer --}}
     <div class="px-4 py-2.5 bg-stone-50 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500 shrink-0 mt-auto">
         <span id="userCountDisplay" class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-stone-700">{{ count($users) }}</strong> dari <strong class="font-semibold text-stone-700">{{ $totalUsers ?? count($users) }}</strong> pengguna</span>
 

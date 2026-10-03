@@ -1,4 +1,3 @@
-{{-- resources/views/admin/partials/table-anak.blade.php --}}
 {{-- Tabel Data Anak/Balita --}}
 <div id="tab-anak" class="flex-1 flex flex-col min-h-0 h-full hidden">
 
@@ -101,7 +100,7 @@
         </table>
     </div>
 
-    {{-- Card Footer (Fixed Bottom Pagination) --}}
+    {{-- Card Footer --}}
     <div class="px-4 py-2.5 bg-stone-50 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500 shrink-0 mt-auto">
         <span id="balitaCountDisplay" class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-stone-700">{{ isset($balita) ? count($balita) : 0 }}</strong> data anak/balita</span>
 

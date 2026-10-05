@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\MpasiController;
 use App\Http\Controllers\PengukuranController;
 use App\Http\Controllers\UserController;
@@ -29,8 +30,21 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('users', UserController::class)->except(['index', 'create', 'show', 'edit']);
     Route::resource('balita', BalitaController::class)->except(['create', 'show', 'edit']);
 
+    Route::get('/kalkulatorGizi', function () {
+        return view('admin.kalkulatorgizi');
+    })->name('kalkulatorGizi');
+    Route::post('/kalkulatorGizi', function () {
+        return redirect()->route('kalkulatorGizi')->withInput();
+    })->name('kalkulator.calculate');
+
     Route::get('/kelolaMpasi', [MpasiController::class, 'index'])->name('kelolaMpasi');
     Route::resource('mpasi', MpasiController::class)->except(['index', 'create', 'show', 'edit']);
+
+    Route::get('/kelolaInformasi', [InformasiController::class, 'index'])->name('kelolaInformasi');
+    Route::get('/kelolaInformasi/{id}/edit', [InformasiController::class, 'edit'])->name('kelolaInformasi.edit');
+    Route::post('/kelolaInformasi', [InformasiController::class, 'store'])->name('kelolaInformasi.store');
+    Route::put('/kelolaInformasi/{id}', [InformasiController::class, 'update'])->name('kelolaInformasi.update');
+    Route::delete('/kelolaInformasi/{id}', [InformasiController::class, 'destroy'])->name('kelolaInformasi.destroy');
 });
 
 Route::middleware(['auth', 'role:Orang Tua'])->group(function () {

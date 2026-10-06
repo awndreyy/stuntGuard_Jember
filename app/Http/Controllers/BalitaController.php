@@ -29,15 +29,17 @@ class BalitaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'nama_balita' => 'required|string|max:30',
-            'nik' => 'nullable|string|size:16|unique:balitas,nik',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'user_id' => ['required', 'exists:users,id'],
+            'nama_balita' => ['required', 'string', 'min:3', 'max:30'],
+            'nik' => ['nullable', 'string', 'size:16', 'unique:balitas,nik'],
+            'tanggal_lahir' => ['required', 'date'],
+            'jenis_kelamin' => ['required', 'in:Laki-laki,Perempuan'],
         ], [
             'user_id.required' => 'Orang tua / wali wajib dipilih',
             'user_id.exists' => 'Data orang tua tidak valid',
             'nama_balita.required' => 'Nama Balita wajib diisi',
+            'nama_balita.min' => 'Nama Balita minimal 3 karakter',
+            'nama_balita.max' => 'Nama Balita maksimal 30 karakter',
             'nik.unique' => 'NIK Balita sudah terdaftar',
             'nik.size' => 'NIK Balita harus tepat 16 digit',
             'tanggal_lahir.required' => 'Tanggal Lahir wajib diisi',

@@ -13,6 +13,6 @@ class Balita extends Model
 
     public function orangTua(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

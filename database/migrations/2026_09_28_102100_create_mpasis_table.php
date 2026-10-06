@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('mpasis', function (Blueprint $table) {
             $table->id('id_resep');
-            $table->string('nama_resep', 50)->unique();
+            $table->string('nama_resep', 20)->unique();
             $table->enum('kategori_usia', ['6-8', '9-11', '12-23']);
             $table->unsignedSmallInteger('waktu_memasak');
             $table->unsignedTinyInteger('porsi');

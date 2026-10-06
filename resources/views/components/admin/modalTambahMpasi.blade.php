@@ -31,7 +31,7 @@
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none {{ $errors->has('nama_resep') ? 'text-rose-400' : 'text-stone-400' }}">
                         <i data-lucide="utensils" class="w-4 h-4"></i>
                     </span>
-                    <input type="text" id="formNamaResep" name="nama_resep" value="{{ old('nama_resep') }}" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" placeholder="Masukan judul resep" class="w-full pl-9 pr-3 py-2 bg-stone-50 border {{ $errors->has('nama_resep') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                    <input type="text" id="formNamaResep" name="nama_resep" maxlength="" value="{{ old('nama_resep') }}" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" placeholder="Masukan judul resep" class="w-full pl-9 pr-3 py-2 bg-stone-50 border {{ $errors->has('nama_resep') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
                 </div>
                 @error('nama_resep')
                     <p class="modal-error-message text-[11px] text-rose-600 mt-1.5 flex items-center gap-1 font-medium">

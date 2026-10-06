@@ -88,13 +88,14 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'name' => ['required|string|max:30'],
+            'name' => ['required', 'string', 'min:3', 'max:30'],
             'nik' => ['required', 'digits:16', Rule::unique('users', 'nik')->ignore($user->id)],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
             'role' => ['required', 'in:Orang Tua,Admin'],
             'password' => 'nullable|min:6',
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
+            'name.min' => 'Nama minimal 3 karakter.',
             'nik.required' => 'NIK wajib diisi.',
             'nik.digits' => 'NIK harus berjumlah tepat 16 digit.',
             'nik.unique' => 'Gagal! NIK ini sudah digunakan oleh akun lain.',

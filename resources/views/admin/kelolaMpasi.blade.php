@@ -10,9 +10,6 @@
                 <h1 class="text-lg sm:text-xl font-bold tracking-tight text-stone-900 flex items-center gap-2">
                     Kelola Resep MPASI
                 </h1>
-                <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
-                    Pangan Lokal Jember
-                </span>
             </div>
             <p class="text-xs text-stone-500 mt-0.5">
                 Kelola direktori menu dan resep Makanan Pendamping ASI bergizi untuk balita usia 6–23 bulan.

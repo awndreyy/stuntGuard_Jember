@@ -21,9 +21,10 @@
         </div>
 
         <!-- Modal Form Body -->
-        <form id="balitaFormElement" action="{{ route('balita.store') }}" method="POST" class="p-5 space-y-3.5 overflow-y-auto">
+        <form id="balitaFormElement" action="{{ old('_method') === 'PUT' && old('balita_id') ? route('balita.update', old('balita_id')) : route('balita.store') }}" method="POST" class="p-5 space-y-3.5 overflow-y-auto">
             @csrf
-            <input type="hidden" name="_method" id="formBalitaMethodInput" value="POST">
+            <input type="hidden" name="_method" id="formBalitaMethodInput" value="{{ old('_method', 'POST') }}">
+            <input type="hidden" name="balita_id" id="inputBalitaId" value="{{ old('balita_id') }}">
 
             <!-- 1. Orang Tua / Wali (Searchable Select Dropdown) -->
             <div>
@@ -363,6 +364,7 @@
     function tambahAnak() {
         const form = document.getElementById('balitaFormElement');
         const methodInput = document.getElementById('formBalitaMethodInput');
+        const balitaIdInput = document.getElementById('inputBalitaId');
         const modalTitle = document.getElementById('modalBalitaTitle');
         const submitBtnText = document.getElementById('submitBalitaBtnText');
         const selectedText = document.getElementById('selectedParentText');
@@ -372,6 +374,7 @@
             form.reset();
         }
         if (methodInput) methodInput.value = 'POST';
+        if (balitaIdInput) balitaIdInput.value = '';
         if (modalTitle) modalTitle.innerText = 'Tambah Data Balita Baru';
         if (submitBtnText) submitBtnText.innerText = 'Simpan Data Balita';
 
@@ -394,14 +397,18 @@
     function editBalita(balita) {
         const form = document.getElementById('balitaFormElement');
         const methodInput = document.getElementById('formBalitaMethodInput');
+        const balitaIdInput = document.getElementById('inputBalitaId');
         const modalTitle = document.getElementById('modalBalitaTitle');
         const submitBtnText = document.getElementById('submitBalitaBtnText');
         const selectedText = document.getElementById('selectedParentText');
 
+        const balitaId = balita.id_balita || balita.id;
+
         if (form) {
-            form.action = `/balita/${balita.id_balita || balita.id}`;
+            form.action = `/balita/${balitaId}`;
         }
         if (methodInput) methodInput.value = 'PUT';
+        if (balitaIdInput) balitaIdInput.value = balitaId;
         if (modalTitle) modalTitle.innerText = 'Edit Data Balita';
         if (submitBtnText) submitBtnText.innerText = 'Update Data Balita';
 
@@ -420,4 +427,15 @@
         updateNikBalitaCounter();
         openBalitaModal();
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        @php
+            $isBalitaError = $errors->has('nama_balita') || $errors->has('tanggal_lahir') || $errors->has('jenis_kelamin') || old('nama_balita') !== null;
+        @endphp
+
+        @if ($isBalitaError)
+            switchTab('anak');
+            openBalitaModal();
+        @endif
+    });
 </script>

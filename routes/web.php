@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\KalkulatorGiziController;
 use App\Http\Controllers\MpasiController;
 use App\Http\Controllers\PengukuranController;
 use App\Http\Controllers\UserController;
@@ -31,6 +32,9 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 
     Route::get('/kelolaMpasi', [MpasiController::class, 'index'])->name('kelolaMpasi');
     Route::resource('mpasi', MpasiController::class)->except(['index', 'create', 'show', 'edit']);
+
+    Route::get('/kalkulatorGizi', [KalkulatorGiziController::class, 'index'])->name('kalkulatorGizi');
+    Route::post('/kalkulatorGizi', [KalkulatorGiziController::class, 'calculate'])->name('kalkulator.calculate');
 });
 
 Route::middleware(['auth', 'role:Orang Tua'])->group(function () {

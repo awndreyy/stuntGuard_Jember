@@ -20,9 +20,9 @@
       @auth
         {{-- Jika User SUDAH Login: arahkan sesuai role --}}
         @php
-          $dashboardUrl = in_array(auth()->user()->role, ['Administrator', 'Kader Posyandu']) 
-                          ? url('/kelolaUser') 
-                          : url('/');
+          $dashboardUrl = (auth()->user()->role === 'Admin') 
+                          ? route('dashboardAdmin') 
+                          : route('dashboardUser');
         @endphp
         
         <a href="{{ $dashboardUrl }}"
@@ -30,7 +30,7 @@
           Dashboard ({{ Str::limit(auth()->user()->name, 10) }})
         </a>
     
-        {{-- Tombol Logout Opsional --}}
+        {{-- Tombol Logout --}}
         <form action="{{ route('logout') }}" method="POST" class="inline">
           @csrf
           <button type="submit" 

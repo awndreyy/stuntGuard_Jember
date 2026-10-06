@@ -7,11 +7,15 @@
         <div class="px-5 py-4 bg-stone-50/80 border-b border-stone-100 flex items-center justify-between">
             <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center">
-                    <i data-lucide="user-plus" class="w-4 h-4"></i>
+                    <i id="modalUserIcon" data-lucide="{{ old('_method') === 'PUT' ? 'user-cog' : 'user-plus' }}" class="w-4 h-4"></i>
                 </div>
                 <div>
-                    <h3 id="modalTitle" class="text-sm font-bold text-stone-900">Tambah User Baru</h3>
-                    <p class="text-[11px] text-stone-500">Isi data akun pengguna untuk mendaftarkan akun baru</p>
+                    <h3 id="modalTitle" class="text-sm font-bold text-stone-900">
+                        {{ old('_method') === 'PUT' ? 'Edit Data User' : 'Tambah User Baru' }}
+                    </h3>
+                    <p id="modalSubtitle" class="text-[11px] text-stone-500">
+                        {{ old('_method') === 'PUT' ? 'Perbarui data akun pengguna yang sudah terdaftar' : 'Isi data akun pengguna untuk mendaftarkan akun baru' }}
+                    </p>
                 </div>
             </div>
             <!-- Tombol Tutup Modal -->
@@ -21,9 +25,10 @@
         </div>
 
         <!-- Modal Form Body -->
-        <form id="userFormElement" action="{{ route('users.store') }}" method="POST" class="p-5 space-y-3.5">
+        <form id="userFormElement" action="{{ old('_method') === 'PUT' && old('user_id') ? route('users.update', old('user_id')) : route('users.store') }}" method="POST" class="p-5 space-y-3.5">
             @csrf
-            <input type="hidden" name="_method" id="formMethodInput" value="POST">
+            <input type="hidden" name="_method" id="formMethodInput" value="{{ old('_method', 'POST') }}">
+            <input type="hidden" name="user_id" id="userIdInput" value="{{ old('user_id') }}">
 
             <!-- Nama Lengkap -->
             <div>
@@ -109,17 +114,17 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-stone-700 mb-1">Password <span id="passwordRequiredStar" class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-semibold text-stone-700 mb-1">Password <span id="passwordRequiredStar" class="text-rose-500 {{ old('_method') === 'PUT' ? 'hidden' : '' }}">*</span></label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-stone-400">
                             <i data-lucide="lock" class="w-4 h-4"></i>
                         </div>
-                        <input type="password" id="inputPassword" name="password" required placeholder="minimal 6 karakter" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('password') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                        <input type="password" id="inputPassword" name="password" {{ old('_method') === 'PUT' ? '' : 'required' }} placeholder="minimal 6 karakter" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('password') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
                     </div>
                     @error('password')
                         <p class="text-[10px] text-rose-600 mt-1">{{ $message }}</p>
                     @else
-                        <p id="passwordHint" class="text-[10px] text-stone-400 mt-1 hidden">Kosongkan jika tidak ingin mengganti password.</p>
+                        <p id="passwordHint" class="text-[10px] text-stone-400 mt-1 {{ old('_method') === 'PUT' ? '' : 'hidden' }}">Kosongkan jika tidak ingin mengganti password.</p>
                     @enderror
                 </div>
             </div>
@@ -131,7 +136,7 @@
                 </button>
                 <button type="submit" class="inline-flex items-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-lg transition-colors shadow-xs cursor-pointer">
                     <i data-lucide="check" class="w-4 h-4"></i>
-                    <span id="submitBtnText">Simpan User</span>
+                    <span id="submitBtnText">{{ old('_method') === 'PUT' ? 'Update User' : 'Simpan User' }}</span>
                 </button>
             </div>
         </form>
@@ -195,7 +200,11 @@
             });
         }
 
-        @if ($errors->any())
+        @php
+            $isUserError = $errors->has('name') || $errors->has('email') || $errors->has('role') || $errors->has('password') || ($errors->has('nik') && !old('nama_balita'));
+        @endphp
+
+        @if ($isUserError)
             // Otomatis buka modal kembali jika ada kesalahan input dari server
             openUserModal();
         @endif

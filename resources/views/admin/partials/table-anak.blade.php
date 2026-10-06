@@ -30,7 +30,7 @@
                     <th class="py-3 px-4 whitespace-nowrap">Nama Balita</th>
                     <th class="py-3 px-4 whitespace-nowrap">NIK Anak</th>
                     <th class="py-3 px-4 whitespace-nowrap">Nama Orang Tua/Wali</th>
-                    <th class="py-3 px-4 whitespace-nowrap">Jenis Kelamin & Usia</th>
+                    <th class="py-3 px-4 whitespace-nowrap">Jenis Kelamin</th>
                     <th class="py-3 px-4 text-center whitespace-nowrap">Aksi</th>
                 </tr>
             </thead>

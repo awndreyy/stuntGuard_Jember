@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KalkulatorGiziController;
 use App\Http\Controllers\MpasiController;
 use App\Http\Controllers\PengukuranController;
@@ -29,6 +30,12 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/kelolaUser', [UserController::class, 'index'])->name('kelolaUser');
     Route::resource('users', UserController::class)->except(['index', 'create', 'show', 'edit']);
     Route::resource('balita', BalitaController::class)->except(['create', 'show', 'edit']);
+
+    Route::get('/kelolaInformasi', [InformasiController::class, 'index'])->name('kelolaInformasi');
+    Route::post('/kelolaInformasi', [InformasiController::class, 'store'])->name('kelolaInformasi.store');
+    Route::get('/kelolaInformasi/{id}/edit', [InformasiController::class, 'edit'])->name('kelolaInformasi.edit');
+    Route::put('/kelolaInformasi/{id}', [InformasiController::class, 'update'])->name('kelolaInformasi.update');
+    Route::delete('/kelolaInformasi/{id}', [InformasiController::class, 'destroy'])->name('kelolaInformasi.destroy');
 
     Route::get('/kelolaMpasi', [MpasiController::class, 'index'])->name('kelolaMpasi');
     Route::resource('mpasi', MpasiController::class)->except(['index', 'create', 'show', 'edit']);

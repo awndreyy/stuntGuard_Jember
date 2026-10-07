@@ -27,7 +27,6 @@
                 </div>
                 <div>
                     <h2 class="text-sm font-bold text-stone-900">Form Pengukuran Balita</h2>
-                    <p class="text-[11px] text-stone-400">Pilih data balita terdaftar atau masukkan data fisik untuk kalkulasi</p>
                 </div>
             </div>
 
@@ -40,9 +39,6 @@
                         <label class="block text-xs font-semibold text-stone-700">
                             Nama Balita <span class="text-rose-500">*</span>
                         </label>
-                        <span id="balitaSelectionBadge" class="text-[10px] font-medium text-stone-400">
-                            Pilih balita terdaftar untuk isi otomatis
-                        </span>
                     </div>
 
                     <div class="relative" id="balitaSelectWrapper">
@@ -186,12 +182,12 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label for="berat" class="block text-xs font-semibold text-stone-700 mb-1">Berat Badan (kg) <span class="text-rose-500">*</span></label>
-                        <input type="text" inputmode="numeric" step="0.1" name="berat" id="berat" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" required value="{{ old('berat', $hasil['berat'] ?? '') }}" placeholder="Contoh: 10.5" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('berat') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
+                        <input type="text" inputmode="numeric" step="0.1" name="berat" id="berat" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" required value="{{ old('berat', $hasil['berat'] ?? '') }}" placeholder="min: 1" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('berat') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
                     </div>
 
                     <div>
                         <label for="tinggi" class="block text-xs font-semibold text-stone-700 mb-1">Tinggi / Panjang Badan (cm) <span class="text-rose-500">*</span></label>
-                        <input type="text" inputmode="numeric" step="0.1" name="tinggi" id="tinggi" maxlength="5" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" required value="{{ old('tinggi', $hasil['tinggi'] ?? '') }}" placeholder="Contoh: 78.0" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('tinggi') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
+                        <input type="text" inputmode="numeric" step="0.1" name="tinggi" id="tinggi" maxlength="5" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" required value="{{ old('tinggi', $hasil['tinggi'] ?? '') }}" placeholder="min: 20" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('tinggi') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
                     </div>
                     @error('berat')
                         <p class="modal-error-message text-[11px] text-rose-600 mt-1.5 flex items-center gap-1 font-medium">
@@ -205,6 +201,66 @@
                             <span>{{ $message }}</span>
                         </p>
                     @enderror
+                </div>
+
+                <!-- Posisi Pengukuran (Terlentang / Berdiri) -->
+                <div>
+                    <label class="block text-xs font-semibold text-stone-700 mb-1.5">
+                        Posisi Pengukuran <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <label class="relative flex items-center gap-2.5 p-2.5 border rounded-xl cursor-pointer transition-all border-stone-200 bg-white hover:bg-stone-50/80">
+                            <input type="radio" name="posisi_badan" id="posisi_terlentang" value="terlentang" class="text-rose-700 focus:ring-rose-700 w-3.5 h-3.5 border-stone-300" {{ old('posisi_badan', $hasil['posisi_badan'] ?? 'terlentang') === 'terlentang' ? 'checked' : '' }}>
+                            <div>
+                                <span class="block text-xs font-semibold text-stone-800 leading-tight">Terlentang</span>
+                                <span class="block text-[10px] text-stone-400 mt-0.5">Berbaring (0 - 23 Bulan)</span>
+                            </div>
+                        </label>
+                        <label class="relative flex items-center gap-2.5 p-2.5 border rounded-xl cursor-pointer transition-all border-stone-200 bg-white hover:bg-stone-50/80">
+                            <input type="radio" name="posisi_badan" id="posisi_berdiri" value="berdiri" class="text-rose-700 focus:ring-rose-700 w-3.5 h-3.5 border-stone-300" {{ old('posisi_badan', $hasil['posisi_badan'] ?? '') === 'berdiri' ? 'checked' : '' }}>
+                            <div>
+                                <span class="block text-xs font-semibold text-stone-800 leading-tight">Berdiri</span>
+                                <span class="block text-[10px] text-stone-400 mt-0.5">Tegak (≥ 24 Bulan)</span>
+                            </div>
+                        </label>
+                    </div>
+                    @error('posisi_badan')
+                        <p class="modal-error-message text-[11px] text-rose-600 mt-1.5 flex items-center gap-1 font-medium">
+                            <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                            <span>{{ $message }}</span>
+                        </p>
+                    @enderror
+                </div>
+
+                <!-- Lingkar Kepala & Lingkar Lengan Atas (LiLA) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <label for="lingkar_kepala" class="block text-xs font-semibold text-stone-700">Lingkar Kepala (cm)</label>
+                            <span class="text-[10px] text-stone-400">Opsional</span>
+                        </div>
+                        <input type="text" inputmode="numeric" step="0.1" name="lingkar_kepala" id="lingkar_kepala" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" value="{{ old('lingkar_kepala', $hasil['lingkar_kepala'] ?? '') }}" placeholder="Contoh: 45.0" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('lingkar_kepala') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
+                        @error('lingkar_kepala')
+                            <p class="modal-error-message text-[11px] text-rose-600 mt-1.5 flex items-center gap-1 font-medium">
+                                <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <label for="lila" class="block text-xs font-semibold text-stone-700">Lingkar Lengan Atas (LiLA) (cm)</label>
+                            <span class="text-[10px] text-stone-400">Opsional</span>
+                        </div>
+                        <input type="text" inputmode="numeric" step="0.1" name="lila" id="lila" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" value="{{ old('lila', $hasil['lila'] ?? '') }}" placeholder="Contoh: 14.5" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('lila') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
+                        @error('lila')
+                            <p class="modal-error-message text-[11px] text-rose-600 mt-1.5 flex items-center gap-1 font-medium">
+                                <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Submit Button -->
@@ -238,6 +294,15 @@
                                 <div class="flex justify-between items-center"><span class="text-stone-500">Jenis Kelamin:</span> <span class="font-medium text-stone-700">{{ $hasil['jenis_kelamin'] }}</span></div>
                                 <div class="flex justify-between items-center"><span class="text-stone-500">Usia:</span> <span class="font-medium text-stone-700">{{ $hasil['usia_bulan'] }} Bulan</span></div>
                                 <div class="flex justify-between items-center"><span class="text-stone-500">Berat / Tinggi:</span> <span class="font-medium text-stone-700">{{ $hasil['berat'] }} kg / {{ $hasil['tinggi'] }} cm</span></div>
+                                @if(!empty($hasil['posisi_badan']))
+                                    <div class="flex justify-between items-center"><span class="text-stone-500">Posisi Ukur:</span> <span class="font-medium text-stone-700 capitalize">{{ $hasil['posisi_badan'] }}</span></div>
+                                @endif
+                                @if(!empty($hasil['lingkar_kepala']))
+                                    <div class="flex justify-between items-center"><span class="text-stone-500">Lingkar Kepala:</span> <span class="font-medium text-stone-700">{{ $hasil['lingkar_kepala'] }} cm</span></div>
+                                @endif
+                                @if(!empty($hasil['lila']))
+                                    <div class="flex justify-between items-center"><span class="text-stone-500">LiLA:</span> <span class="font-medium text-stone-700">{{ $hasil['lila'] }} cm</span></div>
+                                @endif
                                 @if(isset($hasil['z_score']))
                                     <div class="flex justify-between items-center pt-1 border-t border-stone-200/60"><span class="text-stone-500">Z-Score (TB/U):</span> <span class="font-semibold text-stone-700">{{ $hasil['z_score'] }} SD</span></div>
                                 @endif
@@ -390,6 +455,15 @@
             if (usiaBadge) {
                 usiaBadge.classList.remove('hidden');
             }
+
+            // Auto-pilih posisi pengukuran (0-23 bln: Terlentang, >= 24 bln: Berdiri)
+            const radioTerlentang = document.getElementById('posisi_terlentang');
+            const radioBerdiri = document.getElementById('posisi_berdiri');
+            if (calculatedMonths < 24 && radioTerlentang) {
+                radioTerlentang.checked = true;
+            } else if (calculatedMonths >= 24 && radioBerdiri) {
+                radioBerdiri.checked = true;
+            }
         }
 
         toggleBalitaDropdown();
@@ -456,4 +530,4 @@
         }
     });
 </script>
-@endpush
+@endpush

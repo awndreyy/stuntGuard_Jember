@@ -29,6 +29,9 @@ class KalkulatorGiziController extends Controller
             'usia_bulan' => ['required', 'numeric', 'min:1', 'max:60'],
             'berat' => ['required', 'numeric', 'min:1', 'max:30'],
             'tinggi' => ['required', 'numeric', 'min:20', 'max:150'],
+            'posisi_badan' => ['nullable', 'in:terlentang,berdiri'],
+            'lingkar_kepala' => ['nullable', 'numeric', 'min:20', 'max:70'],
+            'lila' => ['nullable', 'numeric', 'min:5', 'max:40'],
         ], [
             'nama.required' => 'Nama lengkap wajib diisi',
             'nama.max' => 'Nama maksimal 30 karakter',
@@ -42,6 +45,10 @@ class KalkulatorGiziController extends Controller
             'usia_bulan.min' => 'Usia minimal 1 bulan',
             'berat.min' => 'Berat badan minimal 1 kg',
             'tinggi.min' => 'Tinggi badan minimal 20 cm',
+            'lingkar_kepala.min' => 'Lingkar kepala minimal 20 cm',
+            'lingkar_kepala.max' => 'Lingkar kepala maksimal 70 cm',
+            'lila.min' => 'LiLA minimal 5 cm',
+            'lila.max' => 'LiLA maksimal 40 cm',
         ]);
 
         $usia = (int) $validated['usia_bulan'];
@@ -74,6 +81,9 @@ class KalkulatorGiziController extends Controller
             'usia_bulan' => $usia,
             'berat' => $berat,
             'tinggi' => $tinggi,
+            'posisi_badan' => $request->input('posisi_badan', 'terlentang'),
+            'lingkar_kepala' => $request->filled('lingkar_kepala') ? (float) $request->lingkar_kepala : null,
+            'lila' => $request->filled('lila') ? (float) $request->lila : null,
             'z_score' => round($zScore, 2),
             'status_stunting' => $statusStunting,
             'badge_color' => $badgeColor,

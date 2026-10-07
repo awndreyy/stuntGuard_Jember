@@ -42,11 +42,11 @@
                 <span class="px-2.5 text-[10px] font-bold tracking-wider text-stone-400 uppercase">Manajemen Konten</span>
                 <nav class="mt-1.5 space-y-1">
                     <!-- Kelola Informasi -->
-                    <a href="#" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl text-stone-600 hover:text-rose-700 hover:bg-stone-50 transition-colors">
-                        <i data-lucide="book-open" class="w-4 h-4 mt-0.5 text-stone-400 group-hover:text-rose-700 transition-colors"></i>
+                    <a href="{{ route('kelolaInformasi') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ request()->is('kelolaInformasi*') ? 'bg-rose-700 text-white shadow-sm' : 'text-stone-600 hover:text-rose-700 hover:bg-stone-50' }} transition-all">
+                        <i data-lucide="book-open" class="w-4 h-4 mt-0.5 {{ request()->is('kelolaInformasi*') ? 'text-rose-100' : 'text-stone-400 group-hover:text-rose-700' }} transition-colors"></i>
                         <div class="flex-1">
                             <span class="block text-xs font-semibold">Kelola Informasi</span>
-                            <span class="block text-[10px] text-stone-400 font-normal leading-tight mt-0.5">Edukasi & Trimester</span>
+                            <span class="block text-[10px] {{ request()->is('kelolaInformasi*') ? 'text-rose-200' : 'text-stone-400' }} font-normal leading-tight mt-0.5">Edukasi & Trimester</span>
                         </div>
                     </a>
                     <!-- Kelola MPASI -->

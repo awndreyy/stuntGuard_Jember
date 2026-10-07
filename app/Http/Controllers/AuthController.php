@@ -83,7 +83,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:30'],
             'nik' => ['required', 'string', 'size:16', 'unique:users,nik'],
             'email' => ['required', 'email', 'max:30', 'unique:users,email'],
-            'password' => ['required', 'min:6'],
+            'password' => ['required', 'min:6', 'confirmed'],
         ], [
             'nik.unique' => 'NIK ini sudah terdaftar dalam sistem.',
             'nik.size' => 'NIK harus berjumlah tepat 16 digit.',

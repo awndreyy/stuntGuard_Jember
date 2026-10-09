@@ -36,7 +36,7 @@
                 @error('nama_resep')
                     <p class="modal-error-message text-[11px] text-rose-600 mt-1.5 flex items-center gap-1 font-medium">
                         <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
-                        <span>{{ $message }}</span>
+                        <span>{{ $message }}</span>   
                     </p>
                 @enderror
             </div>

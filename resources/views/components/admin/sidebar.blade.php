@@ -42,7 +42,7 @@
                 <span class="px-2.5 text-[10px] font-bold tracking-wider text-stone-400 uppercase">Manajemen Konten</span>
                 <nav class="mt-1.5 space-y-1">
                     <!-- Kelola Informasi -->
-                    <a href="{{ route('kelolaInformasi') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ request()->is('kelolaInformasi*') ? 'bg-rose-700 text-white shadow-sm' : 'text-stone-600 hover:text-rose-700 hover:bg-stone-50' }} transition-all">
+                    <a href="{{ url('/kelolaInformasi') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ request()->is('kelolaInformasi*') ? 'bg-rose-700 text-white shadow-sm' : 'text-stone-600 hover:text-rose-700 hover:bg-stone-50' }} transition-all">
                         <i data-lucide="book-open" class="w-4 h-4 mt-0.5 {{ request()->is('kelolaInformasi*') ? 'text-rose-100' : 'text-stone-400 group-hover:text-rose-700' }} transition-colors"></i>
                         <div class="flex-1">
                             <span class="block text-xs font-semibold">Kelola Informasi</span>

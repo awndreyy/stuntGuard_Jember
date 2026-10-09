@@ -32,10 +32,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('balita', BalitaController::class)->except(['create', 'show', 'edit']);
 
     Route::get('/kelolaInformasi', [InformasiController::class, 'index'])->name('kelolaInformasi');
-    Route::post('/kelolaInformasi', [InformasiController::class, 'store'])->name('kelolaInformasi.store');
-    Route::get('/kelolaInformasi/{id}/edit', [InformasiController::class, 'edit'])->name('kelolaInformasi.edit');
-    Route::put('/kelolaInformasi/{id}', [InformasiController::class, 'update'])->name('kelolaInformasi.update');
-    Route::delete('/kelolaInformasi/{id}', [InformasiController::class, 'destroy'])->name('kelolaInformasi.destroy');
+    Route::resource('kelolaInformasi', InformasiController::class)->names('kelolaInformasi')->except(['create', 'show', 'edit']);
 
     Route::get('/kelolaMpasi', [MpasiController::class, 'index'])->name('kelolaMpasi');
     Route::resource('mpasi', MpasiController::class)->except(['index', 'create', 'show', 'edit']);

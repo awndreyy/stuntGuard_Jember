@@ -63,13 +63,16 @@
                         </td>
                         <td class="py-3 px-4 text-center whitespace-nowrap">
                             <div class="inline-flex items-center justify-center gap-1.5">
-                                <button type="button" onclick="editBalita(@js($anak))" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors cursor-pointer" title="Edit Balita">
+                                <button type="button" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors cursor-pointer" title="Lihat Riwayat">
+                                    <i data-lucide="RotateCcwClock" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" onclick="editBalita(@js($anak))" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors cursor-pointer" title="Edit">
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </button>
                                 <form action="{{ route('balita.destroy', $anak->id_balita) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin mau menghapus data balita {{ $anak->nama_balita }} ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="p-1.5 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer" title="Hapus Balita">
+                                    <button type="submit" class="p-1.5 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer" title="Hapus">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
                                 </form>

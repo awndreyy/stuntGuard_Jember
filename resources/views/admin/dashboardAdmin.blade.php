@@ -315,16 +315,7 @@
                 </tbody>
                 </table>
             </div>
-
-            <!-- Card Footer -->
-            <div class="px-4 py-2 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 shrink-0">
-                <span>Sinkronisasi posyandu aktif</span>
-                <a href="#" class="font-semibold text-teal-800 hover:underline flex items-center gap-1">
-                Buka Log Complete <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                </a>
-            </div>
-
-            </div>
+        </div>
 
         </section>
 

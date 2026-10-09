@@ -13,7 +13,7 @@ class InformasiController extends Controller
      */
     public function index()
     {
-        $informations = Informasi::latest()->get();
+        $informations = Informasi::latest('id_informasi')->get();
 
         return view('admin.kelolaInformasi', compact('informations'));
     }
@@ -24,13 +24,16 @@ class InformasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'judul' => ['required_without:title', 'nullable', 'string', 'max:255'],
+            'title' => ['required_without:judul', 'nullable', 'string', 'max:255'],
             'category' => ['required', 'string', 'max:100'],
             'summary' => ['required', 'string'],
             'content' => ['nullable', 'string'],
             'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
         ], [
-            'title.required' => 'Judul informasi wajib diisi.',
+            'judul.required_without' => 'Judul informasi wajib diisi.',
+            'title.required_without' => 'Judul informasi wajib diisi.',
+            'judul.max' => 'Judul informasi maksimal 255 karakter.',
             'title.max' => 'Judul informasi maksimal 255 karakter.',
             'category.required' => 'Kategori wajib dipilih.',
             'summary.required' => 'Ringkasan singkat wajib diisi.',
@@ -46,12 +49,11 @@ class InformasiController extends Controller
         }
 
         Informasi::create([
-            'title' => $request->title,
+            'judul' => $request->input('judul', $request->input('title')),
             'category' => $request->category,
             'summary' => $request->summary,
             'content' => $request->content,
             'thumbnail' => $thumbnailPath,
-            'is_published' => $request->has('is_published'),
         ]);
 
         return redirect()->route('kelolaInformasi')->with('success', 'Informasi & edukasi berhasil ditambahkan!');
@@ -62,7 +64,7 @@ class InformasiController extends Controller
      */
     public function edit(string $id)
     {
-        $informations = Informasi::latest()->get();
+        $informations = Informasi::latest('id_informasi')->get();
         $editInformation = Informasi::findOrFail($id);
 
         return view('admin.kelolaInformasi', compact('informations', 'editInformation'));
@@ -76,13 +78,16 @@ class InformasiController extends Controller
         $informasi = Informasi::findOrFail($id);
 
         $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'judul' => ['required_without:title', 'nullable', 'string', 'max:255'],
+            'title' => ['required_without:judul', 'nullable', 'string', 'max:255'],
             'category' => ['required', 'string', 'max:100'],
             'summary' => ['required', 'string'],
             'content' => ['nullable', 'string'],
             'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
         ], [
-            'title.required' => 'Judul informasi wajib diisi.',
+            'judul.required_without' => 'Judul informasi wajib diisi.',
+            'title.required_without' => 'Judul informasi wajib diisi.',
+            'judul.max' => 'Judul informasi maksimal 255 karakter.',
             'title.max' => 'Judul informasi maksimal 255 karakter.',
             'category.required' => 'Kategori wajib dipilih.',
             'summary.required' => 'Ringkasan singkat wajib diisi.',
@@ -100,11 +105,10 @@ class InformasiController extends Controller
             $informasi->thumbnail = '/storage/'.$path;
         }
 
-        $informasi->title = $request->title;
+        $informasi->judul = $request->input('judul', $request->input('title'));
         $informasi->category = $request->category;
         $informasi->summary = $request->summary;
         $informasi->content = $request->content;
-        $informasi->is_published = $request->has('is_published');
         $informasi->save();
 
         return redirect()->route('kelolaInformasi')->with('success', 'Informasi & edukasi berhasil diperbarui!');

@@ -40,7 +40,7 @@
                     <tr class="table-user-row hover:bg-rose-50/40 transition-colors group" data-role="{{ $user->role }}">
                         <td class="py-3 px-4 font-medium text-stone-900 whitespace-nowrap">
                             <div class="flex items-center gap-3">
-                                {{-- Lingkaran inisial nama --}}
+                                {{-- Avatar inisial nama --}}
                                 <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 font-bold text-xs flex items-center justify-center shrink-0">
                                     {{ strtoupper(substr($user->name, 0, 2)) }}
                                 </div>
@@ -60,6 +60,9 @@
                         </td>
                         <td class="py-3 px-4 text-center whitespace-nowrap">
                             <div class="inline-flex items-center justify-center gap-1.5">
+                                <button type="button" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors cursor-pointer" title="Lihat Balita">
+                                    <i data-lucide="baby" class="w-4 h-4"> class="w-4 h-4"></i>
+                                </button>
                                 <button type="button" onclick="editData(@js($user))" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors cursor-pointer" title="Edit User">
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </button>

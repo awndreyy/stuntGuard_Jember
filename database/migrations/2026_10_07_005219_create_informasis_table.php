@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('informasis', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
+            $table->id('id_informasi');
+            $table->string('judul');
             $table->string('category');
             $table->text('summary');
             $table->longText('content')->nullable();
             $table->string('thumbnail')->nullable();
-            $table->boolean('is_published')->default(true);
             $table->timestamps();
         });
     }

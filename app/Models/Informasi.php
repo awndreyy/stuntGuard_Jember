@@ -11,16 +11,13 @@ class Informasi extends Model
 
     protected $table = 'informasis';
 
+    protected $primaryKey = 'id_informasi';
+
     protected $fillable = [
-        'title',
+        'judul',
         'category',
         'summary',
         'content',
         'thumbnail',
-        'is_published',
-    ];
-
-    protected $casts = [
-        'is_published' => 'boolean',
     ];
 }

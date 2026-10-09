@@ -27,7 +27,7 @@ class KalkulatorGiziController extends Controller
             'nama' => ['required', 'string', 'max:30'],
             'jenis_kelamin' => ['required', 'in:L,P'],
             'usia_bulan' => ['required', 'numeric', 'min:1', 'max:60'],
-            'berat' => ['required', 'numeric', 'min:1', 'max:30'],
+            'berat' => ['required', 'numeric', 'min:1', 'max:50'],
             'tinggi' => ['required', 'numeric', 'min:20', 'max:150'],
             'posisi_badan' => ['nullable', 'in:terlentang,berdiri'],
             'lingkar_kepala' => ['nullable', 'numeric', 'min:20', 'max:70'],

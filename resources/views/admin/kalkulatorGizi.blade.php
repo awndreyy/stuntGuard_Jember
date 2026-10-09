@@ -182,12 +182,12 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label for="berat" class="block text-xs font-semibold text-stone-700 mb-1">Berat Badan (kg) <span class="text-rose-500">*</span></label>
-                        <input type="text" inputmode="numeric" step="0.1" name="berat" id="berat" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" required value="{{ old('berat', $hasil['berat'] ?? '') }}" placeholder="min: 1" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('berat') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
+                        <input type="text" inputmode="numeric" step="0.1" name="berat" id="berat" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" required value="{{ old('berat', $hasil['berat'] ?? '') }}" placeholder="min: 1" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('berat') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
                     </div>
 
                     <div>
                         <label for="tinggi" class="block text-xs font-semibold text-stone-700 mb-1">Tinggi / Panjang Badan (cm) <span class="text-rose-500">*</span></label>
-                        <input type="text" inputmode="numeric" step="0.1" name="tinggi" id="tinggi" maxlength="5" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" required value="{{ old('tinggi', $hasil['tinggi'] ?? '') }}" placeholder="min: 20" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('tinggi') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
+                        <input type="text" inputmode="numeric" step="0.1" name="tinggi" id="tinggi" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" required value="{{ old('tinggi', $hasil['tinggi'] ?? '') }}" placeholder="min: 20" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('tinggi') ? 'border-rose-500 ring-2 ring-rose-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-white transition-colors">
                     </div>
                     @error('berat')
                         <p class="modal-error-message text-[11px] text-rose-600 mt-1.5 flex items-center gap-1 font-medium">

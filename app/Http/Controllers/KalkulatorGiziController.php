@@ -51,10 +51,24 @@ class KalkulatorGiziController extends Controller
             'lila.max' => 'LiLA maksimal 40 cm',
         ]);
 
-        $usia = (int) $validated['usia_bulan'];
+        $usia = (float) $validated['usia_bulan'];
         $tinggi = (float) $validated['tinggi'];
         $berat = (float) $validated['berat'];
-        $jk = $validated['jenis_kelamin'];
+        $jk = $validated['jenis_kelamin']; 
+
+        $posisi = $validated['posisi_badan'] ?? null;
+
+        if ($posisi === null) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'posisi_badan' => 'Posisi pengukuran wajib dipilih.',
+            ]);
+        }
+
+        if ($usia < 24 && $posisi === 'berdiri') {
+            $tinggi += 0.7;
+        } elseif ($usia >= 24 && $posisi === 'terlentang') {
+            $tinggi -= 0.7;
+        }
 
         // Standar Median dan SD WHO Panjang/Tinggi Badan menurut Umur (TB/U) 0-60 Bulan
         [$median, $sd] = $this->getWhoTbuStandard($jk, $usia);

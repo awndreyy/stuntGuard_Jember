@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>{{ $title ?? 'Login - StuntGuard Jember' }}</title>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind -->
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -138,7 +137,6 @@
         <div>
           <div class="flex items-center justify-between mb-1.5">
             <label for="password" class="block text-xs font-semibold text-stone-900">Password</label>
-            <a href="{{ Route::has('password.request') ? route('password.request') : '#' }}" class="text-xs font-medium text-rose-700 hover:text-rose-900 transition-colors">Lupa Password?</a>
           </div>
           <div class="relative group">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">

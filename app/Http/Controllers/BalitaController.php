@@ -12,7 +12,7 @@ class BalitaController extends Controller
      */
     public function index()
     {
-        return redirect()->route('users.index');
+        return redirect()->route('kelolaUser');
     }
 
     /**
@@ -31,8 +31,8 @@ class BalitaController extends Controller
         $request->validate([
             'user_id' => ['required', 'exists:users,id'],
             'nama_balita' => ['required', 'string', 'min:3', 'max:30'],
-            'nik' => ['nullable', 'string', 'size:16', 'unique:balitas,nik'],
-            'tanggal_lahir' => ['required', 'date'],
+            'nik' => ['nullable', 'digits:16', 'unique:balitas,nik'],
+            'tanggal_lahir' => ['required', 'date', 'before_or_equal:today'],
             'jenis_kelamin' => ['required', 'in:Laki-laki,Perempuan'],
         ], [
             'user_id.required' => 'Orang tua / wali wajib dipilih',
@@ -83,8 +83,8 @@ class BalitaController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'nama_balita' => 'required|string|max:30',
-            'nik' => 'nullable|string|size:16|unique:balitas,nik,'.$balita->id_balita.',id_balita',
-            'tanggal_lahir' => 'required|date',
+            'nik' => 'nullable|digits:16|unique:balitas,nik,'.$balita->id_balita.',id_balita',
+            'tanggal_lahir' => 'required|date|before_or_equal:today',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
         ], [
             'user_id.required' => 'Orang tua / wali wajib dipilih',

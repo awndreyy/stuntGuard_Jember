@@ -81,15 +81,15 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:30'],
-            'nik' => ['required', 'string', 'size:16', 'unique:users,nik'],
+            'nik' => ['required', 'digits:16', 'unique:users,nik'],
             'email' => ['required', 'email', 'max:30', 'unique:users,email'],
-            'password' => ['required', 'min:6', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [
             'nik.unique' => 'NIK ini sudah terdaftar dalam sistem.',
             'nik.size' => 'NIK harus berjumlah tepat 16 digit.',
             'email.unique' => 'Email ini sudah terdaftar.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
-            'password.min' => 'Password minimal 6 karakter.',
+            'password.min' => 'Password minimal 8 karakter.',
         ]);
 
         $user = User::create([

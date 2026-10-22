@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Balita;
 use App\Services\WhoGrowthService;
+use App\Models\Pengukuran;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Carbon;
 
 class KalkulatorGiziController extends Controller
 {
@@ -18,6 +20,7 @@ class KalkulatorGiziController extends Controller
     public function calculate(Request $request, WhoGrowthService $who): View
     {
         $v = $request->validate([
+            'balita_id' => ['nullable', 'integer', 'exists:balitas,id_balita'],
             'nama' => ['required', 'string', 'max:30'],
             'jenis_kelamin' => ['required', 'in:L,P'],
             'usia_bulan' => ['required', 'integer', 'between:0,60'],
@@ -68,7 +71,48 @@ class KalkulatorGiziController extends Controller
             'z_lilau' => $zArm === null ? null : round($zArm, 2),
             'skrining_lila' => $who->lilaScreening($arm, $age),
         ];
+   
+        $balita = !empty($v['balita_id'])
+            ? Balita::findOrFail($v['balita_id'])
+            : null;
+
+        if ($balita) {
+            $v['nama'] = $balita->nama_balita;
+
+            $v['jenis_kelamin'] =
+                $balita->jenis_kelamin === 'Laki-laki'
+                    ? 'L'
+                    : 'P';
+
+            $v['usia_bulan'] = (int) Carbon::parse(
+                $balita->tanggal_lahir
+            )->diffInMonths(now());
+        }
+
+        if ($balita) {
+            Pengukuran::create([
+                'balita_id' => $balita->id_balita,
+                'tanggal_pengukuran' => now()->toDateString(),
+        
+                'nama_balita' => $balita->nama_balita,
+                'nik' => $balita->nik,
+                'jenis_kelamin' => $balita->jenis_kelamin,
+        
+                'berat_badan' => $weight,
+                'tinggi_badan' => $height,
+                'umur_bulan' => $age,
+        
+                'lingkar_kepala' => $head,
+                'lila' => $arm,
+        
+                'z_score_bbu' => $zWfa === null ? null : round($zWfa, 2),
+                'z_score_tbu' => $zHeight === null ? null : round($zHeight, 2),
+                'z_score_bbtb' => $zWfh === null ? null : round($zWfh, 2),
+            ]);
+        }
+
         $balitas = Balita::with('orangTua')->orderBy('nama_balita')->get();
         return view('admin.kalkulatorGizi', compact('hasil', 'balitas'));
+
     }
 }

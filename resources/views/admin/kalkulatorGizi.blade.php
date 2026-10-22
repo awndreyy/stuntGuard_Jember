@@ -43,6 +43,7 @@
 
                     <div class="relative" id="balitaSelectWrapper">
                         <!-- Hidden input yang dikirim ke controller -->
+                        <input type="hidden" name="balita_id" id="inputBalitaId" value="{{ old('balita_id') }}">
                         <input type="hidden" name="nama" id="inputNamaBalita" required value="{{ old('nama', $hasil['nama'] ?? '') }}">
 
                         <!-- Trigger Button Dropdown -->
@@ -106,7 +107,7 @@
                                     @foreach($balitas as $balitaItem)
                                         <button
                                             type="button"
-                                            onclick="selectBalita('{{ addslashes($balitaItem->nama_balita) }}', '{{ $balitaItem->jenis_kelamin }}', '{{ $balitaItem->tanggal_lahir }}', '{{ addslashes($balitaItem->orangTua->name ?? 'Tidak ada data') }}', '{{ $balitaItem->nik ?? '-' }}')"
+                                            onclick="selectBalita('{{ $balitaItem->id_balita }}','{{ addslashes($balitaItem->nama_balita) }}', '{{ $balitaItem->jenis_kelamin }}', '{{ $balitaItem->tanggal_lahir }}', '{{ addslashes($balitaItem->orangTua->name ?? 'Tidak ada data') }}', '{{ $balitaItem->nik ?? '-' }}')"
                                             class="balita-option w-full text-left px-3 py-2.5 hover:bg-rose-50/70 transition-colors flex items-center justify-between gap-2.5 cursor-pointer"
                                             data-nama="{{ strtolower($balitaItem->nama_balita) }}"
                                             data-nik="{{ strtolower($balitaItem->nik ?? '') }}"
@@ -431,8 +432,9 @@
         }
     }
 
-    function selectBalita(nama, gender, birthDate, parentName, nik) {
+    function selectBalita(id, nama, gender, birthDate, parentName, nik) {
         // Set nama balita
+        document.getElementById('inputBalitaId').value = id;
         const inputNama = document.getElementById('inputNamaBalita');
         const selectedText = document.getElementById('selectedBalitaText');
         const badge = document.getElementById('balitaSelectionBadge');
@@ -488,6 +490,7 @@
     }
 
     function selectManualName() {
+        document.getElementById('inputBalitaId').value = '';
         const searchInput = document.getElementById('balitaSearchInput');
         const customName = searchInput ? searchInput.value.trim() : '';
 

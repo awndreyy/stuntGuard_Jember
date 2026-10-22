@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::middleware(['guest'])->group(function () {
     // login
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.perform');
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login.perform');
     // Daftar
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.perform');
@@ -41,13 +41,15 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('balita', BalitaController::class)->except(['create', 'show', 'edit']);
 
     Route::get('/kelolaInformasi', [InformasiController::class, 'index'])->name('kelolaInformasi');
-    Route::resource('kelolaInformasi', InformasiController::class)->names('kelolaInformasi')->except(['create', 'show', 'edit']);
+    Route::resource('kelolaInformasi', InformasiController::class)->names('kelolaInformasi')->except(['index', 'create', 'show', 'edit']);
 
     Route::get('/kelolaMpasi', [MpasiController::class, 'index'])->name('kelolaMpasi');
     Route::resource('mpasi', MpasiController::class)->except(['index', 'create', 'show', 'edit']);
 
     Route::get('/kalkulatorGizi', [KalkulatorGiziController::class, 'index'])->name('kalkulatorGizi');
     Route::post('/kalkulatorGizi', [KalkulatorGiziController::class, 'calculate'])->name('kalkulator.calculate');
+    Route::post('/simpan-pengukuran', [PengukuranController::class, 'store'])->name('pengukuran.store');
+    Route::get('/balita/{balita}/riwayat', [PengukuranController::class, 'history'])->name('pengukuran.history');
 });
 
 Route::middleware(['auth', 'role:Orang Tua'])->group(function () {
@@ -60,4 +62,3 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-Route::post('/simpan-pengukuran', [PengukuranController::class, 'store']);

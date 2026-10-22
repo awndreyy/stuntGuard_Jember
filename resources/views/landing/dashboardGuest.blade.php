@@ -32,7 +32,7 @@
         <!-- 1. HERO SECTION -->
         <section class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 pt-space-lg md:pt-space-xl pb-space-xl">
           <div class="max-w-4xl mx-auto flex flex-col items-center text-center gap-4">
-            
+
             <!-- Badge -->
             <div class="inline-flex items-center gap-1 bg-rose-100/70 text-rose-900 px-4 py-1.5 rounded-full shadow-sm">
               <span class="material-symbols-outlined text-[18px] text-rose-700" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
@@ -208,7 +208,7 @@
           </a>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          
+
           <!-- Card 1: Stunting HPK -->
           <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
             <div class="relative h-44 w-full overflow-hidden">

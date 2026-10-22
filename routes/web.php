@@ -7,9 +7,18 @@ use App\Http\Controllers\KalkulatorGiziController;
 use App\Http\Controllers\MpasiController;
 use App\Http\Controllers\PengukuranController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    if(Auth::check()){
+        if(Auth::user()->role == 'Admin'){
+            return redirect()->route('dashboardAdmin');
+        }else{
+            return redirect()->route('dashboardUser');
+        }
+    }
+
     return view('landing.dashboardGuest');
 })->name('home');
 

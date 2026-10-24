@@ -66,154 +66,6 @@ function applyAllFilters() {
     }
 }
 
-// MODAL HANDLERS
-function openRecipeModal(mode = 'create', id = null) {
-    const modal = document.getElementById('recipeModal');
-    const title = document.getElementById('recipeModalTitle');
-    const submitBtnText = document.getElementById('submitBtnText');
-    const form = document.getElementById('recipeForm');
-    const formMethod = document.getElementById('formMethod');
-    const recipesData = window.recipesData || {};
-    const storeUrl = window.mpasiStoreUrl || '/mpasi';
-
-    // Bersihkan error messages dan alert jika ada
-    document.querySelectorAll('.modal-error-message').forEach(el => el.remove());
-    document.querySelectorAll('.modal-error-input').forEach(el => {
-        el.classList.remove('border-rose-500', 'ring-2', 'ring-rose-500/20');
-        el.classList.add('border-stone-200');
-    });
-    const errorAlert = document.getElementById('modalErrorAlert');
-    if (errorAlert) errorAlert.remove();
-
-    if (mode === 'create') {
-        if (title) title.innerText = 'Tambah Resep MPASI Baru';
-        if (submitBtnText) submitBtnText.innerText = 'Simpan Resep';
-        if (form) {
-            form.action = storeUrl;
-            form.reset();
-        }
-        if (formMethod) formMethod.value = 'POST';
-        const editIdInput = document.getElementById('editRecipeId');
-        if (editIdInput) editIdInput.value = '';
-
-        // Reset ingredient & step list
-        const ingList = document.getElementById('ingredientsList');
-        if (ingList) {
-            ingList.innerHTML = `
-                <div class="space-y-1">
-                    <div class="flex items-center gap-2 ingredient-row">
-                        <input type="text" name="bahan[]" required placeholder="Contoh: 30 gr Beras Merah Organik" class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-rose-700/20">
-                        <button type="button" onclick="removeIngredientRow(this)" class="p-1.5 text-stone-400 hover:text-rose-600 rounded-lg cursor-pointer"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                    </div>
-                </div>
-            `;
-        }
-
-        const stepsList = document.getElementById('stepsList');
-        if (stepsList) {
-            stepsList.innerHTML = `
-                <div class="space-y-1">
-                    <div class="flex items-start gap-2 step-row">
-                        <span class="w-5 h-5 rounded-full bg-stone-100 text-stone-600 font-bold text-[10px] flex items-center justify-center shrink-0 mt-1 step-num">1</span>
-                        <textarea name="cara_pembuatan[]" required rows="2" placeholder="Tuliskan petunjuk memasak langkah 1..." class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-rose-700/20"></textarea>
-                        <button type="button" onclick="removeStepRow(this)" class="p-1.5 text-stone-400 hover:text-rose-600 rounded-lg cursor-pointer mt-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                    </div>
-                </div>
-            `;
-        }
-    } else if (mode === 'edit' && id && recipesData[id]) {
-        const recipe = recipesData[id];
-        if (title) title.innerText = 'Edit Resep MPASI';
-        if (submitBtnText) submitBtnText.innerText = 'Simpan Perubahan';
-        const recipeId = recipe.id_resep || recipe.id || id;
-        if (form) form.action = `/mpasi/${recipeId}`;
-        const methodInput = document.getElementById('formMethod');
-        if (methodInput) {
-            methodInput.value = 'PUT';
-        }
-        const editIdInput = document.getElementById('editRecipeId');
-        if (editIdInput) editIdInput.value = recipeId;
-
-        const setVal = (elemId, val) => {
-            const el = document.getElementById(elemId);
-            if (el) el.value = (val !== null && val !== undefined) ? val : '';
-        };
-
-        setVal('formNamaResep', recipe.nama_resep);
-        setVal('formKategoriUsia', recipe.kategori_usia || '6-8');
-        setVal('formWaktu', recipe.waktu_memasak);
-        setVal('formPorsi', recipe.porsi);
-        setVal('formKalori', recipe.kalori);
-        setVal('formKarbohidrat', recipe.karbohidrat);
-        setVal('formLemak', recipe.lemak);
-        setVal('formProtein', recipe.protein);
-        setVal('formZatBesi', recipe.zat_besi);
-        setVal('formSeng', recipe.seng);
-
-        const formFoto = document.getElementById('formFoto');
-        if (formFoto) {
-            if (recipe.gambar && (recipe.gambar.startsWith('http://') || recipe.gambar.startsWith('https://'))) {
-                formFoto.value = recipe.gambar;
-            } else {
-                formFoto.value = '';
-            }
-        }
-
-        // Bahan
-        const ingList = document.getElementById('ingredientsList');
-        if (ingList) {
-            let bahanArr = Array.isArray(recipe.bahan) ? recipe.bahan : [];
-            if (typeof recipe.bahan === 'string') {
-                try { bahanArr = JSON.parse(recipe.bahan); } catch(e) { bahanArr = [recipe.bahan]; }
-            }
-            if (bahanArr.length === 0) bahanArr = [''];
-
-            ingList.innerHTML = bahanArr.map(b => `
-                <div class="space-y-1">
-                    <div class="flex items-center gap-2 ingredient-row">
-                        <input type="text" name="bahan[]" required value="${b}" placeholder="Nama bahan & takaran" class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-rose-700/20">
-                        <button type="button" onclick="removeIngredientRow(this)" class="p-1.5 text-stone-400 hover:text-rose-600 rounded-lg cursor-pointer"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Langkah langkah
-        const stepsList = document.getElementById('stepsList');
-        if (stepsList) {
-            let langkahArr = Array.isArray(recipe.cara_pembuatan) ? recipe.cara_pembuatan : [];
-            if (typeof recipe.cara_pembuatan === 'string') {
-                try { langkahArr = JSON.parse(recipe.cara_pembuatan); } catch(e) { langkahArr = [recipe.cara_pembuatan]; }
-            }
-            if (langkahArr.length === 0) langkahArr = [''];
-
-            stepsList.innerHTML = langkahArr.map((s, idx) => `
-                <div class="space-y-1">
-                    <div class="flex items-start gap-2 step-row">
-                        <span class="w-5 h-5 rounded-full bg-stone-100 text-stone-600 font-bold text-[10px] flex items-center justify-center shrink-0 mt-1 step-num">${idx + 1}</span>
-                        <textarea name="cara_pembuatan[]" required rows="2" placeholder="Tuliskan petunjuk memasak langkah ini..." class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-rose-700/20">${s}</textarea>
-                        <button type="button" onclick="removeStepRow(this)" class="p-1.5 text-stone-400 hover:text-rose-600 rounded-lg cursor-pointer mt-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                    </div>
-                </div>
-            `).join('');
-        }
-    }
-
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    }
-    if (window.lucide) lucide.createIcons();
-}
-
-function closeRecipeModal() {
-    const modal = document.getElementById('recipeModal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
-}
-
 function previewRecipe(id) {
     const recipesData = window.recipesData || {};
     const recipe = recipesData[id];
@@ -224,10 +76,14 @@ function previewRecipe(id) {
             let imageUrl = recipe.gambar;
             if (!imageUrl) {
                 img.removeAttribute('src');
-            } else if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
-                imageUrl = '/' + imageUrl.replace(/^\//, '');
+                img.classList.add('hidden');
+            } else {
+                if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
+                    imageUrl = '/' + imageUrl.replace(/^\//, '');
+                }
+                img.src = imageUrl;
+                img.classList.remove('hidden');
             }
-            img.src = imageUrl;
         }
 
         // Badges & Title
@@ -433,42 +289,13 @@ function showToast(title, message, type = 'success') {
     }, 4000);
 }
 
-// Close on background backdrop click
+// Modal preview tetap dipakai pada halaman daftar.
 document.addEventListener('DOMContentLoaded', () => {
-    const recipeModal = document.getElementById('recipeModal');
-    const recipeModalContainer = document.getElementById('recipeModalContainer');
-    if (recipeModal && recipeModalContainer) {
-        recipeModal.addEventListener('click', (e) => {
-            if (!recipeModalContainer.contains(e.target)) closeRecipeModal();
-        });
-    }
-
     const previewModal = document.getElementById('previewModal');
     const previewModalContainer = document.getElementById('previewModalContainer');
     if (previewModal && previewModalContainer) {
-        previewModal.addEventListener('click', (e) => {
-            if (!previewModalContainer.contains(e.target)) closePreviewModal();
-        });
-    }
-
-    // Pastikan action form dan _method sinkron saat submit
-    const recipeForm = document.getElementById('recipeForm');
-    if (recipeForm) {
-        recipeForm.addEventListener('submit', function () {
-            const methodInput = document.getElementById('formMethod');
-            const editIdInput = document.getElementById('editRecipeId');
-            if (methodInput && methodInput.value === 'PUT') {
-                const editId = editIdInput ? editIdInput.value : '';
-                if (editId) {
-                    recipeForm.action = `/mpasi/${editId}`;
-                } else {
-                    methodInput.value = 'POST';
-                    recipeForm.action = window.mpasiStoreUrl || '/mpasi';
-                }
-            } else {
-                if (methodInput) methodInput.value = 'POST';
-                recipeForm.action = window.mpasiStoreUrl || '/mpasi';
-            }
+        previewModal.addEventListener('click', (event) => {
+            if (!previewModalContainer.contains(event.target)) closePreviewModal();
         });
     }
 });
@@ -478,8 +305,6 @@ Object.assign(window, {
     filterCategory,
     searchRecipes,
     applyAllFilters,
-    openRecipeModal,
-    closeRecipeModal,
     previewRecipe,
     closePreviewModal,
     deleteRecipe,

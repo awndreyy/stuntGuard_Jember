@@ -30,6 +30,24 @@ class MpasiController extends Controller
     }
 
     /**
+     * Show the page for creating an MPASI recipe.
+     */
+    public function create()
+    {
+        return view('admin.formMpasi');
+    }
+
+    /**
+     * Show the page for editing an existing MPASI recipe.
+     */
+    public function edit(string $id)
+    {
+        $mpasi = Mpasi::findOrFail($id);
+
+        return view('admin.formMpasi', compact('mpasi'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -48,7 +66,7 @@ class MpasiController extends Controller
             'bahan' => ['required', 'array', 'min:1'],
             'bahan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'cara_pembuatan' => ['required', 'array', 'min:1'],
-            'cara_pembuatan.*' => ['nullable', 'string'],
+            'cara_pembuatan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
             'foto' => ['nullable', 'string', 'max:500'],
         ], [
@@ -80,6 +98,7 @@ class MpasiController extends Controller
             'bahan.required' => 'Minimal 1 bahan wajib diisi.',
             'bahan.*.regex' => 'Bahan hanya boleh berisi huruf dan angka (tidak boleh simbol).',
             'cara_pembuatan.required' => 'Minimal 1 langkah pembuatan wajib diisi.',
+            'cara_pembuatan.*.regex' => 'Langkah pembuatan hanya boleh berisi huruf dan angka (tidak boleh simbol).',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, webp, atau gif.',
             'gambar.max' => 'Ukuran gambar maksimal 3MB.',
@@ -144,7 +163,7 @@ class MpasiController extends Controller
             'bahan' => ['required', 'array', 'min:1'],
             'bahan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'cara_pembuatan' => ['required', 'array', 'min:1'],
-            'cara_pembuatan.*' => ['nullable', 'string'],
+            'cara_pembuatan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
             'foto' => ['nullable', 'string', 'max:500'],
         ], [
@@ -176,6 +195,7 @@ class MpasiController extends Controller
             'bahan.required' => 'Minimal 1 bahan wajib diisi.',
             'bahan.*.regex' => 'Bahan hanya boleh berisi huruf dan angka (tidak boleh simbol).',
             'cara_pembuatan.required' => 'Minimal 1 langkah pembuatan wajib diisi.',
+            'cara_pembuatan.*.regex' => 'Langkah pembuatan hanya boleh berisi huruf dan angka (tidak boleh simbol).',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, webp, atau gif.',
             'gambar.max' => 'Ukuran gambar maksimal 3MB.',

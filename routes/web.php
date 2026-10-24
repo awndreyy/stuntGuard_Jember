@@ -44,7 +44,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('kelolaInformasi', InformasiController::class)->names('kelolaInformasi')->except(['index', 'create', 'show', 'edit']);
 
     Route::get('/kelolaMpasi', [MpasiController::class, 'index'])->name('kelolaMpasi');
-    Route::resource('mpasi', MpasiController::class)->except(['index', 'create', 'show', 'edit']);
+    Route::resource('mpasi', MpasiController::class)->except(['index', 'show']);
 
     Route::get('/kalkulatorGizi', [KalkulatorGiziController::class, 'index'])->name('kalkulatorGizi');
     Route::post('/kalkulatorGizi', [KalkulatorGiziController::class, 'calculate'])->name('kalkulator.calculate');

@@ -17,10 +17,10 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <button onclick="openRecipeModal('create')" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl transition-all shadow-sm hover:shadow cursor-pointer w-full sm:w-auto">
+            <a href="{{ route('mpasi.create') }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl transition-all shadow-sm hover:shadow cursor-pointer w-full sm:w-auto">
                 <i data-lucide="plus-circle" class="w-4 h-4"></i>
                 <span>Tambah Resep Baru</span>
-            </button>
+            </a>
         </div>
     </div>
 
@@ -72,9 +72,6 @@
         @method('DELETE')
     </form>
 
-    <!-- Modal Tambah / Edit Resep -->
-    @include('components.admin.modalTambahMpasi')
-
     <!-- Modal Detail / Preview Resep -->
     @include('components.admin.modalDetailMpasi')
 
@@ -94,7 +91,6 @@
     <!-- Pass dynamic data to external JS -->
     <script>
         window.recipesData = @json($mpasis->keyBy('id_resep'));
-        window.mpasiStoreUrl = "{{ route('mpasi.store') }}";
     </script>
     <!-- Script Khusus Interaktivitas Halaman MPASI -->
     @vite(['resources/js/kelola-mpasi.js'])
@@ -107,16 +103,5 @@
         </script>
     @endif
 
-    @if(isset($errors) && $errors->any())
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const modal = document.getElementById('recipeModal');
-                if (modal) {
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                    if (window.lucide) lucide.createIcons();
-                }
-            });
-        </script>
-    @endif
+
 @endpush

@@ -64,7 +64,7 @@
                             <td class="py-3 px-4 text-right">
                                 <div class="inline-flex items-center gap-1">
                                     <button onclick="previewRecipe({{ $recipe->id_resep }})" class="p-1.5 text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors cursor-pointer" title="Preview"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                                    <button onclick="openRecipeModal('edit', {{ $recipe->id_resep }})" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button>
+                                    <a href="{{ route('mpasi.edit', $recipe->id_resep) }}" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer" title="Edit" aria-label="Edit resep {{ $recipe->nama_resep }}"><i data-lucide="pencil" class="w-4 h-4"></i></a>
                                     <button onclick="deleteRecipe({{ $recipe->id_resep }}, '{{ addslashes($recipe->nama_resep) }}')" class="p-1.5 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                                 </div>
                             </td>

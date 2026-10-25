@@ -17,6 +17,12 @@
         </div>
     </div>
 
+    @if(session('success'))
+        <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs font-semibold text-emerald-700" role="status">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
         <!-- Form Kalkulator (Kiri) -->
@@ -43,7 +49,7 @@
 
                     <div class="relative" id="balitaSelectWrapper">
                         <!-- Hidden input yang dikirim ke controller -->
-                        <input type="hidden" name="balita_id" id="inputBalitaId" value="{{ old('balita_id') }}">
+                        <input type="hidden" name="balita_id" id="inputBalitaId" value="{{ old('balita_id', $selectedBalitaId ?? '') }}">
                         <input type="hidden" name="nama" id="inputNamaBalita" required value="{{ old('nama', $hasil['nama'] ?? '') }}">
 
                         <!-- Trigger Button Dropdown -->
@@ -107,9 +113,15 @@
                                     @foreach($balitas as $balitaItem)
                                         <button
                                             type="button"
-                                            onclick="selectBalita('{{ $balitaItem->id_balita }}','{{ addslashes($balitaItem->nama_balita) }}', '{{ $balitaItem->jenis_kelamin }}', '{{ $balitaItem->tanggal_lahir }}', '{{ addslashes($balitaItem->orangTua->name ?? 'Tidak ada data') }}', '{{ $balitaItem->nik ?? '-' }}')"
-                                            class="balita-option w-full text-left px-3 py-2.5 hover:bg-rose-50/70 transition-colors flex items-center justify-between gap-2.5 cursor-pointer"
+                                            onclick="selectBalita(this.dataset.id, this.dataset.namaAsli, this.dataset.gender, this.dataset.birth, this.dataset.parentName, this.dataset.nikAsli)"
+                                            data-id="{{ $balitaItem->id_balita }}"
+                                            data-nama-asli="{{ $balitaItem->nama_balita }}"
                                             data-nama="{{ strtolower($balitaItem->nama_balita) }}"
+                                            data-gender="{{ $balitaItem->jenis_kelamin }}"
+                                            data-birth="{{ $balitaItem->tanggal_lahir }}"
+                                            data-parent-name="{{ $balitaItem->orangTua->name ?? 'Tidak ada data' }}"
+                                            data-nik-asli="{{ $balitaItem->nik ?? '-' }}"
+                                            class="balita-option w-full text-left px-3 py-2.5 hover:bg-rose-50/70 transition-colors flex items-center justify-between gap-2.5 cursor-pointer"
                                             data-nik="{{ strtolower($balitaItem->nik ?? '') }}"
                                             data-parent="{{ strtolower($balitaItem->orangTua->name ?? '') }}"
                                         >
@@ -151,6 +163,9 @@
                             <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
                             <span>{{ $message }}</span>
                         </p>
+                    @enderror
+                    @error('balita_id')
+                        <p class="text-[11px] text-rose-600 mt-1.5 font-medium">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -270,6 +285,9 @@
                         <i data-lucide="scale" class="w-4 h-4"></i>
                         <span>Hitung Status Gizi</span>
                     </button>
+                    <p class="text-[11px] text-stone-500 mt-2">
+                        Klik Hitung untuk melihat hasil. Untuk balita terdaftar, gunakan tombol Simpan Pengukuran setelah hasil ditampilkan.
+                    </p>
                 </div>
             </form>
         </div>
@@ -290,6 +308,11 @@
 
                     @if(isset($hasil))
                         <div class="space-y-3">
+                            @if($selectedBalitaId ?? null)
+                                <p id="pengukuranSaveInfo" class="text-[11px] font-medium text-amber-700">Hasil belum disimpan ke riwayat balita.</p>
+                            @else
+                                <p class="text-[11px] font-medium text-amber-700">Simulasi saja — tidak ada data yang disimpan.</p>
+                            @endif
                             <div class="bg-stone-50 p-3.5 rounded-xl border border-stone-100 text-xs space-y-2">
                                 <div class="flex justify-between items-center"><span class="text-stone-500">Nama Balita:</span> <span class="font-bold text-stone-800">{{ $hasil['nama'] }}</span></div>
                                 <div class="flex justify-between items-center"><span class="text-stone-500">Jenis Kelamin:</span> <span class="font-medium text-stone-700">{{ $hasil['jenis_kelamin'] }}</span></div>
@@ -351,6 +374,23 @@
                                 <span class="block text-[11px] font-semibold {{ $subtitleTextColor }} uppercase tracking-wider mb-1">Indikator Stunting ({{ $hasil['indikator_tinggi'] }})</span>
                                 <h3 class="text-base font-bold {{ $titleTextColor }}">{{ $hasil['status_stunting'] }}</h3>
                             </div>
+
+                            @if($selectedBalitaId ?? null)
+                                <form id="simpanPengukuranForm" method="POST" action="{{ route('pengukuran.store') }}" class="pt-2 space-y-2">
+                                    @csrf
+                                    <input type="hidden" name="balita_id" value="{{ $selectedBalitaId }}">
+                                    <input type="hidden" name="tanggal_pengukuran" value="{{ today()->toDateString() }}">
+                                    <input type="hidden" name="weight" value="{{ $hasil['berat'] }}">
+                                    <input type="hidden" name="height" value="{{ $hasil['tinggi'] }}">
+                                    <input type="hidden" name="posisi_badan" value="{{ $hasil['posisi_badan'] }}">
+                                    <input type="hidden" name="lingkar_kepala" value="{{ $hasil['lingkar_kepala'] }}">
+                                    <input type="hidden" name="lila" value="{{ $hasil['lila'] }}">
+                                    <button type="submit" class="w-full rounded-xl bg-emerald-700 px-3 py-2.5 text-xs font-semibold text-white hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Simpan Pengukuran ke Riwayat
+                                    </button>
+                                    <p id="statusSimpanPengukuran" class="text-[11px] font-medium" role="status" aria-live="polite"></p>
+                                </form>
+                            @endif
                         </div>
                     @else
                         <div class="py-12 text-center text-stone-400 text-xs flex flex-col items-center justify-center gap-2">
@@ -528,7 +568,7 @@
             months--;
         }
 
-        return Math.max(0, Math.min(60, months));
+        return Math.max(0, months);
     }
 
     function highlightField(el) {
@@ -536,6 +576,47 @@
         setTimeout(() => {
             el.classList.remove('ring-2', 'ring-rose-400', 'bg-rose-50/50');
         }, 1000);
+    }
+
+    // Simpan melalui PengukuranController, bukan POST kalkulator.
+    // Tanpa JavaScript, form tetap bisa tersimpan melalui respons redirect.
+    const saveForm = document.getElementById('simpanPengukuranForm');
+    if (saveForm) {
+        saveForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const button = saveForm.querySelector('button[type="submit"]');
+            const status = document.getElementById('statusSimpanPengukuran');
+            button.disabled = true;
+            status.textContent = 'Menyimpan pengukuran...';
+            status.className = 'text-[11px] font-medium text-stone-600';
+
+            try {
+                const response = await fetch(saveForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': saveForm.querySelector('input[name="_token"]').value,
+                    },
+                    credentials: 'same-origin',
+                    body: new FormData(saveForm),
+                });
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    throw new Error(result.message || 'Tidak dapat menyimpan pengukuran. Silakan coba lagi.');
+                }
+                status.textContent = 'Pengukuran berhasil disimpan ke riwayat.';
+                const info = document.getElementById('pengukuranSaveInfo');
+                if (info) {
+                    info.textContent = 'Pengukuran telah tercatat dalam riwayat balita.';
+                    info.className = 'text-[11px] font-medium text-emerald-700';
+                }
+                status.className = 'text-[11px] font-medium text-emerald-700';
+            } catch (error) {
+                status.textContent = error.message || 'Gagal menyimpan pengukuran.';
+                status.className = 'text-[11px] font-medium text-rose-700';
+                button.disabled = false;
+            }
+        });
     }
 
     // Close dropdown saat klik di luar

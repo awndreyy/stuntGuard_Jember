@@ -10,9 +10,9 @@
 
     {{-- Nav Links (Desktop) --}}
     <nav class="hidden md:flex items-center gap-4">
-      <a href="#kalkulator-widget"   class="text-sm font-medium text-stone-600 hover:text-rose-700 transition-colors">Kalkulator Gizi</a>
-      <a href="#informasi-kesehatan" class="text-sm font-medium text-stone-600 hover:text-rose-700 transition-colors">Informasi Kesehatan</a>
-      <a href="#resep-mpasi"         class="text-sm font-medium text-stone-600 hover:text-rose-700 transition-colors">MPASI Anak</a>
+      <a href="{{ route('home') }}#kalkulator-widget"   class="text-sm font-medium text-stone-600 hover:text-rose-700 transition-colors">Kalkulator Gizi</a>
+      <a href="{{ route('home') }}#informasi-kesehatan" class="text-sm font-medium text-stone-600 hover:text-rose-700 transition-colors">Informasi Kesehatan</a>
+      <a href="{{ route('home') }}#resep-mpasi"         class="text-sm font-medium text-stone-600 hover:text-rose-700 transition-colors">MPASI Anak</a>
     </nav>
 
     {{-- CTA Buttons --}}
@@ -62,9 +62,9 @@
 
   {{-- Mobile Dropdown Menu --}}
   <div id="mobile-menu" class="hidden md:hidden bg-stone-50 border-t border-rose-200/30 px-4 pb-4 flex flex-col gap-2">
-    <a href="#kalkulator-widget"   class="text-sm font-medium text-stone-600 hover:text-rose-700 py-2 transition-colors">Kalkulator Gizi</a>
-    <a href="#informasi-kesehatan" class="text-sm font-medium text-stone-600 hover:text-rose-700 py-2 transition-colors">Informasi Kesehatan</a>
-    <a href="#resep-mpasi"         class="text-sm font-medium text-stone-600 hover:text-rose-700 py-2 transition-colors">MPASI Anak</a>
+    <a href="{{ route('home') }}#kalkulator-widget"   class="text-sm font-medium text-stone-600 hover:text-rose-700 py-2 transition-colors">Kalkulator Gizi</a>
+    <a href="{{ route('home') }}#informasi-kesehatan" class="text-sm font-medium text-stone-600 hover:text-rose-700 py-2 transition-colors">Informasi Kesehatan</a>
+    <a href="{{ route('home') }}#resep-mpasi"         class="text-sm font-medium text-stone-600 hover:text-rose-700 py-2 transition-colors">MPASI Anak</a>
   </div>
 </header>
 

@@ -4,23 +4,18 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalitaController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KalkulatorGiziController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MpasiController;
 use App\Http\Controllers\PengukuranController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    if(Auth::check()){
-        if(Auth::user()->role == 'Admin'){
-            return redirect()->route('dashboardAdmin');
-        }else{
-            return redirect()->route('dashboardUser');
-        }
-    }
-
-    return view('landing.dashboardGuest');
-})->name('home');
+// Halaman publik: hanya mengambil data yang boleh dilihat pengunjung.
+Route::get('/', [LandingController::class, 'index'])->name('home');
+Route::get('/informasi', [LandingController::class, 'informasi'])->name('public.informasi.index');
+Route::get('/informasi/{informasi}', [LandingController::class, 'detailInformasi'])->name('public.informasi.show');
+Route::get('/resep', [LandingController::class, 'resep'])->name('public.resep.index');
+Route::get('/resep/{mpasi}', [LandingController::class, 'detailResep'])->name('public.resep.show');
 
 Route::middleware(['guest'])->group(function () {
     // login

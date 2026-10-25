@@ -15,7 +15,7 @@
         </p>
         <div class="flex items-center gap-1 text-xs text-emerald-700 font-medium">
           <span class="material-symbols-outlined text-[18px]">verified</span>
-          <span>Program Pendampingan Posyandu Binaan Dinas Kesehatan Kabupaten Jember</span>
+          <span>Informasi pertumbuhan balita dan resep MPASI</span>
         </div>
       </div>
 
@@ -23,24 +23,24 @@
       <div class="flex flex-col gap-2">
         <span class="text-base text-stone-900 font-semibold">Layanan Terpadu</span>
         <ul class="flex flex-col gap-1 text-sm">
-          <li><a class="text-stone-600 hover:text-rose-700 transition-colors" href="#kalkulator-widget">Kalkulator Gizi</a></li>
-          <li><a class="text-stone-600 hover:text-rose-700 transition-colors" href="#informasi-kesehatan">Informasi Kesehatan</a></li>
-          <li><a class="text-stone-600 hover:text-rose-700 transition-colors" href="#resep-mpasi">MPASI Anak</a></li>
+          <li><a class="text-stone-600 hover:text-rose-700 transition-colors" href="{{ route('home') }}#kalkulator-widget">Kalkulator Gizi</a></li>
+          <li><a class="text-stone-600 hover:text-rose-700 transition-colors" href="{{ route('home') }}#informasi-kesehatan">Informasi Kesehatan</a></li>
+          <li><a class="text-stone-600 hover:text-rose-700 transition-colors" href="{{ route('home') }}#resep-mpasi">MPASI Anak</a></li>
         </ul>
       </div>
 
       {{-- Kolom 4: Helpline --}}
       <div class="flex flex-col gap-2">
-        <span class="text-base text-stone-900 font-semibold">Help line Anak Sehat</span>
-        <p class="text-xs text-stone-600">Konsultasi dan tanggap gizi balita darurat Kabupaten Jember:</p>
+        <span class="text-base text-stone-900 font-semibold">Butuh Bantuan Kesehatan?</span>
+        <p class="text-xs text-stone-600">Hubungi puskesmas atau tenaga kesehatan terdekat untuk konsultasi dan pemeriksaan balita.</p>
         <div class="flex flex-col gap-1">
           <div class="flex items-center gap-1 text-rose-700 text-sm font-semibold">
             <span class="material-symbols-outlined text-[20px]">call</span>
-            <span>0800-140-JEMBER (Bebas Pulsa)</span>
+            <span>Puskesmas terdekat</span>
           </div>
           <div class="flex items-center gap-1 text-stone-600 text-xs">
             <span class="material-symbols-outlined text-[18px]">schedule</span>
-            <span>Senin - Sabtu: 08.00 - 16.00 WIB</span>
+            <span>Ikuti jam layanan fasilitas kesehatan setempat</span>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
     {{-- Copyright --}}
     <div class="border-t border-rose-200/30 pt-4 flex flex-col sm:flex-row items-center justify-center gap-2">
       <p class="text-xs text-stone-600 text-center">
-        &copy; {{ date('Y') }} StunGuard Jember. Seluruh hak cipta dilindungi. Dinas Kesehatan Kabupaten Jember.
+        &copy; {{ date('Y') }} StunGuard Jember. Seluruh hak cipta dilindungi.
       </p>
     </div>
   </div>

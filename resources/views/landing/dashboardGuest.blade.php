@@ -66,23 +66,23 @@
               <div class="bg-white/80 backdrop-blur-sm p-2 sm:p-4 rounded-2xl shadow-sm flex flex-col items-center">
                 <div class="flex items-center gap-1 text-rose-700">
                   <span class="material-symbols-outlined text-[20px]">child_care</span>
-                  <span class="text-xl font-bold text-stone-900">12.4k+</span>
+                  <span class="text-xl font-bold text-stone-900">{{ number_format($jumlahBalita, 0, ',', '.') }}</span>
                 </div>
                 <p class="text-xs text-stone-600 mt-1">Balita Terpantau</p>
               </div>
               <div class="bg-white/80 backdrop-blur-sm p-2 sm:p-4 rounded-2xl shadow-sm flex flex-col items-center">
                 <div class="flex items-center gap-1 text-emerald-700">
-                  <span class="material-symbols-outlined text-[20px]">location_on</span>
-                  <span class="text-xl font-bold text-stone-900">248</span>
+                  <span class="material-symbols-outlined text-[20px]">restaurant_menu</span>
+                  <span class="text-xl font-bold text-stone-900">{{ number_format($jumlahResep, 0, ',', '.') }}</span>
                 </div>
-                <p class="text-xs text-stone-600 mt-1">Posyandu di Jember</p>
+                <p class="text-xs text-stone-600 mt-1">Resep MPASI Tersedia</p>
               </div>
               <div class="bg-white/80 backdrop-blur-sm p-2 sm:p-4 rounded-2xl shadow-sm flex flex-col items-center">
                 <div class="flex items-center gap-1 text-amber-800">
-                  <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
-                  <span class="text-xl font-bold text-stone-900">99.2%</span>
+                  <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">article</span>
+                  <span class="text-xl font-bold text-stone-900">{{ number_format($jumlahArtikel, 0, ',', '.') }}</span>
                 </div>
-                <p class="text-xs text-stone-600 mt-1">Orang Tua Terbantu</p>
+                <p class="text-xs text-stone-600 mt-1">Artikel Kesehatan</p>
               </div>
             </div>
 
@@ -97,18 +97,18 @@
             <div>
               <div class="flex items-center gap-1 text-rose-700 mb-1">
                 <span class="material-symbols-outlined text-[24px]">calculate</span>
-                <span class="text-sm font-bold">Kalkulator Gizi Cepat (WHO / Kemenkes RI)</span>
+                <span class="text-sm font-bold">Simulasi Berat Badan Balita</span>
               </div>
               <h2 class="text-2xl sm:text-3xl font-bold text-stone-900">
-                Cek Status Berat &amp; Tinggi Badan Si Kecil
+                Lihat Gambaran Berat Badan Si Kecil
               </h2>
               <p class="text-sm text-stone-600 mt-1">
-                Dapatkan evaluasi Z-score antropometri akurat dalam 1 menit sesuai pedoman Posyandu.
+                Simulasi sederhana untuk edukasi, bukan perhitungan Z-score WHO atau diagnosis status gizi. Untuk penilaian akurat, konsultasikan hasil pengukuran ke tenaga kesehatan.
               </p>
             </div>
             <div class="inline-flex items-center gap-1 bg-white px-4 py-1.5 rounded-full text-emerald-700 text-xs font-bold shadow-sm">
-              <span class="material-symbols-outlined text-[16px]">verified_user</span>
-              <span>Standar Antropometri Kemenkes RI</span>
+              <span class="material-symbols-outlined text-[16px]">info</span>
+              <span>Simulasi Edukasi — Bukan Diagnosis</span>
             </div>
           </div>
 
@@ -158,7 +158,7 @@
             <div class="sm:col-span-2 lg:col-span-4 flex justify-end mt-space-xs">
               <button class="w-full sm:w-auto px-10 py-3 rounded-full bg-rose-700 hover:bg-rose-600 text-white hover:text-white text-sm font-bold flex items-center justify-center gap-1 shadow-md transition-all" type="submit">
                 <span class="material-symbols-outlined text-[20px]">analytics</span>
-                <span>Lihat Hasil Analisis Gizi</span>
+                <span>Lihat Simulasi</span>
               </button>
             </div>
           </form>
@@ -173,14 +173,14 @@
                 <div>
                   <div class="flex flex-wrap items-center gap-1">
                     <span class="bg-emerald-200 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold" id="badgeStatus">
-                      GIZI BAIK &amp; NORMAL
+                      BELUM DIHITUNG
                     </span>
                     <span class="text-stone-600 text-xs font-semibold">
-                      (Z-score: -0.2 SD • Sesuai Rentang Ideal)
+                      Hasil simulasi tidak menggantikan pengukuran WHO
                     </span>
                   </div>
                   <p class="text-sm text-stone-900 mt-1.5" id="descRecommendation">
-                    <strong>Status Gizi Terkini:</strong> Normal &amp; Sesuai Usia • <strong>Kebutuhan Kalori Harian:</strong> ~950 kkal • <strong>Rekomendasi:</strong> Lanjutkan variasi protein hewani lokal Jember (ikan wader puger, telur ayam kampung, tempe kedelai lokal).
+                    Masukkan ukuran balita dan klik <strong>Lihat Simulasi</strong>. Hasil ini bukan diagnosis medis.
                   </p>
                 </div>
               </div>
@@ -194,277 +194,61 @@
         </div>
       </section>
 
-      <!-- 3. MODUL INFORMASI KESEHATAN (EDUKASI & PERTUMBUHAN) -->
+      <!-- 3. ARTIKEL TERBARU: bersumber dari database informasis -->
       <section class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 py-space-xl w-full" id="informasi-kesehatan">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-1 mb-space-lg">
           <div>
             <span class="text-sm font-bold text-rose-700 tracking-wide uppercase">Panduan Ayah &amp; Bunda</span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-1">
-              Edukasi &amp; Informasi Kesehatan Balita
-            </h2>
+            <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-1">Edukasi &amp; Informasi Kesehatan Balita</h2>
+            <p class="text-sm text-stone-600 mt-2">Artikel terbaru yang ditambahkan melalui Kelola Informasi.</p>
           </div>
-          <a class="text-sm text-rose-700 hover:text-rose-600 font-bold flex items-center gap-1" href="#informasi-kesehatan">
+          <a class="text-sm text-rose-700 hover:text-rose-600 font-bold flex items-center gap-1" href="{{ route('public.informasi.index') }}">
             Lihat Semua Artikel <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
           </a>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-          <!-- Card 1: Stunting HPK -->
-          <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
-            <div class="relative h-44 w-full overflow-hidden">
-              <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbuiMuZsSaw7WsfciVsmka4CAFAN9MoZ8VRKihmQCAc5-p8UQq7U88iNzZkR1VHZJBbQ6iXBbI4E29OTP46FdUFDCTG59LEiZkufAIYYVtwwjBtobXmvu36QleGAD8lt893ba7JcAhPOxyBFOWdycfhlDerXyh0BerbU8g5f_ClW36EmDg0L64KDNbJmLIXfntCgwDbPMSYM1j12TyxjXW_5NR3uovHdLs7EplpmBUWRTmSfHD--MB" alt="Panduan 1000 HPK">
-              <span class="absolute top-3 left-3 bg-rose-100 text-rose-900 text-xs px-2.5 py-1 rounded-full font-bold shadow-sm">
-                Tips Posyandu
-              </span>
-            </div>
-            <div class="p-4 flex flex-col flex-1 justify-between gap-2">
-              <div>
-                <div class="flex items-center gap-1 text-xs text-stone-600 mb-1">
-                  <span class="material-symbols-outlined text-[14px]">schedule</span>
-                  <span>4 Menit Baca</span>
-                </div>
-                <h3 class="text-base font-bold text-stone-900 group-hover:text-rose-700 transition-colors leading-snug">
-                  Cegah Stunting Sejak Dini: Panduan 1000 Hari Pertama Kehidupan (HPK) di Jember
-                </h3>
-                <p class="text-xs text-stone-600 mt-2 line-clamp-2">
-                  Kunci optimalisasi masa emas balita lewat nutrisi mikronutrien, sanitasi bersih, dan pemantauan posyandu teratur.
-                </p>
-              </div>
-              <span class="text-xs text-rose-700 font-semibold flex items-center gap-1 pt-1">
-                Baca Selengkapnya <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-              </span>
-            </div>
-          </article>
-
-          <!-- Card 2: Imunisasi Dasar 2025 -->
-          <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
-            <div class="relative h-44 w-full overflow-hidden">
-              <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEfxA7j8Y0qOHpgR8dHRcIZ1SlxcO0QDHp6K78R0VXTkOQdJyzPKAJESqIn7DUqz8DJeQovqDWo2eCymnX1rYL5FT9rFFOTqS4SZgTfhuwNWo2XskR_4DvQRrWJOFZyFLZ65JEEjOwxpxL7kzoWOAgNbmVmlKPhZf3GFTiMIdHLzJoOAvaFlmEy0BRJUxk7qRub9fofdEiu4FQY23UP6o53fJz8nh_XzeoWTMvYS4g-wcmLWXwXjU9" alt="Jadwal Imunisasi Dasar Balita">
-              <span class="absolute top-3 left-3 bg-emerald-200 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold shadow-sm">
-                Imunisasi
-              </span>
-            </div>
-            <div class="p-4 flex flex-col flex-1 justify-between gap-2">
-              <div>
-                <div class="flex items-center gap-1 text-xs text-stone-600 mb-1">
-                  <span class="material-symbols-outlined text-[14px]">schedule</span>
-                  <span>5 Menit Baca</span>
-                </div>
-                <h3 class="text-base font-bold text-stone-900 group-hover:text-rose-700 transition-colors leading-snug">
-                  Jadwal Imunisasi Dasar Lengkap Balita 2025 Sesuai IDAI &amp; Puskesmas
-                </h3>
-                <p class="text-xs text-stone-600 mt-2 line-clamp-2">
-                  Daftar vaksin wajib balita mulai dari Hepatitis B, BCG, Polio tetes, hingga PCV dan Rotavirus di fasilitas kesehatan.
-                </p>
-              </div>
-              <span class="text-xs text-rose-700 font-semibold flex items-center gap-1 pt-1">
-                Baca Selengkapnya <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-              </span>
-            </div>
-          </article>
-
-          <!-- Card 3: Red Flags Motorik -->
-          <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
-            <div class="relative h-44 w-full overflow-hidden">
-              <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2_UzYS7-r6RkTBYU9mHe3-HYipBcRVYiKzfOJqMjT6eXJNDQi1UWX030s5dbCQK54LUvtm3yhQgNUq-Z3PedMueQApcIX7Z0Dee7D_0G4BDE6FTqmFXm4fd4VvytimhH0XlVYt486tNbQGh8ioa0GFdOkZbBPsLM7aYhhMGdugYermpNhxY1rIO9UsKb-R_-qjrDc3kwA6Wf7gssuKh2wTbqjHsr700vSC7EFAuXyTfbIuDEM1xP9" alt="Red Flags Motorik Anak">
-              <span class="absolute top-3 left-3 bg-orange-100 text-amber-900 text-xs px-2.5 py-1 rounded-full font-bold shadow-sm">
-                Milestone
-              </span>
-            </div>
-            <div class="p-4 flex flex-col flex-1 justify-between gap-2">
-              <div>
-                <div class="flex items-center gap-1 text-xs text-stone-600 mb-1">
-                  <span class="material-symbols-outlined text-[14px]">schedule</span>
-                  <span>3 Menit Baca</span>
-                </div>
-                <h3 class="text-base font-bold text-stone-900 group-hover:text-rose-700 transition-colors leading-snug">
-                  Mengenal Tanda Red Flags Perkembangan Motorik Anak Usia 1-3 Tahun
-                </h3>
-                <p class="text-xs text-stone-600 mt-2 line-clamp-2">
-                  Ketahui kapan orang tua perlu segera berkonsultasi ke dokter spesialis anak mengenai keterlambatan jalan dan bicara.
-                </p>
-              </div>
-              <span class="text-xs text-rose-700 font-semibold flex items-center gap-1 pt-1">
-                Baca Selengkapnya <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-              </span>
-            </div>
-          </article>
-
-          <!-- Card 4: Mengatasi GTM -->
-          <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
-            <div class="relative h-44 w-full overflow-hidden">
-              <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADQtQknczphk_wVvx0S7N4nvbYCq7uaybu67xhIH5r5YrH5_gmy5U8FNFwP5ragaKOJ_4z7iG-kXT513XnbyjAxDuaOau7WQNckS46bm78JHz3_9s9PDjqtVqYRR_FG9X2WQHRE_5mNGOirfJb6pO64S875EdQRdzhJVwsBrJ-xQi3vpDzV__YX8kTSyvGjj1Q7qOZ3-X1N-guoGW3mWD-6DX2F2y5eD_uhkAp-335SbZL7wXeeSPf" alt="Mengatasi Balita GTM">
-              <span class="absolute top-3 left-3 bg-rose-100 text-rose-900 text-xs px-2.5 py-1 rounded-full font-bold shadow-sm">
-                Pola Makan
-              </span>
-            </div>
-            <div class="p-4 flex flex-col flex-1 justify-between gap-2">
-              <div>
-                <div class="flex items-center gap-1 text-xs text-stone-600 mb-1">
-                  <span class="material-symbols-outlined text-[14px]">schedule</span>
-                  <span>4 Menit Baca</span>
-                </div>
-                <h3 class="text-base font-bold text-stone-900 group-hover:text-rose-700 transition-colors leading-snug">
-                  Tips Mengatasi Balita Gerakan Tutup Mulut (GTM) dengan Positif
-                </h3>
-                <p class="text-xs text-stone-600 mt-2 line-clamp-2">
-                  Strategi feeding rules tanpa paksaan, menciptakan suasana makan ceria, serta kreasi tekstur makanan menarik.
-                </p>
-              </div>
-              <span class="text-xs text-rose-700 font-semibold flex items-center gap-1 pt-1">
-                Baca Selengkapnya <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-              </span>
-            </div>
-          </article>
-        </div>
+        @if ($artikelTerbaru->isEmpty())
+          <div class="bg-white rounded-3xl p-8 text-center border border-stone-200 text-stone-600">
+            <span class="material-symbols-outlined text-4xl text-rose-200">article</span>
+            <p class="font-semibold text-stone-800 mt-2">Belum ada artikel kesehatan.</p>
+            <p class="text-sm mt-1">Artikel akan tampil otomatis setelah admin menambahkannya.</p>
+          </div>
+        @else
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            @foreach ($artikelTerbaru as $artikel)
+              @include('landing.partials.articleCard', ['artikel' => $artikel])
+            @endforeach
+          </div>
+        @endif
       </section>
 
-      <!-- 4. MODUL MENU & RESEP MPASI ANAK (Kearifan Pangan Lokal Jember) -->
+      <!-- 4. RESEP TERBARU: bersumber dari database mpasis -->
       <section class="bg-stone-100/60 py-space-xl w-full" id="resep-mpasi">
         <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
           <div class="text-center max-w-2xl mx-auto mb-space-xl">
-            <span class="bg-emerald-200/60 text-emerald-700 text-xs px-3 py-1 rounded-full font-bold">
-              Kekayaan Pangan Lokal Jember
-            </span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-2">
-              Inspirasi MPASI Sehat &amp; Bergizi Si Kecil
-            </h2>
-            <p class="text-sm text-stone-600 mt-2">
-              Menu lezat padat gizi rekomendasi dokter anak dan ahli gizi, memanfaatkan kekayaan bahan pangan lokal Jember yang segar, terjangkau, dan kaya nutrisi.
-            </p>
+            <span class="bg-emerald-200/60 text-emerald-700 text-xs px-3 py-1 rounded-full font-bold">Menu MPASI</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-2">Inspirasi MPASI Sehat &amp; Bergizi Si Kecil</h2>
+            <p class="text-sm text-stone-600 mt-2">Resep terbaru dari admin, lengkap dengan bahan, langkah dan informasi gizi.</p>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Recipe 1 -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
-              <div class="relative h-52 w-full">
-                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd9aS7XofD1VvIU3ek94235Hwn0WNFiRoI7m5AcZJkBE4Oys41mpW6ixOZN69h5Y3REdbeq-3KfB3KEQab58vjyh-ON5nBj_azOI435sh7EB2NY-KQ2sIIyuSF8O_01QrL1nxe3bpBa2y63Klk9JSsGJ4uEhV3eFQjRhdsOn35rP1ajwn2CB5bIyWZ4i6S1yam6u4_FpVDPlqnkVsi60WFB-EfvkP5i_XqJ26Ac9f_b4k884-F8hL6" alt="Bubur Tim Salmon Beras Merah">
-                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-rose-700 text-xs px-3 py-1 rounded-full font-bold shadow-sm">
-                  6 - 8 Bulan (Tekstur Halus)
-                </span>
-              </div>
-              <div class="p-4 sm:p-6 flex flex-col flex-1 justify-between gap-4">
-                <div>
-                  <div class="flex items-center gap-1 text-xs text-emerald-700 font-bold mb-1">
-                    <span class="material-symbols-outlined text-[16px]">eco</span>
-                    <span>Tinggi Omega-3 &amp; Zat Besi</span>
-                  </div>
-                  <h3 class="text-base font-bold text-stone-900">
-                    Bubur Tim Salmon Beras Merah &amp; Sayur Bayam Papuma
-                  </h3>
-                  <p class="text-xs text-stone-600 mt-2">
-                    Kombinasi serat halus beras merah organik dan bayam segar dari pesisir selatan Jember dengan lemak esensial ikan untuk pertumbuhan otak optimal.
-                  </p>
-                </div>
-                <div>
-                  <!-- Nutrition Pill Badges -->
-                  <div class="flex flex-wrap gap-1.5 py-1">
-                    <span class="bg-rose-100/60 text-rose-900 text-xs px-2.5 py-0.5 rounded-full">
-                      185 kkal / porsi
-                    </span>
-                    <span class="bg-stone-200 text-stone-600 text-xs px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                      <span class="material-symbols-outlined text-[14px]">timer</span> 25 Menit
-                    </span>
-                    <span class="bg-emerald-200/50 text-emerald-700 text-xs px-2.5 py-0.5 rounded-full">
-                      Bebas Santan
-                    </span>
-                  </div>
-                  <div class="flex items-center justify-between pt-space-sm mt-space-xs border-t border-rose-200/30">
-                    <span class="text-xs text-stone-600">Alergen: Ikan Laut</span>
-                    <button class="text-rose-700 text-xs font-bold hover:underline flex items-center gap-0.5" type="button">
-                      Buka Resep <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+          @if ($resepTerbaru->isEmpty())
+            <div class="bg-white rounded-3xl p-8 text-center border border-stone-200 text-stone-600">
+              <span class="material-symbols-outlined text-4xl text-emerald-200">restaurant</span>
+              <p class="font-semibold text-stone-800 mt-2">Belum ada resep MPASI.</p>
+              <p class="text-sm mt-1">Resep akan tampil otomatis setelah admin menambahkannya.</p>
             </div>
-
-            <!-- Recipe 2 -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
-              <div class="relative h-52 w-full">
-                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwNKRW8La3Rf1GnktTyvvuFSG2Yy4Hd5qVA-bv6uNLlqXJSAb6kxq4wgV8pjscX-XOWcesGGJ6xH2IDkET3LD1hWwC_emvkSW9gWOodSe442QH5IZVh4q2aal1rAC8ZlB2s9OluZ-BAHTFY0BAYovMP2Kq2U7jLYewn4pUw_TWh6fj1VnfMvMo0kqoKh2wILpUYSePY7oVqhGHCqrEltNvDKdHnUEDWuZfcLULBJAmt_XbRkFJ53Kl" alt="Nasi Tim Ayam Kampung Labu Kuning">
-                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-emerald-700 text-xs px-3 py-1 rounded-full font-bold shadow-sm">
-                  9 - 11 Bulan (Cincang Lembut)
-                </span>
-              </div>
-              <div class="p-4 sm:p-6 flex flex-col flex-1 justify-between gap-4">
-                <div>
-                  <div class="flex items-center gap-1 text-xs text-amber-800 font-bold mb-1">
-                    <span class="material-symbols-outlined text-[16px]">visibility</span>
-                    <span>Kaya Vitamin A &amp; Beta Karoten</span>
-                  </div>
-                  <h3 class="text-base font-bold text-stone-900">
-                    Nasi Tim Ayam Kampung Suwir Labu Kuning Jember
-                  </h3>
-                  <p class="text-xs text-stone-600 mt-2">
-                    Daging ayam kampung gurih berpadu manis alaminya labu kuning lokal Jember, merangsang kemampuan mengunyah si kecil dengan rasa lezat alami.
-                  </p>
-                </div>
-                <div>
-                  <div class="flex flex-wrap gap-1.5 py-1">
-                    <span class="bg-rose-100/60 text-rose-900 text-xs px-2.5 py-0.5 rounded-full">
-                      210 kkal / porsi
-                    </span>
-                    <span class="bg-stone-200 text-stone-600 text-xs px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                      <span class="material-symbols-outlined text-[14px]">timer</span> 30 Menit
-                    </span>
-                    <span class="bg-emerald-200/50 text-emerald-700 text-xs px-2.5 py-0.5 rounded-full">
-                      Tekstur Naik Bertahap
-                    </span>
-                  </div>
-                  <div class="flex items-center justify-between pt-space-sm mt-space-xs border-t border-rose-200/30">
-                    <span class="text-xs text-stone-600">Alergen: Unggas</span>
-                    <button class="text-rose-700 text-xs font-bold hover:underline flex items-center gap-0.5" type="button">
-                      Buka Resep <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+          @else
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              @foreach ($resepTerbaru as $resep)
+                @include('landing.partials.recipeCard', ['resep' => $resep])
+              @endforeach
             </div>
+          @endif
 
-            <!-- Recipe 3 -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
-              <div class="relative h-52 w-full">
-                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIRWE90gP_38jz7wt19T_Ifvy6VsyQfeoeWj-A6TOPCUqxqTOEqqRXv7o8ju2Qn8-9vcgfuLErLzMVQ_CrVDWKGenAuZwxzvq1qqSsLiebBcxwYRpOX4Gcj9sLVfntztlj_03G2Av2iIECGp1muaf1aZyVWY795a_hWut3Pi94pgMynLrq9zTp_X1vFM7hphcVayPflzFZQZUxtZfxn2buekphW_IaR_iGgF3TKl0o_fB9hDc0QtSm" alt="Nugget Tempe Ikan Kembung Kukus">
-                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-amber-800 text-xs px-3 py-1 rounded-full font-bold shadow-sm">
-                  12+ Bulan (Finger Food)
-                </span>
-              </div>
-              <div class="p-4 sm:p-6 flex flex-col flex-1 justify-between gap-4">
-                <div>
-                  <div class="flex items-center gap-1 text-xs text-rose-700 font-bold mb-1">
-                    <span class="material-symbols-outlined text-[16px]">shield</span>
-                    <span>Protein Ganda Anti-Stunting</span>
-                  </div>
-                  <h3 class="text-base font-bold text-stone-900">
-                    Nugget Tempe Ikan Kembung Kukus Home-made
-                  </h3>
-                  <p class="text-xs text-stone-600 mt-2">
-                    Inovasi camilan sehat padat nutrisi dari tempe kedelai lokal dan ikan kembung segar kaya kalsium untuk memperkuat tulang dan gigi balita aktif.
-                  </p>
-                </div>
-                <div>
-                  <div class="flex flex-wrap gap-1.5 py-1">
-                    <span class="bg-rose-100/60 text-rose-900 text-xs px-2.5 py-0.5 rounded-full">
-                      195 kkal (3 pcs)
-                    </span>
-                    <span class="bg-stone-200 text-stone-600 text-xs px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                      <span class="material-symbols-outlined text-[14px]">timer</span> 35 Menit
-                    </span>
-                    <span class="bg-emerald-200/50 text-emerald-700 text-xs px-2.5 py-0.5 rounded-full">
-                      Bebas Pengawet
-                    </span>
-                  </div>
-                  <div class="flex items-center justify-between pt-space-sm mt-space-xs border-t border-rose-200/30">
-                    <span class="text-xs text-stone-600">Alergen: Kedelai, Ikan</span>
-                    <button class="text-rose-700 text-xs font-bold hover:underline flex items-center gap-0.5" type="button">
-                      Buka Resep <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+          <div class="mt-8 text-center">
+            <a href="{{ route('public.resep.index') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-rose-700 text-white text-sm font-bold hover:bg-rose-600 transition-colors">
+              Lihat Semua Resep <span class="material-symbols-outlined text-[19px]">arrow_forward</span>
+            </a>
           </div>
         </div>
       </section>
@@ -475,7 +259,7 @@
           <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Sahabat Tumbuh Kembang</span>
           <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-1">Mengapa Memilih StunGuard Jember?</h2>
           <p class="text-sm text-stone-600 mt-2">
-            Dibangun bersama tenaga medis dan kader posyandu untuk memberikan ketenangan hati orang tua di era digital.
+            Fitur pengelolaan resep dan informasi kesehatan untuk membantu orang tua memahami kebutuhan tumbuh kembang balita.
           </p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -486,7 +270,7 @@
             </div>
             <h3 class="text-base font-bold text-stone-900">Standar WHO &amp; Kemenkes</h3>
             <p class="text-xs text-stone-600 mt-2 leading-relaxed">
-              Algoritma kurva pertumbuhan akurat sesuai standar antropometri nasional untuk deteksi dini risiko malnutrisi atau stunting.
+              Pengelola dapat melakukan penilaian antropometri melalui kalkulator gizi berbasis data standar WHO yang tersedia di dashboard admin.
             </p>
           </div>
           <!-- Feature 2 -->
@@ -494,9 +278,9 @@
             <div class="w-12 h-12 rounded-2xl bg-emerald-200/80 text-emerald-700 flex items-center justify-center mb-space-sm">
               <span class="material-symbols-outlined text-[26px]">sync</span>
             </div>
-            <h3 class="text-base font-bold text-stone-900">Integrasi Posyandu Lokal</h3>
+            <h3 class="text-base font-bold text-stone-900">Catatan Pengukuran Balita</h3>
             <p class="text-xs text-stone-600 mt-2 leading-relaxed">
-              Sinkronisasi catatan KMS digital langsung dengan kader Posyandu di 31 kecamatan se-Kabupaten Jember.
+              Pencatatan pengukuran balita dan riwayat pertumbuhan dapat dikelola melalui fitur admin.
             </p>
           </div>
           <!-- Feature 3 -->
@@ -504,9 +288,9 @@
             <div class="w-12 h-12 rounded-2xl bg-orange-100/80 text-amber-800 flex items-center justify-center mb-space-sm">
               <span class="material-symbols-outlined text-[26px]">restaurant</span>
             </div>
-            <h3 class="text-base font-bold text-stone-900">Resep Teruji Ahli Gizi</h3>
+            <h3 class="text-base font-bold text-stone-900">Kumpulan Resep MPASI</h3>
             <p class="text-xs text-stone-600 mt-2 leading-relaxed">
-              Variasi menu harian seimbang menggunakan bahan pangan segar dan terjangkau khas daerah Jember.
+              Lihat bahan, cara membuat, kategori usia dan informasi nutrisi dari resep yang ditambahkan admin.
             </p>
           </div>
           <!-- Feature 4 -->
@@ -514,9 +298,9 @@
             <div class="w-12 h-12 rounded-2xl bg-rose-100/80 text-rose-700 flex items-center justify-center mb-space-sm">
               <span class="material-symbols-outlined text-[26px]">notifications_active</span>
             </div>
-            <h3 class="text-base font-bold text-stone-900">Pengingat Jadwal Rutin</h3>
+            <h3 class="text-base font-bold text-stone-900">Artikel Kesehatan</h3>
             <p class="text-xs text-stone-600 mt-2 leading-relaxed">
-              Notifikasi pengingat penimbangan bulanan, jadwal imunisasi anak, dan vitamin A kapsul langsung ke WhatsApp bunda.
+              Baca artikel edukasi kesehatan yang diperbarui oleh pengelola StunGuard.
             </p>
           </div>
         </div>
@@ -548,36 +332,40 @@
         }
 
         function calculateNutri() {
-          const age = parseFloat(document.getElementById('inputAge').value) || 12;
-          const weight = parseFloat(document.getElementById('inputWeight').value) || 9.5;
-          const height = parseFloat(document.getElementById('inputHeight').value) || 75;
+          const age = Number(document.getElementById('inputAge').value);
+          const weight = Number(document.getElementById('inputWeight').value);
+          const height = Number(document.getElementById('inputHeight').value);
+
+          if (!Number.isFinite(age) || age < 0 || age > 60 || !Number.isFinite(weight) || weight <= 0 || !Number.isFinite(height) || height <= 0) {
+            alert('Mohon isi usia 0–60 bulan, berat badan, dan tinggi/panjang badan dengan angka yang valid.');
+            return;
+          }
 
           const badgeStatus = document.getElementById('badgeStatus');
           const descRec = document.getElementById('descRecommendation');
 
-          // WHO approximation benchmark for demonstration
+          // Perkiraan edukatif sederhana: BUKAN z-score WHO atau alat diagnosis
           const expectedWeight = 8.5 + (age * 0.22);
           const diff = weight - expectedWeight;
 
-          let statusText = "GIZI BAIK & NORMAL";
+          let statusText = "DI SEKITAR PERKIRAAN";
           let statusClasses = "bg-emerald-200 text-emerald-800";
-          let calories = Math.round(750 + (age * 18));
-          let recommendation = "Lanjutkan pola makan gizi seimbang dengan variasi protein hewani lokal Jember (ikan kembung Puger, telur ayam, tempe).";
+          let recommendation = "Perkiraan kasar, bukan penilaian status gizi atau Z-score WHO. Lakukan penilaian pertumbuhan dengan tenaga kesehatan.";
 
           if (diff < -1.8) {
-            statusText = "PERLU PERHATIAN (BERAT KURANG)";
+            statusText = "DI BAWAH PERKIRAAN";
             statusClasses = "bg-orange-100 text-amber-900";
-            recommendation = "Perlu dorongan asupan kalori dan lemak sehat tambahan. Konsultasikan dengan bidan Posyandu atau puskesmas setempat.";
+            recommendation = "Silakan diskusikan pengukuran dan pola pertumbuhan anak dengan tenaga kesehatan. Hasil ini bukan diagnosis.";
           } else if (diff > 2.5) {
-            statusText = "BERAT BADAN LEBIH";
+            statusText = "DI ATAS PERKIRAAN";
             statusClasses = "bg-rose-100 text-rose-900";
-            recommendation = "Kurangi camilan tinggi gula kemasan, perbanyak aktivitas eksplorasi gerak fisik dan serat sayuran lokal.";
+            recommendation = "Silakan diskusikan pengukuran dan pola pertumbuhan anak dengan tenaga kesehatan. Hasil ini bukan diagnosis.";
           }
 
           badgeStatus.className = `${statusClasses} text-xs px-2.5 py-1 rounded-full font-bold`;
           badgeStatus.innerText = statusText;
 
-          descRec.innerHTML = `<strong>Status Gizi Terkini:</strong> ${statusText} • <strong>Kebutuhan Kalori Harian:</strong> ~${calories} kkal • <strong>Rekomendasi:</strong> ${recommendation}`;
+          descRec.textContent = `Simulasi berat badan: ${statusText}. ${recommendation}`;
 
           const box = document.getElementById('resultBox');
           box.classList.add('ring-2', 'ring-rose-700');

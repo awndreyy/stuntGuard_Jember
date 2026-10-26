@@ -1,7 +1,7 @@
 {{-- resources/views/admin/partials/table-mpasi.blade.php --}}
 {{-- RECIPES TABLE CONTAINER --}}
 <div id="recipesContainer" class="flex-1 min-h-0 flex flex-col">
-    <div id="tableViewWrapper" class="bg-white rounded-2xl border border-stone-200 shadow-2xs overflow-hidden flex flex-col flex-1">
+    <div id="tableViewWrapper" class="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col flex-1">
         <div class="overflow-x-auto min-w-full flex-1">
             <table class="w-full text-left border-collapse">
                 <thead class="bg-stone-50 border-b border-stone-200 text-[11px] font-bold text-stone-500 uppercase tracking-wider sticky top-0 z-10">

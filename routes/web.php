@@ -33,6 +33,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     })->name('dashboardAdmin');
 
     Route::get('/kelolaUser', [UserController::class, 'index'])->name('kelolaUser');
+    Route::get('/users/{user}/balita', [UserController::class, 'balitas'])->name('detailBalita');
     Route::resource('users', UserController::class)->except(['index', 'create', 'show', 'edit']);
     Route::resource('balita', BalitaController::class)->except(['create', 'show', 'edit']);
 

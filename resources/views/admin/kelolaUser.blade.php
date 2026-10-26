@@ -56,7 +56,7 @@
     @include('admin.partials.tab-switcher-balita')
 
     {{-- Table Section --}}
-    <section class="flex-1 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col min-h-0 overflow-hidden">
+    <section class="flex-1 bg-white rounded-2xl border border-stone-200 flex flex-col min-h-0 overflow-hidden">
         @include('admin.partials.table-users')
         @include('admin.partials.table-anak')
     </section>

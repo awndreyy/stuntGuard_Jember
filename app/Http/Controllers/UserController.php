@@ -21,6 +21,19 @@ class UserController extends Controller
         return view('admin.kelolaUser', compact('users', 'balita'));
     }
 
+    public function balitas(User $user)
+    {
+        abort_unless($user->role === 'Orang Tua', 404);
+
+        $balitas = $user->balitas()
+            ->withCount('pengukurans')
+            ->orderBy('nama_balita')
+            ->paginate(10);
+
+        return view('admin.detailBalita', compact('user', 'balitas'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */

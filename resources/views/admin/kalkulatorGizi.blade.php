@@ -26,7 +26,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
         <!-- Form Kalkulator (Kiri) -->
-        <div class="lg:col-span-7 bg-white rounded-2xl border border-stone-200 shadow-2xs p-4 sm:p-5">
+        <div class="lg:col-span-7 bg-white rounded-2xl border border-stone-200 p-4 sm:p-5">
             <div class="flex items-center gap-2 mb-4 pb-3 border-b border-stone-100">
                 <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center">
                     <i data-lucide="calculator" class="w-4 h-4"></i>
@@ -294,7 +294,7 @@
 
         <!-- Hasil Kalkulasi (Kanan) -->
         <div class="lg:col-span-5 flex flex-col gap-4">
-            <div class="bg-white rounded-2xl border border-stone-200 shadow-2xs p-4 sm:p-5 flex-1 flex flex-col justify-between">
+            <div class="bg-white rounded-2xl border border-stone-200 p-4 sm:p-5 flex-1 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center gap-2 mb-3 pb-3 border-b border-stone-100">
                         <div class="w-8 h-8 rounded-lg bg-stone-100 text-stone-700 flex items-center justify-center">

@@ -43,7 +43,7 @@
         </button>
     </div>
 
-    <div class="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-2xs">
+    <div class="overflow-hidden rounded-2xl border border-stone-200 bg-white">
         <div class="overflow-x-auto">
             <table class="w-full min-w-[720px] border-collapse text-left">
                 <thead class="border-b border-stone-200 bg-stone-50/80 text-[11px] font-bold uppercase tracking-wider text-stone-400">

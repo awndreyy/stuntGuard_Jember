@@ -17,7 +17,7 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <a href="{{ route('mpasi.create') }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl transition-all shadow-sm hover:shadow cursor-pointer w-full sm:w-auto">
+            <a href="{{ route('mpasi.create') }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl hover:shadow cursor-pointer w-full sm:w-auto">
                 <i data-lucide="plus-circle" class="w-4 h-4"></i>
                 <span>Tambah Resep Baru</span>
             </a>
@@ -28,7 +28,7 @@
     @include('components.admin.cardStatistikMpasi')
 
     <!-- Filter & Toolbar -->
-    <div class="bg-white p-3 rounded-2xl border border-stone-200 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0">
+    <div class="bg-white p-3 rounded-2xl border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0">
         <!-- Filter Usia -->
         <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
             <button onclick="filterCategory('all', this)" class="category-tab active-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-700 text-white shadow-xs transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer">

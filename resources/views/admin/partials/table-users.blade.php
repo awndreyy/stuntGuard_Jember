@@ -60,9 +60,15 @@
                         </td>
                         <td class="py-3 px-4 text-center whitespace-nowrap">
                             <div class="inline-flex items-center justify-center gap-1.5">
-                                <button type="button" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors cursor-pointer" title="Lihat Balita">
-                                    <i data-lucide="baby" class="w-4 h-4"> class="w-4 h-4"></i>
-                                </button>
+                                @if($user->role === 'Orang Tua')
+                                    <a href="{{ route('detailBalita', $user) }}" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors" title="Lihat balita milik {{ $user->name }}" aria-label="Lihat balita milik {{ $user->name }}">
+                                        <i data-lucide="baby" class="w-4 h-4"></i>
+                                    </a>
+                                @else
+                                    <span class="p-1.5 text-stone-300 cursor-not-allowed" title="Akun Admin tidak memiliki daftar balita" aria-label="Tidak tersedia">
+                                        <i data-lucide="baby" class="w-4 h-4"></i>
+                                    </span>
+                                @endif
                                 <button type="button" onclick="editData(@js($user))" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors cursor-pointer" title="Edit User">
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </button>

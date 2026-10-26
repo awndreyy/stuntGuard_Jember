@@ -22,11 +22,11 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 w-full sm:w-auto">
-                    <a href="#kalkulator-widget" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold px-7 py-3.5 rounded-full shadow-lg shadow-pink-500/25 transition-all hover:-translate-y-0.5">
+                    <a href="#kalkulator-widget" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold px-7 py-3.5 rounded-full shadow-lg shadow-pink-500/25">
                         <span class="material-symbols-outlined text-[20px]">calculate</span>
                         <span>Cek Gizi Anak Sekarang</span>
                     </a>
-                    <a href="#resep-mpasi" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-white hover:bg-pink-50 text-pink-700 border border-pink-200 font-bold px-7 py-3.5 rounded-full shadow-sm transition-all">
+                    <a href="#resep-mpasi" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-white hover:bg-pink-50 text-pink-700 border border-pink-200 font-bold px-7 py-3.5 rounded-full shadow-sm">
                         <span class="material-symbols-outlined text-[20px]">restaurant_menu</span>
                         <span>Lihat Resep MPASI</span>
                     </a>
@@ -159,10 +159,6 @@
                             <h3 class="text-sm sm:text-base font-bold text-stone-900">Hasil Analisis</h3>
                             <p class="text-xs text-stone-500">Ringkasan status pertumbuhan anak</p>
                         </div>
-                    </div>
-
-                    <div class="border-t border-stone-200 pt-3 mb-3">
-                        <p id="historyNotice" class="text-xs font-medium text-amber-700">Hasil belum disimpan ke riwayat balita.</p>
                     </div>
 
                     <div class="rounded-xl bg-stone-50 border border-stone-200 p-3 sm:p-4">

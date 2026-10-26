@@ -45,17 +45,19 @@ class AuthController extends Controller
 
             if ($user->role === 'Admin') {
                 return redirect()
-                    ->intended('/dashboardAdmin')
+                    ->to('/dashboardAdmin')
                     ->with('success', 'Selamat datang '.$user->name);
             }
 
             if ($user->role === 'Orang Tua') {
                 return redirect()
-                    ->intended('/dashboardUser')
+                    ->to('/dashboardUser')
                     ->with('success', 'Selamat datang '.$user->name);
             }
 
             Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
             return back()
                 ->withErrors([
@@ -83,13 +85,12 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:30'],
             'nik' => ['required', 'digits:16', 'unique:users,nik'],
             'email' => ['required', 'email', 'max:30', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:6'],
         ], [
             'nik.unique' => 'NIK ini sudah terdaftar dalam sistem.',
-            'nik.size' => 'NIK harus berjumlah tepat 16 digit.',
+            'nik.digits' => 'NIK harus berjumlah tepat 16 digit.',
             'email.unique' => 'Email ini sudah terdaftar.',
-            'password.confirmed' => 'Konfirmasi password tidak cocok.',
-            'password.min' => 'Password minimal 8 karakter.',
+            'password.min' => 'Password minimal 6 karakter.',
         ]);
 
         $user = User::create([
@@ -102,7 +103,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->intended('/dashboardUser')->with('success', 'Registrasi berhasil! Selamat datang, '.$user->name);
+        return redirect()->to('/dashboardUser')->with('success', 'Registrasi berhasil! Selamat datang, '.$user->name);
     }
 
     // Logout

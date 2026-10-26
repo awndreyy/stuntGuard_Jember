@@ -45,7 +45,7 @@
                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none {{ $errors->has('waktu_memasak') ? 'text-rose-400' : 'text-stone-400' }}">
                     <i data-lucide="clock" class="w-4 h-4"></i>
                 </span>
-                <input type="text" inputmode="numeric" id="formWaktu" name="waktu_memasak" maxlength="3" value="{{ old('waktu_memasak', $mpasi?->waktu_memasak) }}" required placeholder="Waktu memasak" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 3);" class="w-full pl-9 pr-14 py-2 bg-stone-50 border {{ $errors->has('waktu_memasak') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-xl text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                <input type="text" inputmode="numeric" id="formWaktu" name="waktu_memasak" maxlength="3" value="{{ old('waktu_memasak', $mpasi?->waktu_memasak) }}" required placeholder="max 100 menit" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 3);" class="w-full pl-9 pr-14 py-2 bg-stone-50 border {{ $errors->has('waktu_memasak') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-xl text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
                 <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-stone-400 text-[11px]">Menit</span>
             </div>
             @error('waktu_memasak')
@@ -60,7 +60,7 @@
                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none {{ $errors->has('porsi') ? 'text-rose-400' : 'text-stone-400' }}">
                     <i data-lucide="pie-chart" class="w-4 h-4"></i>
                 </span>
-                <input type="text" inputmode="numeric" id="formPorsi" name="porsi" value="{{ old('porsi', $mpasi?->porsi) }}" maxlength="2" required placeholder="Jumlah porsi" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2);" class="w-full pl-9 pr-14 py-2 bg-stone-50 border {{ $errors->has('porsi') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-xl text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                <input type="text" inputmode="numeric" id="formPorsi" name="porsi" value="{{ old('porsi', $mpasi?->porsi) }}" maxlength="2" required placeholder="max 10 porsi" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2);" class="w-full pl-9 pr-14 py-2 bg-stone-50 border {{ $errors->has('porsi') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-xl text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
                 <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-stone-400 text-[11px]">Porsi</span>
             </div>
             @error('porsi')

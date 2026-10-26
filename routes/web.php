@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\GuestKalkulatorController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KalkulatorGiziController;
 use App\Http\Controllers\LandingController;
@@ -12,16 +13,16 @@ use Illuminate\Support\Facades\Route;
 
 // Halaman publik: hanya mengambil data yang boleh dilihat pengunjung.
 Route::get('/', [LandingController::class, 'index'])->name('home');
+Route::post('/kalkulator-guest/hitung', [GuestKalkulatorController::class, 'calculate'])
+    ->middleware('throttle:30,1')->name('public.kalkulator.calculate');
 Route::get('/informasi', [LandingController::class, 'informasi'])->name('public.informasi.index');
 Route::get('/informasi/{informasi}', [LandingController::class, 'detailInformasi'])->name('public.informasi.show');
 Route::get('/resep', [LandingController::class, 'resep'])->name('public.resep.index');
 Route::get('/resep/{mpasi}', [LandingController::class, 'detailResep'])->name('public.resep.show');
 
 Route::middleware(['guest'])->group(function () {
-    // login
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login.perform');
-    // Daftar
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.perform');
 });
@@ -56,4 +57,3 @@ Route::middleware(['auth', 'role:Orang Tua'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
-

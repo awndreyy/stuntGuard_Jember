@@ -4,7 +4,7 @@
             ? $resep->gambar : asset(ltrim($resep->gambar, '/')))
         : null;
 @endphp
-<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col border border-pink-100">
+<article class="bg-white rounded-3xl overflow-hidden hover:shadow-xs transition-all flex flex-col border border-pink-100">
     <a href="{{ route('public.resep.show', $resep) }}" class="relative h-52 w-full bg-pink-50 flex items-center justify-center overflow-hidden" aria-label="Lihat resep {{ $resep->nama_resep }}">
         @if ($urlFoto)
             <img class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src="{{ $urlFoto }}" alt="{{ $resep->nama_resep }}" loading="lazy">
@@ -38,7 +38,7 @@
             </div>
             <div class="flex items-center justify-between pt-3 mt-2 border-t border-pink-200/30">
                 <span class="text-xs text-stone-600">Protein: {{ $resep->protein ?? 0 }} g</span>
-                <a class="text-pink-600 text-xs font-bold hover:underline flex items-center gap-0.5" href="{{ route('public.resep.show', $resep) }}">
+                <a class="text-pink-600 text-xs font-bold hover:text-pink-800 flex items-center gap-0.5" href="{{ route('public.resep.show', $resep) }}">
                     Buka Resep <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                 </a>
             </div>

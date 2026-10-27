@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\GuestKalkulatorController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KalkulatorGiziController;
@@ -28,10 +29,7 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:Admin'])->group(function () {
-    Route::get('/dashboardAdmin', function () {
-        return view('admin.dashboardAdmin');
-    })->name('dashboardAdmin');
-
+    Route::get('/dashboardAdmin', [DashboardAdminController::class, 'index'])->name('dashboardAdmin');
     Route::get('/kelolaUser', [UserController::class, 'index'])->name('kelolaUser');
     Route::get('/users/{user}/balita', [UserController::class, 'balitas'])->name('detailBalita');
     Route::get('/users/{user}/balita/{balita}/riwayat', [UserController::class, 'riwayatBalita'])->name('users.balitas.riwayat');

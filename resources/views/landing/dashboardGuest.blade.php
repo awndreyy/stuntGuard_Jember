@@ -7,7 +7,7 @@
 
         <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
             <div class="max-w-3xl mx-auto flex flex-col items-center text-center">
-                <div class="inline-flex items-center gap-2 bg-white border border-pink-200 text-pink-700 px-4 py-1.5 rounded-full shadow-sm mb-5">
+                <div class="inline-flex items-center gap-2 bg-white border border-pink-200 text-pink-700 px-4 py-1.5 rounded-full mb-5">
                     <span class="material-symbols-outlined text-[18px] text-pink-500">auto_awesome</span>
                     <span class="text-xs font-bold">Inovasi Posyandu Cerdas Kabupaten Jember</span>
                 </div>
@@ -32,7 +32,7 @@
                     </a>
                 </div>
 
-                <div class="grid grid-cols-3 gap-3 sm:gap-6 mt-12 w-full max-w-2xl bg-white/95 p-4 sm:p-6 rounded-3xl border border-pink-100 shadow-sm">
+                <div class="grid grid-cols-3 gap-3 sm:gap-6 mt-12 w-full max-w-2xl bg-white/95 p-4 sm:p-6 rounded-3xl border border-pink-100 shadow-xs">
                     <div class="flex flex-col items-center text-center border-r border-pink-100 pr-2">
                         <div class="flex items-center gap-1.5 text-pink-500">
                             <span class="material-symbols-outlined text-[22px] hidden sm:inline">child_care</span>
@@ -73,7 +73,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch bg-gradient-to-br from-pink-50 via-rose-50/70 to-pink-100/50 p-5 sm:p-8 rounded-3xl border border-pink-200/80 shadow-sm">
-                <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-pink-100 shadow-sm flex flex-col justify-between">
+                <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-pink-100 flex flex-col justify-between">
                     <div>
                         <div class="flex items-center gap-2.5 pb-4 mb-6 border-b border-pink-100">
                             <span class="w-7 h-7 rounded-full bg-pink-500 text-white text-xs font-bold flex items-center justify-center">1</span>
@@ -81,11 +81,6 @@
                         </div>
 
                         <form id="nutriForm" class="space-y-5">
-                            <div>
-                                <label for="inputName" class="block text-xs font-bold text-stone-700 mb-1.5">Nama Anak <span class="text-stone-400 font-medium">(opsional)</span></label>
-                                <input id="inputName" type="text" maxlength="100" placeholder="Contoh: Embut" class="w-full h-12 bg-stone-50 border border-stone-200 rounded-xl px-4 text-sm text-stone-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all">
-                            </div>
-
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-2">Pilih Jenis Kelamin Anak</label>
                                 <div class="grid grid-cols-2 gap-2.5 bg-pink-50/70 p-1.5 rounded-2xl border border-pink-100">
@@ -136,7 +131,7 @@
                             <p id="guestCalcError" role="alert" aria-live="polite" class="hidden text-xs text-rose-700"></p>
 
                             <div class="pt-2">
-                                <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-md shadow-pink-500/20 transition-all cursor-pointer">
+                                <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer">
                                     <span class="material-symbols-outlined text-[20px]">analytics</span>
                                     <span>Hitung Z-score WHO</span>
                                 </button>
@@ -150,7 +145,7 @@
                     </p>
                 </div>
 
-                <div id="resultBox" class="lg:col-span-5 bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm transition-all duration-300">
+                <div id="resultBox" class="lg:col-span-5 bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 transition-all duration-300">
                     <div class="flex items-start gap-2.5 mb-3">
                         <div class="w-9 h-9 rounded-xl bg-stone-100 text-stone-600 flex items-center justify-center shrink-0">
                             <span class="material-symbols-outlined text-[20px]">monitor_heart</span>
@@ -163,9 +158,6 @@
 
                     <div class="rounded-xl bg-stone-50 border border-stone-200 p-3 sm:p-4">
                         <div class="grid grid-cols-[minmax(110px,auto)_1fr] gap-x-3 gap-y-1.5 text-xs sm:text-[13px]">
-                            <div class="text-stone-600">Nama Balita:</div>
-                            <div id="resultName" class="font-bold text-stone-900 text-right">-</div>
-
                             <div class="text-stone-600">Jenis Kelamin:</div>
                             <div id="resultGender" class="text-stone-900 text-right">-</div>
 
@@ -279,7 +271,7 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm">
+                <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-xs">
                     <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center mb-4">
                         <span class="material-symbols-outlined text-[26px]">verified</span>
                     </div>
@@ -287,7 +279,7 @@
                     <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">Kalkulator publik menggunakan referensi pertumbuhan WHO untuk skrining awal tumbuh kembang balita.</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm">
+                <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-xs">
                     <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center mb-4">
                         <span class="material-symbols-outlined text-[26px]">sync</span>
                     </div>
@@ -295,7 +287,7 @@
                     <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">Membantu orang tua memahami pentingnya pencatatan pengukuran dan konsultasi rutin di Posyandu.</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm">
+                <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-xs">
                     <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center mb-4">
                         <span class="material-symbols-outlined text-[26px]">restaurant</span>
                     </div>
@@ -303,7 +295,7 @@
                     <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">Temukan inspirasi menu MPASI dengan bahan pangan yang mudah ditemukan di sekitar keluarga.</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm">
+                <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-xs">
                     <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center mb-4">
                         <span class="material-symbols-outlined text-[26px]">touch_app</span>
                     </div>
@@ -396,7 +388,6 @@
         }
 
         const payload = {
-            nama_anak: document.getElementById('inputName').value,
             jenis_kelamin: selectedGender === 'boy' ? 'L' : 'P',
             usia_bulan: document.getElementById('inputAge').value,
             berat: document.getElementById('inputWeight').value,
@@ -425,8 +416,11 @@
                 throw new Error(errors || data.message || 'Perhitungan gagal.');
             }
 
-            document.getElementById('historyNotice').textContent = data.riwayat;
-            document.getElementById('resultName').textContent = data.nama_anak;
+            const historyNotice = document.getElementById('historyNotice');
+
+            if (historyNotice) {
+                historyNotice.textContent = data.riwayat ?? '';
+            }
             document.getElementById('resultGender').textContent = data.jenis_kelamin_label;
             document.getElementById('resultAge').textContent = `${data.usia_bulan} Bulan`;
             document.getElementById('resultMeasure').textContent = `${Number(data.berat).toFixed(1)} kg / ${Number(data.tinggi_input).toFixed(1)} cm`;

@@ -59,12 +59,14 @@
         <x-admin.header />
 
         <!-- Main Content Area -->
-        <main class="flex-1 overflow-y-auto p-3.5 sm:p-5 flex flex-col gap-4 max-w-[1920px] w-full mx-auto">
+        <main class="flex-1 min-h-0 overflow-y-auto p-3.5 sm:p-5 flex flex-col gap-4 max-w-[1920px] w-full mx-auto">
             @yield('content')
 
             <!-- Footer -->
-            <footer class="text-center py-2 shrink-0">
-                <span class="text-[11px] text-stone-400">© 2026 StuntGuard Jember • Modul Edukasi & Resep MPASI Balita</span>
+            <footer class="mt-auto pt-4 pb-2 text-center shrink-0">
+                <span class="text-[11px] text-stone-400">
+                    © 2026 StuntGuard Jember • Dibuat oleh Kelompok 2
+                </span>
             </footer>
         </main>
     </div>

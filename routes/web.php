@@ -34,7 +34,9 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 
     Route::get('/kelolaUser', [UserController::class, 'index'])->name('kelolaUser');
     Route::get('/users/{user}/balita', [UserController::class, 'balitas'])->name('detailBalita');
+    Route::get('/users/{user}/balita/{balita}/riwayat', [UserController::class, 'riwayatBalita'])->name('users.balitas.riwayat');
     Route::resource('users', UserController::class)->except(['index', 'create', 'show', 'edit']);
+    Route::get('/balita/{balita}/riwayat-halaman', [BalitaController::class, 'riwayat'])->name('balita.riwayat');
     Route::resource('balita', BalitaController::class)->except(['create', 'show', 'edit']);
 
     Route::get('/kelolaInformasi', [InformasiController::class, 'index'])->name('kelolaInformasi');

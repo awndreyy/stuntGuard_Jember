@@ -7,6 +7,23 @@ use Illuminate\Http\Request;
 
 class BalitaController extends Controller
 {
+    // lihat riwayat pengukuran balita
+    public function riwayat(Balita $balita)
+    {
+        $balita->load('orangTua');
+        $user = $balita->orangTua;
+        $riwayat = $balita->pengukurans()
+            ->orderByDesc('tanggal_pengukuran')
+            ->orderByDesc('id')
+            ->paginate(10);
+
+        return view('admin.riwayatBalita', [
+            'user' => $user,
+            'balita' => $balita,
+            'riwayat' => $riwayat,
+            'backUrl' => route('kelolaUser') . '#tab-anak',
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */

@@ -33,6 +33,18 @@ class UserController extends Controller
         return view('admin.detailBalita', compact('user', 'balitas'));
     }
 
+    /** Riwayat hanya untuk balita yang menjadi milik akun Orang Tua ini. */
+    public function riwayatBalita(User $user, Balita $balita)
+    {
+        abort_unless($user->role === 'Orang Tua' && $balita->user_id === $user->id, 404);
+
+        $riwayat = $balita->pengukurans()
+            ->orderByDesc('tanggal_pengukuran')
+            ->orderByDesc('id')
+            ->paginate(10);
+
+        return view('admin.riwayatBalita', compact('user', 'balita', 'riwayat'));
+    }
 
     /**
      * Show the form for creating a new resource.

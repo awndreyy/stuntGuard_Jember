@@ -1,3 +1,10 @@
+@php
+    $kelolaUserAktif = request()->is('kelolaUser*')
+        || request()->is('users/*/balita')
+        || request()->is('users/*/balita/*/riwayat')
+        || request()->is('balita/*/riwayat-halaman');
+@endphp
+
 <!-- Mobile Overlay -->
 <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-stone-900/40 backdrop-blur-xs z-30 hidden md:hidden transition-opacity"></div>
 
@@ -73,11 +80,11 @@
                         </div>
                     </a>
                     <!-- Kelola User -->
-                    <a href="{{ url('/kelolaUser') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ request()->is('kelolaUser*') ? 'bg-rose-700 text-white shadow-sm' : 'text-stone-600 hover:text-rose-700 hover:bg-stone-50' }} transition-all">
-                        <i data-lucide="users" class="w-4 h-4 mt-0.5 {{ request()->is('kelolaUser*') ? 'text-rose-100' : 'text-stone-400 group-hover:text-rose-700' }} transition-colors"></i>
+                    <a href="{{ url('/kelolaUser') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ $kelolaUserAktif ? 'bg-rose-700 text-white shadow-sm' : 'text-stone-600 hover:text-rose-700 hover:bg-stone-50' }} transition-all">
+                        <i data-lucide="users" class="w-4 h-4 mt-0.5 {{ $kelolaUserAktif ? 'text-rose-100' : 'text-stone-400 group-hover:text-rose-700' }} transition-colors"></i>
                         <div class="flex-1">
                             <span class="block text-xs font-semibold">Kelola User</span>
-                            <span class="block text-[10px] {{ request()->is('kelolaUser*') ? 'text-rose-200' : 'text-stone-400' }} font-normal leading-tight mt-0.5">Pengguna & Balita</span>
+                            <span class="block text-[10px] {{ $kelolaUserAktif ? 'text-rose-200' : 'text-stone-400' }} font-normal leading-tight mt-0.5">Pengguna & Balita</span>
                         </div>
                     </a>
                 </nav>

@@ -4,7 +4,7 @@
             ? $artikel->thumbnail : asset(ltrim($artikel->thumbnail, '/')))
         : null;
 @endphp
-<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col group border border-pink-100">
+<article class="bg-white rounded-3xl overflow-hidden hover:shadow-xs transition-all flex flex-col group border border-pink-100">
     <a href="{{ route('public.informasi.show', $artikel) }}" class="relative h-44 w-full overflow-hidden bg-pink-50 flex items-center justify-center" aria-label="Baca {{ $artikel->judul }}">
         @if ($urlFoto)
             <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="{{ $urlFoto }}" alt="{{ $artikel->judul }}" loading="lazy">
@@ -26,7 +26,7 @@
             </h3>
             <p class="text-xs text-stone-600 mt-2 line-clamp-3">{{ $artikel->summary }}</p>
         </div>
-        <a href="{{ route('public.informasi.show', $artikel) }}" class="text-xs text-pink-600 font-semibold flex items-center gap-1 pt-2 hover:underline">
+        <a href="{{ route('public.informasi.show', $artikel) }}" class="text-xs text-pink-600 font-semibold flex items-center gap-1 pt-2 hover:text-pink-600">
             Baca Selengkapnya <span class="material-symbols-outlined text-[16px]">chevron_right</span>
         </a>
     </div>

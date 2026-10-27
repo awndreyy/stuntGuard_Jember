@@ -34,15 +34,31 @@
         <div class="flex-1 overflow-y-auto px-3.5 py-4 space-y-5">
 
             <!-- Group 1: MAIN -->
-            <div>
-                <span class="px-2.5 text-[10px] font-bold tracking-wider text-stone-400 uppercase">Main</span>
-                <nav class="mt-1.5 space-y-1">
-                    <a href="{{ route('dashboardAdmin') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl {{ request()->is('dashboard-admin') ? 'bg-rose-700 text-white font-semibold text-xs shadow-sm' : 'text-stone-600 hover:text-rose-700 hover:bg-stone-50' }} transition-all">
-                        <i data-lucide="layout-dashboard" class="w-4 h-4 {{ request()->is('dashboard-admin') ? 'stroke-[2.2]' : 'text-stone-400 group-hover:text-rose-700' }} transition-colors"></i>
-                        <span class="text-xs font-semibold">Dashboard Overview</span>
-                    </a>
-                </nav>
-            </div>
+        <div>
+            <span class="px-2.5 text-[10px] font-bold tracking-wider text-stone-400 uppercase">
+                Main
+            </span>
+
+            <nav class="mt-1.5 space-y-1">
+                <a href="{{ route('dashboardAdmin') }}"
+                class="group flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all
+                {{ request()->routeIs('dashboardAdmin')
+                        ? 'bg-rose-700 text-white shadow-sm'
+                        : 'text-stone-600 hover:text-rose-700 hover:bg-stone-50' }}">
+
+                    <i data-lucide="layout-dashboard"
+                    class="w-4 h-4
+                    {{ request()->routeIs('dashboardAdmin')
+                            ? 'text-rose-100'
+                            : 'text-stone-400 group-hover:text-rose-700' }}">
+                    </i>
+
+                    <span class="text-xs font-semibold">
+                        Dashboard
+                    </span>
+                </a>
+            </nav>
+        </div>
 
             <!-- Group 2: MANAJEMEN KONTEN -->
             <div>

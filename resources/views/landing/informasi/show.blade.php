@@ -9,10 +9,10 @@
                 ? $informasi->thumbnail : asset(ltrim($informasi->thumbnail, '/')))
             : null;
     @endphp
-    <a href="{{ route('public.informasi.index') }}" class="inline-flex items-center gap-1 text-sm font-semibold text-pink-600 hover:underline mb-6">
-        <span class="material-symbols-outlined text-lg">arrow_back</span> Semua Artikel
+    <a href="{{ route('public.informasi.index') }}" class="inline-flex items-center gap-1 text-sm font-semibold text-pink-600 hover:text-pink-800">
+        <span class="material-symbols-outlined text-lg">arrow_back</span> kembali
     </a>
-    <article class="max-w-3xl mx-auto bg-white rounded-3xl shadow-sm border border-pink-100 overflow-hidden">
+    <article class="max-w-3xl mx-auto bg-white rounded-3xl border border-pink-100 overflow-hidden">
         @if ($urlFoto)
             <img src="{{ $urlFoto }}" alt="{{ $informasi->judul }}" class="w-full max-h-[390px] object-cover">
         @endif

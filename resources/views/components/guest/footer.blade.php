@@ -35,11 +35,11 @@
         <p class="text-xs text-stone-600">Hubungi puskesmas atau tenaga kesehatan terdekat untuk konsultasi dan pemeriksaan balita.</p>
         <div class="flex flex-col gap-1">
           <div class="flex items-center gap-1 text-pink-700 text-sm font-semibold">
-            <span class="material-symbols-outlined text-[20px]">call</span>
+            <span class="material-symbols-outlined">call</span>
             <span>Puskesmas terdekat</span>
           </div>
           <div class="flex items-center gap-1 text-stone-600 text-xs">
-            <span class="material-symbols-outlined text-[18px]">schedule</span>
+            <span class="material-symbols-outlined">schedule</span>
             <span>Ikuti jam layanan fasilitas kesehatan setempat</span>
           </div>
         </div>

@@ -3,8 +3,8 @@
 @section('title', 'Informasi Kesehatan Balita - StuntGuard Jember')
 
 @section('content')
-    <div class="mb-10 rounded-3xl border border-pink-100 bg-gradient-to-br from-white via-pink-50 to-rose-50 px-6 py-8 sm:px-10 sm:py-10 shadow-sm">
-        <a href="{{ route('home') }}#informasi-kesehatan" class="inline-flex items-center gap-1 text-sm font-semibold text-pink-600 hover:underline mb-4">
+    <div class="mb-10 rounded-3xl border border-pink-100 bg-gradient-to-br from-white via-pink-50 to-rose-50 px-6 py-8 sm:px-10 sm:py-10">
+        <a href="{{ route('home') }}#informasi-kesehatan" class="inline-flex items-center gap-1 text-sm font-semibold text-pink-600 hover:text-pink-800 mb-4">
             <span class="material-symbols-outlined text-lg">arrow_back</span> Kembali ke Beranda
         </a>
         <h1 class="text-3xl font-extrabold text-stone-900">Informasi & Edukasi Kesehatan Balita</h1>

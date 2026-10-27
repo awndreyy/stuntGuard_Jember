@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-2xl border border-stone-200 shadow-sm w-full max-w-5xl mx-auto">
+    <div class="bg-white rounded-2xl border border-stone-200 w-full max-w-5xl mx-auto">
         <form id="recipeForm" action="{{ $isEdit ? route('mpasi.update', $mpasi->id_resep) : route('mpasi.store') }}"
               method="POST" enctype="multipart/form-data" novalidate class="p-4 sm:p-6 space-y-5 text-xs">
             @csrf

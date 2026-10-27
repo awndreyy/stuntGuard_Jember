@@ -1,45 +1,68 @@
 @php
+    // Pertahankan sumber gambar dan route detail yang dipakai sebelumnya.
     $urlFoto = $resep->gambar
         ? (\Illuminate\Support\Str::startsWith($resep->gambar, ['http://', 'https://'])
             ? $resep->gambar : asset(ltrim($resep->gambar, '/')))
         : null;
 @endphp
-<article class="bg-white rounded-3xl overflow-hidden hover:shadow-xs transition-all flex flex-col border border-pink-100">
-    <a href="{{ route('public.resep.show', $resep) }}" class="relative h-52 w-full bg-pink-50 flex items-center justify-center overflow-hidden" aria-label="Lihat resep {{ $resep->nama_resep }}">
+
+<article class="group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition-colors hover:border-pink-300 focus-within:border-pink-400">
+    <a href="{{ route('public.resep.show', $resep) }}" class="relative block aspect-[16/9] w-full overflow-hidden bg-pink-50" aria-label="Lihat resep {{ $resep->nama_resep }}">
         @if ($urlFoto)
-            <img class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src="{{ $urlFoto }}" alt="{{ $resep->nama_resep }}" loading="lazy">
+            <img src="{{ $urlFoto }}" alt="{{ $resep->nama_resep }}" loading="lazy"
+                class="h-full w-full object-cover">
         @else
-            <span class="material-symbols-outlined text-6xl text-pink-200">restaurant</span>
+            <span class="flex h-full w-full items-center justify-center">
+                <span class="material-symbols-outlined text-6xl text-pink-200" aria-hidden="true">restaurant</span>
+            </span>
         @endif
-        <span class="absolute top-3 left-3 bg-white/95 text-pink-600 text-xs px-3 py-1 rounded-full font-bold shadow-sm">
-            {{ $resep->kategori_usia }} Bulan
+        <span class="absolute left-3 top-3 rounded-full border border-pink-100 bg-white px-3 py-1.5 text-xs font-bold text-pink-700">
+            {{ $resep->kategori_usia }} bulan
         </span>
     </a>
-    <div class="p-4 sm:p-6 flex flex-col flex-1 justify-between gap-4">
+
+    <div class="flex flex-1 flex-col p-5">
         <div>
-            <div class="flex items-center gap-1 text-xs text-pink-700 font-bold mb-2">
-                <span class="material-symbols-outlined text-[16px]">nutrition</span>
-                <span>Informasi Gizi per Resep</span>
-            </div>
-            <h3 class="text-base font-bold text-stone-900 line-clamp-2">
-                <a href="{{ route('public.resep.show', $resep) }}" class="hover:text-pink-600">{{ $resep->nama_resep }}</a>
+            <p class="mb-2 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-pink-700">
+                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">nutrition</span>
+                Resep MPASI
+            </p>
+            <h3 class="line-clamp-2 text-lg font-bold leading-snug text-stone-900">
+                <a href="{{ route('public.resep.show', $resep) }}" class="transition-colors hover:text-pink-700">
+                    {{ $resep->nama_resep }}
+                </a>
             </h3>
-            <p class="text-xs text-stone-600 mt-2">
-                {{ count($resep->bahan ?? []) }} bahan · {{ count($resep->cara_pembuatan ?? []) }} langkah pembuatan
+            <p class="mt-2 text-xs leading-relaxed text-stone-600">
+                {{ count($resep->bahan ?? []) }} bahan <span class="px-1 text-stone-400">·</span> {{ count($resep->cara_pembuatan ?? []) }} langkah pembuatan
             </p>
         </div>
-        <div>
-            <div class="flex flex-wrap gap-1.5 py-1">
-                <span class="bg-pink-100/60 text-pink-900 text-xs px-2.5 py-0.5 rounded-full">{{ number_format($resep->kalori ?? 0, 0, ',', '.') }} kkal</span>
-                <span class="bg-pink-100 text-stone-600 text-xs px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[14px]">timer</span> {{ $resep->waktu_memasak }} Menit
-                </span>
-                <span class="bg-pink-100 text-pink-700 text-xs px-2.5 py-0.5 rounded-full">{{ $resep->porsi }} Porsi</span>
+
+        <div class="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-pink-100 bg-pink-50 p-3">
+            <div>
+                <p class="text-[11px] font-medium text-stone-600">Energi / resep</p>
+                <p class="mt-1 text-sm font-extrabold text-stone-900">{{ number_format($resep->kalori ?? 0, 0, ',', '.') }} <span class="text-xs font-medium text-stone-600">kkal</span></p>
             </div>
-            <div class="flex items-center justify-between pt-3 mt-2 border-t border-pink-200/30">
-                <span class="text-xs text-stone-600">Protein: {{ $resep->protein ?? 0 }} g</span>
-                <a class="text-pink-600 text-xs font-bold hover:text-pink-800 flex items-center gap-0.5" href="{{ route('public.resep.show', $resep) }}">
-                    Buka Resep <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            <div class="border-l border-pink-200 pl-3">
+                <p class="text-[11px] font-medium text-stone-600">Protein / resep</p>
+                <p class="mt-1 text-sm font-extrabold text-stone-900">{{ $resep->protein ?? 0 }} <span class="text-xs font-medium text-stone-600">g</span></p>
+            </div>
+        </div>
+
+        <div class="mt-auto pt-4">
+            <div class="flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium text-stone-600">
+                <span class="inline-flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[18px] text-pink-700" aria-hidden="true">schedule</span>
+                    {{ $resep->waktu_memasak }} menit
+                </span>
+                <span class="inline-flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[18px] text-pink-700" aria-hidden="true">restaurant</span>
+                    {{ $resep->porsi }} porsi
+                </span>
+            </div>
+            <div class="mt-4 border-t border-stone-100 pt-4">
+                <a href="{{ route('public.resep.show', $resep) }}" class="inline-flex items-center gap-1.5 text-sm font-bold text-pink-700 transition-colors hover:text-pink-800 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-600">
+                    Lihat detail resep
+                    <span class="material-symbols-outlined text-[19px]" aria-hidden="true">arrow_forward</span>
                 </a>
             </div>
         </div>

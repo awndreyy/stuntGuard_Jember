@@ -8,17 +8,17 @@
       </div>
     </a>
     <nav id="desktopNav" class="hidden md:flex items-center gap-7 text-sm font-semibold text-stone-600">
-      <a href="{{ route('home') }}#beranda" class="text-pink-600 font-bold">Beranda</a>
+      <a href="{{ route('home') }}#beranda" class="{{ request()->routeIs('home') ? 'text-pink-700 font-bold' : 'hover:text-pink-600 transition-colors' }}">Beranda</a>
       <a href="{{ route('home') }}#kalkulator-widget" class="hover:text-pink-600 transition-colors">Kalkulator Gizi</a>
-      <a href="{{ route('home') }}#resep-mpasi" class="hover:text-pink-600 transition-colors">Resep MPASI</a>
+      <a href="{{ route('home') }}#resep-mpasi" class="{{ request()->routeIs('public.resep.*') ? 'text-pink-700 font-bold' : 'hover:text-pink-600 transition-colors' }}">Resep MPASI</a>
       <a href="{{ route('home') }}#informasi-kesehatan" class="hover:text-pink-600 transition-colors">Edukasi Kesehatan</a>
     </nav>
     <div class="hidden sm:flex items-center gap-2.5">
       @guest
         <a href="{{ route('login') }}" class="text-xs sm:text-sm font-bold text-pink-700 border border-pink-200 hover:bg-pink-50 px-4 py-2 rounded-full transition-all">Masuk</a>
-        <a href="{{ route('register') }}" class="text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white px-5 py-2 rounded-full shadow-md shadow-pink-500/20 transition-all">Daftar</a>
+        <a href="{{ route('register') }}" class="text-xs sm:text-sm font-bold bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-full transition-colors">Daftar</a>
       @else
-        <a href="{{ auth()->user()->role === 'Admin' ? route('dashboardAdmin') : route('dashboardUser') }}" class="text-sm font-bold bg-gradient-to-r from-pink-500 to-rose-600 text-white px-5 py-2 rounded-full">Dashboard</a>
+        <a href="{{ auth()->user()->role === 'Admin' ? route('dashboardAdmin') : route('dashboardUser') }}" class="text-sm font-bold bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-full transition-colors">Dashboard</a>
       @endguest
     </div>
     <button id="mobileMenuButton" type="button" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-pink-100 text-pink-700" aria-label="Buka menu" aria-expanded="false">
@@ -28,7 +28,7 @@
   <nav id="mobileNav" class="hidden md:hidden bg-white border-t border-pink-100 px-5 py-4 space-y-3 text-sm font-semibold text-stone-700">
     <a class="block py-1 hover:text-pink-600" href="{{ route('home') }}#beranda">Beranda</a>
     <a class="block py-1 hover:text-pink-600" href="{{ route('home') }}#kalkulator-widget">Kalkulator Gizi</a>
-    <a class="block py-1 hover:text-pink-600" href="{{ route('home') }}#resep-mpasi">Resep MPASI</a>
+    <a class="block py-1 {{ request()->routeIs('public.resep.*') ? 'text-pink-700 font-bold' : 'hover:text-pink-600' }}" href="{{ route('home') }}#resep-mpasi">Resep MPASI</a>
     <a class="block py-1 hover:text-pink-600" href="{{ route('home') }}#informasi-kesehatan">Edukasi Kesehatan</a>
     @guest 
     <div class="flex gap-2 pt-2">

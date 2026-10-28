@@ -9,10 +9,11 @@
                 ? $resep->gambar : asset(ltrim($resep->gambar, '/')))
             : null;
     @endphp
-    <a href="{{ route('public.resep.index') }}" class="inline-flex items-center gap-1 text-sm font-semibold text-pink-600 hover:underline mb-6">
+    <div class="mx-auto max-w-[1200px] px-4 pb-16 pt-7 sm:px-6 md:px-8 lg:px-12">
+    <a href="{{ route('public.resep.index') }}" class="mb-6 inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-pink-700 transition-colors hover:bg-pink-50">
         <span class="material-symbols-outlined text-lg">arrow_back</span> Semua Resep
     </a>
-    <article class="max-w-4xl mx-auto bg-white rounded-3xl overflow-hidden border border-pink-100 shadow-sm">
+    <article class="max-w-4xl mx-auto bg-white rounded-3xl overflow-hidden border border-pink-100">
         <div class="relative h-56 sm:h-80 bg-pink-50 flex items-center justify-center">
             @if ($urlFoto)
                 <img src="{{ $urlFoto }}" alt="{{ $resep->nama_resep }}" class="w-full h-full object-cover">
@@ -72,4 +73,5 @@
             </div>
         </div>
     </article>
+    </div>
 @endsection

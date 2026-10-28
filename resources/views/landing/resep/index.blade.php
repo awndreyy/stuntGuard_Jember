@@ -4,18 +4,12 @@
 
 @section('content')
     <div class="mx-auto max-w-[1200px] px-4 pb-16 pt-7 sm:px-6 md:px-8 md:pb-20 md:pt-10 lg:px-12">
-        
-        {{-- Tombol kembali ke beranda --}}
+        {{-- Tombol kembali, menggantikan header katalog. --}}
         <a href="{{ route('home') }}"
-        class="inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-pink-700 transition-colors hover:border-pink-300 hover:bg-pink-50">
-
-            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">
-                arrow_back
-            </span>
-
+           class="inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-pink-700 transition-colors hover:border-pink-300 hover:bg-pink-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600">
+            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_back</span>
             Kembali ke Beranda
         </a>
-
 
         @if ($resep->isEmpty())
             <div class="mt-8 rounded-2xl border border-stone-200 bg-white px-5 py-16 text-center">

@@ -32,14 +32,14 @@
       {{-- Kolom 4: Helpline --}}
       <div class="flex flex-col gap-2">
         <span class="text-base text-stone-900 font-semibold">Butuh Bantuan Kesehatan?</span>
-        <p class="text-xs text-stone-600">Hubungi puskesmas atau tenaga kesehatan terdekat untuk konsultasi dan pemeriksaan balita.</p>
+        <p class="text-sm text-stone-600">Hubungi puskesmas atau tenaga kesehatan terdekat untuk konsultasi dan pemeriksaan balita.</p>
         <div class="flex flex-col gap-1">
           <div class="flex items-center gap-1 text-pink-700 text-sm font-semibold">
             <span class="material-symbols-outlined">call</span>
             <span>Puskesmas terdekat</span>
           </div>
-          <div class="flex items-center gap-1 text-stone-600 text-xs">
-            <span class="material-symbols-outlined">schedule</span>
+          <div class="flex items-center gap-1 text-stone-600 text-sm">
+            <span class="material-symbols-outlined text-[18px] text-pink-700" aria-hidden="true">schedule</span>
             <span>Ikuti jam layanan fasilitas kesehatan setempat</span>
           </div>
         </div>

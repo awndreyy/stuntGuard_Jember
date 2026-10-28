@@ -17,7 +17,7 @@
     </style>
     @stack('styles')
 </head>
-<body class="bg-pink-50/40 text-stone-800 min-h-screen flex flex-col antialiased selection:bg-pink-200 selection:text-pink-900">
+<body class="bg-[#FFFBFC] text-stone-800 min-h-screen flex flex-col antialiased selection:bg-pink-200 selection:text-pink-900">
     <x-guest.navbar />
     <main class="w-full flex-1 pt-20" id="beranda">
       @yield('content')

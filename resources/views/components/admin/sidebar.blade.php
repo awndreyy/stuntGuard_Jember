@@ -15,7 +15,7 @@
         <!-- Top Brand Logo Area -->
         <div class="h-16 px-5 border-b border-stone-100 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('images/logoBesar.png') }}" alt="Logo StuntGuard" class="w-9 h-9 rounded-xl object-cover shadow-sm">
+                <img src="{{ asset('images/logo-StuntGuard.png') }}" alt="Logo StuntGuard" class="w-9 h-9 rounded-xl object-cover">
                 <div>
                     <div class="flex items-center gap-1.5">
                         <span class="font-bold text-base tracking-tight text-rose-700">StuntGuard</span>

@@ -11,7 +11,7 @@
             </h1>
             <p class="text-xs text-stone-500 mt-0.5">
                 Monitoring gizi anak & pengelolaan resep MPASI StuntGuard Kabupaten Jember.
-            </p>
+        `    </p>
             </div>
         </div>
 
@@ -180,7 +180,7 @@
                 </div>
                 </div>
                 <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> 10 Terbaru
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Terbaru
                 </span>
             </div>
 

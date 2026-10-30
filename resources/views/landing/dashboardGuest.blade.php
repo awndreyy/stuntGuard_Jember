@@ -7,10 +7,6 @@
         <div class="mx-auto max-w-[1200px] px-4 md:px-8 lg:px-12">
             <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
                 <div class="lg:col-span-7">
-                    <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-pink-200 bg-white px-4 py-2 text-xs font-bold text-pink-700">
-                        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">favorite</span>
-                        Inovasi Posyandu Cerdas Kabupaten Jember
-                    </div>
                     <h1 class="max-w-[720px] text-3xl font-extrabold leading-tight tracking-tight text-stone-900 sm:text-4xl lg:text-[44px] lg:leading-[1.16]">
                         Pantau Tumbuh Kembang &amp; Gizi Si Kecil dengan
                         <span class="text-pink-600">Kasih Sayang</span>

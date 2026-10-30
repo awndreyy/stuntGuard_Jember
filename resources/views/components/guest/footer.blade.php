@@ -50,7 +50,7 @@
     {{-- Copyright --}}
     <div class="border-t border-pink-200/30 pt-4 flex flex-col sm:flex-row items-center justify-center gap-2">
       <p class="text-xs text-stone-600 text-center">
-        &copy; {{ date('Y') }} StuntGuard Jember. Seluruh hak cipta dilindungi.
+        &copy; {{ date('Y') }} StuntGuard Jember. Dibuat oleh Kelompok 2.
       </p>
     </div>
   </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Informasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class InformasiController extends Controller
 {
@@ -24,17 +25,22 @@ class InformasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => ['required_without:title', 'nullable', 'string', 'max:255'],
-            'title' => ['required_without:judul', 'nullable', 'string', 'max:255'],
-            'category' => ['required', 'string', 'max:100'],
+            'judul' => ['required_without:title', 'nullable', 'string', 'max:50'],
+            'title' => ['required_without:judul', 'nullable', 'string', 'max:50'],
+            'category' => ['required', Rule::in([
+                'Trimester 1',
+                'Trimester 2',
+                'Trimester 3',
+                'Edukasi Gizi',
+                'Pencegahan Stunting',]),],
             'summary' => ['required', 'string'],
             'content' => ['nullable', 'string'],
             'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
         ], [
             'judul.required_without' => 'Judul informasi wajib diisi.',
             'title.required_without' => 'Judul informasi wajib diisi.',
-            'judul.max' => 'Judul informasi maksimal 255 karakter.',
-            'title.max' => 'Judul informasi maksimal 255 karakter.',
+            'judul.max' => 'Judul informasi maksimal 50 karakter.',
+            'title.max' => 'Judul informasi maksimal 50 karakter.',
             'category.required' => 'Kategori wajib dipilih.',
             'summary.required' => 'Ringkasan singkat wajib diisi.',
             'thumbnail.image' => 'File thumbnail harus berupa gambar.',
@@ -78,17 +84,22 @@ class InformasiController extends Controller
         $informasi = Informasi::findOrFail($id);
 
         $request->validate([
-            'judul' => ['required_without:title', 'nullable', 'string', 'max:255'],
-            'title' => ['required_without:judul', 'nullable', 'string', 'max:255'],
-            'category' => ['required', 'string', 'max:100'],
+            'judul' => ['required_without:title', 'nullable', 'string', 'max:50'],
+            'title' => ['required_without:judul', 'nullable', 'string', 'max:50'],
+            'category' => ['required', Rule::in([
+                'Trimester 1',
+                'Trimester 2',
+                'Trimester 3',
+                'Edukasi Gizi',
+                'Pencegahan Stunting',]),],
             'summary' => ['required', 'string'],
             'content' => ['nullable', 'string'],
             'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
         ], [
             'judul.required_without' => 'Judul informasi wajib diisi.',
             'title.required_without' => 'Judul informasi wajib diisi.',
-            'judul.max' => 'Judul informasi maksimal 255 karakter.',
-            'title.max' => 'Judul informasi maksimal 255 karakter.',
+            'judul.max' => 'Judul informasi maksimal 50 karakter.',
+            'title.max' => 'Judul informasi maksimal 50 karakter.',
             'category.required' => 'Kategori wajib dipilih.',
             'summary.required' => 'Ringkasan singkat wajib diisi.',
             'thumbnail.image' => 'File thumbnail harus berupa gambar.',

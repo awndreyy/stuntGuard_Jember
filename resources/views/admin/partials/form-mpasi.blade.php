@@ -114,7 +114,7 @@
         </div>
         <div>
             <span class="block text-[11px] text-stone-500 mb-1">Seng (mg)</span>
-            <input type="number" id="formSeng" name="seng" inputmode="numeric" max="8" step="0.01" value="{{ old('seng', $mpasi?->seng) }}" placeholder="maks 8" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('seng') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+            <input type="number" id="formSeng" name="seng" min="0" max="8" step="0.01" value="{{ old('seng', $mpasi?->seng) }}" placeholder="maks 8" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('seng') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
             @error('seng')
                 <p class="text-[10px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
             @enderror
@@ -217,7 +217,7 @@
         <div class="flex flex-wrap items-center gap-3 rounded-xl border border-stone-200 bg-stone-50 p-3">
             <img src="{{ asset(ltrim($mpasi->gambar, '/')) }}"
                  alt="Foto resep {{ $mpasi->nama_resep }}" class="w-20 h-20 rounded-xl object-cover border border-stone-200">
-            <p class="text-[11px] text-stone-500 max-w-md">Foto saat ini. Biarkan pilihan file dan URL kosong jika tidak ingin mengganti foto.</p>
+            <p class="text-[11px] text-stone-500 max-w-md">Foto saat ini. Biarkan pilihan file kosong jika tidak ingin mengganti foto.</p>
         </div>
     @endif
 

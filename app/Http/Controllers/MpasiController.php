@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Validation\Rule;
-
 use App\Models\Mpasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class MpasiController extends Controller
 {
@@ -60,9 +59,9 @@ class MpasiController extends Controller
             'waktu_memasak' => ['required', 'integer', 'min:1', 'max:100'],
             'porsi' => ['required', 'integer', 'min:1', 'max:10'],
             'kalori' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:2000'],
-            'karbohidrat' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:40'],
-            'lemak' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:300'],
-            'protein' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:50'],
+            'karbohidrat' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:300'],
+            'lemak' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:50'],
+            'protein' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:40'],
             'zat_besi' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:10'],
             'seng' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:8'],
             'bahan' => ['required', 'array', 'min:1'],
@@ -154,9 +153,9 @@ class MpasiController extends Controller
             'waktu_memasak' => ['required', 'integer', 'min:1', 'max:100'],
             'porsi' => ['required', 'integer', 'min:1', 'max:10'],
             'kalori' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:2000'],
-            'karbohidrat' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:40'],
-            'lemak' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:300'],
-            'protein' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:50'],
+            'karbohidrat' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:300'],
+            'lemak' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:50'],
+            'protein' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:40'],
             'zat_besi' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:10'],
             'seng' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:8'],
             'bahan' => ['required', 'array', 'min:1'],
@@ -164,7 +163,6 @@ class MpasiController extends Controller
             'cara_pembuatan' => ['required', 'array', 'min:1'],
             'cara_pembuatan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
-            'foto' => ['nullable', 'url', 'max:500', 'regex:/^https?:\/\//i'],
         ], [
             'nama_resep.required' => 'Nama resep wajib diisi.',
             'nama_resep.max' => 'Nama resep maksimal 50 karakter.',

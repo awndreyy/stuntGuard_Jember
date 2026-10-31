@@ -35,7 +35,7 @@
                                 '12-23' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
                                 default => 'bg-stone-50 text-stone-700 border-stone-200'
                             };
-                            $imageUrl = $recipe->gambar ? (str_starts_with($recipe->gambar, 'http') ? $recipe->gambar : asset($recipe->gambar)) : null;
+                            $imageUrl = $recipe->gambar? asset(ltrim($recipe->gambar, '/')): null;
                         @endphp
                         <tr class="table-recipe-row hover:bg-rose-50/30 transition-colors" data-category="{{ $recipe->kategori_usia }}" data-name="{{ strtolower($recipe->nama_resep) }}">
                             <td class="py-3 px-4">

@@ -70,19 +70,18 @@ function previewRecipe(id) {
     const recipesData = window.recipesData || {};
     const recipe = recipesData[id];
     if (recipe) {
-        // Image
+        // Preview gambar lokal
         const img = document.getElementById('prevImage');
+
         if (img) {
-            let imageUrl = recipe.gambar;
-            if (!imageUrl) {
+            const imagePath = recipe.gambar;
+
+            if (imagePath) {
+                img.src = '/' + imagePath.replace(/^\/+/, '');
+                img.classList.remove('hidden');
+            } else {
                 img.removeAttribute('src');
                 img.classList.add('hidden');
-            } else {
-                if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
-                    imageUrl = '/' + imageUrl.replace(/^\//, '');
-                }
-                img.src = imageUrl;
-                img.classList.remove('hidden');
             }
         }
 

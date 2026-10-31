@@ -4,10 +4,9 @@
 
 @section('content')
     @php
-        $urlFoto = $resep->gambar
-            ? (\Illuminate\Support\Str::startsWith($resep->gambar, ['http://', 'https://'])
-                ? $resep->gambar : asset(ltrim($resep->gambar, '/')))
-            : null;
+    $urlFoto = $resep->gambar
+        ? asset(ltrim($resep->gambar, '/'))
+        : null;
     @endphp
     <div class="mx-auto max-w-[1200px] px-4 pb-16 pt-7 sm:px-6 md:px-8 lg:px-12">
     <a href="{{ route('public.resep.index') }}" class="mb-6 inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-pink-700 transition-colors hover:bg-pink-50">
@@ -31,7 +30,7 @@
 
             <section class="mt-8" aria-label="Informasi nutrisi">
                 <h2 class="text-lg font-bold text-stone-900 mb-3">Informasi Gizi</h2>
-                <p class="text-xs text-stone-500 mb-3">Nilai gizi sesuai data resep yang dimasukkan admin.</p>
+                <p class="text-xs text-stone-500 mb-3">Nilai gizi berikut per 1 porsi</p>
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-center">
                     @foreach ([
                         ['Energi', $resep->kalori, 'kkal'],

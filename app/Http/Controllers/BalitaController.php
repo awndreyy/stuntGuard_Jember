@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-
-use Illuminate\Validation\Rule;
-
 use App\Models\Balita;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BalitaController extends Controller
 {
@@ -51,12 +49,12 @@ class BalitaController extends Controller
     {
         $request->validate([
             'user_id' => ['required', Rule::exists(User::class, 'id')],
-            'nama_balita' => ['required', 'string', 'min:3', 'max:30'],
+            'nama_balita' => ['required', 'string', 'min:3', 'max:60'],
             'nik' => ['nullable', 'digits:16', Rule::unique(Balita::class, 'nik')],
             'tanggal_lahir' => ['required', 'date', 'before_or_equal:today'],
-            'jenis_kelamin' => ['required', 'in:Laki-laki,Perempuan'],
+            'jenis_kelamin' => ['required', Rule::in(['Laki-laki', 'Perempuan'])],
         ], [
-            'user_id.required' => 'Orang tua / wali wajib dipilih',
+            'user_id.required' => 'Orang tua wajib dipilih',
             'user_id.exists' => 'Data orang tua tidak valid',
             'nama_balita.required' => 'Nama Balita wajib diisi',
             'nama_balita.min' => 'Nama Balita minimal 3 karakter',
@@ -103,12 +101,12 @@ class BalitaController extends Controller
 
         $request->validate([
             'user_id' => ['required', Rule::exists(User::class, 'id')],
-            'nama_balita' => 'required|string|max:30',
+            'nama_balita' => ['required', 'string','min:3', 'max:60'],
             'nik' => ['nullable', 'digits:16', Rule::unique(Balita::class, 'nik')->ignore($balita->id_balita, 'id_balita')],
-            'tanggal_lahir' => 'required|date|before_or_equal:today',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'tanggal_lahir' => ['required', 'date', 'before_or_equal:today'],
+            'jenis_kelamin' => ['required', Rule::in(['Laki-laki', 'Perempuan'])],
         ], [
-            'user_id.required' => 'Orang tua / wali wajib dipilih',
+            'user_id.required' => 'Orang tua wajib dipilih',
             'nama_balita.required' => 'Nama Balita wajib diisi',
             'nik.unique' => 'NIK Balita sudah terdaftar',
             'nik.size' => 'NIK Balita harus tepat 16 digit',

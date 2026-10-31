@@ -60,10 +60,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:30'],
+            'name' => ['required', 'string', 'max:60'],
             'nik' => ['required', 'string', 'size:16', Rule::unique(User::class, 'nik')],
-            'email' => ['required', 'email', Rule::unique(User::class, 'email')],
-            'role' => ['required', 'in:Orang Tua,Admin'],
+            'email' => ['required', 'email', 'max:100', Rule::unique(User::class, 'email')],
+            'role' => ['required', Rule::in(['Admin', 'Orang Tua'])],
             'password' => ['required', 'min:6'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
@@ -73,6 +73,7 @@ class UserController extends Controller
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Gagal! Email ini sudah digunakan oleh pengguna lain.',
+            'email.max' => 'Email maksimal 100 karakter',
             'role.required' => 'Peran / Role wajib dipilih.',
             'password.required' => 'Password wajib diisi.',
             'password.min' => 'Password minimal 6 karakter.',
@@ -113,10 +114,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:30'],
+            'name' => ['required', 'string', 'min:3', 'max:60'],
             'nik' => ['required', 'digits:16', Rule::unique(User::class, 'nik')->ignore($user->id)],
             'email' => ['required', 'email', Rule::unique(User::class, 'email')->ignore($user->id)],
-            'role' => ['required', 'in:Orang Tua,Admin'],
+            'role' => ['required', Rule::in(['Admin', 'Orang Tua'])],
             'password' => 'nullable|min:6',
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',

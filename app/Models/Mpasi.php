@@ -34,11 +34,12 @@ class Mpasi extends Model
         'cara_pembuatan' => 'array',
         'waktu_memasak' => 'integer',
         'porsi' => 'integer',
-        'kalori' => 'integer',
-        'karbohidrat' => 'integer',
-        'lemak' => 'integer',
-        'protein' => 'integer',
-        'zat_besi' => 'integer',
-        'seng' => 'integer',
+
+        'kalori' => 'decimal:2',
+        'karbohidrat' => 'decimal:2',
+        'lemak' => 'decimal:2',
+        'protein' => 'decimal:2',
+        'zat_besi' => 'decimal:2',
+        'seng' => 'decimal:2',
     ];
 }

@@ -79,42 +79,42 @@
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
         <div>
             <span class="block text-[11px] text-stone-500 mb-1">Energi (kkal)</span>
-            <input type="text" inputmode="numeric" maxlength="4" id="formKalori" name="kalori" value="{{ old('kalori', $mpasi?->kalori) }}" placeholder="185" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('kalori') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+            <input type="number" id="formKalori" name="kalori" min="0" max="2000" step="0.01" value="{{ old('kalori', $mpasi?->kalori) }}" placeholder="maks 2000" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('kalori') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
             @error('kalori')
                 <p class="text-[10px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
             @enderror
         </div>
         <div>
             <span class="block text-[11px] text-stone-500 mb-1">Karbohidrat (gr)</span>
-            <input type="text" inputmode="numeric" maxlength="4" id="formKarbohidrat" name="karbohidrat" value="{{ old('karbohidrat', $mpasi?->karbohidrat) }}" placeholder="25" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('karbohidrat') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+            <input type="number" id="formKarbohidrat" name="karbohidrat" min="0" max="300" step="0.01" value="{{ old('karbohidrat', $mpasi?->karbohidrat) }}" placeholder="maks 300" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('karbohidrat') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
             @error('karbohidrat')
                 <p class="text-[10px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
             @enderror
         </div>
         <div>
             <span class="block text-[11px] text-stone-500 mb-1">Lemak (gr)</span>
-            <input type="text" inputmode="numeric" maxlength="4" id="formLemak" name="lemak" value="{{ old('lemak', $mpasi?->lemak) }}" placeholder="5" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('lemak') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+            <input type="number" id="formLemak" name="lemak" min="0" max="50" step="0.01" value="{{ old('lemak', $mpasi?->lemak) }}" placeholder="maks 50" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('lemak') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
             @error('lemak')
                 <p class="text-[10px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
             @enderror
         </div>
         <div>
             <span class="block text-[11px] text-stone-500 mb-1">Protein (gr)</span>
-            <input type="text" inputmode="numeric" maxlength="4" id="formProtein" name="protein" value="{{ old('protein', $mpasi?->protein) }}" placeholder="7" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('protein') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+            <input type="number" id="formProtein" name="protein" min="0" max="40" step="0.01" value="{{ old('protein', $mpasi?->protein) }}" placeholder="maks 40" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('protein') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
             @error('protein')
                 <p class="text-[10px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
             @enderror
         </div>
         <div>
             <span class="block text-[11px] text-stone-500 mb-1">Zat Besi (mg)</span>
-            <input type="text" inputmode="numeric" maxlength="4" id="formZatBesi" name="zat_besi" value="{{ old('zat_besi', $mpasi?->zat_besi) }}" placeholder="2" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('zat_besi') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+            <input type="number" id="formZatBesi" name="zat_besi" min="0" max="10" step="0.01" value="{{ old('zat_besi', $mpasi?->zat_besi) }}" placeholder="maks 10" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('zat_besi') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
             @error('zat_besi')
                 <p class="text-[10px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
             @enderror
         </div>
         <div>
             <span class="block text-[11px] text-stone-500 mb-1">Seng (mg)</span>
-            <input type="text" inputmode="numeric" maxlength="4" id="formSeng" name="seng" value="{{ old('seng', $mpasi?->seng) }}" placeholder="1" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('seng') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
+            <input type="number" id="formSeng" name="seng" inputmode="numeric" max="8" step="0.01" value="{{ old('seng', $mpasi?->seng) }}" placeholder="maks 8" class="w-full px-2.5 py-1.5 bg-stone-50 border {{ $errors->has('seng') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
             @error('seng')
                 <p class="text-[10px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
             @enderror
@@ -205,7 +205,7 @@
     </div>
 </div>
 
-<!-- 7. Foto Makanan (Upload File atau URL) -->
+<!-- 7. Foto Makanan -->
 <div class="pt-1 space-y-2">
     <div class="flex items-center justify-between">
         <label class="block font-semibold text-stone-700">Foto Resep</label>
@@ -215,7 +215,7 @@
 
     @if($isEdit && $mpasi->gambar)
         <div class="flex flex-wrap items-center gap-3 rounded-xl border border-stone-200 bg-stone-50 p-3">
-            <img src="{{ str_starts_with($mpasi->gambar, 'http://') || str_starts_with($mpasi->gambar, 'https://') ? $mpasi->gambar : asset(ltrim($mpasi->gambar, '/')) }}"
+            <img src="{{ asset(ltrim($mpasi->gambar, '/')) }}"
                  alt="Foto resep {{ $mpasi->nama_resep }}" class="w-20 h-20 rounded-xl object-cover border border-stone-200">
             <p class="text-[11px] text-stone-500 max-w-md">Foto saat ini. Biarkan pilihan file dan URL kosong jika tidak ingin mengganti foto.</p>
         </div>
@@ -226,21 +226,6 @@
             <span class="block text-[11px] text-stone-500 mb-1">Unggah Gambar (JPG/PNG/WebP)</span>
             <input type="file" id="formGambarFile" name="gambar" accept="image/*" class="w-full text-xs text-stone-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100 bg-stone-50 border {{ $errors->has('gambar') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-xl cursor-pointer">
             @error('gambar')
-                <p class="text-[11px] text-rose-600 mt-1.5 flex items-center gap-1 font-medium">
-                    <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
-                    <span>{{ $message }}</span>
-                </p>
-            @enderror
-        </div>
-        <div>
-            <span class="block text-[11px] text-stone-500 mb-1">Atau Link / URL Foto Online</span>
-            <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none {{ $errors->has('foto') ? 'text-rose-400' : 'text-stone-400' }}">
-                    <i data-lucide="link" class="w-3.5 h-3.5"></i>
-                </span>
-                <input type="url" id="formFoto" name="foto" value="{{ old('foto', $mpasi && filter_var($mpasi->gambar, FILTER_VALIDATE_URL) ? $mpasi->gambar : '') }}" placeholder="https://..." class="w-full pl-8 pr-3 py-1.5 bg-stone-50 border {{ $errors->has('foto') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-stone-200' }} rounded-xl text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20">
-            </div>
-            @error('foto')
                 <p class="text-[11px] text-rose-600 mt-1.5 flex items-center gap-1 font-medium">
                     <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
                     <span>{{ $message }}</span>

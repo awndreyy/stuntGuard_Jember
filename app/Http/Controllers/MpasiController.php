@@ -55,22 +55,21 @@ class MpasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', Rule::unique(Mpasi::class, 'nama_resep')->ignore($id, 'id_resep')],
+            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', Rule::unique(Mpasi::class, 'nama_resep')],
             'kategori_usia' => ['required', 'string', 'in:6-8,9-11,12-23'],
             'waktu_memasak' => ['required', 'integer', 'min:1', 'max:100'],
             'porsi' => ['required', 'integer', 'min:1', 'max:10'],
-            'kalori' => ['nullable', 'integer', 'min:0'],
-            'karbohidrat' => ['nullable', 'integer', 'min:0'],
-            'lemak' => ['nullable', 'integer', 'min:0'],
-            'protein' => ['nullable', 'integer', 'min:0'],
-            'zat_besi' => ['nullable', 'integer', 'min:0'],
-            'seng' => ['nullable', 'integer', 'min:0'],
+            'kalori' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:2000'],
+            'karbohidrat' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:40'],
+            'lemak' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:300'],
+            'protein' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:50'],
+            'zat_besi' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:10'],
+            'seng' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:8'],
             'bahan' => ['required', 'array', 'min:1'],
-            'bahan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s\/]+$/'],
+            'bahan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s\/]+$/'], //regex hanya boleh huruf, angka, simbol /
             'cara_pembuatan' => ['required', 'array', 'min:1'],
-            'cara_pembuatan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'],
+            'cara_pembuatan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'], //regex hanya boleh huruf dan angka
             'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
-            'foto' => ['nullable', 'url', 'max:500', 'regex:/^https?:\/\//i'],
         ], [
             'nama_resep.required' => 'Nama resep wajib diisi.',
             'nama_resep.max' => 'Nama resep maksimal 50 karakter.',
@@ -85,18 +84,18 @@ class MpasiController extends Controller
             'porsi.integer' => 'Porsi harus berupa angka.',
             'porsi.min' => 'Porsi minimal 1.',
             'porsi.max' => 'Porsi maksimal 10.',
-            'kalori.integer' => 'Nilai kalori harus berupa angka bulat (tanpa koma).',
-            'kalori.min' => 'Nilai kalori tidak boleh kurang dari 0.',
-            'karbohidrat.integer' => 'Nilai karbohidrat harus berupa angka bulat (tanpa koma).',
-            'karbohidrat.min' => 'Nilai karbohidrat tidak boleh kurang dari 0.',
-            'lemak.integer' => 'Nilai lemak harus berupa angka bulat (tanpa koma).',
-            'lemak.min' => 'Nilai lemak tidak boleh kurang dari 0.',
-            'protein.integer' => 'Nilai protein harus berupa angka bulat (tanpa koma).',
-            'protein.min' => 'Nilai protein tidak boleh kurang dari 0.',
-            'zat_besi.integer' => 'Nilai zat besi harus berupa angka bulat (tanpa koma).',
-            'zat_besi.min' => 'Nilai zat besi tidak boleh kurang dari 0.',
-            'seng.integer' => 'Nilai seng harus berupa angka bulat (tanpa koma).',
-            'seng.min' => 'Nilai seng tidak boleh kurang dari 0.',
+            'kalori.numeric' => 'Nilai kalori harus berupa angka.',
+            'kalori.decimal' => 'Nilai kalori maksimal 2 angka desimal.',
+            'karbohidrat.numeric' => 'Nilai karbohirat harus berupa angka.',
+            'karbohidrat.decimal' => 'Nilai karbohidrat maksimal 2 angka desimal.',
+            'lemak.numeric' => 'Nilai lemak harus berupa angka.',
+            'lemak.decimal' => 'Nilai lemak maksimal 2 angka desimal.',
+            'protein.numeric' => 'Nilai protein harus berupa angka',
+            'protein.decimal' => 'Nilai protein maksimal 2 angka desimal.',
+            'zat_besi.numeric' => 'Nilai zat besi harus berupa angka.',
+            'zat_besi.decimal' => 'Nilai zat besi maksimal 2 angka desimal.',
+            'seng.numeric' => 'Nilai seng harus berupa angka.',
+            'seng.decimal' => 'Nilai seng maksimal 2 angka desimal.',
             'bahan.required' => 'Minimal 1 bahan wajib diisi.',
             'bahan.*.regex' => 'Bahan hanya boleh berisi huruf, angka, spasi, dan simbol garis miring (/).',
             'cara_pembuatan.required' => 'Minimal 1 langkah pembuatan wajib diisi.',
@@ -110,8 +109,6 @@ class MpasiController extends Controller
         if ($request->hasFile('gambar')) {
             $path = $request->file('gambar')->store('mpasi', 'public');
             $gambarPath = '/storage/'.$path;
-        } elseif ($request->filled('foto')) {
-            $gambarPath = $request->foto;
         }
 
         $bahanCleaned = array_values(array_filter((array) $request->bahan, fn ($b) => trim((string) $b) !== ''));
@@ -152,16 +149,16 @@ class MpasiController extends Controller
         $mpasi = Mpasi::findOrFail($id);
 
         $request->validate([
-            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', Rule::unique(Mpasi::class, 'nama_resep')],
+            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', Rule::unique(Mpasi::class, 'nama_resep')->ignore($mpasi->getKey(), $mpasi->getKeyName())],
             'kategori_usia' => ['required', 'string', 'in:6-8,9-11,12-23'],
             'waktu_memasak' => ['required', 'integer', 'min:1', 'max:100'],
             'porsi' => ['required', 'integer', 'min:1', 'max:10'],
-            'kalori' => ['nullable', 'integer', 'min:0'],
-            'karbohidrat' => ['nullable', 'integer', 'min:0'],
-            'lemak' => ['nullable', 'integer', 'min:0'],
-            'protein' => ['nullable', 'integer', 'min:0'],
-            'zat_besi' => ['nullable', 'integer', 'min:0'],
-            'seng' => ['nullable', 'integer', 'min:0'],
+            'kalori' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:2000'],
+            'karbohidrat' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:40'],
+            'lemak' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:300'],
+            'protein' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:50'],
+            'zat_besi' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:10'],
+            'seng' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:8'],
             'bahan' => ['required', 'array', 'min:1'],
             'bahan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s\/]+$/'],
             'cara_pembuatan' => ['required', 'array', 'min:1'],
@@ -182,18 +179,18 @@ class MpasiController extends Controller
             'porsi.integer' => 'Porsi harus berupa angka.',
             'porsi.min' => 'Porsi minimal 1.',
             'porsi.max' => 'Porsi maksimal 10.',
-            'kalori.integer' => 'Nilai kalori harus berupa angka bulat (tanpa koma).',
-            'kalori.min' => 'Nilai kalori tidak boleh kurang dari 0.',
-            'karbohidrat.integer' => 'Nilai karbohidrat harus berupa angka bulat (tanpa koma).',
-            'karbohidrat.min' => 'Nilai karbohidrat tidak boleh kurang dari 0.',
-            'lemak.integer' => 'Nilai lemak harus berupa angka bulat (tanpa koma).',
-            'lemak.min' => 'Nilai lemak tidak boleh kurang dari 0.',
-            'protein.integer' => 'Nilai protein harus berupa angka bulat (tanpa koma).',
-            'protein.min' => 'Nilai protein tidak boleh kurang dari 0.',
-            'zat_besi.integer' => 'Nilai zat besi harus berupa angka bulat (tanpa koma).',
-            'zat_besi.min' => 'Nilai zat besi tidak boleh kurang dari 0.',
-            'seng.integer' => 'Nilai seng harus berupa angka bulat (tanpa koma).',
-            'seng.min' => 'Nilai seng tidak boleh kurang dari 0.',
+            'kalori.numeric' => 'Nilai kalori harus berupa angka.',
+            'kalori.decimal' => 'Nilai kalori maksimal 2 angka desimal.',
+            'karbohidrat.numeric' => 'Nilai karbohirat harus berupa angka.',
+            'karbohidrat.decimal' => 'Nilai karbohidrat maksimal 2 angka desimal.',
+            'lemak.numeric' => 'Nilai lemak harus berupa angka.',
+            'lemak.decimal' => 'Nilai lemak maksimal 2 angka desimal.',
+            'protein.numeric' => 'Nilai protein harus berupa angka',
+            'protein.decimal' => 'Nilai protein maksimal 2 angka desimal.',
+            'zat_besi.numeric' => 'Nilai zat besi harus berupa angka.',
+            'zat_besi.decimal' => 'Nilai zat besi maksimal 2 angka desimal.',
+            'seng.numeric' => 'Nilai seng harus berupa angka.',
+            'seng.decimal' => 'Nilai seng maksimal 2 angka desimal.',
             'bahan.required' => 'Minimal 1 bahan wajib diisi.',
             'bahan.*.regex' => 'Bahan hanya boleh berisi huruf, angka, spasi, dan simbol garis miring (/).',
             'cara_pembuatan.required' => 'Minimal 1 langkah pembuatan wajib diisi.',
@@ -210,8 +207,6 @@ class MpasiController extends Controller
             }
             $path = $request->file('gambar')->store('mpasi', 'public');
             $mpasi->gambar = '/storage/'.$path;
-        } elseif ($request->filled('foto')) {
-            $mpasi->gambar = $request->foto;
         }
 
         $bahanCleaned = array_values(array_filter((array) $request->bahan, fn ($b) => trim((string) $b) !== ''));

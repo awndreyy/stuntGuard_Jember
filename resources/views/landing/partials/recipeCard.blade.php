@@ -1,8 +1,6 @@
 @php
-    // Pertahankan sumber gambar dan route detail yang dipakai sebelumnya.
     $urlFoto = $resep->gambar
-        ? (\Illuminate\Support\Str::startsWith($resep->gambar, ['http://', 'https://'])
-            ? $resep->gambar : asset(ltrim($resep->gambar, '/')))
+        ? asset(ltrim($resep->gambar, '/'))
         : null;
 @endphp
 

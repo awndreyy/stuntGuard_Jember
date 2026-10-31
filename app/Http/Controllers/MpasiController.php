@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
+
 use App\Models\Mpasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -53,7 +55,7 @@ class MpasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', 'unique:mpasis,nama_resep'],
+            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', Rule::unique(Mpasi::class, 'nama_resep')->ignore($id, 'id_resep')],
             'kategori_usia' => ['required', 'string', 'in:6-8,9-11,12-23'],
             'waktu_memasak' => ['required', 'integer', 'min:1', 'max:100'],
             'porsi' => ['required', 'integer', 'min:1', 'max:10'],
@@ -150,7 +152,7 @@ class MpasiController extends Controller
         $mpasi = Mpasi::findOrFail($id);
 
         $request->validate([
-            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', 'unique:mpasis,nama_resep,'.$id.',id_resep'],
+            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', Rule::unique(Mpasi::class, 'nama_resep')],
             'kategori_usia' => ['required', 'string', 'in:6-8,9-11,12-23'],
             'waktu_memasak' => ['required', 'integer', 'min:1', 'max:100'],
             'porsi' => ['required', 'integer', 'min:1', 'max:10'],

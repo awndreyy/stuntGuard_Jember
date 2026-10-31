@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Validation\Rule;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -14,8 +16,8 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:30'],
-            'nik' => ['required', 'digits:16', 'unique:users,nik'],
-            'email' => ['required', 'email', 'max:30', 'unique:users,email'],
+            'nik' => ['required', 'digits:16', Rule::unique(User::class, 'nik')],
+            'email' => ['required', 'email', 'max:30', Rule::unique(User::class, 'email')],
             'password' => ['required', 'string', 'min:6'],
         ]);
 

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mpasi extends Model
 {
+    protected $table = 'tm_mpasis';
+
     use HasFactory;
 
     protected $primaryKey = 'id_resep';

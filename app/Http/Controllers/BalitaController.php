@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+
+use Illuminate\Validation\Rule;
+
 use App\Models\Balita;
 use Illuminate\Http\Request;
 
@@ -46,9 +50,9 @@ class BalitaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => ['required', 'exists:users,id'],
+            'user_id' => ['required', Rule::exists(User::class, 'id')],
             'nama_balita' => ['required', 'string', 'min:3', 'max:30'],
-            'nik' => ['nullable', 'digits:16', 'unique:balitas,nik'],
+            'nik' => ['nullable', 'digits:16', Rule::unique(Balita::class, 'nik')],
             'tanggal_lahir' => ['required', 'date', 'before_or_equal:today'],
             'jenis_kelamin' => ['required', 'in:Laki-laki,Perempuan'],
         ], [
@@ -98,9 +102,9 @@ class BalitaController extends Controller
         $balita = Balita::findOrFail($id);
 
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => ['required', Rule::exists(User::class, 'id')],
             'nama_balita' => 'required|string|max:30',
-            'nik' => 'nullable|digits:16|unique:balitas,nik,'.$balita->id_balita.',id_balita',
+            'nik' => ['nullable', 'digits:16', Rule::unique(Balita::class, 'nik')->ignore($balita->id_balita, 'id_balita')],
             'tanggal_lahir' => 'required|date|before_or_equal:today',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
         ], [

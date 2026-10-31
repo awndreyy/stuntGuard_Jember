@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
+
 use App\Models\Balita;
 use App\Services\PengukuranService;
 use Illuminate\Http\JsonResponse;
@@ -13,7 +15,7 @@ class PengukuranController extends Controller
     public function store(Request $request, PengukuranService $measurements): JsonResponse|RedirectResponse
     {
         $data = $request->validate([
-            'balita_id' => ['required', 'integer', 'exists:balitas,id_balita'],
+            'balita_id' => ['required', 'integer', Rule::exists(Balita::class, 'id_balita')],
             'tanggal_pengukuran' => ['required', 'date', 'before_or_equal:today'],
             'weight' => ['required', 'numeric', 'between:1,50'],
             'height' => ['required', 'numeric', 'between:20,150'],

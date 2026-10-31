@@ -9,7 +9,7 @@ class Informasi extends Model
 {
     use HasFactory;
 
-    protected $table = 'informasis';
+    protected $table = 'tm_informasis';
 
     protected $primaryKey = 'id_informasi';
 

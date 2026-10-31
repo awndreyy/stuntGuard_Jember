@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -83,8 +85,8 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:30'],
-            'nik' => ['required', 'digits:16', 'unique:users,nik'],
-            'email' => ['required', 'email', 'max:30', 'unique:users,email'],
+            'nik' => ['required', 'digits:16', Rule::unique(User::class, 'nik')],
+            'email' => ['required', 'email', 'max:30', Rule::unique(User::class, 'email')],
             'password' => ['required', 'string', 'min:6'],
         ], [
             'nik.unique' => 'NIK ini sudah terdaftar dalam sistem.',

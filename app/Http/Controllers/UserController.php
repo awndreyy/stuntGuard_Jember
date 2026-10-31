@@ -61,8 +61,8 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:30'],
-            'nik' => ['required', 'string', 'size:16', 'unique:users,nik'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'nik' => ['required', 'string', 'size:16', Rule::unique(User::class, 'nik')],
+            'email' => ['required', 'email', Rule::unique(User::class, 'email')],
             'role' => ['required', 'in:Orang Tua,Admin'],
             'password' => ['required', 'min:6'],
         ], [
@@ -114,8 +114,8 @@ class UserController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:30'],
-            'nik' => ['required', 'digits:16', Rule::unique('users', 'nik')->ignore($user->id)],
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+            'nik' => ['required', 'digits:16', Rule::unique(User::class, 'nik')->ignore($user->id)],
+            'email' => ['required', 'email', Rule::unique(User::class, 'email')->ignore($user->id)],
             'role' => ['required', 'in:Orang Tua,Admin'],
             'password' => 'nullable|min:6',
         ], [

@@ -23,17 +23,19 @@ class DashboardAdminController extends Controller
             ->get();
 
         // Hanya riwayat balita terdaftar, bukan simulasi kalkulator tamu.
+        $measurementTable = (new Pengukuran())->getTable();
+
         $latestMeasurements = Pengukuran::query()
             ->whereNotNull('balita_id')
-            ->whereNotExists(function ($query) {
+            ->whereNotExists(function ($query) use ($measurementTable) {
                 $query->selectRaw('1')
-                    ->from('pengukurans as lebih_baru')
-                    ->whereColumn('lebih_baru.balita_id', 'pengukurans.balita_id')
-                    ->where(function ($q) {
-                        $q->whereColumn('lebih_baru.tanggal_pengukuran', '>', 'pengukurans.tanggal_pengukuran')
-                            ->orWhere(function ($sameDay) {
-                                $sameDay->whereColumn('lebih_baru.tanggal_pengukuran', '=', 'pengukurans.tanggal_pengukuran')
-                                    ->whereColumn('lebih_baru.id', '>', 'pengukurans.id');
+                    ->from($measurementTable.' as lebih_baru')
+                    ->whereColumn('lebih_baru.balita_id', $measurementTable.'.balita_id')
+                    ->where(function ($q) use ($measurementTable) {
+                        $q->whereColumn('lebih_baru.tanggal_pengukuran', '>', $measurementTable.'.tanggal_pengukuran')
+                            ->orWhere(function ($sameDay) use ($measurementTable) {
+                                $sameDay->whereColumn('lebih_baru.tanggal_pengukuran', '=', $measurementTable.'.tanggal_pengukuran')
+                                    ->whereColumn('lebih_baru.id', '>', $measurementTable.'.id');
                             });
                     });
             });

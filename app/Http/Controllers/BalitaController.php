@@ -131,8 +131,15 @@ class BalitaController extends Controller
     public function destroy(string $id)
     {
         $balita = Balita::findOrFail($id);
+        if ($balita->pengukurans()->exists()) {
+            return back()->with(
+                'error',
+                'Balita tidak dapat dihapus karena masih memiliki riwayat pengukuran.'
+            );
+        }
+    
         $balita->delete();
 
-        return redirect()->back()->with('success', 'Data Balita berhasil dihapus');
+        return back()->with('success', 'Data balita berhasil dihapus.');
     }
 }

@@ -14,7 +14,7 @@ class InformasiController extends Controller
      */
     public function index()
     {
-        $informations = Informasi::latest('id_informasi')->get();
+        $informations = Informasi::latest('created_at')->get();
 
         return view('admin.kelolaInformasi', compact('informations'));
     }
@@ -70,7 +70,7 @@ class InformasiController extends Controller
      */
     public function edit(string $id)
     {
-        $informations = Informasi::latest('id_informasi')->get();
+        $informations = Informasi::latest('created_at')->get();
         $editInformation = Informasi::findOrFail($id);
 
         return view('admin.kelolaInformasi', compact('informations', 'editInformation'));

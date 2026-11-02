@@ -21,7 +21,7 @@ class KalkulatorGiziController extends Controller
     public function calculate(Request $request, PengukuranService $measurements): View
     {
         $data = $request->validate([
-            'balita_id' => ['nullable', 'integer', Rule::exists(Balita::class, 'id_balita')],
+            'balita_id' => ['nullable', 'string', Rule::exists(Balita::class, 'id_balita')],
             'nama' => ['required', 'string', 'max:30'],
             'jenis_kelamin' => ['required', 'in:L,P'],
             'usia_bulan' => ['required', 'integer', 'between:0,60'],

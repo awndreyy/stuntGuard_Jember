@@ -14,7 +14,7 @@ class MpasiController extends Controller
      */
     public function index()
     {
-        $mpasis = Mpasi::latest('id_resep')->get();
+        $mpasis = Mpasi::latest('created_at')->get();
 
         $totalResep = $mpasis->count();
         $total68 = $mpasis->where('kategori_usia', '6-8')->count();

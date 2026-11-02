@@ -9,9 +9,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pengukurans', function (Blueprint $table) {
-            $table->foreignId('balita_id')
-                ->nullable()
-                ->constrained('balitas', 'id_balita')
+            $table->string('balita_id', 24)->nullable();
+            $table->foreign('balita_id')
+                ->references('id_balita')
+                ->on('balitas')
                 ->nullOnDelete();
 
             $table->date('tanggal_pengukuran')

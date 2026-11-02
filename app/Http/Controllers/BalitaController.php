@@ -16,7 +16,7 @@ class BalitaController extends Controller
         $user = $balita->orangTua;
         $riwayat = $balita->pengukurans()
             ->orderByDesc('tanggal_pengukuran')
-            ->orderByDesc('id')
+            ->orderByDesc('created_at')->orderByDesc('id')
             ->paginate(10);
 
         return view('admin.riwayatBalita', [

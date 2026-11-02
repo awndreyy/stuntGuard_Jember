@@ -18,7 +18,7 @@ class DashboardAdminController extends Controller
 
         $resepList = Mpasi::query()
             ->when($kategori !== 'semua', fn ($q) => $q->where('kategori_usia', $kategori))
-            ->latest('id_resep')
+            ->latest('created_at')
             ->limit(10)
             ->get();
 
@@ -35,7 +35,13 @@ class DashboardAdminController extends Controller
                         $q->whereColumn('lebih_baru.tanggal_pengukuran', '>', $measurementTable.'.tanggal_pengukuran')
                             ->orWhere(function ($sameDay) use ($measurementTable) {
                                 $sameDay->whereColumn('lebih_baru.tanggal_pengukuran', '=', $measurementTable.'.tanggal_pengukuran')
-                                    ->whereColumn('lebih_baru.id', '>', $measurementTable.'.id');
+                                    ->where(function ($ties) use ($measurementTable) {
+                                        $ties->whereColumn('lebih_baru.created_at', '>', $measurementTable.'.created_at')
+                                            ->orWhere(function ($sameSecond) use ($measurementTable) {
+                                                $sameSecond->whereColumn('lebih_baru.created_at', '=', $measurementTable.'.created_at')
+                                                    ->whereColumn('lebih_baru.id', '>', $measurementTable.'.id');
+                                            });
+                                    });
                             });
                     });
             });
@@ -50,7 +56,7 @@ class DashboardAdminController extends Controller
                 ->with('balita')
                 ->whereNotNull('balita_id')
                 ->orderByDesc('tanggal_pengukuran')
-                ->orderByDesc('id')
+                ->orderByDesc('created_at')->orderByDesc('id')
                 ->limit(10)
                 ->get(),
         ]);

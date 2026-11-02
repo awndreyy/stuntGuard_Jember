@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasCustomId;
+use App\Services\CustomIdService;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Pengukuran extends Model
 {
+    use HasCustomId;
+
     protected $table = 'tt_pengukurans';
 
     protected $fillable = [
@@ -30,5 +35,10 @@ class Pengukuran extends Model
     public function balita(): BelongsTo
     {
         return $this->belongsTo(Balita::class, 'balita_id', 'id_balita');
+    }
+
+    protected function makeCustomId(): string
+    {
+        return app(CustomIdService::class)->generatePengukuran();
     }
 }

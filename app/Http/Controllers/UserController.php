@@ -16,9 +16,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest()->get();
+        $orangTua = User::query()->where('role', 'Orang Tua')->orderBy('name')->get();
         $balita = Balita::with('orangTua')->latest()->get();
 
-        return view('admin.kelolaUser', compact('users', 'balita'));
+        return view('admin.kelolaUser', compact('users', 'balita', 'orangTua'));
     }
 
     public function balitas(User $user)

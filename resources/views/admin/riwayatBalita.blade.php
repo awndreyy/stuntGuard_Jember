@@ -39,8 +39,8 @@
                             $status = is_null($zTinggi) ? 'Tidak tersedia' : ($zTinggi < -3 ? 'Sangat Pendek' : ($zTinggi < -2 ? 'Pendek' : ($zTinggi <= 3 ? 'Normal' : 'Tinggi')));
                         @endphp
                         <tr class="align-top hover:bg-rose-50/40">
-                            <td class="px-4 py-3 font-semibold text-stone-800">{{ $ukur->nama_balita ?: $balita->nama_balita }}</td>
-                            <td class="px-4 py-3 text-stone-600">{{ $ukur->jenis_kelamin ?: $balita->jenis_kelamin }}</td>
+                            <td class="px-4 py-3 font-semibold text-stone-800">{{ $balita->nama_balita }}</td>
+                            <td class="px-4 py-3 text-stone-600">{{ $balita->jenis_kelamin }}</td>
                             <td class="px-4 py-3 text-stone-600">{{ $ukur->umur_bulan }} bulan</td>
                             <td class="px-4 py-3 text-stone-600">{{ $ukur->tanggal_pengukuran?->translatedFormat('d M Y') ?? '-' }}</td>
                             <td class="px-4 py-3 text-stone-700">

@@ -179,16 +179,6 @@
           </button>
         </div>
       </form>
-
-      <!-- Link ke Halaman Registrasi -->
-      <div class="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-rose-200/30 text-center">
-        <p class="text-xs sm:text-sm text-stone-600">
-          Belum punya akun?
-          <a href="{{ Route::has('register') ? route('register') : url('/register') }}" class="font-semibold text-rose-700 hover:text-rose-900 hover:underline inline-flex items-center gap-1 ml-0.5">
-            Daftar di sini
-          </a>
-        </p>
-      </div>
     </div>
 
     <!-- Footer -->

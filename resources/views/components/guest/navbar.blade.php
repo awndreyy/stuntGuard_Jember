@@ -16,10 +16,10 @@
     <div class="hidden md:flex items-center gap-2.5">
       @guest
         <a href="{{ route('login') }}" class="text-xs sm:text-sm font-bold text-pink-700 border border-pink-200 hover:bg-pink-50 px-4 py-2 rounded-full transition-all">Masuk</a>
-        {{-- <a href="{{ route('register') }}" class="text-xs sm:text-sm font-bold bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-full transition-colors">Daftar</a>
-        <a href="{{ route('login') }}" class="text-xs sm:text-sm font-bold bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-full transition-colors">Masuk</a> --}}
       @else
-        <a href="{{ auth()->user()->role === 'Admin' ? route('dashboardAdmin') : route('dashboardUser') }}" class="text-sm font-bold bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-full transition-colors">Dashboard</a>
+        @if(auth()->user()->role === 'Admin')
+          <a href="{{ route('dashboardAdmin') }}" class="text-sm font-bold bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-full">Dashboard Admin</a>
+        @endif      
       @endguest
     </div>
     <button id="mobileMenuButton" type="button" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-pink-100 text-pink-700" aria-label="Buka menu" aria-expanded="false">
@@ -31,11 +31,13 @@
     <a data-guest-section="kalkulator-widget" class="block py-1 hover:text-pink-600" href="{{ route('home') }}#kalkulator-widget">Kalkulator Gizi</a>
     <a data-guest-section="resep-mpasi" class="block py-1 hover:text-pink-600" href="{{ route('home') }}#resep-mpasi">Resep MPASI</a>
     <a data-guest-section="informasi-kesehatan" class="block py-1 hover:text-pink-600" href="{{ route('home') }}#informasi-kesehatan">Edukasi Kesehatan</a>
-    @guest 
-    <div class="flex gap-2 pt-2">  
-      <a href="{{ route('login') }}" class="border border-pink-200 text-pink-700 px-4 py-2 rounded-full">Masuk</a>
-      <a href="{{ route('register') }}" class="bg-pink-600 text-white px-4 py-2 rounded-full">Daftar</a></div> 
-    @else <a href="{{ auth()->user()->role === 'Admin' ? route('dashboardAdmin') : route('dashboardUser') }}" class="inline-block bg-pink-600 text-white px-4 py-2 rounded-full">Dashboard</a> @endguest
+    @guest
+      <a href="{{ route('login') }}" class="inline-block border border-pink-200 text-pink-700 px-4 py-2 rounded-full">Masuk</a>
+    @else
+        @if(auth()->user()->role === 'Admin')
+          <a href="{{ route('dashboardAdmin') }}" class="inline-block bg-pink-600 text-white px-4 py-2 rounded-full">Dashboard Admin</a>
+        @endif
+@endguest
   </nav>
 </header>
 <script>

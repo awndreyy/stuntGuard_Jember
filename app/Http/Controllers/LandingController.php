@@ -13,8 +13,8 @@ class LandingController extends Controller
 {
     public function index(): View|RedirectResponse
     {
-        if (Auth::check()) {
-            return redirect()->route(Auth::user()->role === 'Admin' ? 'dashboardAdmin' : 'dashboardUser');
+        if (Auth::check() && Auth::user()->role === 'Admin') {
+            return redirect()->route('dashboardAdmin');
         }
 
         return view('landing.dashboardGuest', [

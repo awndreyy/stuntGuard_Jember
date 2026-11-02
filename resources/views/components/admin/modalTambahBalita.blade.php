@@ -6,7 +6,7 @@
         <!-- Modal Header -->
         <div class="px-5 py-4 bg-stone-50/80 border-b border-stone-100 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center">
+                <div class="w-8 h-8 rounded-lg bg-pink-100 text-pink-700 flex items-center justify-center">
                     <i data-lucide="baby" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -29,7 +29,7 @@
             <!-- 1. Orang Tua / Wali (Searchable Select Dropdown) -->
             <div>
                 <label class="block text-xs font-semibold text-stone-700 mb-1">
-                    Orang Tua / Wali <span class="text-rose-500">*</span>
+                    Orang Tua / Wali <span class="text-pink-500">*</span>
                 </label>
                 <div class="relative" id="parentSelectWrapper">
                     <input type="hidden" name="user_id" id="inputBalitaUserId" required value="">
@@ -39,7 +39,7 @@
                         type="button"
                         id="parentSelectTrigger"
                         onclick="toggleParentDropdown()"
-                        class="w-full flex items-center justify-between px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all cursor-pointer text-left"
+                        class="w-full flex items-center justify-between px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all cursor-pointer text-left"
                     >
                         <div class="flex items-center gap-2 truncate">
                             <i data-lucide="users" class="w-4 h-4 text-stone-400 shrink-0"></i>
@@ -64,7 +64,7 @@
                                     id="parentSearchInput"
                                     oninput="filterParents(this.value)"
                                     placeholder="Cari nama atau NIK orang tua..."
-                                    class="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-rose-700 focus:border-rose-700"
+                                    class="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-pink-700 focus:border-pink-700"
                                 >
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                             @if($orangTua->isNotEmpty())
                                 @foreach($orangTua as $parent)
                                     <button
-                                        type="button" class="parent-option w-full text-left px-3 py-2 hover:bg-rose-50/70 transition-colors flex items-center justify-between gap-2 cursor-pointer"
+                                        type="button" class="parent-option w-full text-left px-3 py-2 hover:bg-pink-50/70 transition-colors flex items-center justify-between gap-2 cursor-pointer"
                                         data-id="{{ $parent->id }}"
                                         data-parent-name="{{ $parent->name }}"
                                         data-parent-nik="{{ $parent->nik ?? '' }}"
@@ -102,7 +102,7 @@
             <!-- 2. Nama Lengkap Balita -->
             <div>
                 <label class="block text-xs font-semibold text-stone-700 mb-1">
-                    Nama Lengkap Balita <span class="text-rose-500">*</span>
+                    Nama Lengkap Balita <span class="text-pink-500">*</span>
                 </label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
@@ -116,7 +116,7 @@
                         oninput="this.value = this.value.replace(/[^a-zA-Z\s'.]/g, '')"
                         required
                         placeholder="Masukkan nama lengkap balita"
-                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all"
+                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all"
                     >
                 </div>
             </div>
@@ -140,7 +140,7 @@
                         maxlength="16"
                         inputmode="numeric"
                         placeholder="3509xxxxxxxxxxxx (16 Digit)"
-                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all tracking-wide"
+                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all tracking-wide"
                     >
                 </div>
                 <p id="nikBalitaHelp" class="text-[10px] text-stone-400 mt-1">Isi 16 digit jika anak sudah memiliki KIA/NIK</p>
@@ -151,7 +151,7 @@
                 <!-- Tanggal Lahir -->
                 <div>
                     <label class="block text-xs font-semibold text-stone-700 mb-1">
-                        Tanggal Lahir <span class="text-rose-500">*</span>
+                        Tanggal Lahir <span class="text-pink-500">*</span>
                     </label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
@@ -163,7 +163,7 @@
                             name="tanggal_lahir"
                             required
                             max="{{ date('Y-m-d') }}"
-                            class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all"
+                            class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all"
                         >
                     </div>
                 </div>
@@ -171,14 +171,14 @@
                 <!-- Jenis Kelamin -->
                 <div>
                     <label class="block text-xs font-semibold text-stone-700 mb-1">
-                        Jenis Kelamin <span class="text-rose-500">*</span>
+                        Jenis Kelamin <span class="text-pink-500">*</span>
                     </label>
                     <div class="relative">
                         <select
                             id="selectJenisKelamin"
                             name="jenis_kelamin"
                             required
-                            class="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all"
+                            class="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all"
                         >
                             <option value="" disabled selected>Pilih Jenis Kelamin</option>
                             <option value="Laki-laki">Laki-laki</option>
@@ -193,7 +193,7 @@
                 <button type="button" onclick="closeBalitaModal()" class="px-3.5 py-2 text-xs font-semibold text-stone-600 hover:text-stone-800 hover:bg-stone-100 rounded-lg transition-colors cursor-pointer">
                     Batal
                 </button>
-                <button type="submit" class="inline-flex items-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-lg transition-colors shadow-xs cursor-pointer">
+                <button type="submit" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand hover:bg-brand-hover text-white text-xs font-semibold rounded-lg transition-colors shadow-xs cursor-pointer">
                     <i data-lucide="check" class="w-4 h-4"></i>
                     <span id="submitBalitaBtnText">Simpan Data Balita</span>
                 </button>

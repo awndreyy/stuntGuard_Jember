@@ -3,11 +3,11 @@
 ])
 
 <!-- Header (Compact 56px Widescreen Header) -->
-<header class="h-14 bg-white border-b border-stone-200 sticky top-0 z-20 px-4 sm:px-6 flex items-center justify-between gap-4 shrink-0">
+<header class="h-14 bg-white border-b border-pink-100 sticky top-0 z-20 px-4 sm:px-6 flex items-center justify-between gap-4 shrink-0">
 
     <!-- Left: Mobile Toggle + Title + Search -->
     <div class="flex items-center gap-3 flex-1 max-w-2xl">
-        <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded-lg text-stone-500 hover:text-rose-700 hover:bg-stone-100 focus:outline-none">
+        <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded-lg text-stone-500 hover:text-pink-700 hover:bg-stone-100 focus:outline-none">
             <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
     </div>
@@ -23,7 +23,7 @@
         <!-- Admin Profile -->
         <div class="flex items-center gap-2 pl-1">
             <div class="relative">
-                <div class="w-8 h-8 rounded-full bg-rose-700 text-white font-semibold text-xs flex items-center justify-center ring-2 ring-rose-700/20">
+                <div class="w-8 h-8 rounded-full bg-brand text-white font-semibold text-xs flex items-center justify-center ring-2 ring-pink-700/20">
                     {{ $userInitials ?? (auth()->check() ? strtoupper(substr(auth()->user()->name, 0, 2)) : 'AD') }}
                 </div>
                 <span class="absolute bottom-0 right-0 w-2 h-2 bg-emerald-500 border-2 border-white rounded-full"></span>

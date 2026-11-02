@@ -3,7 +3,27 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+/* StunGuard brand = palet halaman guest (pink-600/pink-700). */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --color-brand: #db2777;
+    --color-brand-hover: #be185d;
+    --color-brand-canvas: #fffbfc;
+    --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Material Symbols lokal, tetap menggunakan class lama di halaman guest. */
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined Variable';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    display: inline-block;
+    white-space: nowrap;
+    direction: ltr;
+    letter-spacing: normal;
+    text-transform: none;
+    font-feature-settings: 'liga';
+    font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    user-select: none;
 }

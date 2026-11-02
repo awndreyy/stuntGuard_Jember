@@ -18,7 +18,7 @@
     @endif
 
     @if (isset($errors) && $errors->any())
-        <div class="space-y-1 rounded-xl border border-rose-200 bg-rose-50 p-4 text-xs text-rose-800">
+        <div class="space-y-1 rounded-xl border border-pink-200 bg-pink-50 p-4 text-xs text-pink-800">
             <p class="font-bold">Gagal menyimpan data:</p>
             <ul class="list-disc pl-4">
                 @foreach ($errors->all() as $error)
@@ -37,7 +37,7 @@
                 Artikel kesehatan, panduan trimester, dan materi pencegahan stunting.
             </p>
         </div>
-        <button onclick="tambahInformasi()" type="button" class="inline-flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-rose-700 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-rose-600 hover:shadow sm:w-auto">
+        <button onclick="tambahInformasi()" type="button" class="inline-flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-brand px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-brand-hover hover:shadow sm:w-auto">
             <i data-lucide="plus-circle" class="h-4 w-4"></i>
             <span>Tambah Informasi Baru</span>
         </button>
@@ -62,7 +62,7 @@
                                 {{ $item->title ?? $item->judul ?? '-' }}
                             </td>
                             <td class="p-4 text-stone-600">
-                                <span class="rounded-lg bg-rose-50 px-2.5 py-1 text-[11px] font-medium text-rose-700">
+                                <span class="rounded-lg bg-pink-50 px-2.5 py-1 text-[11px] font-medium text-pink-700">
                                     {{ $item->category ?? $item->kategori ?? 'Edukasi' }}
                                 </span>
                             </td>
@@ -74,13 +74,13 @@
                             </td>
                             <td class="p-4 pr-6 text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    <button type="button" onclick="editInformasi({{ json_encode($item) }})" class="cursor-pointer rounded-lg p-2 text-stone-400 transition-colors hover:bg-rose-50 hover:text-rose-700" title="Edit informasi">
+                                    <button type="button" onclick="editInformasi({{ json_encode($item) }})" class="cursor-pointer rounded-lg p-2 text-stone-400 transition-colors hover:bg-pink-50 hover:text-pink-700" title="Edit informasi">
                                         <i data-lucide="pencil" class="h-4 w-4"></i>
                                     </button>
                                     <form action="{{ route('kelolaInformasi.destroy', $item->id_informasi ?? $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus informasi ini?')" class="inline-block">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="cursor-pointer rounded-lg p-2 text-stone-400 transition-colors hover:bg-rose-50 hover:text-rose-600" title="Hapus informasi">
+                                        <button type="submit" class="cursor-pointer rounded-lg p-2 text-stone-400 transition-colors hover:bg-pink-50 hover:text-pink-600" title="Hapus informasi">
                                             <i data-lucide="trash-2" class="h-4 w-4"></i>
                                         </button>
                                     </form>

@@ -16,7 +16,7 @@
                 <span class="text-[10px] text-emerald-600 font-semibold flex items-center">menu aktif</span>
             </div>
         </div>
-        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center shrink-0">
+        <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-700 flex items-center justify-center shrink-0">
             <i data-lucide="utensils-crossed" class="w-5 h-5"></i>
         </div>
     </div>

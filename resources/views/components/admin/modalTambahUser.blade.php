@@ -6,7 +6,7 @@
         <!-- Modal Header -->
         <div class="px-5 py-4 bg-stone-50/80 border-b border-stone-100 flex items-center justify-between">
             <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center">
+                <div class="w-8 h-8 rounded-lg bg-pink-100 text-pink-700 flex items-center justify-center">
                     <i id="modalUserIcon" data-lucide="{{ old('_method') === 'PUT' ? 'user-cog' : 'user-plus' }}" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -32,15 +32,15 @@
 
             <!-- Nama Lengkap -->
             <div>
-                <label class="block text-xs font-semibold text-stone-700 mb-1">Nama Lengkap <span class="text-rose-500">*</span></label>
+                <label class="block text-xs font-semibold text-stone-700 mb-1">Nama Lengkap <span class="text-pink-500">*</span></label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
                         <i data-lucide="user" class="w-4 h-4"></i>
                     </span>
-                    <input type="text" id="inputName" name="name" value="{{ old('name') }}" oninput="this.value = this.value.replace(/[^a-zA-Z\s'.]/g, '')" required placeholder="Masukkan nama lengkap" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('name') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                    <input type="text" id="inputName" name="name" value="{{ old('name') }}" oninput="this.value = this.value.replace(/[^a-zA-Z\s'.]/g, '')" required placeholder="Masukkan nama lengkap" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('name') ? 'border-red-400 ring-1 ring-red-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all">
                 </div>
                 @error('name')
-                    <p class="text-[10px] text-rose-600 mt-1 flex items-center gap-1">
+                    <p class="text-[10px] text-red-600 mt-1 flex items-center gap-1">
                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
                         <span>{{ $message }}</span>
                     </p>
@@ -51,7 +51,7 @@
             <div>
                 <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
                     <label class="block text-xs font-semibold text-stone-700">
-                        Nomor Induk Kependudukan (NIK) <span class="text-rose-500">*</span>
+                        Nomor Induk Kependudukan (NIK) <span class="text-pink-500">*</span>
                     </label>
                     <span id="nikCounterModal" class="text-[10px] font-medium text-stone-400">0/16 Digit</span>
                 </div>
@@ -69,11 +69,11 @@
                         pattern="[0-9]{16}"
                         required 
                         placeholder="3509xxxxxxxxxxxx (16 Digit)" 
-                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('nik') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all tracking-wide"
+                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('nik') ? 'border-red-400 ring-1 ring-red-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all tracking-wide"
                     >
                 </div>
                 @error('nik')
-                    <p class="text-[10px] text-rose-600 mt-1 flex items-center gap-1 font-semibold">
+                    <p class="text-[10px] text-red-600 mt-1 flex items-center gap-1 font-semibold">
                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
                         <span>{{ $message }}</span>
                     </p>
@@ -84,15 +84,15 @@
 
             <!-- Email -->
             <div>
-                <label class="block text-xs font-semibold text-stone-700 mb-1">Email <span class="text-rose-500">*</span></label>
+                <label class="block text-xs font-semibold text-stone-700 mb-1">Email <span class="text-pink-500">*</span></label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
                         <i data-lucide="mail" class="w-4 h-4"></i>
                     </span>
-                    <input type="email" id="inputEmail" name="email" value="{{ old('email') }}" required placeholder="contoh@email.com" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('email') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                    <input type="email" id="inputEmail" name="email" value="{{ old('email') }}" required placeholder="contoh@email.com" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('email') ? 'border-red-400 ring-1 ring-red-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all">
                 </div>
                 @error('email')
-                    <p class="text-[10px] text-rose-600 mt-1 flex items-center gap-1 font-semibold">
+                    <p class="text-[10px] text-red-600 mt-1 flex items-center gap-1 font-semibold">
                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
                         <span>{{ $message }}</span>
                     </p>
@@ -102,27 +102,27 @@
             <!-- Grid 2 Kolom: Peran & Password -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                    <label class="block text-xs font-semibold text-stone-700 mb-1">Peran / Role <span class="text-rose-500">*</span></label>
-                    <select id="selectRole" name="role" required class="w-full px-3 py-2 text-xs bg-stone-50 border {{ $errors->has('role') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                    <label class="block text-xs font-semibold text-stone-700 mb-1">Peran / Role <span class="text-pink-500">*</span></label>
+                    <select id="selectRole" name="role" required class="w-full px-3 py-2 text-xs bg-stone-50 border {{ $errors->has('role') ? 'border-red-400 ring-1 ring-red-400' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all">
                         <option value="" disabled selected>Pilih Peran</option>
                         <option value="Orang Tua" {{ old('role') === 'Orang Tua' ? 'selected' : '' }}>Orang Tua</option>
                         <option value="Admin" {{ old('role') === 'Admin' ? 'selected' : '' }}>Admin</option>
                     </select>
                     @error('role')
-                        <p class="text-[10px] text-rose-600 mt-1">{{ $message }}</p>
+                        <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-stone-700 mb-1">Password <span id="passwordRequiredStar" class="text-rose-500 {{ old('_method') === 'PUT' ? 'hidden' : '' }}">*</span></label>
+                    <label class="block text-xs font-semibold text-stone-700 mb-1">Password <span id="passwordRequiredStar" class="text-pink-500 {{ old('_method') === 'PUT' ? 'hidden' : '' }}">*</span></label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-stone-400">
                             <i data-lucide="lock" class="w-4 h-4"></i>
                         </div>
-                        <input type="password" id="inputPassword" name="password" {{ old('_method') === 'PUT' ? '' : 'required' }} placeholder="minimal 6 karakter" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('password') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all">
+                        <input type="password" id="inputPassword" name="password" {{ old('_method') === 'PUT' ? '' : 'required' }} placeholder="minimal 6 karakter" class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ $errors->has('password') ? 'border-red-400 ring-1 ring-red-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all">
                     </div>
                     @error('password')
-                        <p class="text-[10px] text-rose-600 mt-1">{{ $message }}</p>
+                        <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
                     @else
                         <p id="passwordHint" class="text-[10px] text-stone-400 mt-1 {{ old('_method') === 'PUT' ? '' : 'hidden' }}">Kosongkan jika tidak ingin mengganti password.</p>
                     @enderror
@@ -134,7 +134,7 @@
                 <button type="button" onclick="closeUserModal()" class="px-3.5 py-2 text-xs font-semibold text-stone-600 hover:text-stone-800 hover:bg-stone-100 rounded-lg transition-colors cursor-pointer">
                     Batal
                 </button>
-                <button type="submit" class="inline-flex items-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-lg transition-colors shadow-xs cursor-pointer">
+                <button type="submit" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand hover:bg-brand-hover text-white text-xs font-semibold rounded-lg transition-colors shadow-xs cursor-pointer">
                     <i data-lucide="check" class="w-4 h-4"></i>
                     <span id="submitBtnText">{{ old('_method') === 'PUT' ? 'Update User' : 'Simpan User' }}</span>
                 </button>

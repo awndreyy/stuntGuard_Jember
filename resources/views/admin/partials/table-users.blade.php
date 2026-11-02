@@ -5,7 +5,7 @@
     {{-- Card Header with Filters --}}
     <div class="px-4 py-3 border-b border-stone-100 flex flex-wrap items-center justify-between gap-3 shrink-0 bg-white">
         <div class="flex items-center gap-2">
-            <div class="w-7 h-7 rounded-lg bg-rose-100/70 text-rose-700 flex items-center justify-center">
+            <div class="w-7 h-7 rounded-lg bg-pink-100/70 text-pink-700 flex items-center justify-center">
                 <i data-lucide="users" class="w-4 h-4"></i>
             </div>
             <div>
@@ -16,7 +16,7 @@
         <div class="flex items-center gap-2">
             {{-- Filter Tabs --}}
             <div class="hidden sm:flex items-center bg-stone-100/80 p-0.5 rounded-lg text-[11px] font-medium text-stone-600">
-                <button type="button" onclick="filterUserRole('all', this)" class="user-role-tab px-2.5 py-1 rounded-md bg-white text-rose-700 shadow-2xs font-semibold cursor-pointer transition-colors">Semua</button>
+                <button type="button" onclick="filterUserRole('all', this)" class="user-role-tab px-2.5 py-1 rounded-md bg-white text-pink-700 shadow-2xs font-semibold cursor-pointer transition-colors">Semua</button>
                 <button type="button" onclick="filterUserRole('Admin', this)" class="user-role-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Admin</button>
                 <button type="button" onclick="filterUserRole('Orang Tua', this)" class="user-role-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Orang Tua</button>
             </div>
@@ -37,11 +37,11 @@
             <tbody class="divide-y divide-stone-100 text-xs" id="tableUserBody">
                 @if(isset($users) && count($users) > 0)
                     @foreach($users as $user)
-                    <tr class="table-user-row hover:bg-rose-50/40 transition-colors group" data-role="{{ $user->role }}">
+                    <tr class="table-user-row hover:bg-pink-50/40 transition-colors group" data-role="{{ $user->role }}">
                         <td class="py-3 px-4 font-medium text-stone-900 whitespace-nowrap">
                             <div class="flex items-center gap-3">
                                 {{-- Avatar inisial nama --}}
-                                <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 font-bold text-xs flex items-center justify-center shrink-0">
+                                <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-700 font-bold text-xs flex items-center justify-center shrink-0">
                                     {{ strtoupper(substr($user->name, 0, 2)) }}
                                 </div>
                                 <div>
@@ -54,14 +54,14 @@
                             <span class="block text-xs text-stone-700">{{ $user->email }}</span>
                         </td>
                         <td class="py-3 px-4 whitespace-nowrap">
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold {{ $user->role === 'Administrator' || $user->role === 'Admin' ? 'bg-rose-100/70 text-rose-900' : 'bg-emerald-100 text-emerald-800' }}">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold {{ $user->role === 'Administrator' || $user->role === 'Admin' ? 'bg-pink-100/70 text-pink-900' : 'bg-emerald-100 text-emerald-800' }}">
                                 {{ $user->role }}
                             </span>
                         </td>
                         <td class="py-3 px-4 text-center whitespace-nowrap">
                             <div class="inline-flex items-center justify-center gap-1.5">
                                 @if($user->role === 'Orang Tua')
-                                    <a href="{{ route('detailBalita', $user) }}" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors" title="Lihat balita milik {{ $user->name }}" aria-label="Lihat balita milik {{ $user->name }}">
+                                    <a href="{{ route('detailBalita', $user) }}" class="p-1.5 text-stone-400 hover:text-pink-700 hover:bg-pink-50 rounded transition-colors" title="Lihat balita milik {{ $user->name }}" aria-label="Lihat balita milik {{ $user->name }}">
                                         <i data-lucide="baby" class="w-4 h-4"></i>
                                     </a>
                                 @else
@@ -69,7 +69,7 @@
                                         <i data-lucide="baby" class="w-4 h-4"></i>
                                     </span>
                                 @endif
-                                <button type="button" onclick="editData(@js($user))" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors cursor-pointer" title="Edit User">
+                                <button type="button" onclick="editData(@js($user))" class="p-1.5 text-stone-400 hover:text-pink-700 hover:bg-pink-50 rounded transition-colors cursor-pointer" title="Edit User">
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </button>
                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin mau menghapus akun {{ $user->name }} ini?');">
@@ -118,7 +118,7 @@
 
             {{-- Page Numbers --}}
             <div class="flex items-center gap-1">
-                <button class="w-8 h-8 rounded-lg bg-rose-700 text-white font-bold text-xs flex items-center justify-center shadow-xs">1</button>
+                <button class="w-8 h-8 rounded-lg bg-brand text-white font-bold text-xs flex items-center justify-center shadow-xs">1</button>
             </div>
 
             {{-- Next Button --}}

@@ -16,7 +16,7 @@
             </p>
         </div>
         {{-- Tombol Tambah (teks berubah sesuai tab aktif) --}}
-        <button id="btn-tambah" onclick="tambahData()" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl transition-all shadow-sm hover:shadow cursor-pointer w-full sm:w-auto">
+        <button id="btn-tambah" onclick="tambahData()" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-brand hover:bg-brand-hover text-white text-xs font-semibold rounded-xl transition-all shadow-sm hover:shadow cursor-pointer w-full sm:w-auto">
             <i id="btn-tambah-icon" data-lucide="plus" class="w-4 h-4"></i>
             <span id="btn-tambah-label">Tambah User Baru</span>
         </button>
@@ -36,17 +36,17 @@
     @endif
 
     @if (session('error') || (isset($errors) && $errors->any()))
-        <div class="p-3 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-xl flex items-center justify-between gap-2 shrink-0 shadow-xs">
+        <div class="p-3 bg-pink-50 border border-pink-200 text-pink-800 text-xs rounded-xl flex items-center justify-between gap-2 shrink-0 shadow-xs">
             <div class="flex items-center gap-2">
-                <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600 shrink-0"></i>
+                <i data-lucide="alert-circle" class="w-4 h-4 text-pink-600 shrink-0"></i>
                 <div>
                     <span class="font-semibold block">{{ session('error') ?? 'Gagal menyimpan data!' }}</span>
                     @if (isset($errors) && $errors->any())
-                        <span class="text-[11px] text-rose-700 block mt-0.5">{{ $errors->first() }}</span>
+                        <span class="text-[11px] text-pink-700 block mt-0.5">{{ $errors->first() }}</span>
                     @endif
                 </div>
             </div>
-            <button onclick="this.parentElement.remove()" class="text-rose-600 hover:text-rose-800 p-1 cursor-pointer">
+            <button onclick="this.parentElement.remove()" class="text-pink-600 hover:text-pink-800 p-1 cursor-pointer">
                 <i data-lucide="x" class="w-3.5 h-3.5"></i>
             </button>
         </div>
@@ -193,7 +193,7 @@
         const btnUser = document.getElementById('tab-btn-user');
         const btnAnak = document.getElementById('tab-btn-anak');
 
-        const activeTabCls   = ['text-rose-700', 'font-semibold', 'border-rose-700'];
+        const activeTabCls   = ['text-pink-700', 'font-semibold', 'border-pink-700'];
         const inactiveTabCls = ['text-stone-500', 'font-medium',  'border-transparent'];
 
         // Tombol Tambah
@@ -252,10 +252,10 @@
     // Filter User berdasarkan Role
     function filterUserRole(role, button) {
         document.querySelectorAll('.user-role-tab').forEach(btn => {
-            btn.classList.remove('bg-white', 'text-rose-700', 'shadow-2xs', 'font-semibold');
+            btn.classList.remove('bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold');
             btn.classList.add('text-stone-600', 'hover:text-stone-900');
         });
-        button.classList.add('bg-white', 'text-rose-700', 'shadow-2xs', 'font-semibold');
+        button.classList.add('bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold');
         button.classList.remove('text-stone-600', 'hover:text-stone-900');
 
         const rows = document.querySelectorAll('.table-user-row');
@@ -307,10 +307,10 @@
     // Filter Balita berdasarkan Jenis Kelamin
     function filterBalitaGender(gender, button) {
         document.querySelectorAll('.balita-gender-tab').forEach(btn => {
-            btn.classList.remove('bg-white', 'text-rose-700', 'shadow-2xs', 'font-semibold');
+            btn.classList.remove('bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold');
             btn.classList.add('text-stone-600', 'hover:text-stone-900');
         });
-        button.classList.add('bg-white', 'text-rose-700', 'shadow-2xs', 'font-semibold');
+        button.classList.add('bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold');
         button.classList.remove('text-stone-600', 'hover:text-stone-900');
 
         const rows = document.querySelectorAll('.table-balita-row');

@@ -1,10 +1,10 @@
 // Filter Category Tabs
 function filterCategory(category, button) {
     document.querySelectorAll('.category-tab').forEach(btn => {
-        btn.classList.remove('active-tab', 'bg-rose-700', 'text-white');
+        btn.classList.remove('active-tab', 'bg-brand', 'text-white');
         btn.classList.add('text-stone-600', 'hover:bg-stone-100');
     });
-    button.classList.add('active-tab', 'bg-rose-700', 'text-white');
+    button.classList.add('active-tab', 'bg-brand', 'text-white');
     button.classList.remove('text-stone-600', 'hover:bg-stone-100');
 
     applyAllFilters();
@@ -155,7 +155,7 @@ function previewRecipe(id) {
 
                 const bullet = document.createElement('span');
                 bullet.className =
-                    'w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0';
+                    'w-1.5 h-1.5 rounded-full bg-pink-500 shrink-0';
 
                 const text = document.createElement('span');
                 text.textContent = String(bahan ?? '');
@@ -195,7 +195,7 @@ function previewRecipe(id) {
 
                 const number = document.createElement('span');
                 number.className =
-                    'w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5';
+                    'w-5 h-5 rounded-full bg-pink-100 text-pink-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5';
                 number.textContent = String(index + 1);
 
                 const text = document.createElement('span');
@@ -242,8 +242,8 @@ function addIngredientRow() {
     row.className = 'space-y-1';
     row.innerHTML = `
         <div class="flex items-center gap-2 ingredient-row">
-            <input type="text" name="bahan[]" required placeholder="Contoh: 30 gr Beras Merah Organik" class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-rose-700/20">
-            <button type="button" onclick="removeIngredientRow(this)" class="p-1.5 text-stone-400 hover:text-rose-600 rounded-lg cursor-pointer"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+            <input type="text" name="bahan[]" required placeholder="Contoh: 30 gr Beras Merah Organik" class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-pink-700/20">
+            <button type="button" onclick="removeIngredientRow(this)" class="p-1.5 text-stone-400 hover:text-pink-600 rounded-lg cursor-pointer"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
         </div>
     `;
     list.appendChild(row);
@@ -274,8 +274,8 @@ function addStepRow() {
     row.innerHTML = `
         <div class="flex items-start gap-2 step-row">
             <span class="w-5 h-5 rounded-full bg-stone-100 text-stone-600 font-bold text-[10px] flex items-center justify-center shrink-0 mt-1 step-num">${stepNum}</span>
-            <textarea name="cara_pembuatan[]" required rows="2" placeholder="Tuliskan petunjuk memasak langkah ini..." class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-rose-700/20"></textarea>
-            <button type="button" onclick="removeStepRow(this)" class="p-1.5 text-stone-400 hover:text-rose-600 rounded-lg cursor-pointer mt-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+            <textarea name="cara_pembuatan[]" required rows="2" placeholder="Tuliskan petunjuk memasak langkah ini..." class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-pink-700/20"></textarea>
+            <button type="button" onclick="removeStepRow(this)" class="p-1.5 text-stone-400 hover:text-pink-600 rounded-lg cursor-pointer mt-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
         </div>
     `;
     list.appendChild(row);
@@ -316,7 +316,7 @@ function showToast(title, message, type = 'success') {
 
     if (iconContainer) {
         if (type === 'error') {
-            iconContainer.className = 'w-6 h-6 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center';
+            iconContainer.className = 'w-6 h-6 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center';
             iconContainer.innerHTML = '<i data-lucide="alert-circle" class="w-4 h-4"></i>';
         } else {
             iconContainer.className = 'w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center';

@@ -37,7 +37,7 @@
                             };
                             $imageUrl = $recipe->gambar? asset(ltrim($recipe->gambar, '/')): null;
                         @endphp
-                        <tr class="table-recipe-row hover:bg-rose-50/30 transition-colors" data-category="{{ $recipe->kategori_usia }}" data-name="{{ strtolower($recipe->nama_resep) }}">
+                        <tr class="table-recipe-row hover:bg-pink-50/30 transition-colors" data-category="{{ $recipe->kategori_usia }}" data-name="{{ strtolower($recipe->nama_resep) }}">
                             <td class="py-3 px-4">
                                 <div class="flex items-center gap-3">
                                     @if ($imageUrl)
@@ -55,7 +55,7 @@
                             </td>   
                             <td class="py-3 px-3 font-medium text-stone-600">{{ $tekstur }}</td>
                             <td class="py-3 px-3">
-                                <span class="font-bold text-rose-700">{{ $recipe->kalori }} kkal</span>
+                                <span class="font-bold text-pink-700">{{ $recipe->kalori }} kkal</span>
                                 <span class="text-stone-400 text-[10px] block">Protein {{ $recipe->protein }}g</span>
                             </td>
                             <td class="py-3 px-3 text-stone-500 text-[11px]">
@@ -64,8 +64,8 @@
                             <td class="py-3 px-4 text-right">
                                 <div class="inline-flex items-center gap-1">
                                     <button onclick="previewRecipe({{ $recipe->id_resep }})" class="p-1.5 text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors cursor-pointer" title="Preview"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                                    <a href="{{ route('mpasi.edit', $recipe->id_resep) }}" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer" title="Edit" aria-label="Edit resep {{ $recipe->nama_resep }}"><i data-lucide="pencil" class="w-4 h-4"></i></a>
-                                    <button onclick="deleteRecipe({{ $recipe->id_resep }}, '{{ addslashes($recipe->nama_resep) }}')" class="p-1.5 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                    <a href="{{ route('mpasi.edit', $recipe->id_resep) }}" class="p-1.5 text-stone-400 hover:text-pink-700 hover:bg-pink-50 rounded-lg transition-colors cursor-pointer" title="Edit" aria-label="Edit resep {{ $recipe->nama_resep }}"><i data-lucide="pencil" class="w-4 h-4"></i></a>
+                                    <button onclick="deleteRecipe({{ $recipe->id_resep }}, '{{ addslashes($recipe->nama_resep) }}')" class="p-1.5 text-stone-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-colors cursor-pointer" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>

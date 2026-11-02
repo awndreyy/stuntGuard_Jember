@@ -17,7 +17,7 @@
                         6 - 8 Bulan
                     </span>
                     <span class="bg-black/40 backdrop-blur-xs text-stone-200 text-[10px] font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1 border border-white/10">
-                        <i data-lucide="clock" class="w-3 h-3 text-rose-400"></i>
+                        <i data-lucide="clock" class="w-3 h-3 text-pink-400"></i>
                         <span id="prevWaktu">25 Menit</span>
                     </span>
                     <span class="bg-black/40 backdrop-blur-xs text-stone-200 text-[10px] font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1 border border-white/10">
@@ -37,12 +37,12 @@
             <!-- 1. Nilai Nutrisi Grid -->
             <div>
                 <h4 class="font-bold text-stone-900 mb-2 flex items-center gap-1.5">
-                    <i data-lucide="activity" class="w-3.5 h-3.5 text-rose-700"></i> Nilai Nutrisi (Per Porsi):
+                    <i data-lucide="activity" class="w-3.5 h-3.5 text-pink-700"></i> Nilai Nutrisi (Per Porsi):
                 </h4>
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-center">
-                    <div class="bg-rose-50/80 p-2.5 rounded-xl border border-rose-100">
+                    <div class="bg-pink-50/80 p-2.5 rounded-xl border border-pink-100">
                         <span class="text-[10px] text-stone-500 block font-medium">Energi</span>
-                        <span id="prevKalori" class="text-xs sm:text-sm font-bold text-rose-700">185 kkal</span>
+                        <span id="prevKalori" class="text-xs sm:text-sm font-bold text-pink-700">185 kkal</span>
                     </div>
                     <div class="bg-orange-50/80 p-2.5 rounded-xl border border-orange-100">
                         <span class="text-[10px] text-stone-500 block font-medium">Karbohidrat</span>
@@ -75,19 +75,19 @@
                 <div class="bg-stone-50 p-3.5 rounded-xl border border-stone-200">
                     <ul id="prevIngredientsList" class="space-y-2">
                         <li class="flex items-center gap-2 text-stone-700">
-                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-pink-500 shrink-0"></span>
                             <span>30 gr Beras Merah Organik</span>
                         </li>
                         <li class="flex items-center gap-2 text-stone-700">
-                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-pink-500 shrink-0"></span>
                             <span>40 gr Fillet Ikan Salmon / Kembung Segar</span>
                         </li>
                         <li class="flex items-center gap-2 text-stone-700">
-                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-pink-500 shrink-0"></span>
                             <span>1 genggam Daun Bayam Segar</span>
                         </li>
                         <li class="flex items-center gap-2 text-stone-700">
-                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-pink-500 shrink-0"></span>
                             <span>1 sdt Minyak Kelapa / Lemak Tambahan</span>
                         </li>
                     </ul>
@@ -97,20 +97,20 @@
             <!-- 3. Cara Pembuatan Steps -->
             <div>
                 <h4 class="font-bold text-stone-900 mb-2 flex items-center gap-1.5">
-                    <i data-lucide="utensils" class="w-3.5 h-3.5 text-rose-700"></i> Cara Pembuatan:
+                    <i data-lucide="utensils" class="w-3.5 h-3.5 text-pink-700"></i> Cara Pembuatan:
                 </h4>
                 <div class="space-y-2.5">
                     <ol id="prevStepsList" class="space-y-2 text-stone-700">
                         <li class="flex items-start gap-2.5 bg-stone-50/50 p-2.5 rounded-xl border border-stone-100">
-                            <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                            <span class="w-5 h-5 rounded-full bg-pink-100 text-pink-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</span>
                             <span class="leading-relaxed">Cuci beras merah hingga bersih, lalu masak bersama air/kaldu hingga menjadi bubur lembut.</span>
                         </li>
                         <li class="flex items-start gap-2.5 bg-stone-50/50 p-2.5 rounded-xl border border-stone-100">
-                            <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                            <span class="w-5 h-5 rounded-full bg-pink-100 text-pink-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</span>
                             <span class="leading-relaxed">Kukus fillet ikan dan sayur bayam hingga matang merata.</span>
                         </li>
                         <li class="flex items-start gap-2.5 bg-stone-50/50 p-2.5 rounded-xl border border-stone-100">
-                            <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                            <span class="w-5 h-5 rounded-full bg-pink-100 text-pink-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</span>
                             <span class="leading-relaxed">Haluskan dan saring melalui kawat saring halus sesuai tekstur usia bayi, sajikan selagi hangat.</span>
                         </li>
                     </ol>
@@ -121,7 +121,7 @@
 
         <!-- Preview Footer -->
         <div class="px-5 py-3 bg-stone-50 border-t border-stone-100 flex items-center justify-end gap-2 shrink-0">
-            <button type="button" onclick="closePreviewModal()" class="px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white font-semibold rounded-xl text-xs transition-colors cursor-pointer">
+            <button type="button" onclick="closePreviewModal()" class="px-4 py-2 bg-brand hover:bg-brand-hover text-white font-semibold rounded-xl text-xs transition-colors cursor-pointer">
                 Tutup Preview
             </button>
         </div>

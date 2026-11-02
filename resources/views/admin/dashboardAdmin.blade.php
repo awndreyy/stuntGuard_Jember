@@ -19,10 +19,10 @@
         <section class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-3.5 shrink-0">
 
             <!-- KPI 1: Pengguna Aktif -->
-            <div class="bg-white rounded-xl p-3.5 border border-stone-200/80 shadow-2xs hover:border-rose-300 transition-all flex flex-col justify-between">
+            <div class="bg-white rounded-xl p-3.5 border border-stone-200/80 shadow-2xs hover:border-pink-300 transition-all flex flex-col justify-between">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] font-semibold uppercase tracking-wider text-stone-500">Total Pengguna</span>
-                    <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-800 flex items-center justify-center">
+                    <div class="w-8 h-8 rounded-lg bg-pink-50 text-pink-800 flex items-center justify-center">
                         <i data-lucide="users" class="w-4 h-4"></i>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                 <!-- Card Header with Category Tabs -->
                 <div class="px-4 py-3 border-b border-stone-100 flex flex-wrap items-center justify-between gap-2 shrink-0">
                     <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 rounded-lg bg-rose-50 text-rose-800 flex items-center justify-center">
+                        <div class="w-7 h-7 rounded-lg bg-pink-50 text-pink-800 flex items-center justify-center">
                             <i data-lucide="soup" class="w-4 h-4"></i>
                         </div>
                         <div>
@@ -84,10 +84,10 @@
                         <div class="flex items-center gap-1 bg-stone-100/80 p-0.5 rounded-lg text-[11px] font-medium">
                             @foreach(['semua' => 'Semua', '6-8' => '6-8 Bln', '9-11' => '9-11 Bln', '12-23' => '12-23 Bln'] as $nilai => $label)
                                 <a href="{{ route('dashboardAdmin', ['kategori' => $nilai]) }}"
-                                   class="px-2.5 py-1 rounded-md {{ $kategori === $nilai ? 'bg-white text-rose-900 shadow-2xs font-semibold' : 'text-stone-600 hover:text-stone-900' }}">{{ $label }}</a>
+                                   class="px-2.5 py-1 rounded-md {{ $kategori === $nilai ? 'bg-white text-pink-900 shadow-2xs font-semibold' : 'text-stone-600 hover:text-stone-900' }}">{{ $label }}</a>
                             @endforeach
                         </div>
-                        <a href="{{ route('mpasi.create') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-700 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg transition-colors">
+                        <a href="{{ route('mpasi.create') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand hover:bg-brand-hover text-white text-xs font-semibold rounded-lg transition-colors">
                             <i data-lucide="plus" class="w-3.5 h-3.5"></i><span>Tambah</span>
                         </a>
                     </div>
@@ -107,10 +107,10 @@
                         <tbody class="divide-y divide-stone-100 text-xs">
 
                         @forelse($resepList as $resep)
-                        <tr class="hover:bg-rose-50/40 transition-colors group">
+                        <tr class="hover:bg-pink-50/40 transition-colors group">
                             <td class="py-2.5 px-4 font-medium text-stone-900 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-6.5 h-6.5 rounded-md bg-rose-50 text-rose-800 flex items-center justify-center shrink-0">
+                                    <div class="w-6.5 h-6.5 rounded-md bg-pink-50 text-pink-800 flex items-center justify-center shrink-0">
                                         <i data-lucide="utensils" class="w-3 h-3"></i>
                                     </div>
                                     <div>
@@ -132,7 +132,7 @@
                             </td>
                             <td class="py-2.5 px-4 text-right whitespace-nowrap">
                                 <div class="inline-flex items-center gap-1">
-                                    <a href="{{ route('mpasi.edit', $resep->id_resep) }}" class="p-1 text-stone-400 hover:text-rose-800 hover:bg-white rounded transition-colors" title="Edit resep" aria-label="Edit {{ $resep->nama_resep }}">
+                                    <a href="{{ route('mpasi.edit', $resep->id_resep) }}" class="p-1 text-stone-400 hover:text-pink-800 hover:bg-white rounded transition-colors" title="Edit resep" aria-label="Edit {{ $resep->nama_resep }}">
                                          <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                                      </a>
                                      <form action="{{ route('mpasi.destroy', $resep->id_resep) }}" method="POST" onsubmit="return confirm('Hapus resep ini?')">
@@ -158,7 +158,7 @@
             <!-- Card Footer -->
             <div class="px-4 py-2 bg-stone-50 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500 shrink-0">
                 <span>Menampilkan {{ count($resepList) }} dari {{ $totalResep }} resep</span>
-                <a href="{{ route('kelolaMpasi') }}" class="font-semibold text-rose-800 hover:underline flex items-center gap-1">
+                <a href="{{ route('kelolaMpasi') }}" class="font-semibold text-pink-800 hover:underline flex items-center gap-1">
                 Lihat Semua <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -171,7 +171,7 @@
             <!-- Card Header -->
             <div class="px-4 py-3 border-b border-stone-100 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-lg bg-rose-50 text-rose-800 flex items-center justify-center">
+                <div class="w-7 h-7 rounded-lg bg-pink-50 text-pink-800 flex items-center justify-center">
                     <i data-lucide="clipboard-check" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -198,7 +198,7 @@
                 <tbody class="divide-y divide-stone-100 text-xs">
 
                     @forelse($logGiziList as $log)
-                    <tr class="hover:bg-rose-50/40 transition-colors">
+                    <tr class="hover:bg-pink-50/40 transition-colors">
                         <td class="py-2.5 px-4 font-medium text-stone-900 whitespace-nowrap">
                         <div class="flex items-center gap-2">
                             <div class="w-6 h-6 rounded-full bg-stone-100 text-stone-700 font-bold text-[10px] flex items-center justify-center shrink-0">

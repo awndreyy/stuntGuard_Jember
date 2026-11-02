@@ -9,17 +9,10 @@
     <!-- CSS & JavaScript melalui Laravel Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: var(--font-sans);
             -webkit-font-smoothing: antialiased;
         }
         /* Custom subtle scrollbar */
@@ -47,7 +40,7 @@
 
     @stack('styles')
 </head>
-<body class="bg-stone-50 text-stone-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
+<body class="bg-brand-canvas text-stone-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row relative font-sans">
 
     <!-- Sidebar Component -->
     <x-admin.sidebar />
@@ -74,9 +67,7 @@
     <!-- Script Global (Lucide Icon Init & Format Tanggal) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (window.lucide) {
-                lucide.createIcons();
-            }
+            window.lucide?.createIcons();
 
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
             const today = new Date().toLocaleDateString('id-ID', dateOptions);

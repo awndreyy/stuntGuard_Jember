@@ -74,7 +74,7 @@ class UserController extends Controller
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Gagal! Email ini sudah digunakan oleh pengguna lain.',
             'email.max' => 'Email maksimal 100 karakter',
-            'role.required' => 'Peran / Role wajib dipilih.',
+            'role.required' => 'Role wajib dipilih.',
             'password.required' => 'Password wajib diisi.',
             'password.min' => 'Password minimal 6 karakter.',
         ]);

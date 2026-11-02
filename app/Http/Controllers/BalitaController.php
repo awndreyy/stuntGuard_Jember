@@ -48,19 +48,19 @@ class BalitaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => ['required', Rule::exists(User::class, 'id')],
+            'user_id' => ['required', Rule::exists(User::class, 'id')->where('role', 'Orang Tua')],
             'nama_balita' => ['required', 'string', 'min:3', 'max:60'],
             'nik' => ['nullable', 'digits:16', Rule::unique(Balita::class, 'nik')],
             'tanggal_lahir' => ['required', 'date', 'before_or_equal:today'],
             'jenis_kelamin' => ['required', Rule::in(['Laki-laki', 'Perempuan'])],
         ], [
             'user_id.required' => 'Orang tua wajib dipilih',
-            'user_id.exists' => 'Data orang tua tidak valid',
+            'user_id.exists' => 'Akun orang tua tidak valid atau bukan pengguna dengan role Orang Tua.',
             'nama_balita.required' => 'Nama Balita wajib diisi',
             'nama_balita.min' => 'Nama Balita minimal 3 karakter',
-            'nama_balita.max' => 'Nama Balita maksimal 30 karakter',
+            'nama_balita.max' => 'Nama Balita maksimal 60 karakter',
             'nik.unique' => 'NIK Balita sudah terdaftar',
-            'nik.size' => 'NIK Balita harus tepat 16 digit',
+            'nik.digits' => 'NIK Balita harus tepat 16 digit',
             'tanggal_lahir.required' => 'Tanggal Lahir wajib diisi',
             'jenis_kelamin.required' => 'Jenis Kelamin wajib diisi',
         ]);
@@ -131,8 +131,15 @@ class BalitaController extends Controller
     public function destroy(string $id)
     {
         $balita = Balita::findOrFail($id);
+        if ($balita->pengukurans()->exists()) {
+            return back()->with(
+                'error',
+                'Balita tidak dapat dihapus karena masih memiliki riwayat pengukuran.'
+            );
+        }
+    
         $balita->delete();
 
-        return redirect()->back()->with('success', 'Data Balita berhasil dihapus');
+        return back()->with('success', 'Data balita berhasil dihapus.');
     }
 }

@@ -71,15 +71,15 @@
 
                         <!-- Options List -->
                         <div id="parentOptionsList" class="max-h-48 overflow-y-auto divide-y divide-stone-50 py-1">
-                            @if(isset($users) && count($users) > 0)
-                                @foreach($users as $parent)
+                            @if($orangTua->isNotEmpty())
+                                @foreach($orangTua as $parent)
                                     <button
-                                        type="button"
-                                        onclick="selectParent('{{ $parent->id }}', '{{ addslashes($parent->name) }}', '{{ $parent->nik ?? '-' }}')"
-                                        class="parent-option w-full text-left px-3 py-2 hover:bg-rose-50/70 transition-colors flex items-center justify-between gap-2 cursor-pointer"
-                                        data-name="{{ strtolower($parent->name) }}"
-                                        data-nik="{{ strtolower($parent->nik ?? '') }}"
-                                    >
+                                        type="button" class="parent-option w-full text-left px-3 py-2 hover:bg-rose-50/70 transition-colors flex items-center justify-between gap-2 cursor-pointer"
+                                        data-id="{{ $parent->id }}"
+                                        data-parent-name="{{ $parent->name }}"
+                                        data-parent-nik="{{ $parent->nik ?? '' }}"
+                                        data-name="{{ mb_strtolower($parent->name) }}"
+                                        data-nik="{{ strtolower($parent->nik ?? '') }}">
                                         <div class="min-w-0">
                                             <p class="text-xs font-semibold text-stone-800 truncate">{{ $parent->name }}</p>
                                             <p class="text-[10px] text-stone-400">NIK: {{ $parent->nik ?? 'Belum ada NIK' }} • {{ $parent->role ?? 'User' }}</p>
@@ -112,7 +112,7 @@
                         type="text"
                         id="inputNamaBalita"
                         name="nama_balita"
-                        maxlength="30"
+                        maxlength="60"
                         oninput="this.value = this.value.replace(/[^a-zA-Z\s'.]/g, '')"
                         required
                         placeholder="Masukkan nama lengkap balita"
@@ -317,6 +317,16 @@
         const parentWrapper = document.getElementById('parentSelectWrapper');
         const nikBalita = document.getElementById('inputNikBalita');
         const balitaForm = document.getElementById('balitaFormElement');
+
+        document.querySelectorAll('.parent-option').forEach(option => {
+            option.addEventListener('click', function() {
+                selectParent(
+                    this.dataset.id,
+                    this.dataset.parentName,
+                    this.dataset.parentNik || '-'
+                );
+            });
+        });
 
         // Tutup modal jika klik backdrop luar
         if (modal && container) {

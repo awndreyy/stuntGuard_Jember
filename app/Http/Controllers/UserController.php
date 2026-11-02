@@ -16,9 +16,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest()->get();
+        $orangTua = User::query()->where('role', 'Orang Tua')->orderBy('name')->get();
         $balita = Balita::with('orangTua')->latest()->get();
 
-        return view('admin.kelolaUser', compact('users', 'balita'));
+        return view('admin.kelolaUser', compact('users', 'balita', 'orangTua'));
     }
 
     public function balitas(User $user)
@@ -148,10 +149,21 @@ class UserController extends Controller
 
     public function destroy(string $id)
     {
-        // cari data user dengan id
         $user = User::findOrFail($id);
+
+        if ($user->balitas()->exists()) {
+            return back()->with(
+                'error',
+                'Akun tidak dapat dihapus karena masih memiliki data balita.'
+            );
+        }
+
+        if ($user->id === auth()->id()) {
+            return back()->with('error', 'Anda tidak dapat menghapus akun sendiri.');
+        }
+
         $user->delete();
 
-        return redirect()->back()->with('success', 'Data berhasil dihapus');
+        return back()->with('success', 'Data pengguna berhasil dihapus.');
     }
 }

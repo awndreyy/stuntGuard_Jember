@@ -138,9 +138,6 @@ class PengukuranService
         $pengukuran = Pengukuran::create([
             'balita_id' => $balita->id_balita,
             'tanggal_pengukuran' => $measurementDate,
-            'nama_balita' => $balita->nama_balita,
-            'nik' => $balita->nik,
-            'jenis_kelamin' => $balita->jenis_kelamin,
             'berat_badan' => $hasil['berat'],
             'tinggi_badan' => $hasil['tinggi'],
             'umur_bulan' => $hasil['usia_bulan'],

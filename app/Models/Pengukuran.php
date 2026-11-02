@@ -10,9 +10,16 @@ class Pengukuran extends Model
     protected $table = 'tt_pengukurans';
 
     protected $fillable = [
-        'balita_id', 'tanggal_pengukuran', 'nama_balita', 'nik', 'jenis_kelamin',
-        'berat_badan', 'tinggi_badan', 'umur_bulan', 'lingkar_kepala', 'lila',
-        'z_score_bbu', 'z_score_tbu', 'z_score_bbtb',
+        'balita_id',
+        'tanggal_pengukuran',
+        'berat_badan',
+        'tinggi_badan',
+        'umur_bulan',
+        'lingkar_kepala',
+        'lila',
+        'z_score_bbu',
+        'z_score_tbu',
+        'z_score_bbtb',
     ];
 
     protected function casts(): array

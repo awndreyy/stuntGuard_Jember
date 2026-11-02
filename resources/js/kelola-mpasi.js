@@ -126,37 +126,87 @@ function previewRecipe(id) {
         const prevSeng = document.getElementById('prevSeng');
         if (prevSeng) prevSeng.innerText = `${recipe.seng} mg`;
 
-        // Bahan
+        
+        // Bahan - render aman tanpa innerHTML
         const ingList = document.getElementById('prevIngredientsList');
+
         if (ingList) {
-            let bahanArr = Array.isArray(recipe.bahan) ? recipe.bahan : [];
+            let bahanArr = Array.isArray(recipe.bahan)
+                ? recipe.bahan
+                : [];
+
             if (typeof recipe.bahan === 'string') {
-                try { bahanArr = JSON.parse(recipe.bahan); } catch(e) { bahanArr = [recipe.bahan]; }
+                try {
+                    bahanArr = JSON.parse(recipe.bahan);
+                } catch (e) {
+                    bahanArr = [recipe.bahan];
+                }
             }
 
-            ingList.innerHTML = bahanArr.map(b => `
-                <li class="flex items-center gap-2 text-stone-700">
-                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-                    <span>${b}</span>
-                </li>
-            `).join('');
+            ingList.replaceChildren();
+
+            if (!Array.isArray(bahanArr)) {
+                bahanArr = [bahanArr];
+            }
+
+            bahanArr.forEach(bahan => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center gap-2 text-stone-700';
+
+                const bullet = document.createElement('span');
+                bullet.className =
+                    'w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0';
+
+                const text = document.createElement('span');
+                text.textContent = String(bahan ?? '');
+
+                li.append(bullet, text);
+                ingList.appendChild(li);
+            });
         }
 
-        // Langkah
+        
+        // Langkah pembuatan - render aman
         const stepsList = document.getElementById('prevStepsList');
+
         if (stepsList) {
-            let langkahArr = Array.isArray(recipe.cara_pembuatan) ? recipe.cara_pembuatan : [];
+            let langkahArr = Array.isArray(recipe.cara_pembuatan)
+                ? recipe.cara_pembuatan
+                : [];
+
             if (typeof recipe.cara_pembuatan === 'string') {
-                try { langkahArr = JSON.parse(recipe.cara_pembuatan); } catch(e) { langkahArr = [recipe.cara_pembuatan]; }
+                try {
+                    langkahArr = JSON.parse(recipe.cara_pembuatan);
+                } catch (e) {
+                    langkahArr = [recipe.cara_pembuatan];
+                }
             }
 
-            stepsList.innerHTML = langkahArr.map((s, idx) => `
-                <li class="flex items-start gap-2.5 bg-stone-50/50 p-2.5 rounded-xl border border-stone-100">
-                    <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
-                    <span class="leading-relaxed">${s}</span>
-                </li>
-            `).join('');
+            stepsList.replaceChildren();
+
+            if (!Array.isArray(langkahArr)) {
+                langkahArr = [langkahArr];
+            }
+
+            langkahArr.forEach((langkah, index) => {
+                const li = document.createElement('li');
+                li.className =
+                    'flex items-start gap-2.5 bg-stone-50/50 p-2.5 rounded-xl border border-stone-100';
+
+                const number = document.createElement('span');
+                number.className =
+                    'w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5';
+                number.textContent = String(index + 1);
+
+                const text = document.createElement('span');
+                text.className = 'leading-relaxed';
+                text.textContent = String(langkah ?? '');
+
+                li.append(number, text);
+                stepsList.appendChild(li);
+            });
         }
+
     }
 
     const modal = document.getElementById('previewModal');

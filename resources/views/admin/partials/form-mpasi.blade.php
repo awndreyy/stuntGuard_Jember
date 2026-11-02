@@ -75,7 +75,7 @@
 
 <!-- 4. Nilai Nutrisi -->
 <div class="space-y-2 pt-1">
-    <label class="block font-semibold text-stone-700">Nilai Nutrisi (Opsional)</label>
+    <label class="block font-semibold text-stone-700">Kandungan Gizi per Porsi</label>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
         <div>
             <span class="block text-[11px] text-stone-500 mb-1">Energi (kkal)</span>

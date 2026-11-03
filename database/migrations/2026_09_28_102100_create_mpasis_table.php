@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mpasis', function (Blueprint $table) {
-            $table->id('id_resep');
+            $table->string('id_resep', 24)->primary();
             $table->string('nama_resep', 20)->unique();
             $table->enum('kategori_usia', ['6-8', '9-11', '12-23']);
             $table->unsignedSmallInteger('waktu_memasak');

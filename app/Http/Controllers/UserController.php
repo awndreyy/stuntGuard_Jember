@@ -41,7 +41,7 @@ class UserController extends Controller
 
         $riwayat = $balita->pengukurans()
             ->orderByDesc('tanggal_pengukuran')
-            ->orderByDesc('id')
+            ->orderByDesc('created_at')->orderByDesc('id')
             ->paginate(10);
 
         return view('admin.riwayatBalita', compact('user', 'balita', 'riwayat'));

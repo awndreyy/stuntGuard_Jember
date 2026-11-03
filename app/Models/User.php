@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Concerns\HasCustomId;
+use App\Services\CustomIdService;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -16,6 +17,8 @@ use Laravel\Sanctum\HasApiTokens;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
+    use HasCustomId;
+
     protected $table = 'tm_users';
 
     /** @use HasFactory<UserFactory> */
@@ -36,5 +39,16 @@ class User extends Authenticatable
     public function balitas(): HasMany
     {
         return $this->hasMany(Balita::class, 'user_id', 'id');
+    }
+
+    protected function makeCustomId(): string
+    {
+        [$prefix, $roleCode] = match ($this->role) {
+            'Admin' => ['AMN', '46'],
+            'Orang Tua' => ['ORT', '32'],
+            default => throw new \InvalidArgumentException('Role pengguna tidak valid.'),
+        };
+
+        return app(CustomIdService::class)->generate($this->getTable(), $prefix, $roleCode);
     }
 }

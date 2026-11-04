@@ -4,9 +4,9 @@
         : null;
 @endphp
 
-<article class="group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition-colors hover:border-pink-300 focus-within:border-pink-400">
+<article class="sg-recipe-card group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition-colors hover:border-pink-300 focus-within:border-pink-400">
     <a href="{{ route('public.resep.show', $resep) }}"
-       class="relative block aspect-[16/9] w-full overflow-hidden bg-pink-50"
+       class="relative block aspect-square sm:aspect-[16/9] w-full overflow-hidden bg-pink-50"
        aria-label="Lihat resep {{ $resep->nama_resep }}">
         @if ($urlFoto)
             <img src="{{ $urlFoto }}" alt="{{ $resep->nama_resep }}" loading="lazy"

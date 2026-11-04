@@ -1,6 +1,6 @@
 {{-- resources/views/components/guest/footer.blade.php --}}
 {{-- Footer untuk halaman Guest (Landing Page) --}}
-<footer class="w-full bg-white border-t border-pink-100">
+<footer class="sg-footer w-full bg-white border-t border-pink-100">
   <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 py-10">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
 
@@ -10,7 +10,7 @@
           <span class="text-lg text-pink-700 font-bold">StuntGuard Jember</span>
         </div>
         <p class="text-sm text-stone-600 max-w-md">
-          Platform pemantauan tumbuh kembang dan gizi balita terpadu untuk orang tua di Kabupaten Jember,
+          Platform pemantauan tumbuh kembang dan gizi balita di Kabupaten Jember. Orang tua mengakses layanan melalui aplikasi mobile, sementara admin posyandu mengelola data melalui web,
           didedikasikan untuk pencegahan stunting dan generasi sehat Jawa Timur.
         </p>
         <div class="flex items-center gap-1 text-xs text-pink-600 font-medium">

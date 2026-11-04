@@ -1,0 +1,527 @@
+.sg-guest  {
+    
+    --sg-primary:#db2777;
+        --sg-hover:#be185d;
+        --sg-soft:#fff1f7;
+        --sg-border:#f5c9dd;
+        --sg-ink:#352d33;
+        --sg-muted:#685963;
+       
+    --color-pink-50:#fff1f7;
+        --color-pink-100:#fce7f3;
+        --color-pink-200:#fbcfe8;
+        --color-pink-300:#f9a8d4;
+       
+    --color-pink-400:#f472b6;
+        --color-pink-500:#ec4899;
+        --color-pink-600:#db2777;
+        --color-pink-700:#be185d;
+        --color-pink-800:#9d174d;
+        --color-pink-900:#831843;
+       
+   }
+   
+   
+   /* Guest presentation only;
+        calculator and authentication behavior stay in Blade. */
+   .sg-guest {
+       background:#fffbfd;
+       color:#352d33}
+   .sg-container {
+       max-width:1200px;
+       margin:auto;
+       padding:0 48px}
+   .sg-hero {
+       background:#fff0f6;
+       padding:64px 0 0;
+       overflow:hidden;
+       border-bottom:1px solid #f9d7e7}
+   .sg-hero-grid {
+       display:grid;
+       grid-template-columns:1.1fr 1fr;
+       align-items:center;
+       gap:48px}
+   .sg-eyebrow {
+       font-size:12px;
+       font-weight:700;
+       letter-spacing:1.7px;
+       color:#be185d;
+       margin:0 0 22px}
+   .sg-hero h1 {
+       font-family:Georgia,'Times New Roman',serif;
+       font-size:clamp(44px,4.6vw,64px);
+       font-weight:500;
+       line-height:1.14;
+       letter-spacing:-2px;
+       margin:0 0 24px}
+   .sg-hero h1 em {
+       color:#db2777}
+   .sg-lead {
+       font-size:16px;
+       line-height:1.9;
+       color:#685963;
+       max-width:540px}
+   .sg-actions {
+       display:flex;
+       flex-wrap:wrap;
+       gap:12px;
+       margin:28px 0 22px}
+   .sg-primary,.sg-secondary {
+       display:inline-flex;
+       align-items:center;
+       justify-content:center;
+       gap:16px;
+       min-height:52px;
+       border-radius:99px;
+       padding:14px 23px;
+       font-size:14px;
+       font-weight:700;
+       text-decoration:none;
+       transition:background .2s}
+   .sg-primary {
+       background:#db2777;
+       color:white}
+   .sg-primary:hover {
+       background:#be185d}
+   .sg-secondary {
+       border:1px solid #e8aec8;
+       color:#be185d;
+       background:#ffffff80}
+   .sg-secondary:hover {
+       background:white}
+   .sg-trust {
+       display:flex;
+       gap:16px;
+       flex-wrap:wrap;
+       color:#715d68;
+       font-size:12px}
+   .sg-trust span::before {
+       content:'✓';
+       color:#be185d;
+       margin-right:6px}
+   .sg-hero-art {
+       position:relative;
+       max-width:470px;
+       width:100%;
+       height:430px;
+       border-radius:48% 48% 20px 20px;
+       background:#f9dce9;
+       margin:auto}
+   .sg-hero-art svg {
+       width:100%;
+       height:100%}
+   .sg-art-note,.sg-art-caption {
+       position:absolute;
+       background:#fffdfd;
+       border-radius:16px;
+       padding:14px 18px;
+       font-size:12px;
+       color:#715d68;
+       box-shadow:0 8px 30px #8318430a}
+   .sg-art-note {
+       right:0;
+       top:34px}
+   .sg-art-caption {
+       left:12px;
+       bottom:25px}
+   .sg-art-note b,.sg-art-caption b {
+       display:block;
+       font-size:14px;
+       color:#9d174d;
+       margin-bottom:3px}
+   .sg-stats {
+       display:grid;
+       grid-template-columns:repeat(3,1fr);
+       padding:26px 0;
+       margin-top:44px;
+       border-top:1px solid #f1c7da}
+   .sg-stats>div {
+       display:flex;
+       align-items:center;
+       gap:16px;
+       border-right:1px solid #f1c7da;
+       padding:0 24px}
+   .sg-stats>div:first-child {
+       padding-left:0}
+   .sg-stats>div:last-child {
+       border:0}
+   .sg-stats .material-symbols-outlined {
+       display:grid;
+       place-items:center;
+       background:white;
+       border-radius:50%;
+       width:46px;
+       height:46px;
+       flex-shrink:0;
+       color:#be185d}
+   .sg-stats p {
+       margin:0}
+   .sg-stats strong {
+       font-size:25px;
+       display:block}
+   .sg-stats small {
+       display:block;
+       font-size:12px;
+       color:#715d68}
+   .sg-guest main section[id] {
+       scroll-margin-top:96px}
+   .sg-guest main h2 {
+       font-family:Georgia,'Times New Roman',serif;
+       font-size:clamp(28px,3vw,38px);
+       line-height:1.25;
+       font-weight:500;
+       letter-spacing:-.7px}
+   .sg-guest #kalkulator-widget {
+       padding-top:72px;
+       padding-bottom:72px}
+   .sg-guest #kalkulator-widget>div>div:first-child>p {
+       font-size:15px;
+       line-height:1.8}
+   .sg-guest #nutriForm input,.sg-guest #nutriForm select {
+       font-size:16px;
+       font-weight:500;
+       min-height:50px;
+       background:white}
+   .sg-guest #nutriForm button {
+       min-height:48px}
+   .sg-guest #nutriForm button[type=submit] {
+       border-radius:99px}
+   .sg-guest #resultBox {
+       background:#fffafd;
+       border-color:#f2dce6;
+       padding:24px}
+   .sg-guest #resep-mpasi {
+       background:#fff3f8;
+       padding-top:72px;
+       padding-bottom:72px}
+   .sg-guest #informasi-kesehatan {
+       padding-top:72px;
+       padding-bottom:72px}
+   .sg-guest main article {
+       border-radius:22px;
+       border-color:#f0dce5;
+       transition:transform .2s,box-shadow .2s}
+   .sg-guest main article:hover {
+       transform:translateY(-3px);
+       box-shadow:0 12px 24px #8318430a}
+   .sg-guest main article h3 {
+       font-size:19px}
+   .sg-mobile {
+       max-width:1104px;
+       margin:54px auto 64px;
+       border:1px solid #f4bfd7;
+       background:#fce7f3;
+       border-radius:28px;
+       padding:42px;
+       display:flex;
+       align-items:center;
+       justify-content:space-between;
+       gap:36px}
+   .sg-mobile-copy {
+       max-width:690px}
+   .sg-mobile h2 {
+       margin:0 0 18px}
+   .sg-mobile p:last-child {
+       font-size:14px;
+       line-height:1.9;
+       color:#715363;
+       margin:0}
+   .sg-mobile-icon {
+       display:flex;
+       flex-direction:column;
+       align-items:center;
+       gap:10px;
+       flex-shrink:0;
+       color:#be185d;
+       font-size:12px;
+       font-weight:700}
+   .sg-mobile-icon .material-symbols-outlined {
+       font-size:80px}
+   .sg-guest header a[href$='/login'] {
+       min-height:44px;
+       display:inline-flex;
+       align-items:center}
+   .sg-guest #mobileNav>a {
+       min-height:44px;
+       align-content:center}
+   .sg-guest footer {
+       background:#fffafd}
+   .sg-guest :is(a,button,input,select):focus-visible {
+       outline:3px solid #be185d;
+       outline-offset:4px}
+   .sg-skip {
+       position:absolute;
+       top:-100px;
+       left:20px;
+       background:white;
+       padding:12px;
+       z-index:100}
+   .sg-skip:focus {
+       top:12px}
+   
+   @media(max-width:1100px) {
+       .sg-container {
+       padding:0 32px}
+   .sg-hero-grid {
+       gap:25px}
+   .sg-hero-art {
+       height:380px}
+   .sg-mobile {
+       margin-left:32px;
+       margin-right:32px}
+   .sg-guest #desktopNav {
+       gap:16px;
+       font-size:12px}
+   }
+   
+   @media(max-width:900px) {
+       .sg-hero-grid {
+       grid-template-columns:1fr}
+   .sg-hero h1 {
+       max-width:650px}
+   .sg-hero-art {
+       max-width:450px;
+       margin-top:16px}
+   .sg-hero {
+       padding-top:42px}
+   .sg-guest header>div {
+       padding-left:20px;
+       padding-right:20px;
+       gap:10px}
+   .sg-guest header>div>a img {
+       width:36px;
+       height:36px}
+   .sg-guest header>div>a span:first-child {
+       font-size:16px}
+   .sg-guest #desktopNav {
+       gap:10px;
+       font-size:11px}
+   }
+   
+   @media(max-width:640px) {
+       .sg-container {
+       padding:0 20px}
+   .sg-hero h1 {
+       font-size:43px;
+       letter-spacing:-1.5px}
+   .sg-hero-art {
+       height:345px;
+       max-width:370px}
+   .sg-lead {
+       font-size:15px}
+   .sg-actions {
+       flex-direction:column}
+   .sg-stats {
+       margin-top:30px;
+       gap:0}
+   .sg-stats>div {
+       padding:0 10px;
+       gap:0}
+   .sg-stats .material-symbols-outlined {
+       display:none}
+   .sg-stats strong {
+       font-size:22px}
+   .sg-stats small {
+       font-size:11px}
+   .sg-art-note {
+       font-size:11px;
+       top:24px}
+   .sg-art-caption {
+       font-size:11px;
+       bottom:18px}
+   .sg-mobile {
+       margin:32px 16px 48px;
+       padding:28px;
+       display:block}
+   .sg-mobile-icon {
+       display:none}
+   .sg-guest #resultBox {
+       padding:18px}
+   .sg-guest #kalkulator-widget,.sg-guest #resep-mpasi,.sg-guest #informasi-kesehatan {
+       padding-top:52px;
+       padding-bottom:52px}
+   }
+   
+   @media(prefers-reduced-motion:reduce) {
+       .sg-guest {
+       scroll-behavior:auto}
+   .sg-guest *, .sg-guest *::before,.sg-guest *::after {
+       scroll-behavior:auto!important;
+       animation:none!important;
+       transition:none!important}
+   }
+   
+   
+   
+   /* Keep measurement inputs compact beside the longer analysis panel. */
+   .sg-guest #kalkulator-widget > div > .grid {
+       align-items:start}
+   
+   .sg-hero-grid {
+       grid-template-columns:1.2fr 1fr;
+       gap:32px}
+   
+   .sg-hero h1 {
+       font-size:clamp(40px,4.1vw,58px);
+       text-wrap:balance}
+   
+   @media(max-width:900px) {
+       .sg-hero-grid {
+       grid-template-columns:1fr}
+   .sg-hero h1 {
+       max-width:650px}
+   }
+   
+   @media(max-width:640px) {
+       .sg-hero h1 {
+       font-size:40px;
+       letter-spacing:-1.4px}
+   }
+   
+       
+   .sg-guest .sg-navbar {
+       background:#fffdfef5;
+       backdrop-filter:blur(12px);
+       border-color:var(--sg-border)}
+   
+   .sg-guest .sg-navbar .sg-brand-name {
+       color:var(--sg-hover);
+       font-size:23px;
+       letter-spacing:-.7px;
+       font-weight:800}
+   
+   .sg-guest .sg-navbar .sg-brand-location {
+       display:none}
+   
+   .sg-guest #desktopNav {
+       font-size:14px;
+       gap:26px}
+   
+   .sg-guest [data-guest-section] {
+       color:var(--sg-muted);
+       transition:color .2s;
+       min-height:44px;
+       display:inline-flex;
+       align-items:center;
+       position:relative}
+   
+   .sg-guest [data-guest-section]:hover,.sg-guest [data-guest-section][aria-current] {
+       color:var(--sg-hover)}
+   
+   .sg-guest #desktopNav [aria-current]::after {
+       content:'';
+       position:absolute;
+       bottom:0;
+       left:0;
+       right:0;
+       height:2px;
+       background:var(--sg-primary);
+       border-radius:2px}
+   
+   .sg-guest .sg-admin-login {
+       display:inline-flex;
+       align-items:center;
+       justify-content:center;
+       min-height:44px;
+       border:1px solid var(--sg-primary);
+       color:var(--sg-hover);
+       background:white;
+       border-radius:99px;
+       padding:10px 20px;
+       font-size:14px;
+       font-weight:700}
+   
+   .sg-guest .sg-admin-login:hover {
+       background:var(--sg-soft)}
+   
+   .sg-guest #mobileNav {
+       background:#fffdfd;
+       border-color:var(--sg-border)}
+   
+   .sg-guest #mobileNav [data-guest-section] {
+       display:flex}
+   
+   .sg-guest #mobileMenuButton {
+       color:var(--sg-hover);
+       border-color:var(--sg-border)}
+   
+   .sg-guest .sg-hero {
+       background:var(--sg-soft)}
+   
+   .sg-guest .sg-primary {
+       background:var(--sg-primary)}
+   
+   .sg-guest .sg-primary:hover {
+       background:var(--sg-hover)}
+   
+   .sg-guest .sg-secondary {
+       color:var(--sg-hover);
+       border-color:var(--sg-border)}
+   
+   .sg-guest #kalkulator-widget > div > .grid {
+       padding:12px;
+       gap:12px;
+       border-radius:26px;
+       background:#fce7f3;
+       border:1px solid var(--sg-border)}
+   
+   .sg-guest #resultBox {
+       background:#fffafd;
+       border:0;
+       border-radius:18px}
+   
+   .sg-guest #resep-mpasi,.sg-guest #informasi-kesehatan {
+       padding-top:72px;
+       padding-bottom:72px}
+   
+   .sg-guest main article {
+       background:white;
+       border-color:var(--sg-border);
+       border-radius:20px}
+   
+   .sg-guest main article h3 {
+       font-size:19px;
+       line-height:1.4}
+   
+   .sg-guest main article a:hover {
+       color:var(--sg-hover)}
+   
+   .sg-guest .sg-mobile {
+       background:#fce7f3;
+       border-color:var(--sg-border)}
+   
+   .sg-guest .sg-footer {
+       background:#831843;
+       color:white;
+       border:0}
+   
+   .sg-guest .sg-footer p,.sg-guest .sg-footer li a,.sg-guest .sg-footer .text-stone-600 {
+       color:#fce7f3}
+   
+   .sg-guest .sg-footer .text-stone-900,.sg-guest .sg-footer .text-pink-700,.sg-guest .sg-footer .text-pink-600 {
+       color:white}
+   
+   .sg-guest .sg-footer a:hover {
+       color:#f9a8d4}
+   
+   @media(max-width:1050px) {
+       .sg-guest #desktopNav {
+       gap:14px;
+       font-size:12px}
+   .sg-guest .sg-navbar .sg-brand-name {
+       font-size:20px}
+   .sg-guest .sg-admin-login {
+       padding:10px 14px;
+       font-size:12px}
+   }
+   
+   @media(max-width:767px) {
+       .sg-guest .sg-navbar .sg-brand-name {
+       font-size:21px}
+   .sg-guest #mobileNav a {
+       font-size:14px}
+   .sg-guest #kalkulator-widget > div > .grid {
+       padding:10px}
+   }
+   
+   

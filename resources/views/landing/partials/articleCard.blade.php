@@ -5,7 +5,7 @@
             ? $artikel->thumbnail : asset(ltrim($artikel->thumbnail, '/')))
         : null;
 @endphp
-<article class="group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition-colors hover:border-pink-300 {{ $featured ? 'sm:flex-row' : '' }}">
+<article class="sg-article-card group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition-colors hover:border-pink-300 {{ $featured ? 'sm:flex-row' : '' }}">
     <a href="{{ route('public.informasi.show', $artikel) }}" class="relative flex aspect-[16/9] w-full shrink-0 items-center justify-center overflow-hidden bg-pink-50 {{ $featured ? 'sm:aspect-auto sm:w-[42%] sm:min-h-[240px]' : '' }}" aria-label="Baca {{ $artikel->judul }}">
         @if ($urlFoto)
             <img class="h-full w-full object-cover" src="{{ $urlFoto }}" alt="{{ $artikel->judul }}" loading="lazy">

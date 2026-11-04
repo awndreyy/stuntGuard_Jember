@@ -4,12 +4,13 @@
 
 @section('content')
     <div class="sg-public-list mx-auto max-w-[1200px] px-4 pb-16 pt-7 sm:px-6 md:px-8 lg:px-12">
-    <div class="mb-10 rounded-3xl border border-pink-100 bg-pink-50 px-6 py-8 sm:px-10 sm:py-10">
-        <a href="{{ route('home') }}#informasi-kesehatan" class="inline-flex items-center gap-1 text-sm font-semibold text-pink-600 hover:text-pink-800 mb-4">
+    <div class="sg-page-heading mb-10">
+        <a href="{{ route('home') }}#informasi-kesehatan" class="sg-back-link">
             <span class="material-symbols-outlined text-lg">arrow_back</span> Kembali ke Beranda
         </a>
-        <h1 class="text-3xl font-extrabold text-stone-900">Informasi & Edukasi Kesehatan Balita</h1>
-        <p class="text-sm text-stone-600 mt-2">Artikel terbaru dari pengelola StuntGuard Jember.</p>
+        <p class="sg-eyebrow">Pengetahuan untuk Orang Tua</p>
+        <h1 class="text-3xl font-extrabold text-stone-900">Edukasi Kesehatan Anak</h1>
+        <p class="text-sm text-stone-600 mt-2">Informasi praktis untuk mendukung kesehatan dan tumbuh kembang si kecil.</p>
     </div>
 
     @if ($artikel->isEmpty())
@@ -19,7 +20,7 @@
             <p class="text-sm text-stone-500 mt-1">Artikel akan muncul setelah ditambahkan oleh admin.</p>
         </div>
     @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($artikel as $item)
                 @include('landing.partials.articleCard', ['artikel' => $item])
             @endforeach

@@ -4,12 +4,15 @@
 
 @section('content')
     <div class="sg-public-list mx-auto max-w-[1200px] px-4 pb-16 pt-7 sm:px-6 md:px-8 md:pb-20 md:pt-10 lg:px-12">
-        {{-- Tombol kembali, menggantikan header katalog. --}}
-        <a href="{{ route('home') }}"
-           class="inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-pink-700 transition-colors hover:border-pink-300 hover:bg-pink-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600">
-            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_back</span>
-            Kembali ke Beranda
-        </a>
+        <div class="sg-page-heading">
+            <a href="{{ route('home') }}#resep-mpasi" class="sg-back-link">
+                <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_back</span>
+                Kembali ke Beranda
+            </a>
+            <p class="sg-eyebrow">Inspirasi Menu Si Kecil</p>
+            <h1>Resep MPASI Sehat</h1>
+            <p>Temukan ide menu sesuai usia si kecil, lengkap dengan bahan, langkah memasak, dan informasi gizi.</p>
+        </div>
 
         @if ($resep->isEmpty())
             <div class="mt-8 rounded-2xl border border-stone-200 bg-white px-5 py-16 text-center">
@@ -27,7 +30,7 @@
             </div>
         @else
             {{-- Filter hanya bekerja pada kartu halaman yang sedang dibuka; query Laravel dan pagination tetap. --}}
-            <section aria-label="Cari dan filter resep" class="mt-8 rounded-2xl border border-stone-200 bg-white p-4 sm:p-6">
+            <section aria-label="Cari dan filter resep" class="sg-recipe-filters mt-8 rounded-2xl border border-stone-200 bg-white p-4 sm:p-6">
                 <div class="mb-4 flex items-center gap-2">
                     <span class="flex size-9 items-center justify-center rounded-lg bg-pink-50 text-pink-700">
                         <span class="material-symbols-outlined text-xl" aria-hidden="true">tune</span>
@@ -93,7 +96,7 @@
                     </p>
                 </div>
 
-                <div id="recipeGrid" class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 lg:gap-6">
+                <div id="recipeGrid" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($resep as $item)
                         <div data-recipe-item
                              data-name="{{ $item->nama_resep }}"

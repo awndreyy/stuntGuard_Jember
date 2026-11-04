@@ -13,11 +13,11 @@
         <span class="material-symbols-outlined text-lg">arrow_back</span> Semua Resep
     </a>
     <article class="max-w-4xl mx-auto bg-white rounded-3xl overflow-hidden border border-pink-100">
-        <div class="relative h-56 sm:h-80 bg-pink-50 flex items-center justify-center">
+        <div class="sg-detail-media sg-detail-recipe relative h-56 sm:h-80 bg-pink-50 flex items-center justify-center">
             @if ($urlFoto)
                 <img src="{{ $urlFoto }}" alt="{{ $resep->nama_resep }}" class="w-full h-full object-cover">
             @else
-                <span class="material-symbols-outlined text-7xl text-pink-200">restaurant</span>
+                <svg class="sg-placeholder-art" aria-hidden="true" viewBox="0 0 280 180"><ellipse cx="140" cy="151" rx="85" ry="11" fill="#695440" opacity=".1"/><path d="M56 78q8 74 84 74t84-74" fill="#b86272"/><ellipse cx="140" cy="78" rx="84" ry="29" fill="#fffaf0"/><ellipse cx="140" cy="79" rx="70" ry="22" fill="#e3bb78"/><path d="M101 76l15-9 11 13-15 8zm47-11 19 5-5 15-17-4z" fill="#c67a47"/><path d="M126 67l6-9 9 8-6 9m41 8 7-9 9 8-8 7" fill="#698752"/><path d="m203 63 27-37" stroke="#958271" stroke-width="8" stroke-linecap="round"/><path d="M88 105q14 26 39 29" stroke="#fff" stroke-width="4" fill="none" opacity=".6"/></svg>
             @endif
         </div>
         <div class="p-6 md:p-10">

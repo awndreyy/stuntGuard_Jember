@@ -1,10 +1,10 @@
-<header class="fixed top-0 inset-x-0 z-50 bg-white border-b border-pink-100">
+<header class="sg-navbar fixed top-0 inset-x-0 z-50 bg-white border-b border-pink-100">
   <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 h-20 flex items-center justify-between">
     <a href="{{ url('/') }}" class="flex items-center gap-2.5" aria-label="StuntGuard Jember - Beranda">
       <img src="{{ asset('images/logo-StuntGuard.png') }}" alt="Logo StuntGuard" class="w-12 h-12 object-contain">
       <div>
-        <span class="text-lg font-extrabold text-stone-900 tracking-tight block leading-none">StuntGuard</span>
-        <span class="text-[11px] font-bold text-pink-600 tracking-wider uppercase">Kabupaten Jember</span>
+        <span class="sg-brand-name text-lg font-extrabold text-stone-900 tracking-tight block leading-none">StuntGuard</span>
+        <span class="sg-brand-location text-[11px] font-bold text-pink-600 tracking-wider uppercase">Kabupaten Jember</span>
       </div>
     </a>
     <nav id="desktopNav" class="hidden md:flex items-center gap-7 text-sm font-semibold text-stone-600">
@@ -15,14 +15,14 @@
     </nav>
     <div class="hidden md:flex items-center gap-2.5">
       @guest
-        <a href="{{ route('login') }}" class="text-xs sm:text-sm font-bold text-pink-700 border border-pink-200 hover:bg-pink-50 px-4 py-2 rounded-full transition-all">Masuk</a>
+        <a href="{{ route('login') }}" class="sg-admin-login">Masuk Admin</a>
       @else
         @if(auth()->user()->role === 'Admin')
           <a href="{{ route('dashboardAdmin') }}" class="text-sm font-bold bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-full">Dashboard Admin</a>
         @endif      
       @endguest
     </div>
-    <button id="mobileMenuButton" type="button" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-pink-100 text-pink-700" aria-label="Buka menu" aria-expanded="false">
+    <button id="mobileMenuButton" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border border-pink-100 text-pink-700" aria-controls="mobileNav" aria-label="Buka menu" aria-expanded="false">
       <span class="material-symbols-outlined">menu</span>
     </button>
   </div>
@@ -32,7 +32,7 @@
     <a data-guest-section="resep-mpasi" class="block py-1 hover:text-pink-600" href="{{ route('home') }}#resep-mpasi">Resep MPASI</a>
     <a data-guest-section="informasi-kesehatan" class="block py-1 hover:text-pink-600" href="{{ route('home') }}#informasi-kesehatan">Edukasi Kesehatan</a>
     @guest
-      <a href="{{ route('login') }}" class="inline-block border border-pink-200 text-pink-700 px-4 py-2 rounded-full">Masuk</a>
+      <a href="{{ route('login') }}" class="sg-admin-login">Masuk Admin</a>
     @else
         @if(auth()->user()->role === 'Admin')
           <a href="{{ route('dashboardAdmin') }}" class="inline-block bg-pink-600 text-white px-4 py-2 rounded-full">Dashboard Admin</a>

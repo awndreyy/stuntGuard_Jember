@@ -3,7 +3,7 @@
 @section('title', 'Resep MPASI - StuntGuard Jember')
 
 @section('content')
-    <div class="mx-auto max-w-[1200px] px-4 pb-16 pt-7 sm:px-6 md:px-8 md:pb-20 md:pt-10 lg:px-12">
+    <div class="sg-public-list mx-auto max-w-[1200px] px-4 pb-16 pt-7 sm:px-6 md:px-8 md:pb-20 md:pt-10 lg:px-12">
         {{-- Tombol kembali, menggantikan header katalog. --}}
         <a href="{{ route('home') }}"
            class="inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-pink-700 transition-colors hover:border-pink-300 hover:bg-pink-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600">
@@ -93,7 +93,7 @@
                     </p>
                 </div>
 
-                <div id="recipeGrid" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+                <div id="recipeGrid" class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 lg:gap-6">
                     @foreach ($resep as $item)
                         <div data-recipe-item
                              data-name="{{ $item->nama_resep }}"

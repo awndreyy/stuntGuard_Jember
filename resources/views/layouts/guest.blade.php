@@ -9,10 +9,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="bg-[#FFFBFC] font-sans text-stone-800 min-h-screen flex flex-col antialiased selection:bg-pink-200 selection:text-pink-900">
+<body class="sg-guest bg-[#FFFBFC] font-sans text-stone-800 min-h-screen flex flex-col antialiased selection:bg-pink-200 selection:text-pink-900">
+    <a class="sg-skip" href="#guest-content">Lewati navigasi</a>
     <x-guest.navbar />
-    <main class="w-full flex-1 pt-20" id="beranda">
-      @yield('content')
+    <main tabindex="-1" class="w-full flex-1 pt-20" id="beranda">
+      <div id="guest-content">@yield('content')</div>
     </main>
     <x-guest.footer />
     @stack('scripts')

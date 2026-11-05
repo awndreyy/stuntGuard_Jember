@@ -109,7 +109,7 @@
 
         <!-- Logout Button Area inside Sidebar -->
         <div class="p-3 border-t border-stone-100 shrink-0">
-            <form action="{{ route('logout') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin logout?');">
+            <form action="{{ route('logout') }}" method="POST" data-confirm="logout">
                 @csrf
                 <button type="submit" class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-stone-600 hover:text-pink-700 hover:bg-pink-50 border border-stone-200/80 hover:border-pink-200 transition-all font-semibold text-xs cursor-pointer group">
                     <div class="w-7 h-7 rounded-lg bg-stone-100 group-hover:bg-pink-100 text-stone-500 group-hover:text-pink-700 flex items-center justify-center transition-colors shrink-0">

@@ -135,7 +135,7 @@
                                     <a href="{{ route('mpasi.edit', $resep->id_resep) }}" class="p-1 text-stone-400 hover:text-pink-800 hover:bg-white rounded transition-colors" title="Edit resep" aria-label="Edit {{ $resep->nama_resep }}">
                                          <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                                      </a>
-                                     <form action="{{ route('mpasi.destroy', $resep->id_resep) }}" method="POST" onsubmit="return confirm('Hapus resep ini?')">
+                                     <form action="{{ route('mpasi.destroy', $resep->id_resep) }}" method="POST" data-confirm="delete" data-confirm-name="{{ $resep->nama_resep }}" data-confirm-kind="resep">
                                          @csrf
                                          @method('DELETE')
                                          <button type="submit" class="p-1 text-stone-400 hover:text-red-600 hover:bg-white rounded transition-colors cursor-pointer" title="Hapus resep" aria-label="Hapus {{ $resep->nama_resep }}">

@@ -64,6 +64,8 @@
         </main>
     </div>
 
+    <x-admin.confirmation-modal />
+
     <!-- Script Global (Lucide Icon Init & Format Tanggal) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {

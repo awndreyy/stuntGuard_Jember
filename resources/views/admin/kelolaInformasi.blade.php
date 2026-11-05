@@ -77,7 +77,7 @@
                                     <button type="button" onclick="editInformasi({{ json_encode($item) }})" class="cursor-pointer rounded-lg p-2 text-stone-400 transition-colors hover:bg-pink-50 hover:text-pink-700" title="Edit informasi">
                                         <i data-lucide="pencil" class="h-4 w-4"></i>
                                     </button>
-                                    <form action="{{ route('kelolaInformasi.destroy', $item->id_informasi ?? $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus informasi ini?')" class="inline-block">
+                                    <form action="{{ route('kelolaInformasi.destroy', $item->id_informasi ?? $item->id) }}" method="POST" data-confirm="delete" data-confirm-name="{{ $item->judul }}" data-confirm-kind="informasi" class="inline-block">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="cursor-pointer rounded-lg p-2 text-stone-400 transition-colors hover:bg-pink-50 hover:text-pink-600" title="Hapus informasi">

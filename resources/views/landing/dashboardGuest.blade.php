@@ -6,7 +6,6 @@
         <div class="sg-container">
             <div class="sg-hero-grid">
                 <div>
-                    <p class="sg-eyebrow">BERSAMA KELUARGA JEMBER</p>
                     <h1>Langkah kecil hari ini,<br><em>masa depan hebat.</em></h1>
                     <p class="sg-lead">Temani perjalanan si kecil dengan lebih percaya diri. Cek pertumbuhan, temukan inspirasi MPASI, dan pelajari kesehatan keluarga dalam satu tempat.</p>
                     <div class="sg-actions">

@@ -72,7 +72,7 @@
                                 <button type="button" onclick="editData(@js($user))" class="p-1.5 text-stone-400 hover:text-pink-700 hover:bg-pink-50 rounded transition-colors cursor-pointer" title="Edit User">
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </button>
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin mau menghapus akun {{ $user->name }} ini?');">
+                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block" data-confirm="delete" data-confirm-name="{{ $user->name }}" data-confirm-kind="akun">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="p-1.5 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer" title="Hapus User">

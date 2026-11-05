@@ -226,13 +226,12 @@ function closePreviewModal() {
 }
 
 function deleteRecipe(id, name) {
-    if (confirm(`Apakah Anda yakin ingin menghapus resep "${name}"?`)) {
-        const form = document.getElementById('globalDeleteForm');
-        if (form) {
-            form.action = `/mpasi/${id}`;
-            form.submit();
-        }
-    }
+    const form = document.getElementById('globalDeleteForm');
+    if (!form) return;
+
+    form.action = `/mpasi/${encodeURIComponent(id)}`;
+    form.dataset.confirmName = name;
+    form.requestSubmit();
 }
 
 function addIngredientRow() {

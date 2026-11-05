@@ -67,7 +67,7 @@
     @include('admin.partials.table-mpasi')
 
     <!-- Hidden Global Delete Form -->
-    <form id="globalDeleteForm" method="POST" class="hidden">
+    <form id="globalDeleteForm" method="POST" data-confirm="delete" data-confirm-kind="resep" class="hidden">
         @csrf
         @method('DELETE')
     </form>

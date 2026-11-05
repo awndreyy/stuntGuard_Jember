@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\MpasiController;
 
 Route::post('/register', [AuthController::class, 'register'])
     ->middleware('throttle:5,1');
@@ -11,5 +12,7 @@ Route::post('/login', [AuthController::class, 'login'])
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
+    Route::get('/mpasi', [MpasiController::class, 'index'])->name('api.mpasi.index');
+    Route::get('/mpasi/{mpasi}', [MpasiController::class, 'show'])->name('api.mpasi.show');
     Route::post('/logout', [AuthController::class, 'logout']);
 });

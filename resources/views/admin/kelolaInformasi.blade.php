@@ -7,15 +7,6 @@
         $editInformation = $editInformation ?? null;
     @endphp
 
-    @if (session('success'))
-        <div class="flex items-center justify-between rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-xs text-emerald-800">
-            <div class="flex items-center gap-2">
-                <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i>
-                <span>{{ session('success') }}</span>
-            </div>
-            <button type="button" onclick="this.parentElement.remove()" class="text-emerald-500 hover:text-emerald-700" aria-label="Tutup notifikasi">&times;</button>
-        </div>
-    @endif
 
     @if (isset($errors) && $errors->any())
         <div class="space-y-1 rounded-xl border border-pink-200 bg-pink-50 p-4 text-xs text-pink-800">
@@ -57,7 +48,7 @@
                 </thead>
                 <tbody class="divide-y divide-stone-100 text-xs">
                     @forelse ($informations ?? [] as $item)
-                        <tr class="transition-colors hover:bg-stone-50/60">
+                        <tr class="pagination-informasi-row transition-colors hover:bg-stone-50/60">
                             <td class="max-w-xs truncate p-4 pl-6 font-semibold text-stone-800">
                                 {{ $item->title ?? $item->judul ?? '-' }}
                             </td>
@@ -97,8 +88,14 @@
                 </tbody>
             </table>
         </div>
-        @include('admin.partials.pagination', ['paginator' => $informations, 'label' => 'informasi'])
     </div>
 
+    <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-stone-200 bg-white px-4 py-3 text-xs text-stone-500">
+        <span id="informasiCountDisplay"></span>
+        <nav id="paginationInformasi" class="flex items-center gap-1" aria-label="Navigasi halaman informasi"></nav>
+    </div>
     <x-admin.modalTambahInformasi :editInformation="$editInformation" />
 @endsection
+@push('scripts')
+@include('admin.partials.pagination-script')
+@endpush

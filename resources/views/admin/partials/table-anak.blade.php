@@ -1,5 +1,5 @@
 {{-- Tabel Data Anak/Balita --}}
-<div id="tab-anak" class="flex-1 flex flex-col min-h-0 h-full hidden">
+<div id="tab-anak" class="flex flex-col hidden">
 
     {{-- Card Header --}}
     <div class="px-4 py-3 border-b border-stone-100 flex flex-wrap items-center justify-between gap-3 shrink-0 bg-white">
@@ -15,17 +15,17 @@
         <div class="flex items-center gap-2">
             {{-- Filter Jenis Kelamin --}}
             <div class="hidden sm:flex items-center bg-stone-100/80 p-0.5 rounded-lg text-[11px] font-medium text-stone-600">
-                <button type="button" onclick="filterBalitaGender('all', this)" class="balita-gender-tab px-2.5 py-1 rounded-md bg-white text-pink-700 shadow-2xs font-semibold cursor-pointer transition-colors">Semua</button>
-                <button type="button" onclick="filterBalitaGender('Laki-laki', this)" class="balita-gender-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Laki-laki</button>
-                <button type="button" onclick="filterBalitaGender('Perempuan', this)" class="balita-gender-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Perempuan</button>
+                <button type="button" onclick="filterBalitaGender('all', this)" class="balita-gender-tab px-2.5 py-1 rounded-md cursor-pointer transition-colors {{ request('gender', 'all') === 'all' ? 'bg-white text-pink-700 shadow-2xs font-semibold' : 'text-stone-600 hover:text-stone-900' }}">Semua</button>
+                <button type="button" onclick="filterBalitaGender('Laki-laki', this)" class="balita-gender-tab px-2.5 py-1 rounded-md cursor-pointer transition-colors {{ request('gender', 'all') === 'Laki-laki' ? 'bg-white text-pink-700 shadow-2xs font-semibold' : 'text-stone-600 hover:text-stone-900' }}">Laki-laki</button>
+                <button type="button" onclick="filterBalitaGender('Perempuan', this)" class="balita-gender-tab px-2.5 py-1 rounded-md cursor-pointer transition-colors {{ request('gender', 'all') === 'Perempuan' ? 'bg-white text-pink-700 shadow-2xs font-semibold' : 'text-stone-600 hover:text-stone-900' }}">Perempuan</button>
             </div>
         </div>
     </div>
 
     {{-- Data Table Container (Scrollable Area) --}}
-    <div class="flex-1 overflow-x-auto overflow-y-auto min-h-0">
+    <div class="w-full overflow-x-auto">
         <table class="w-full text-left border-collapse min-w-[640px]">
-            <thead class="sticky top-0 bg-stone-50 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
+            <thead class="bg-stone-50 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
                 <tr>
                     <th class="py-3 px-4 whitespace-nowrap">Nama Balita</th>
                     <th class="py-3 px-4 whitespace-nowrap">NIK Anak</th>
@@ -102,5 +102,6 @@
             </tbody>
         </table>
     </div>
-    @include('admin.partials.pagination', ['paginator' => $balita, 'label' => 'anak/balita'])
+
+    @include('admin.partials.pagination', ['paginator' => $balita, 'label' => 'balita'])
 </div>

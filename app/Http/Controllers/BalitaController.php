@@ -73,7 +73,7 @@ class BalitaController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
         ]);
 
-        return redirect()->back()->with('success', 'Data Balita berhasil ditambahkan');
+        return redirect()->route('kelolaUser', ['tab' => 'anak'])->with('success', 'Data Balita berhasil ditambahkan');
     }
 
     /**
@@ -122,7 +122,7 @@ class BalitaController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
         ]);
 
-        return redirect()->back()->with('success', 'Data Balita berhasil diperbarui');
+        return redirect()->route('kelolaUser', ['tab' => 'anak'])->with('success', 'Data Balita berhasil diperbarui');
     }
 
     /**
@@ -140,6 +140,6 @@ class BalitaController extends Controller
     
         $balita->delete();
 
-        return back()->with('success', 'Data balita berhasil dihapus.');
+        return redirect()-> route('kelolaUser', ['tab' => 'anak'])->with('success', 'Data balita berhasil dihapus.');
     }
 }

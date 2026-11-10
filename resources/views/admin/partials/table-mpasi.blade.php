@@ -1,10 +1,10 @@
 {{-- resources/views/admin/partials/table-mpasi.blade.php --}}
 {{-- RECIPES TABLE CONTAINER --}}
-<div id="recipesContainer" class="flex-1 min-h-0 flex flex-col">
-    <div id="tableViewWrapper" class="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col flex-1">
-        <div class="overflow-x-auto min-w-full flex-1">
+<div id="recipesContainer" class="flex flex-col">
+    <div id="tableViewWrapper" class="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col">
+        <div class="overflow-x-auto min-w-full">
             <table class="w-full text-left border-collapse">
-                <thead class="bg-stone-50 border-b border-stone-200 text-[11px] font-bold text-stone-500 uppercase tracking-wider sticky top-0 z-10">
+                <thead class="bg-stone-50 border-b border-stone-200 text-[11px] font-bold text-stone-500 uppercase tracking-wider z-10">
                     <tr>
                         <th class="py-3 px-4">Nama Resep MPASI</th>
                         <th class="py-3 px-3">Kategori Usia</th>
@@ -76,7 +76,7 @@
                                     <div class="w-12 h-12 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mb-3">
                                         <i data-lucide="utensils" class="w-6 h-6"></i>
                                     </div>
-                                    <h4 class="text-sm font-bold text-stone-800">Tidak ada resep MPASI yang ditampilkan</h4>
+                                    <h4 class="text-sm font-bold text-stone-800">Belum ada resep MPASI</h4>
                                     <p class="text-xs text-stone-500 mt-1 max-w-sm">Klik tombol "Tambah Resep Baru" di atas untuk menambahkan resep MPASI pertama.</p>
                                 </div>
                             </td>
@@ -85,7 +85,18 @@
                 </tbody>
             </table>
         </div>
-        @include('admin.partials.pagination', ['paginator' => $mpasis, 'label' => 'resep'])
     </div>
 
+    <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white px-4 py-3 text-xs text-stone-500 border border-stone-200 mt-2">
+        <span id="mpasiCountDisplay"></span>
+        <nav id="paginationMpasi" class="flex items-center gap-1" aria-label="Navigasi halaman resep"></nav>
+    </div>
+    <!-- Empty State Search Placeholder -->
+    <div id="emptySearchState" class="hidden bg-white rounded-2xl border border-stone-200 p-8 text-center flex-col items-center justify-center my-auto">
+        <div class="w-12 h-12 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mb-3">
+            <i data-lucide="utensils" class="w-6 h-6"></i>
+        </div>
+        <h4 class="text-sm font-bold text-stone-800">Tidak ada resep yang cocok</h4>
+        <p class="text-xs text-stone-500 mt-1 max-w-sm">Coba kata kunci lain atau ubah filter kategori usia di atas.</p>
+    </div>
 </div>

@@ -22,12 +22,12 @@ class UserController extends Controller
         $users = User::query()
             ->when(($filters['role'] ?? 'all') !== 'all', fn ($query) => $query->where('role', $filters['role']))
             ->latest()->orderByDesc('id')
-            ->paginate(10, ['*'], 'users_page')->withQueryString()->fragment('tab-user');
+            ->paginate(6, ['*'], 'users_page')->withQueryString()->appends(['tab' => 'user'])->fragment('tab-user');
         $orangTua = User::query()->where('role', 'Orang Tua')->orderBy('name')->get();
         $balita = Balita::with('orangTua')
             ->when(($filters['gender'] ?? 'all') !== 'all', fn ($query) => $query->where('jenis_kelamin', $filters['gender']))
             ->latest()->orderByDesc('id_balita')
-            ->paginate(10, ['*'], 'balita_page')->withQueryString()->fragment('tab-anak');
+            ->paginate(6, ['*'], 'balita_page')->withQueryString()->appends(['tab' => 'anak'])->fragment('tab-anak');
 
         return view('admin.kelolaUser', compact('users', 'balita', 'orangTua'));
     }
@@ -39,7 +39,7 @@ class UserController extends Controller
         $balitas = $user->balitas()
             ->withCount('pengukurans')
             ->orderBy('nama_balita')
-            ->paginate(10);
+            ->paginate(6);
 
         return view('admin.detailBalita', compact('user', 'balitas'));
     }

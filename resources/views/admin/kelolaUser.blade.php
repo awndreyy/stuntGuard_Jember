@@ -23,17 +23,6 @@
     </div>
 
     {{-- Alert Notifikasi Sukses / Error --}}
-    @if (session('success'))
-        <div class="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl flex items-center justify-between gap-2 shrink-0 shadow-xs">
-            <div class="flex items-center gap-2">
-                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-700 shrink-0"></i>
-                <span class="font-medium">{{ session('success') }}</span>
-            </div>
-            <button onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-800 p-1 cursor-pointer">
-                <i data-lucide="x" class="w-3.5 h-3.5"></i>
-            </button>
-        </div>
-    @endif
 
     @if (session('error') || (isset($errors) && $errors->any()))
         <div class="p-3 bg-pink-50 border border-pink-200 text-pink-800 text-xs rounded-xl flex items-center justify-between gap-2 shrink-0 shadow-xs">
@@ -56,7 +45,7 @@
     @include('admin.partials.tab-switcher-balita')
 
     {{-- Table Section --}}
-    <section class="flex-1 bg-white rounded-2xl border border-stone-200 flex flex-col min-h-0 overflow-hidden">
+    <section class="bg-white rounded-2xl border border-stone-200 flex flex-col overflow-hidden">
         @include('admin.partials.table-users')
         @include('admin.partials.table-anak')
     </section>
@@ -188,11 +177,11 @@
 
     // Tab Switcher
     function switchTab(tab) {
-        const url = new URL(window.location.href);
-        url.hash = tab === 'anak' ? 'tab-anak' : 'tab-user';
-        window.history.replaceState(null, '', url);
-        document.getElementById('tab-btn-user')?.setAttribute('aria-selected', String(tab === 'user'));
-        document.getElementById('tab-btn-anak')?.setAttribute('aria-selected', String(tab === 'anak'));
+        const currentUrl = new URL(window.location.href);
+        if (currentUrl.searchParams.get('tab') !== tab) {
+            currentUrl.searchParams.set('tab', tab);
+            history.replaceState(null, '', currentUrl.toString());
+        }
         const tabUser = document.getElementById('tab-user');
         const tabAnak = document.getElementById('tab-anak');
         const btnUser = document.getElementById('tab-btn-user');
@@ -254,38 +243,28 @@
         if (window.lucide) lucide.createIcons();
     }
 
-    function filterUserRole(role) {
-        const url = new URL(window.location.href);
-        url.searchParams.set('role', role);
-        url.searchParams.delete('users_page');
-        url.hash = 'tab-user';
-        window.location.assign(url);
-    }
-
-    function filterBalitaGender(gender) {
-        const url = new URL(window.location.href);
-        url.searchParams.set('gender', gender);
-        url.searchParams.delete('balita_page');
-        url.hash = 'tab-anak';
-        window.location.assign(url);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        switchTab(window.location.hash === '#tab-anak' ? 'anak' : 'user');
+    // Pulihkan tab setelah halaman selesai dimuat (di luar switchTab).
+    document.addEventListener('DOMContentLoaded', function () {
         const params = new URLSearchParams(window.location.search);
-        for (const [selector, key, values] of [
-            ['.user-role-tab', 'role', ['all', 'Admin', 'Orang Tua']],
-            ['.balita-gender-tab', 'gender', ['all', 'Laki-laki', 'Perempuan']],
-        ]) {
-            document.querySelectorAll(selector).forEach((button, index) => {
-                const active = values[index] === (params.get(key) || 'all');
-                for (const cls of ['bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold']) {
-                    button.classList.toggle(cls, active);
-                }
-                button.classList.toggle('text-stone-600', !active);
-                button.setAttribute('aria-pressed', String(active));
-            });
-        }
+        switchTab(params.get('tab') === 'anak' ? 'anak' : 'user');
     });
+
+    // Filter data melalui Laravel agar mencakup SELURUH database, bukan 6 baris di halaman aktif.
+    function applyTableFilter(key, value, tab) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('tab', tab);
+        if (value === 'all') url.searchParams.delete(key);
+        else url.searchParams.set(key, value);
+        url.searchParams.delete(tab === 'anak' ? 'balita_page' : 'users_page');
+        window.location.assign(url.toString());
+    }
+
+    function filterUserRole(role, button) {
+        applyTableFilter('role', role, 'user');
+    }
+
+    function filterBalitaGender(gender, button) {
+        applyTableFilter('gender', gender, 'anak');
+    }
 </script>
 @endpush

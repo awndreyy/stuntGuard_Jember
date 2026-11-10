@@ -4,7 +4,9 @@
     @else
         <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="inline-flex min-h-11 items-center rounded-xl border border-stone-200 bg-white px-3 hover:bg-pink-50 focus-visible:outline-2 focus-visible:outline-pink-700">Sebelumnya</a>
     @endif
-    @if ($paginator->hasPages())
+    @if (!$paginator->hasPages())
+        <span aria-current="page" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-brand px-3 text-white">1</span>
+    @else
         @foreach ($elements as $element)
             @if (is_string($element))
                 <span class="hidden px-2 sm:inline">{{ $element }}</span>

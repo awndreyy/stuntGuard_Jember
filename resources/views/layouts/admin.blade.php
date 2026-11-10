@@ -64,12 +64,50 @@
         </main>
     </div>
 
+    {{-- Toast sukses global, digunakan seluruh halaman admin. --}}
+    <div id="adminToast" role="status" aria-live="polite" aria-atomic="true"
+    class="pointer-events-none fixed left-1/2 top-5 z-[100] flex w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-3 items-center gap-3 rounded-2xl border border-green-200 bg-white px-4 py-3 text-stone-800 opacity-0 shadow-xl transition-all duration-300">
+        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-700">
+            <i data-lucide="check-circle-2" class="h-5 w-5"></i>
+        </span>
+        <div class="min-w-0">
+            <p id="adminToastTitle" class="text-sm font-bold">Berhasil</p>
+            <p id="adminToastMessage" class="break-words text-xs text-stone-600"></p>
+        </div>
+        <button type="button" id="adminToastClose" class="pointer-events-auto ml-auto rounded-lg p-1 text-stone-400 transition hover:bg-stone-100 hover:text-stone-700" aria-label="Tutup notifikasi">
+            <i data-lucide="x" class="h-4 w-4"></i>
+        </button>
+    </div>
+
     <x-admin.confirmation-modal />
 
     <!-- Script Global (Lucide Icon Init & Format Tanggal) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             window.lucide?.createIcons();
+
+            const toast = document.getElementById('adminToast');
+            let toastTimer;
+            window.showToast = (title, message) => {
+                if (!toast) return;
+                document.getElementById('adminToastTitle').textContent = title;
+                document.getElementById('adminToastMessage').textContent = message;
+                clearTimeout(toastTimer);
+                toast.classList.remove('pointer-events-none', 'opacity-0', '-translate-y-3');
+                toast.classList.add('opacity-100', 'translate-y-0');
+                toastTimer = setTimeout(() => {
+                    toast.classList.add('pointer-events-none', 'opacity-0', '-translate-y-3');
+                    toast.classList.remove('opacity-100', 'translate-y-0');
+                }, 4000);
+            };
+            document.getElementById('adminToastClose')?.addEventListener('click', () => {
+                clearTimeout(toastTimer);
+                toast.classList.add('pointer-events-none', 'opacity-0', '-translate-y-3');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            });
+            @if(session('success'))
+                window.showToast('Berhasil', @json(session('success')));
+            @endif
 
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
             const today = new Date().toLocaleDateString('id-ID', dateOptions);

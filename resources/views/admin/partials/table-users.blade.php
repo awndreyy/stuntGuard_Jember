@@ -1,6 +1,6 @@
 {{-- resources/views/admin/partials/table-users.blade.php --}}
 {{-- Tabel Data Pengguna --}}
-<div id="tab-user" class="flex-1 flex flex-col min-h-0 h-full">
+<div id="tab-user" class="flex flex-col">
 
     {{-- Card Header with Filters --}}
     <div class="px-4 py-3 border-b border-stone-100 flex flex-wrap items-center justify-between gap-3 shrink-0 bg-white">
@@ -15,18 +15,18 @@
 
         <div class="flex items-center gap-2">
             {{-- Filter Tabs --}}
-            <div class="flex flex-wrap items-center bg-stone-100/80 p-0.5 rounded-lg text-[11px] font-medium text-stone-600">
-                <button type="button" onclick="filterUserRole('all', this)" class="user-role-tab px-2.5 py-1 rounded-md bg-white text-pink-700 shadow-2xs font-semibold cursor-pointer transition-colors">Semua</button>
-                <button type="button" onclick="filterUserRole('Admin', this)" class="user-role-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Admin</button>
-                <button type="button" onclick="filterUserRole('Orang Tua', this)" class="user-role-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Orang Tua</button>
+            <div class="hidden sm:flex items-center bg-stone-100/80 p-0.5 rounded-lg text-[11px] font-medium text-stone-600">
+                <button type="button" onclick="filterUserRole('all', this)" class="user-role-tab px-2.5 py-1 rounded-md cursor-pointer transition-colors {{ request('role', 'all') === 'all' ? 'bg-white text-pink-700 shadow-2xs font-semibold' : 'text-stone-600 hover:text-stone-900' }}">Semua</button>
+                <button type="button" onclick="filterUserRole('Admin', this)" class="user-role-tab px-2.5 py-1 rounded-md cursor-pointer transition-colors {{ request('role', 'all') === 'Admin' ? 'bg-white text-pink-700 shadow-2xs font-semibold' : 'text-stone-600 hover:text-stone-900' }}">Admin</button>
+                <button type="button" onclick="filterUserRole('Orang Tua', this)" class="user-role-tab px-2.5 py-1 rounded-md cursor-pointer transition-colors {{ request('role', 'all') === 'Orang Tua' ? 'bg-white text-pink-700 shadow-2xs font-semibold' : 'text-stone-600 hover:text-stone-900' }}">Orang Tua</button>
             </div>
         </div>
     </div>
 
     {{-- Data Table Container (Scrollable Area) --}}
-    <div class="flex-1 overflow-x-auto overflow-y-auto min-h-0">
+    <div class="w-full overflow-x-auto">
         <table class="w-full text-left border-collapse min-w-[560px]">
-            <thead class="sticky top-0 bg-stone-50 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
+            <thead class="bg-stone-50 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
                 <tr>
                     <th class="py-3 px-4 whitespace-nowrap">Informasi Pengguna</th>
                     <th class="py-3 px-4 whitespace-nowrap">Kontak</th>
@@ -83,12 +83,20 @@
                         </td>
                     </tr>
                     @endforeach
+                    <tr id="emptyUserFilterRow" class="hidden">
+                        <td colspan="4" class="py-12 text-center text-stone-400">
+                            <div class="flex flex-col items-center gap-2">
+                                <i data-lucide="users" class="w-8 h-8 text-stone-300"></i>
+                                <span class="text-xs font-semibold text-stone-500">Tidak ada pengguna pada kategori ini</span>
+                            </div>
+                        </td>
+                    </tr>
                 @else
                     <tr>
                         <td colspan="4" class="py-12 text-center text-stone-400">
                             <div class="flex flex-col items-center gap-2">
                                 <i data-lucide="users" class="w-8 h-8 text-stone-300"></i>
-                                <span class="text-xs font-semibold text-stone-500">Tidak ada pengguna yang ditampilkan</span>
+                                <span class="text-xs font-semibold text-stone-500">Belum ada data pengguna</span>
                             </div>
                         </td>
                     </tr>

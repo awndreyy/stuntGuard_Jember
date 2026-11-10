@@ -1,71 +1,3 @@
-// Filter Category Tabs
-function filterCategory(category, button) {
-    document.querySelectorAll('.category-tab').forEach(btn => {
-        btn.classList.remove('active-tab', 'bg-brand', 'text-white');
-        btn.classList.add('text-stone-600', 'hover:bg-stone-100');
-    });
-    button.classList.add('active-tab', 'bg-brand', 'text-white');
-    button.classList.remove('text-stone-600', 'hover:bg-stone-100');
-
-    applyAllFilters();
-}
-
-// Search Recipe by Keyword
-function searchRecipes() {
-    applyAllFilters();
-}
-
-function applyAllFilters() {
-    const activeTab = document.querySelector('.category-tab.active-tab');
-    let selectedCategory = 'all';
-    if (activeTab) {
-        const text = activeTab.innerText.toLowerCase();
-        if (text.includes('6-8')) selectedCategory = '6-8';
-        else if (text.includes('9-11')) selectedCategory = '9-11';
-        else if (text.includes('12-23')) selectedCategory = '12-23';
-    }
-
-    const searchInput = document.getElementById('recipeSearchInput');
-    const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
-    const tableRows = document.querySelectorAll('.table-recipe-row');
-    let visibleCount = 0;
-
-    // Filter table rows
-    tableRows.forEach(row => {
-        const rowCat = row.getAttribute('data-category');
-        const rowName = (row.getAttribute('data-name') || '').toLowerCase();
-
-        const matchesCat = (selectedCategory === 'all' || rowCat === selectedCategory);
-        const matchesSearch = (!searchQuery || rowName.includes(searchQuery));
-
-        if (matchesCat && matchesSearch) {
-            row.style.display = '';
-            visibleCount++;
-        } else {
-            row.style.display = 'none';
-        }
-    });
-
-    // Empty state
-    const emptyState = document.getElementById('emptySearchState');
-    const tableWrapper = document.getElementById('tableViewWrapper');
-    if (tableRows.length > 0) {
-        if (visibleCount === 0) {
-            if (emptyState) {
-                emptyState.classList.remove('hidden');
-                emptyState.classList.add('flex');
-            }
-            if (tableWrapper) tableWrapper.classList.add('hidden');
-        } else {
-            if (emptyState) {
-                emptyState.classList.add('hidden');
-                emptyState.classList.remove('flex');
-            }
-            if (tableWrapper) tableWrapper.classList.remove('hidden');
-        }
-    }
-}
-
 function previewRecipe(id) {
     const recipesData = window.recipesData || {};
     const recipe = recipesData[id];
@@ -350,9 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Expose functions to inline handlers (Vite bundles this file as a module)
 Object.assign(window, {
-    filterCategory,
-    searchRecipes,
-    applyAllFilters,
     previewRecipe,
     closePreviewModal,
     deleteRecipe,

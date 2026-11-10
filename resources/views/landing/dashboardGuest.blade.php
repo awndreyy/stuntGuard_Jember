@@ -32,7 +32,7 @@
                 </div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900">Kalkulator Cek Gizi Balita</h2>
                 <p class="text-sm text-stone-600 mt-2">
-                    Masukkan data pengukuran untuk melihat hasil Z-score berdasarkan tabel WHO. Hasil ini merupakan skrining awal, bukan diagnosis medis.
+                    Masukkan data pengukuran untuk melihat hasil Z-score berdasarkan tabel WHO.
                 </p>
             </div>
 

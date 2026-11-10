@@ -76,7 +76,7 @@
                                     <div class="w-12 h-12 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mb-3">
                                         <i data-lucide="utensils" class="w-6 h-6"></i>
                                     </div>
-                                    <h4 class="text-sm font-bold text-stone-800">Belum ada resep MPASI</h4>
+                                    <h4 class="text-sm font-bold text-stone-800">Tidak ada resep MPASI yang ditampilkan</h4>
                                     <p class="text-xs text-stone-500 mt-1 max-w-sm">Klik tombol "Tambah Resep Baru" di atas untuk menambahkan resep MPASI pertama.</p>
                                 </div>
                             </td>
@@ -85,14 +85,7 @@
                 </tbody>
             </table>
         </div>
+        @include('admin.partials.pagination', ['paginator' => $mpasis, 'label' => 'resep'])
     </div>
 
-    <!-- Empty State Search Placeholder -->
-    <div id="emptySearchState" class="hidden bg-white rounded-2xl border border-stone-200 p-8 text-center flex-col items-center justify-center my-auto">
-        <div class="w-12 h-12 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mb-3">
-            <i data-lucide="utensils" class="w-6 h-6"></i>
-        </div>
-        <h4 class="text-sm font-bold text-stone-800">Tidak ada resep yang cocok</h4>
-        <p class="text-xs text-stone-500 mt-1 max-w-sm">Coba kata kunci lain atau ubah filter kategori usia di atas.</p>
-    </div>
 </div>

@@ -97,6 +97,7 @@
                 </tbody>
             </table>
         </div>
+        @include('admin.partials.pagination', ['paginator' => $informations, 'label' => 'informasi'])
     </div>
 
     <x-admin.modalTambahInformasi :editInformation="$editInformation" />

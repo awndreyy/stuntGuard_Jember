@@ -14,7 +14,7 @@ class InformasiController extends Controller
      */
     public function index()
     {
-        $informations = Informasi::latest('created_at')->get();
+        $informations = Informasi::latest('created_at')->orderByDesc('id_informasi')->paginate(10)->withQueryString();
 
         return view('admin.kelolaInformasi', compact('informations'));
     }

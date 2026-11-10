@@ -12,21 +12,31 @@ class MpasiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $mpasis = Mpasi::latest('created_at')->get();
+        $filters = $request->validate([
+            'kategori_usia' => ['nullable', Rule::in(['all', '6-8', '9-11', '12-23'])],
+            'q' => ['nullable', 'string', 'max:100'],
+        ]);
+        $search = trim($filters['q'] ?? '');
+        $mpasis = Mpasi::query()
+            ->when(($filters['kategori_usia'] ?? 'all') !== 'all', fn ($query) => $query->where('kategori_usia', $filters['kategori_usia']))
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('nama_resep', 'like', '%'.$search.'%')
+                        ->orWhere('bahan', 'like', '%'.$search.'%');
+                });
+            })
+            ->latest('created_at')->orderByDesc('id_resep')
+            ->paginate(5)->withQueryString();
 
-        $totalResep = $mpasis->count();
-        $total68 = $mpasis->where('kategori_usia', '6-8')->count();
-        $total911 = $mpasis->where('kategori_usia', '9-11')->count();
-        $total1223 = $mpasis->where('kategori_usia', '12-23')->count();
+        $totalResep = Mpasi::count();
+        $total68 = Mpasi::where('kategori_usia', '6-8')->count();
+        $total911 = Mpasi::where('kategori_usia', '9-11')->count();
+        $total1223 = Mpasi::where('kategori_usia', '12-23')->count();
 
         return view('admin.kelolaMpasi', compact(
-            'mpasis',
-            'totalResep',
-            'total68',
-            'total911',
-            'total1223'
+            'mpasis', 'totalResep', 'total68', 'total911', 'total1223'
         ));
     }
 

@@ -13,11 +13,21 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->get();
+        $filters = $request->validate([
+            'role' => ['nullable', Rule::in(['all', 'Admin', 'Orang Tua'])],
+            'gender' => ['nullable', Rule::in(['all', 'Laki-laki', 'Perempuan'])],
+        ]);
+        $users = User::query()
+            ->when(($filters['role'] ?? 'all') !== 'all', fn ($query) => $query->where('role', $filters['role']))
+            ->latest()->orderByDesc('id')
+            ->paginate(10, ['*'], 'users_page')->withQueryString()->fragment('tab-user');
         $orangTua = User::query()->where('role', 'Orang Tua')->orderBy('name')->get();
-        $balita = Balita::with('orangTua')->latest()->get();
+        $balita = Balita::with('orangTua')
+            ->when(($filters['gender'] ?? 'all') !== 'all', fn ($query) => $query->where('jenis_kelamin', $filters['gender']))
+            ->latest()->orderByDesc('id_balita')
+            ->paginate(10, ['*'], 'balita_page')->withQueryString()->fragment('tab-anak');
 
         return view('admin.kelolaUser', compact('users', 'balita', 'orangTua'));
     }

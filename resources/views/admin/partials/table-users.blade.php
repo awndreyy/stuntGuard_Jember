@@ -15,7 +15,7 @@
 
         <div class="flex items-center gap-2">
             {{-- Filter Tabs --}}
-            <div class="hidden sm:flex items-center bg-stone-100/80 p-0.5 rounded-lg text-[11px] font-medium text-stone-600">
+            <div class="flex flex-wrap items-center bg-stone-100/80 p-0.5 rounded-lg text-[11px] font-medium text-stone-600">
                 <button type="button" onclick="filterUserRole('all', this)" class="user-role-tab px-2.5 py-1 rounded-md bg-white text-pink-700 shadow-2xs font-semibold cursor-pointer transition-colors">Semua</button>
                 <button type="button" onclick="filterUserRole('Admin', this)" class="user-role-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Admin</button>
                 <button type="button" onclick="filterUserRole('Orang Tua', this)" class="user-role-tab px-2.5 py-1 rounded-md text-stone-600 hover:text-stone-900 transition-colors cursor-pointer">Orang Tua</button>
@@ -83,20 +83,12 @@
                         </td>
                     </tr>
                     @endforeach
-                    <tr id="emptyUserFilterRow" class="hidden">
-                        <td colspan="4" class="py-12 text-center text-stone-400">
-                            <div class="flex flex-col items-center gap-2">
-                                <i data-lucide="users" class="w-8 h-8 text-stone-300"></i>
-                                <span class="text-xs font-semibold text-stone-500">Tidak ada pengguna pada kategori ini</span>
-                            </div>
-                        </td>
-                    </tr>
                 @else
                     <tr>
                         <td colspan="4" class="py-12 text-center text-stone-400">
                             <div class="flex flex-col items-center gap-2">
                                 <i data-lucide="users" class="w-8 h-8 text-stone-300"></i>
-                                <span class="text-xs font-semibold text-stone-500">Belum ada data pengguna</span>
+                                <span class="text-xs font-semibold text-stone-500">Tidak ada pengguna yang ditampilkan</span>
                             </div>
                         </td>
                     </tr>
@@ -105,28 +97,5 @@
         </table>
     </div>
 
-    {{-- Card Footer --}}
-    <div class="px-4 py-2.5 bg-stone-50 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500 shrink-0 mt-auto">
-        <span id="userCountDisplay" class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-stone-700">{{ count($users) }}</strong> dari <strong class="font-semibold text-stone-700">{{ $totalUsers ?? count($users) }}</strong> pengguna</span>
-
-        <div class="flex items-center gap-1.5">
-            {{-- Previous Button --}}
-            <button class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-stone-200 bg-white hover:bg-stone-50 text-stone-400 transition-colors text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
-                <span class="hidden sm:inline">Sebelumnya</span>
-            </button>
-
-            {{-- Page Numbers --}}
-            <div class="flex items-center gap-1">
-                <button class="w-8 h-8 rounded-lg bg-brand text-white font-bold text-xs flex items-center justify-center shadow-xs">1</button>
-            </div>
-
-            {{-- Next Button --}}
-            <button class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 transition-colors text-xs font-medium">
-                <span class="hidden sm:inline">Selanjutnya</span>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-            </button>
-        </div>
-    </div>
-
+    @include('admin.partials.pagination', ['paginator' => $users, 'label' => 'pengguna'])
 </div>

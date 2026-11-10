@@ -188,6 +188,11 @@
 
     // Tab Switcher
     function switchTab(tab) {
+        const url = new URL(window.location.href);
+        url.hash = tab === 'anak' ? 'tab-anak' : 'tab-user';
+        window.history.replaceState(null, '', url);
+        document.getElementById('tab-btn-user')?.setAttribute('aria-selected', String(tab === 'user'));
+        document.getElementById('tab-btn-anak')?.setAttribute('aria-selected', String(tab === 'anak'));
         const tabUser = document.getElementById('tab-user');
         const tabAnak = document.getElementById('tab-anak');
         const btnUser = document.getElementById('tab-btn-user');
@@ -249,110 +254,38 @@
         if (window.lucide) lucide.createIcons();
     }
 
-    // Filter User berdasarkan Role
-    function filterUserRole(role, button) {
-        document.querySelectorAll('.user-role-tab').forEach(btn => {
-            btn.classList.remove('bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold');
-            btn.classList.add('text-stone-600', 'hover:text-stone-900');
-        });
-        button.classList.add('bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold');
-        button.classList.remove('text-stone-600', 'hover:text-stone-900');
-
-        const rows = document.querySelectorAll('.table-user-row');
-        let visibleCount = 0;
-        const totalCount = rows.length;
-
-        rows.forEach(row => {
-            const userRole = (row.getAttribute('data-role') || '').trim().toLowerCase();
-            const targetRole = role.toLowerCase();
-            
-            let matches = false;
-            if (targetRole === 'all') {
-                matches = true;
-            } else if (targetRole === 'admin') {
-                matches = userRole === 'admin' || userRole === 'administrator';
-            } else if (targetRole === 'orang tua' || targetRole === 'orangtua') {
-                matches = userRole === 'orang tua' || userRole === 'orangtua';
-            } else {
-                matches = userRole === targetRole;
-            }
-
-            if (matches) {
-                row.style.display = '';
-                visibleCount++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        // Toggle Empty Filter Row
-        const emptyRow = document.getElementById('emptyUserFilterRow');
-        if (emptyRow) {
-            if (visibleCount === 0 && totalCount > 0) {
-                emptyRow.classList.remove('hidden');
-            } else {
-                emptyRow.classList.add('hidden');
-            }
-        }
-
-        // Update count display
-        const countDisplay = document.getElementById('userCountDisplay');
-        if (countDisplay) {
-            countDisplay.innerHTML = `Menampilkan <strong class="font-semibold text-stone-700">${visibleCount}</strong> dari <strong class="font-semibold text-stone-700">${totalCount}</strong> pengguna`;
-        }
-
-        if (window.lucide) lucide.createIcons();
+    function filterUserRole(role) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('role', role);
+        url.searchParams.delete('users_page');
+        url.hash = 'tab-user';
+        window.location.assign(url);
     }
 
-    // Filter Balita berdasarkan Jenis Kelamin
-    function filterBalitaGender(gender, button) {
-        document.querySelectorAll('.balita-gender-tab').forEach(btn => {
-            btn.classList.remove('bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold');
-            btn.classList.add('text-stone-600', 'hover:text-stone-900');
-        });
-        button.classList.add('bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold');
-        button.classList.remove('text-stone-600', 'hover:text-stone-900');
-
-        const rows = document.querySelectorAll('.table-balita-row');
-        let visibleCount = 0;
-        const totalCount = rows.length;
-
-        rows.forEach(row => {
-            const rowGender = (row.getAttribute('data-gender') || '').trim().toLowerCase();
-            const targetGender = gender.toLowerCase();
-
-            let matches = false;
-            if (targetGender === 'all') {
-                matches = true;
-            } else {
-                matches = rowGender === targetGender;
-            }
-
-            if (matches) {
-                row.style.display = '';
-                visibleCount++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        // Toggle Empty Filter Row
-        const emptyRow = document.getElementById('emptyBalitaFilterRow');
-        if (emptyRow) {
-            if (visibleCount === 0 && totalCount > 0) {
-                emptyRow.classList.remove('hidden');
-            } else {
-                emptyRow.classList.add('hidden');
-            }
-        }
-
-        // Update count display
-        const countDisplay = document.getElementById('balitaCountDisplay');
-        if (countDisplay) {
-            countDisplay.innerHTML = `Menampilkan <strong class="font-semibold text-stone-700">${visibleCount}</strong> data anak/balita`;
-        }
-
-        if (window.lucide) lucide.createIcons();
+    function filterBalitaGender(gender) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('gender', gender);
+        url.searchParams.delete('balita_page');
+        url.hash = 'tab-anak';
+        window.location.assign(url);
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        switchTab(window.location.hash === '#tab-anak' ? 'anak' : 'user');
+        const params = new URLSearchParams(window.location.search);
+        for (const [selector, key, values] of [
+            ['.user-role-tab', 'role', ['all', 'Admin', 'Orang Tua']],
+            ['.balita-gender-tab', 'gender', ['all', 'Laki-laki', 'Perempuan']],
+        ]) {
+            document.querySelectorAll(selector).forEach((button, index) => {
+                const active = values[index] === (params.get(key) || 'all');
+                for (const cls of ['bg-white', 'text-pink-700', 'shadow-2xs', 'font-semibold']) {
+                    button.classList.toggle(cls, active);
+                }
+                button.classList.toggle('text-stone-600', !active);
+                button.setAttribute('aria-pressed', String(active));
+            });
+        }
+    });
 </script>
 @endpush

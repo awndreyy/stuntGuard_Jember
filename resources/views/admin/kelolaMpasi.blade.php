@@ -27,41 +27,22 @@
     <!-- Total Resep, 6-8, 9-11, 12-23 -->
     @include('components.admin.cardStatistikMpasi')
 
-    <!-- Filter & Toolbar -->
-    <div class="bg-white p-3 rounded-2xl border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0">
-        <!-- Filter Usia -->
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
-            <button onclick="filterCategory('all', this)" class="category-tab active-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-brand text-white shadow-xs transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
-                <span>Semua Usia</span>
-                <span class="px-1.5 py-0.2 rounded-md bg-white/20 text-[10px]">{{ $totalResep }}</span>
-            </button>
-            <button onclick="filterCategory('6-8', this)" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
-                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                <span>6-8 Bulan</span>
-                <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-500">{{ $total68 }}</span>
-            </button>
-            <button onclick="filterCategory('9-11', this)" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
-                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                <span>9-11 Bulan</span>
-                <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-500">{{ $total911 }}</span>
-            </button>
-            <button onclick="filterCategory('12-23', this)" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
-                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                <span>12-23 Bulan</span>
-                <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-500">{{ $total1223 }}</span>
-            </button>
-        </div>
-
-        <!-- Search Field -->
-        <div class="flex items-center gap-2">
-            <div class="relative w-full sm:w-72">
-                <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-stone-400">
-                    <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                </span>
-                <input type="text" id="recipeSearchInput" oninput="searchRecipes()" placeholder="Cari nama resep / bahan..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-stone-50 border border-stone-200 rounded-xl text-stone-700 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all">
-            </div>
-        </div>
-    </div>
+    <form method="GET" action="{{ route('kelolaMpasi') }}" class="flex shrink-0 flex-wrap items-end gap-3 rounded-2xl border border-stone-200 bg-white p-3">
+        <label class="flex flex-col gap-1 text-xs text-stone-600">
+            Kategori usia
+            <select name="kategori_usia" class="min-h-11 rounded-xl border border-stone-200 bg-stone-50 px-3 focus:outline-pink-700">
+                @foreach (['all' => 'Semua Usia', '6-8' => '6–8 Bulan', '9-11' => '9–11 Bulan', '12-23' => '12–23 Bulan'] as $value => $label)
+                    <option value="{{ $value }}" @selected(request('kategori_usia', 'all') === $value)>{{ $label }}</option>
+                @endforeach
+            </select>
+        </label>
+        <label class="flex min-w-0 flex-1 flex-col gap-1 text-xs text-stone-600">
+            Cari resep
+            <input type="search" name="q" maxlength="100" value="{{ request('q') }}" placeholder="Nama resep / bahan..." class="min-h-11 w-full rounded-xl border border-stone-200 bg-stone-50 px-3 focus:outline-pink-700">
+        </label>
+        <button class="min-h-11 cursor-pointer rounded-xl bg-brand px-4 text-xs font-semibold text-white hover:bg-brand-hover focus-visible:outline-2 focus-visible:outline-pink-700">Terapkan</button>
+        <a href="{{ route('kelolaMpasi') }}" class="inline-flex min-h-11 items-center rounded-xl px-3 text-xs text-pink-700 hover:bg-pink-50 focus-visible:outline-2 focus-visible:outline-pink-700">Reset</a>
+    </form>
 
     <!-- TABEL RESEP -->
     @include('admin.partials.table-mpasi')

@@ -102,24 +102,5 @@
             </tbody>
         </table>
     </div>
-
-    {{-- Card Footer --}}
-    <div class="px-4 py-2.5 bg-stone-50 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500 shrink-0 mt-auto">
-        <span id="balitaCountDisplay" class="text-center sm:text-left">Menampilkan <strong class="font-semibold text-stone-700">{{ isset($balita) ? count($balita) : 0 }}</strong> data anak/balita</span>
-
-        <div class="flex items-center gap-1.5">
-            <button class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-stone-200 bg-white text-stone-400 text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
-                <span class="hidden sm:inline">Sebelumnya</span>
-            </button>
-            <div class="flex items-center gap-1">
-                <button class="w-8 h-8 rounded-lg bg-brand text-white font-bold text-xs flex items-center justify-center shadow-xs">1</button>
-            </div>
-            <button class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 transition-colors text-xs font-medium">
-                <span class="hidden sm:inline">Selanjutnya</span>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-            </button>
-        </div>
-    </div>
-
+    @include('admin.partials.pagination', ['paginator' => $balita, 'label' => 'anak/balita'])
 </div>

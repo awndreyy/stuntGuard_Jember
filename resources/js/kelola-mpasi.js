@@ -1,70 +1,27 @@
-// Filter Category Tabs
-function filterCategory(category, button) {
-    document.querySelectorAll('.category-tab').forEach(btn => {
-        btn.classList.remove('active-tab', 'bg-brand', 'text-white');
-        btn.classList.add('text-stone-600', 'hover:bg-stone-100');
-    });
-    button.classList.add('active-tab', 'bg-brand', 'text-white');
-    button.classList.remove('text-stone-600', 'hover:bg-stone-100');
-
-    applyAllFilters();
+// Filter di database agar semua resep ikut terhitung, bukan hanya baris halaman aktif.
+function filterCategory(category) {
+    const url = new URL(window.location.href);
+    if (category === 'all') url.searchParams.delete('kategori_usia');
+    else url.searchParams.set('kategori_usia', category);
+    url.searchParams.delete('page');
+    window.location.assign(url.toString());
 }
 
-// Search Recipe by Keyword
+let searchRecipesTimer;
 function searchRecipes() {
-    applyAllFilters();
+    clearTimeout(searchRecipesTimer);
+    searchRecipesTimer = setTimeout(() => {
+        const url = new URL(window.location.href);
+        const query = document.getElementById('recipeSearchInput')?.value.trim() || '';
+        if (query) url.searchParams.set('q', query);
+        else url.searchParams.delete('q');
+        url.searchParams.delete('page');
+        window.location.assign(url.toString());
+    }, 500);
 }
 
-function applyAllFilters() {
-    const activeTab = document.querySelector('.category-tab.active-tab');
-    let selectedCategory = 'all';
-    if (activeTab) {
-        const text = activeTab.innerText.toLowerCase();
-        if (text.includes('6-8')) selectedCategory = '6-8';
-        else if (text.includes('9-11')) selectedCategory = '9-11';
-        else if (text.includes('12-23')) selectedCategory = '12-23';
-    }
-
-    const searchInput = document.getElementById('recipeSearchInput');
-    const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
-    const tableRows = document.querySelectorAll('.table-recipe-row');
-    let visibleCount = 0;
-
-    // Filter table rows
-    tableRows.forEach(row => {
-        const rowCat = row.getAttribute('data-category');
-        const rowName = (row.getAttribute('data-name') || '').toLowerCase();
-
-        const matchesCat = (selectedCategory === 'all' || rowCat === selectedCategory);
-        const matchesSearch = (!searchQuery || rowName.includes(searchQuery));
-
-        if (matchesCat && matchesSearch) {
-            row.style.display = '';
-            visibleCount++;
-        } else {
-            row.style.display = 'none';
-        }
-    });
-
-    // Empty state
-    const emptyState = document.getElementById('emptySearchState');
-    const tableWrapper = document.getElementById('tableViewWrapper');
-    if (tableRows.length > 0) {
-        if (visibleCount === 0) {
-            if (emptyState) {
-                emptyState.classList.remove('hidden');
-                emptyState.classList.add('flex');
-            }
-            if (tableWrapper) tableWrapper.classList.add('hidden');
-        } else {
-            if (emptyState) {
-                emptyState.classList.add('hidden');
-                emptyState.classList.remove('flex');
-            }
-            if (tableWrapper) tableWrapper.classList.remove('hidden');
-        }
-    }
-}
+// Kompatibilitas jika dipanggil kode lama.
+function applyAllFilters() { searchRecipes(); }
 
 function previewRecipe(id) {
     const recipesData = window.recipesData || {};

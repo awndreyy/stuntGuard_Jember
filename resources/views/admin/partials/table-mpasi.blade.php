@@ -87,10 +87,7 @@
         </div>
     </div>
 
-    <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white px-4 py-3 text-xs text-stone-500 border border-stone-200 mt-2">
-        <span id="mpasiCountDisplay"></span>
-        <nav id="paginationMpasi" class="flex items-center gap-1" aria-label="Navigasi halaman resep"></nav>
-    </div>
+    @include('admin.partials.pagination', ['paginator' => $mpasis, 'label' => 'resep'])
     <!-- Empty State Search Placeholder -->
     <div id="emptySearchState" class="hidden bg-white rounded-2xl border border-stone-200 p-8 text-center flex-col items-center justify-center my-auto">
         <div class="w-12 h-12 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mb-3">

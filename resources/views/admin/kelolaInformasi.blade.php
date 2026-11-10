@@ -90,12 +90,7 @@
         </div>
     </div>
 
-    <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-stone-200 bg-white px-4 py-3 text-xs text-stone-500">
-        <span id="informasiCountDisplay"></span>
-        <nav id="paginationInformasi" class="flex items-center gap-1" aria-label="Navigasi halaman informasi"></nav>
-    </div>
+    @include('admin.partials.pagination', ['paginator' => $informations, 'label' => 'artikel'])
     <x-admin.modalTambahInformasi :editInformation="$editInformation" />
 @endsection
-@push('scripts')
-@include('admin.partials.pagination-script')
-@endpush
+

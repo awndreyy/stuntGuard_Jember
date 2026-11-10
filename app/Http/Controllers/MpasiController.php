@@ -28,7 +28,7 @@ class MpasiController extends Controller
                 });
             })
             ->latest('created_at')->orderByDesc('id_resep')
-            ->paginate(5)->withQueryString();
+            ->paginate(6)->withQueryString();
 
         $totalResep = Mpasi::count();
         $total68 = Mpasi::where('kategori_usia', '6-8')->count();

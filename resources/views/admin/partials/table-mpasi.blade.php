@@ -1,6 +1,6 @@
 {{-- resources/views/admin/partials/table-mpasi.blade.php --}}
 {{-- RECIPES TABLE CONTAINER --}}
-<div id="recipesContainer" class="flex flex-col">
+<div id="recipesContainer" class="flex flex-col gap-3">
     <div id="tableViewWrapper" class="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col">
         <div class="overflow-x-auto min-w-full">
             <table class="w-full text-left border-collapse">
@@ -71,13 +71,13 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="py-12 text-center text-stone-400 text-xs">
+                            <td colspan="6" class="py-12 text-center text-stone-400 text-xs">
                                 <div class="flex flex-col items-center justify-center">
                                     <div class="w-12 h-12 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mb-3">
                                         <i data-lucide="utensils" class="w-6 h-6"></i>
                                     </div>
-                                    <h4 class="text-sm font-bold text-stone-800">Belum ada resep MPASI</h4>
-                                    <p class="text-xs text-stone-500 mt-1 max-w-sm">Klik tombol "Tambah Resep Baru" di atas untuk menambahkan resep MPASI pertama.</p>
+                                    <h4 class="text-sm font-bold text-stone-800">{{ request()->filled('q') || (request()->filled('kategori_usia') && request('kategori_usia') !== 'all') ? 'Tidak ada resep yang cocok' : 'Belum ada resep MPASI' }}</h4>
+                                    <p class="text-xs text-stone-500 mt-1 max-w-sm">{{ request()->filled('q') || (request()->filled('kategori_usia') && request('kategori_usia') !== 'all') ? 'Coba kata kunci lain atau ganti kategori usia.' : 'Klik tombol Tambah Resep Baru di atas untuk menambahkan resep MPASI pertama.' }}</p>
                                 </div>
                             </td>
                         </tr>
@@ -88,12 +88,6 @@
     </div>
 
     @include('admin.partials.pagination', ['paginator' => $mpasis, 'label' => 'resep'])
-    <!-- Empty State Search Placeholder -->
-    <div id="emptySearchState" class="hidden bg-white rounded-2xl border border-stone-200 p-8 text-center flex-col items-center justify-center my-auto">
-        <div class="w-12 h-12 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mb-3">
-            <i data-lucide="utensils" class="w-6 h-6"></i>
-        </div>
-        <h4 class="text-sm font-bold text-stone-800">Tidak ada resep yang cocok</h4>
-        <p class="text-xs text-stone-500 mt-1 max-w-sm">Coba kata kunci lain atau ubah filter kategori usia di atas.</p>
-    </div>
 </div>
+{{-- Data preview untuk hasil filter/pagination AJAX --}}
+<script id="mpasi-recipes-json" type="application/json">@json($mpasis->keyBy('id_resep'))</script>

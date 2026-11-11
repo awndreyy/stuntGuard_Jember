@@ -1,5 +1,6 @@
 {{-- Tabel Data Anak/Balita --}}
-<div id="tab-anak" class="flex flex-col hidden">
+<div id="tab-anak" class="flex flex-col gap-3 hidden">
+    <div class="overflow-hidden rounded-2xl border border-stone-200 bg-white">
 
     {{-- Card Header --}}
     <div class="px-4 py-3 border-b border-stone-100 flex flex-wrap items-center justify-between gap-3 shrink-0 bg-white">
@@ -101,6 +102,7 @@
                 @endif
             </tbody>
         </table>
+    </div>
     </div>
 
     @include('admin.partials.pagination', ['paginator' => $balita, 'label' => 'balita'])

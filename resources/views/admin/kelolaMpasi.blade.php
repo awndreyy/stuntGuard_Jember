@@ -28,39 +28,46 @@
     @include('components.admin.cardStatistikMpasi')
 
     <!-- Filter & Toolbar -->
-    <div class="bg-white p-3 rounded-2xl border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0">
+    <div id="mpasiFilterToolbar" class="bg-white p-3 rounded-2xl border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0">
         <!-- Filter Usia -->
         <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
-            <button onclick="filterCategory('all', this)" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === 'all' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
+            <a href="{{ route('kelolaMpasi', request()->except('kategori_usia', 'page')) }}" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === 'all' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
                 <span>Semua Usia</span>
                 <span class="px-1.5 py-0.2 rounded-md bg-white/20 text-[10px]">{{ $totalResep }}</span>
-            </button>
-            <button onclick="filterCategory('6-8', this)" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === '6-8' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
+            </a>
+            <a href="{{ route('kelolaMpasi', array_merge(request()->except('page'), ['kategori_usia' => '6-8'])) }}" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === '6-8' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
                 <span class="w-2 h-2 rounded-full bg-blue-500"></span>
                 <span>6-8 Bulan</span>
                 <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-500">{{ $total68 }}</span>
-            </button>
-            <button onclick="filterCategory('9-11', this)" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === '9-11' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
+            </a>
+            <a href="{{ route('kelolaMpasi', array_merge(request()->except('page'), ['kategori_usia' => '9-11'])) }}" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === '9-11' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
                 <span class="w-2 h-2 rounded-full bg-amber-500"></span>
                 <span>9-11 Bulan</span>
                 <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-500">{{ $total911 }}</span>
-            </button>
-            <button onclick="filterCategory('12-23', this)" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === '12-23' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
+            </a>
+            <a href="{{ route('kelolaMpasi', array_merge(request()->except('page'), ['kategori_usia' => '12-23'])) }}" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === '12-23' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                 <span>12-23 Bulan</span>
                 <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-500">{{ $total1223 }}</span>
-            </button>
+            </a>
         </div>
 
-        <!-- Search Field -->
-        <div class="flex items-center gap-2">
-            <div class="relative w-full sm:w-72">
+        <!-- Search: GET Laravel, pencarian di seluruh database -->
+        <form id="mpasiSearchForm" method="GET" action="{{ route('kelolaMpasi') }}" class="flex w-full sm:w-auto items-center gap-2">
+            @if (request()->filled('kategori_usia') && request('kategori_usia') !== 'all')
+                <input type="hidden" name="kategori_usia" value="{{ request('kategori_usia') }}">
+            @endif
+            <div class="relative flex-1 sm:w-72">
                 <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-stone-400">
                     <i data-lucide="search" class="w-3.5 h-3.5"></i>
                 </span>
-                <input type="text" id="recipeSearchInput" value="{{ request('q', '') }}" oninput="searchRecipes()" placeholder="Cari nama resep / bahan..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-stone-50 border border-stone-200 rounded-xl text-stone-700 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all">
+                <input type="search" name="q" id="recipeSearchInput" value="{{ request('q', '') }}" placeholder="Cari nama resep / bahan..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-stone-50 border border-stone-200 rounded-xl text-stone-700 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all">
             </div>
-        </div>
+            
+            @if (request()->filled('q'))
+                <a href="{{ route('kelolaMpasi', request()->except('q', 'page')) }}" class="shrink-0 rounded-xl border border-stone-200 px-3 py-2 text-xs text-stone-600 hover:bg-stone-50">Reset</a>
+            @endif
+        </form>
     </div>
 
     <!-- TABEL RESEP -->

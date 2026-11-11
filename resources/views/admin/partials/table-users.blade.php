@@ -1,6 +1,7 @@
 {{-- resources/views/admin/partials/table-users.blade.php --}}
 {{-- Tabel Data Pengguna --}}
-<div id="tab-user" class="flex flex-col">
+<div id="tab-user" class="flex flex-col gap-3">
+    <div class="overflow-hidden rounded-2xl border border-stone-200 bg-white">
 
     {{-- Card Header with Filters --}}
     <div class="px-4 py-3 border-b border-stone-100 flex flex-wrap items-center justify-between gap-3 shrink-0 bg-white">
@@ -103,6 +104,7 @@
                 @endif
             </tbody>
         </table>
+    </div>
     </div>
 
     @include('admin.partials.pagination', ['paginator' => $users, 'label' => 'pengguna'])

@@ -44,11 +44,11 @@
     {{-- Tab Switcher --}}
     @include('admin.partials.tab-switcher-balita')
 
-    {{-- Table Section --}}
-    <section class="bg-white rounded-2xl border border-stone-200 flex flex-col overflow-hidden">
+    {{-- Table Section: setiap tab memiliki card tabel dan pagination terpisah --}}
+    <div class="flex flex-col gap-3">
         @include('admin.partials.table-users')
         @include('admin.partials.table-anak')
-    </section>
+    </div>
 
     <!-- Modal Tambah User Baru  -->
     @include('components.admin.modalTambahUser')

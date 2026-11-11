@@ -1,26 +1,73 @@
-// Filter di database agar semua resep ikut terhitung, bukan hanya baris halaman aktif.
+// Filter MPASI: query tetap dijalankan Laravel untuk seluruh database,
+// tetapi hasil tabel diperbarui tanpa reload halaman.
+let mpasiRequest = null;
+let mpasiSearchTimer = null;
+
+async function loadMpasiPage(url, addHistory = true) {
+    const target = new URL(url, window.location.href);
+    if (target.origin !== window.location.origin) return;
+
+    if (mpasiRequest) mpasiRequest.abort();
+    const controller = new AbortController();
+    mpasiRequest = controller;
+    const container = document.getElementById('recipesContainer');
+    if (container) container.setAttribute('aria-busy', 'true');
+
+    try {
+        const response = await fetch(target.toString(), {
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'text/html' },
+            credentials: 'same-origin',
+            signal: controller.signal,
+        });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+        const nextTable = doc.getElementById('recipesContainer');
+        const nextToolbar = doc.getElementById('mpasiFilterToolbar');
+        const currentTable = document.getElementById('recipesContainer');
+        const currentToolbar = document.getElementById('mpasiFilterToolbar');
+        if (!nextTable || !nextToolbar || !currentTable || !currentToolbar) {
+            throw new Error('Markup tabel MPASI tidak ditemukan');
+        }
+
+        currentTable.replaceWith(nextTable);
+        currentToolbar.replaceWith(nextToolbar);
+        const json = nextTable.querySelector('#mpasi-recipes-json');
+        if (json) window.recipesData = JSON.parse(json.textContent);
+        if (addHistory) window.history.pushState({ mpasi: true }, '', target.toString());
+        if (window.lucide) window.lucide.createIcons();
+    } catch (error) {
+        if (error.name === 'AbortError') return;
+        console.error('Filter MPASI gagal:', error);
+        // Fallback: tetap bisa menggunakan server-side filter bila AJAX gagal.
+        window.location.assign(target.toString());
+    } finally {
+        if (mpasiRequest === controller) {
+            mpasiRequest = null;
+            document.getElementById('recipesContainer')?.removeAttribute('aria-busy');
+        }
+    }
+}
+
 function filterCategory(category) {
     const url = new URL(window.location.href);
     if (category === 'all') url.searchParams.delete('kategori_usia');
     else url.searchParams.set('kategori_usia', category);
     url.searchParams.delete('page');
-    window.location.assign(url.toString());
+    loadMpasiPage(url);
 }
 
-let searchRecipesTimer;
 function searchRecipes() {
-    clearTimeout(searchRecipesTimer);
-    searchRecipesTimer = setTimeout(() => {
+    clearTimeout(mpasiSearchTimer);
+    mpasiSearchTimer = setTimeout(() => {
         const url = new URL(window.location.href);
         const query = document.getElementById('recipeSearchInput')?.value.trim() || '';
         if (query) url.searchParams.set('q', query);
         else url.searchParams.delete('q');
         url.searchParams.delete('page');
-        window.location.assign(url.toString());
-    }, 500);
+        loadMpasiPage(url);
+    }, 450);
 }
 
-// Kompatibilitas jika dipanggil kode lama.
 function applyAllFilters() { searchRecipes(); }
 
 function previewRecipe(id) {
@@ -271,6 +318,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Event delegation: tetap aktif setelah toolbar/tabel diganti melalui AJAX.
+document.addEventListener('click', event => {
+    const anchor = event.target.closest('#mpasiFilterToolbar .category-tab, #mpasiFilterToolbar a[href], #recipesContainer nav a[href]');
+    if (!anchor || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    if (!anchor.href || new URL(anchor.href).origin !== window.location.origin) return;
+    event.preventDefault();
+    clearTimeout(mpasiSearchTimer);
+    loadMpasiPage(anchor.href);
+});
+
+document.addEventListener('input', event => {
+    if (event.target.id === 'recipeSearchInput') searchRecipes();
+});
+
+document.addEventListener('submit', event => {
+    if (event.target.id !== 'mpasiSearchForm') return;
+    event.preventDefault();
+    clearTimeout(mpasiSearchTimer);
+    const url = new URL(event.target.action);
+    const data = new FormData(event.target);
+    const q = String(data.get('q') || '').trim();
+    const age = data.get('kategori_usia');
+    if (q) url.searchParams.set('q', q);
+    if (age) url.searchParams.set('kategori_usia', String(age));
+    loadMpasiPage(url);
+});
+
+window.addEventListener('popstate', () => loadMpasiPage(window.location.href, false));
 
 // Expose functions to inline handlers (Vite bundles this file as a module)
 Object.assign(window, {

@@ -12,7 +12,7 @@
                 </h1>
             </div>
             <p class="text-xs text-stone-500 mt-0.5">
-                Hitung dan simulasikan status gizi serta deteksi dini risiko stunting balita berdasarkan indikator TB/U WHO.
+                Hitung status gizi balita terdaftar berdasarkan data identitas dan referensi WHO.
             </p>
         </div>
     </div>
@@ -39,7 +39,7 @@
             <form action="{{ route('kalkulator.calculate') }}" method="POST" class="space-y-3.5" id="kalkulatorForm">
                 @csrf
 
-                <!-- Nama Balita (Searchable Dropdown / Manual Input) -->
+                <!-- Pilih balita terdaftar -->
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <label class="block text-xs font-semibold text-stone-700">
@@ -50,7 +50,7 @@
                     <div class="relative" id="balitaSelectWrapper">
                         <!-- Hidden input yang dikirim ke controller -->
                         <input type="hidden" name="balita_id" id="inputBalitaId" value="{{ old('balita_id', $selectedBalitaId ?? '') }}">
-                        <input type="hidden" name="nama" id="inputNamaBalita" required value="{{ old('nama', $hasil['nama'] ?? '') }}">
+                        <input type="hidden" id="inputNamaBalita" value="{{ old('nama', $hasil['nama'] ?? '') }}">
 
                         <!-- Trigger Button Dropdown -->
                         <button
@@ -92,18 +92,6 @@
                                         placeholder="Ketik nama balita, NIK, atau nama orang tua..."
                                         class="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-pink-700 focus:border-pink-700"
                                     >
-                                </div>
-
-                                <!-- Opsi Gunakan Nama Manual -->
-                                <div id="manualNameAction" class="mt-1.5 hidden">
-                                    <button
-                                        type="button"
-                                        onclick="selectManualName()"
-                                        class="w-full text-left px-2.5 py-1.5 bg-pink-50 hover:bg-pink-100 text-pink-700 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
-                                    >
-                                        <i data-lucide="edit-3" class="w-3.5 h-3.5 shrink-0"></i>
-                                        <span class="truncate">Gunakan nama manual: "<span id="manualNamePreview"></span>"</span>
-                                    </button>
                                 </div>
                             </div>
 
@@ -157,40 +145,27 @@
                             </div>
                         </div>
                     </div>
-
-                    @error('nama')
-                        <p class="modal-error-message text-[11px] text-red-600 mt-1.5 flex items-center gap-1 font-medium">
-                            <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
-                            <span>{{ $message }}</span>
-                        </p>
-                    @enderror
                     @error('balita_id')
                         <p class="text-[11px] text-red-600 mt-1.5 font-medium">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Jenis Kelamin & Usia -->
+                <!-- Identitas otomatis dari database; bukan input perhitungan -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label for="jenis_kelamin" class="block text-xs font-semibold text-stone-700 mb-1">Jenis Kelamin <span class="text-pink-500">*</span></label>
-                        <select name="jenis_kelamin" id="jenis_kelamin" required class="w-full px-3 py-2 text-xs border border-stone-200 rounded-xl focus:outline-none focus:border-pink-700 focus:ring-1 focus:ring-pink-700 bg-white transition-all">
-                            <option value="L" {{ (old('jenis_kelamin', $hasil['jenis_kelamin'] ?? '') == 'Laki-laki' || old('jenis_kelamin') == 'L') ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="P" {{ (old('jenis_kelamin', $hasil['jenis_kelamin'] ?? '') == 'Perempuan' || old('jenis_kelamin') == 'P') ? 'selected' : '' }}>Perempuan</option>
+                        <label for="jenis_kelamin" class="block text-xs font-semibold text-stone-700 mb-1">Jenis Kelamin (dari data balita)</label>
+                        <select id="jenis_kelamin" disabled class="w-full px-3 py-2 text-xs border border-stone-200 rounded-xl bg-stone-100 text-stone-600 cursor-not-allowed">
+                            <option value="">Pilih balita terlebih dahulu</option>
+                            <option value="L">Laki-laki</option>
+                            <option value="P">Perempuan</option>
                         </select>
                     </div>
-
                     <div>
                         <div class="flex items-center justify-between mb-1">
-                            <label for="usia_bulan" class="block text-xs font-semibold text-stone-700">Usia (Bulan) <span class="text-pink-500">*</span></label>
-                            <span id="usiaAutoBadge" class="text-[10px] text-emerald-600 font-medium hidden">✓ Otomatis terhitung</span>
+                            <label for="usia_bulan" class="block text-xs font-semibold text-stone-700">Usia (Bulan)</label>
+                            <span id="usiaAutoBadge" class="text-[10px] text-emerald-600 font-medium hidden">Otomatis dari tanggal lahir</span>
                         </div>
-                        <input type="text" inputmode="numeric" name="usia_bulan" id="usia_bulan" min="0" max="60" maxlength="2" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required value="{{ old('usia_bulan', $hasil['usia_bulan'] ?? '') }}" placeholder="0 - 60 Bulan" class="w-full px-3 py-2 text-xs border border-stone-200 {{ $errors->has('usia_bulan') ? 'border-red-500 ring-2 ring-red-500/20 modal-error-input' : 'border-stone-200' }} rounded-xl focus:outline-none focus:border-pink-700 focus:ring-1 focus:ring-pink-700 bg-white transition-all">
-                        @error('usia_bulan')
-                            <p class="modal-error-message text-[11px] text-red-600 mt-1.5 flex items-center gap-1 font-medium">
-                                <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
-                                <span>{{ $message }}</span>
-                            </p>
-                        @enderror
+                        <input type="text" id="usia_bulan" readonly value="" placeholder="Pilih balita terlebih dahulu" class="w-full px-3 py-2 text-xs border border-stone-200 rounded-xl bg-stone-100 text-stone-600 cursor-not-allowed">
                     </div>
                 </div>
 
@@ -286,7 +261,7 @@
                         <span>Hitung Status Gizi</span>
                     </button>
                     <p class="text-[11px] text-stone-500 mt-2">
-                        Klik Hitung untuk melihat hasil. Untuk balita terdaftar, gunakan tombol Simpan Pengukuran setelah hasil ditampilkan.
+                        Klik Hitung untuk melihat hasil tanpa menyimpan. Gunakan tombol Simpan Pengukuran jika ingin mencatat hasil ke riwayat balita.
                     </p>
                 </div>
             </form>
@@ -440,8 +415,6 @@
     function filterBalitas(query) {
         const normalized = query.toLowerCase().trim();
         const options = document.querySelectorAll('.balita-option');
-        const manualAction = document.getElementById('manualNameAction');
-        const manualPreview = document.getElementById('manualNamePreview');
         const noMatch = document.getElementById('noBalitaMatch');
         let visibleCount = 0;
 
@@ -461,18 +434,9 @@
         if (noMatch) {
             noMatch.classList.toggle('hidden', visibleCount > 0);
         }
-
-        if (manualAction && manualPreview) {
-            if (normalized.length > 0) {
-                manualPreview.textContent = query.trim();
-                manualAction.classList.remove('hidden');
-            } else {
-                manualAction.classList.add('hidden');
-            }
-        }
     }
 
-    function selectBalita(id, nama, gender, birthDate, parentName, nik) {
+    function selectBalita(id, nama, gender, birthDate, parentName, nik, skipToggle = false) {
         // Set nama balita
         document.getElementById('inputBalitaId').value = id;
         const inputNama = document.getElementById('inputNamaBalita');
@@ -525,36 +489,8 @@
             }
         }
 
-        toggleBalitaDropdown();
+        if (!skipToggle) toggleBalitaDropdown();
         if (window.lucide) lucide.createIcons();
-    }
-
-    function selectManualName() {
-        document.getElementById('inputBalitaId').value = '';
-        const searchInput = document.getElementById('balitaSearchInput');
-        const customName = searchInput ? searchInput.value.trim() : '';
-
-        if (!customName) return;
-
-        const inputNama = document.getElementById('inputNamaBalita');
-        const selectedText = document.getElementById('selectedBalitaText');
-        const badge = document.getElementById('balitaSelectionBadge');
-        const usiaBadge = document.getElementById('usiaAutoBadge');
-
-        if (inputNama) inputNama.value = customName;
-        if (selectedText) {
-            selectedText.textContent = customName;
-            selectedText.className = 'font-semibold text-stone-800 truncate block';
-        }
-        if (badge) {
-            badge.textContent = 'Input manual (Belum terdaftar)';
-            badge.className = 'text-[10px] font-medium text-amber-600';
-        }
-        if (usiaBadge) {
-            usiaBadge.classList.add('hidden');
-        }
-
-        toggleBalitaDropdown();
     }
 
     function calculateAgeInMonths(birthDateStr) {
@@ -577,6 +513,18 @@
             el.classList.remove('ring-2', 'ring-pink-400', 'bg-pink-50/50');
         }, 1000);
     }
+
+    // Sinkronkan identitas tampilan saat kembali dari validasi / hasil perhitungan.
+    document.addEventListener('DOMContentLoaded', function () {
+        const currentId = document.getElementById('inputBalitaId')?.value;
+        if (!currentId) return;
+        const choice = Array.from(document.querySelectorAll('.balita-option'))
+            .find(option => option.dataset.id === currentId);
+        if (choice) {
+            selectBalita(choice.dataset.id, choice.dataset.namaAsli, choice.dataset.gender,
+                choice.dataset.birth, choice.dataset.parentName, choice.dataset.nikAsli, true);
+        }
+    });
 
     // Simpan melalui PengukuranController, bukan POST kalkulator.
     // Tanpa JavaScript, form tetap bisa tersimpan melalui respons redirect.

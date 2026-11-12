@@ -22,7 +22,7 @@ class LandingController extends Controller
             'jumlahResep' => Mpasi::count(),
             'jumlahArtikel' => Informasi::count(),
             'resepTerbaru' => Mpasi::orderByDesc('created_at')->orderByDesc('id_resep')->limit(3)->get(),
-            'artikelTerbaru' => Informasi::orderByDesc('created_at')->orderByDesc('id_informasi')->limit(4)->get(),
+            'artikelTerbaru' => Informasi::orderByDesc('created_at')->orderByDesc('id_informasi')->limit(3)->get(),
         ]);
     }
 

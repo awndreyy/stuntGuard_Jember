@@ -159,7 +159,7 @@
     <!-- Footer -->
     <div class="px-4 sm:px-8 py-3.5 bg-pink-50 border-t border-pink-100 text-center">
       <p class="text-[11px] sm:text-xs text-stone-600">
-        &copy; {{ date('Y') }} StuntGuard Jember. Hak Cipta Dilindungi.
+        &copy; {{ date('Y') }} StuntGuard. Dibuat oleh kelompok 2.
       </p>
     </div>
   </div>

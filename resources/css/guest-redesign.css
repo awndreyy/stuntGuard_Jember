@@ -223,7 +223,7 @@
 }
 .sg-guest :is(.sg-recipe-card, .sg-article-card):is(:hover, :focus-within) { transform: translateY(-4px); box-shadow: 0 12px 26px #332b2210; border-color: #c9b1b6; }
 .sg-guest .sg-card-media { display: flex; align-items: center; justify-content: center; background: #eee2d1; }
-.sg-guest .sg-recipe-card > .sg-card-media { height: 210px; aspect-ratio: auto; }
+.sg-guest :is(.sg-recipe-card, .sg-article-card) > .sg-card-media { height: 210px; aspect-ratio: auto; }
 .sg-guest .sg-article-card > .sg-card-media { background: var(--sg-blush); }
 .sg-guest :is(#recipeGrid, #resep-mpasi .grid) > :nth-child(3n+2) .sg-card-media { background: #f0dfc3; }
 .sg-guest :is(#recipeGrid, #resep-mpasi .grid) > :nth-child(3n+3) .sg-card-media { background: #e1e7d9; }

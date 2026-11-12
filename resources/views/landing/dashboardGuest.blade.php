@@ -89,7 +89,7 @@
                                     <option value="terlentang">Terlentang (panjang badan)</option>
                                     <option value="berdiri">Berdiri (tinggi badan)</option>
                                 </select>
-                                <p class="text-xs text-stone-600 mt-1">Untuk usia di bawah 24 bulan gunakan panjang badan; usia 24 bulan ke atas gunakan tinggi badan. Sistem melakukan koreksi 0,7 cm jika posisi tidak sesuai.</p>
+                                <p class="text-xs text-stone-600 mt-1">Untuk usia di bawah 24 bulan gunakan panjang badan; usia 24 bulan ke atas gunakan tinggi badan.</p>
                             </div>
 
                             <p id="guestCalcError" role="alert" aria-live="polite" class="hidden text-xs text-rose-700"></p>
@@ -246,9 +246,9 @@
                     <p class="text-sm mt-1">Artikel akan tampil setelah admin menambahkannya.</p>
                 </div>
             @else
-                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 {{ $artikelTerbaru->count() === 1 ? 'sm:grid-cols-1' : ($artikelTerbaru->count() === 2 ? 'lg:grid-cols-2' : ($artikelTerbaru->count() === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4')) }}">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($artikelTerbaru as $artikel)
-                        @include('landing.partials.articleCard', ['artikel' => $artikel, 'featured' => $artikelTerbaru->count() === 1])
+                        @include('landing.partials.articleCard', ['artikel' => $artikel])
                     @endforeach
                 </div>
             @endif
@@ -256,7 +256,10 @@
     </section>
 
 <section class="sg-mobile" id="aplikasi-mobile" aria-labelledby="mobile-heading">
-        <div class="sg-mobile-copy"><p class="sg-eyebrow">STUNTGUARD DI GENGGAMAN</p><h2 id="mobile-heading">Temani tumbuh kembangnya,<br>dari aplikasi mobile.</h2><p>Orang tua dapat mengakses resep MPASI, artikel kesehatan, data anak, dan riwayat pengukuran melalui aplikasi StuntGuard. Pencatatan pengukuran dikelola oleh admin posyandu.</p></div>
+        <div class="sg-mobile-copy"><p class="sg-eyebrow">STUNTGUARD DI GENGGAMAN</p>
+            <h2 id="mobile-heading">Temani tumbuh kembangnya,<br>dari aplikasi mobile.</h2>
+            <p>Orang tua dapat mengakses resep MPASI, artikel kesehatan, data anak, dan riwayat pengukuran melalui aplikasi StuntGuard Mobile.</p>
+        </div>
         <div class="sg-mobile-icon"><svg viewBox="0 0 180 220" role="img" aria-label="Ilustrasi aplikasi StuntGuard di ponsel"><circle cx="90" cy="112" r="83" fill="#efd7df"/><rect x="43" y="9" width="94" height="192" rx="19" fill="#852641"/><rect x="49" y="16" width="82" height="178" rx="14" fill="#fffaf8"/><rect x="72" y="17" width="36" height="7" rx="3.5" fill="#852641"/><rect x="49" y="39" width="82" height="51" fill="#ac3156"/><path d="M90 76s-17-10-17-20c0-9 12-12 17-3 5-9 17-6 17 3 0 10-17 20-17 20Z" fill="#fffaf8"/><rect x="59" y="103" width="62" height="25" rx="6" fill="#f6e3e7"/><rect x="59" y="138" width="27" height="27" rx="6" fill="#e4e9dd"/><rect x="94" y="138" width="27" height="27" rx="6" fill="#f6e3e7"/><path d="M67 116h17m8 0h21" stroke="#ac3156" stroke-width="3" stroke-linecap="round"/><rect x="77" y="182" width="26" height="3" rx="1.5" fill="#852641"/></svg><span>StuntGuard Mobile</span></div>
     </section>
 @endsection

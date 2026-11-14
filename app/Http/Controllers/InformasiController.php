@@ -58,7 +58,7 @@ class InformasiController extends Controller
             'judul' => $request->input('judul', $request->input('title')),
             'category' => $request->category,
             'summary' => $request->summary,
-            'content' => $request->content,
+            'content' => $request->input('content'),
             'thumbnail' => $thumbnailPath,
         ]);
 
@@ -119,7 +119,7 @@ class InformasiController extends Controller
         $informasi->judul = $request->input('judul', $request->input('title'));
         $informasi->category = $request->category;
         $informasi->summary = $request->summary;
-        $informasi->content = $request->content;
+        $informasi->content = $request->input('content');
         $informasi->save();
 
         return redirect()->route('kelolaInformasi')->with('success', 'Informasi & edukasi berhasil diperbarui!');

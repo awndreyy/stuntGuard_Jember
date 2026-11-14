@@ -20,7 +20,7 @@
             <h2 class="font-bold text-sm">Balita milik {{ $user->name }}</h2>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full min-w-[650px] text-left text-xs">
+            <table class="w-full min-w-162.5 text-left text-xs">
                 <thead class="bg-stone-50 text-[10px] uppercase text-stone-500">
                     <tr>
                         <th class="px-4 py-3">Nama Balita</th>

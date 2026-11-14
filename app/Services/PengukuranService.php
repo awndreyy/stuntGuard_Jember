@@ -13,7 +13,9 @@ use Illuminate\Validation\ValidationException;
  */
 class PengukuranService
 {
-    public function __construct(private readonly WhoGrowthService $who) {}
+    public function __construct(private readonly WhoGrowthService $who)
+    {
+    }
 
     /**
      * Hitung tanpa menyimpan (untuk simulasi balita yang belum terdaftar).
@@ -144,67 +146,9 @@ class PengukuranService
             'z_score_bbu' => $hasil['z_bbu'],
             'z_score_tbu' => $hasil['z_score'],
             'z_score_bbtb' => $hasil['z_bb_tb'],
-            'hasil' => $hasil,
         ]);
 
         return compact('hasil', 'pengukuran');
-    }
-
-    /**
-     * Rebuild the available result for records created before result snapshots
-     * were persisted.
-     *
-     * @return array<string, mixed>
-     */
-    public function historyResultForBalita(Balita $balita, Pengukuran $record): array
-    {
-        $age = (int) $record->umur_bulan;
-        $sex = $balita->jenis_kelamin === 'Laki-laki' ? 'L' : 'P';
-        $isLength = $age < 24;
-        $heightScore = $record->z_score_tbu === null
-            ? null
-            : (float) $record->z_score_tbu;
-        $weightAgeScore = $record->z_score_bbu === null
-            ? null
-            : (float) $record->z_score_bbu;
-        $weightHeightScore = $record->z_score_bbtb === null
-            ? null
-            : (float) $record->z_score_bbtb;
-        $head = $record->lingkar_kepala === null
-            ? null
-            : (float) $record->lingkar_kepala;
-        $arm = $record->lila === null ? null : (float) $record->lila;
-
-        $status = match (true) {
-            $heightScore === null => 'Tidak dapat dihitung: data di luar rentang referensi',
-            $heightScore < -3 => 'Sangat Pendek',
-            $heightScore < -2 => 'Pendek (Stunted)',
-            $heightScore <= 3 => 'Normal',
-            default => 'Tinggi',
-        };
-
-        return [
-            'nama' => $balita->nama_balita,
-            'jenis_kelamin' => $balita->jenis_kelamin,
-            'usia_bulan' => $age,
-            'berat' => (float) $record->berat_badan,
-            'tinggi' => (float) $record->tinggi_badan,
-            'posisi_badan' => 'Tidak tersimpan',
-            'z_score' => $this->roundedZScore($heightScore),
-            'status_stunting' => $status,
-            'indikator_tinggi' => $isLength ? 'PB/U' : 'TB/U',
-            'indikator_berat_tinggi' => $isLength ? 'BB/PB' : 'BB/TB',
-            'z_bbu' => $this->roundedZScore($weightAgeScore),
-            'z_bb_tb' => $this->roundedZScore($weightHeightScore),
-            'z_lku' => $head === null
-                ? null
-                : $this->roundedZScore($this->who->zScore('hcfa', $sex, $age, $head)),
-            'z_lilau' => $arm === null || $age < 3
-                ? null
-                : $this->roundedZScore($this->who->zScore('acfa', $sex, $age, $arm)),
-            'skrining_lila' => $this->who->lilaScreening($arm, $age),
-            'catatan' => 'Sebagian detail posisi ukur tidak tersimpan pada catatan pengukuran lama.',
-        ];
     }
 
     private function ageInMonths(Balita $balita, string $measurementDate, string $errorField): int
@@ -227,7 +171,7 @@ class PengukuranService
         // Bulan kalender penuh, konsisten untuk tanggal lahir di akhir bulan.
         $age = ($date->year - $birth->year) * 12 + ($date->month - $birth->month);
         if ($date->day < $birth->day) {
-            $age--;
+            --$age;
         }
 
         if ($age > 60) {

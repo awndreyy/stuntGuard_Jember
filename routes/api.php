@@ -27,6 +27,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/balita/{balita}', [BalitaController::class, 'destroy']);
         Route::get('/balita/{balita}/pengukuran', [PengukuranController::class, 'historyForBalita']);
         Route::post('/balita/{balita}/pengukuran', [PengukuranController::class, 'storeForBalita']);
-    });
+;    });
     Route::post('/logout', [AuthController::class, 'logout']);
 });

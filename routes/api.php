@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BalitaController;
+use App\Http\Controllers\Api\InformasiController;
 use App\Http\Controllers\Api\MpasiController;
 use App\Http\Controllers\PengukuranController;
 use Illuminate\Http\Request;
@@ -16,6 +17,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return response()->json($request->user());
 });
 
+Route::get('/informasi', [InformasiController::class, 'index']);
+Route::get('/informasi/{informasi}', [InformasiController::class, 'show']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::get('/mpasi', [MpasiController::class, 'index'])->name('api.mpasi.index');
@@ -27,6 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/balita/{balita}', [BalitaController::class, 'destroy']);
         Route::get('/balita/{balita}/pengukuran', [PengukuranController::class, 'historyForBalita']);
         Route::post('/balita/{balita}/pengukuran', [PengukuranController::class, 'storeForBalita']);
-;    });
+    });
     Route::post('/logout', [AuthController::class, 'logout']);
 });

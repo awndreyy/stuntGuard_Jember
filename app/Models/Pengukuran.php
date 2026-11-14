@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Concerns\HasCustomId;
 use App\Services\CustomIdService;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -25,11 +24,15 @@ class Pengukuran extends Model
         'z_score_bbu',
         'z_score_tbu',
         'z_score_bbtb',
+        'hasil',
     ];
 
     protected function casts(): array
     {
-        return ['tanggal_pengukuran' => 'date'];
+        return [
+            'tanggal_pengukuran' => 'date',
+            'hasil' => 'array',
+        ];
     }
 
     public function balita(): BelongsTo

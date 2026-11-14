@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Balita;
+use App\Models\Pengukuran;
 use App\Services\PengukuranService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -41,16 +42,27 @@ class PengukuranController extends Controller
         ], 201);
     }
 
-    public function historyForBalita(Request $request, string $balita): JsonResponse
-    {
+    public function historyForBalita(
+        Request $request,
+        string $balita,
+        PengukuranService $measurements,
+    ): JsonResponse {
         $anak = $request->user()->balitas()->whereKey($balita)->firstOrFail();
+        $rows = $anak->pengukurans()
+            ->orderByDesc('tanggal_pengukuran')
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->get();
 
         return response()->json([
-            'data' => $anak->pengukurans()
-                ->orderByDesc('tanggal_pengukuran')
-                ->orderByDesc('created_at')
-                ->orderByDesc('id')
-                ->get(),
+            'data' => $rows->each(function (Pengukuran $row) use ($anak, $measurements): void {
+                if ($row->hasil === null) {
+                    $row->setAttribute(
+                        'hasil',
+                        $measurements->historyResultForBalita($anak, $row),
+                    );
+                }
+            }),
         ]);
     }
 

@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (Schema::getColumnType('tt_pengukurans', 'id') === 'string') {
+        if (in_array(Schema::getColumnType('tt_pengukurans', 'id'), ['string', 'varchar'], true)) {
             return;
         }
 

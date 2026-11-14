@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="sg-guest bg-[#FFFBFC] font-sans text-stone-800 min-h-screen flex flex-col antialiased selection:bg-pink-200 selection:text-pink-900">
+<body class="sg-guest bg-brand-canvas font-sans text-stone-800 min-h-screen flex flex-col antialiased selection:bg-pink-200 selection:text-pink-900">
     <a class="sg-skip" href="#guest-content">Lewati navigasi</a>
     <x-guest.navbar />
     <main tabindex="-1" class="w-full flex-1 pt-20" id="beranda">

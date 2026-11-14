@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\BalitaController;
-use App\Http\Controllers\Api\MpasiController;
-use App\Http\Controllers\PengukuranController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\MpasiController;
+use App\Http\Controllers\Api\BalitaController;
 
 Route::post('/register', [AuthController::class, 'register'])
     ->middleware('throttle:5,1');
@@ -25,8 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/balita', [BalitaController::class, 'store']);
         Route::put('/balita/{balita}', [BalitaController::class, 'update']);
         Route::delete('/balita/{balita}', [BalitaController::class, 'destroy']);
-        Route::get('/balita/{balita}/pengukuran', [PengukuranController::class, 'historyForBalita']);
-        Route::post('/balita/{balita}/pengukuran', [PengukuranController::class, 'storeForBalita']);
-;    });
+    });
     Route::post('/logout', [AuthController::class, 'logout']);
 });

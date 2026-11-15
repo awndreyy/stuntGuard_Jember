@@ -3,7 +3,7 @@
 @section('title', 'Resep MPASI - StuntGuard Jember')
 
 @section('content')
-    <div class="sg-public-list mx-auto max-w-[1200px] px-4 pb-16 pt-7 sm:px-6 md:px-8 md:pb-20 md:pt-10 lg:px-12">
+    <div class="sg-public-list mx-auto max-w-300 px-4 pb-16 pt-7 sm:px-6 md:px-8 md:pb-20 md:pt-10 lg:px-12">
         <div class="sg-page-heading">
             <a href="{{ route('home') }}#resep-mpasi" class="sg-back-link">
                 <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_back</span>
@@ -96,7 +96,7 @@
                     </p>
                 </div>
 
-                <div id="recipeGrid" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div id="recipeGrid" class="grid grid-cols-2 gap-3.5 sm:gap-6 lg:grid-cols-3">
                     @foreach ($resep as $item)
                         <div data-recipe-item
                              data-name="{{ $item->nama_resep }}"

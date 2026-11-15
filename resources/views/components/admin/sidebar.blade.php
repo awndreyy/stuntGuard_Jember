@@ -65,7 +65,7 @@
                 <span class="px-2.5 text-[10px] font-bold tracking-wider text-stone-400 uppercase">Manajemen Konten</span>
                 <nav class="mt-1.5 space-y-1">
                     <!-- Kelola Informasi -->
-                    <a href="{{ url('/kelolaInformasi') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ request()->is('kelolaInformasi*') ? 'bg-brand text-white shadow-sm' : 'text-stone-600 hover:text-pink-700 hover:bg-stone-50' }} transition-all">
+                    <a href="{{ route('kelolaInformasi') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ request()->is('kelolaInformasi*') ? 'bg-brand text-white shadow-sm' : 'text-stone-600 hover:text-pink-700 hover:bg-stone-50' }} transition-all">
                         <i data-lucide="book-open" class="w-4 h-4 mt-0.5 {{ request()->is('kelolaInformasi*') ? 'text-pink-100' : 'text-stone-400 group-hover:text-pink-700' }} transition-colors"></i>
                         <div class="flex-1">
                             <span class="block text-xs font-semibold">Kelola Informasi</span>
@@ -73,7 +73,7 @@
                         </div>
                     </a>
                     <!-- Kelola MPASI -->
-                    <a href="{{ url('/kelolaMpasi') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ (request()->is('kelolaMpasi*') || request()->routeIs('mpasi.create', 'mpasi.edit')) ? 'bg-brand text-white shadow-sm' : 'text-stone-600 hover:text-pink-700 hover:bg-stone-50' }} transition-all">
+                    <a href="{{ route('kelolaMpasi') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ (request()->is('kelolaMpasi*') || request()->routeIs('mpasi.create', 'mpasi.edit')) ? 'bg-brand text-white shadow-sm' : 'text-stone-600 hover:text-pink-700 hover:bg-stone-50' }} transition-all">
                         <i data-lucide="utensils-crossed" class="w-4 h-4 mt-0.5 {{ (request()->is('kelolaMpasi*') || request()->routeIs('mpasi.create', 'mpasi.edit')) ? 'text-pink-100' : 'text-stone-400 group-hover:text-pink-700' }} transition-colors"></i>
                         <div class="flex-1">
                             <span class="block text-xs font-semibold">Kelola MPASI</span>
@@ -88,7 +88,7 @@
                 <span class="px-2.5 text-[10px] font-bold tracking-wider text-stone-400 uppercase">Pengaturan Sistem</span>
                 <nav class="mt-1.5 space-y-1">
                     <!-- Kalkulator Gizi -->
-                    <a href="{{ url('/kalkulatorGizi') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ request()->is('kalkulatorGizi*') ? 'bg-brand text-white shadow-sm' : 'text-stone-600 hover:text-pink-700 hover:bg-stone-50' }} transition-all">
+                    <a href="{{ route('kalkulatorGizi') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ request()->is('kalkulatorGizi*') ? 'bg-brand text-white shadow-sm' : 'text-stone-600 hover:text-pink-700 hover:bg-stone-50' }} transition-all">
                         <i data-lucide="calculator" class="w-4 h-4 mt-0.5 {{ request()->is('kalkulatorGizi*') ? 'text-pink-100' : 'text-stone-400 group-hover:text-pink-700' }} transition-colors"></i>
                         <div class="flex-1">
                             <span class="block text-xs font-semibold">Kalkulator Gizi</span>
@@ -96,7 +96,7 @@
                         </div>
                     </a>
                     <!-- Kelola User -->
-                    <a href="{{ url('/kelolaUser') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ $kelolaUserAktif ? 'bg-brand text-white shadow-sm' : 'text-stone-600 hover:text-pink-700 hover:bg-stone-50' }} transition-all">
+                    <a href="{{ route('kelolaUser') }}" class="group flex items-start gap-2.5 px-3 py-2 rounded-xl {{ $kelolaUserAktif ? 'bg-brand text-white shadow-sm' : 'text-stone-600 hover:text-pink-700 hover:bg-stone-50' }} transition-all">
                         <i data-lucide="users" class="w-4 h-4 mt-0.5 {{ $kelolaUserAktif ? 'text-pink-100' : 'text-stone-400 group-hover:text-pink-700' }} transition-colors"></i>
                         <div class="flex-1">
                             <span class="block text-xs font-semibold">Kelola User</span>

@@ -13,43 +13,46 @@
       -webkit-font-smoothing: antialiased;
     }
     .btn-primary {
-      background-color: var(--color-brand);
-      transition: background-color 0.2s ease;
+      background-color: var(--sg-primary, #ac3156);
+      transition: all 0.2s ease;
     }
     .btn-primary:hover {
-      background-color: var(--color-brand-hover);
+      background-color: var(--sg-hover, #852641);
     }
     .input-field:focus {
-      border-color: var(--color-brand);
-      box-shadow: 0 0 0 3px rgb(219 39 119 / 0.12);
+      border-color: var(--sg-primary, #ac3156);
+      box-shadow: 0 0 0 3px rgb(172 49 86 / 0.15);
     }
   </style>
 </head>
-<body class="min-h-screen bg-brand-canvas relative flex items-center justify-center p-3 sm:p-6 py-6 sm:py-10 overflow-x-hidden overflow-y-auto">
+<body class="sg-guest min-h-screen bg-[#fffdfa] relative flex items-center justify-center p-3 sm:p-6 py-6 sm:py-10 overflow-x-hidden overflow-y-auto selection:bg-pink-200 selection:text-pink-900">
 
+  <!-- Aksen Dekoratif Halus Latar Belakang -->
+  <div class="pointer-events-none absolute -top-32 -left-32 w-96 h-96 rounded-full bg-pink-100/60 blur-3xl" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-pink-50/80 blur-3xl" aria-hidden="true"></div>
 
   <!-- KARTU FORM LOGIN -->
-  <div class="w-full max-w-[420px] sm:max-w-md bg-white rounded-2xl border border-pink-100 overflow-hidden relative z-10 my-auto">
+  <div class="w-full max-w-105 sm:max-w-md bg-white rounded-3xl border border-stone-200 shadow-[0_12px_32px_rgba(53,47,50,0.06)] overflow-hidden relative z-10 my-auto">
 
     <!-- Header -->
-    <div class="px-4 sm:px-8 pt-10 sm:pt-8 pb-6 sm:pb-7 text-center border-b border-pink-100 bg-pink-50 relative">
+    <div class="px-4 sm:px-8 pt-10 sm:pt-8 pb-6 sm:pb-7 text-center border-b border-stone-200 bg-pink-50/70 relative">
 
       <!-- Tombol Kembali -->
-      <a href="{{ url('/') }}" class="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-20 inline-flex items-center gap-1.5 text-xs font-semibold text-stone-600 hover:text-pink-700 active:scale-95 bg-white/90 hover:bg-white backdrop-blur-xs px-2.5 py-1.5 rounded-lg border border-pink-200/60 transition-colors" title="Kembali ke halaman sebelumnya">
+      <a href="{{ url('/') }}" class="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-20 inline-flex items-center gap-1.5 text-xs font-semibold text-stone-600 hover:text-pink-700 active:scale-95 bg-white/90 hover:bg-white backdrop-blur-xs px-2.5 py-1.5 rounded-xl border border-stone-200 shadow-xs transition-colors" title="Kembali ke halaman sebelumnya">
         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
         <span>Kembali</span>
       </a>
 
       <!-- Logo Brand -->
-      <div class="mx-auto w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white flex items-center justify-center mb-3 sm:mb-3.5 relative z-10 overflow-hidden border border-pink-200/30">
+      <div class="mx-auto w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white flex items-center justify-center mb-3 sm:mb-3.5 relative z-10 overflow-hidden border border-stone-200 shadow-xs p-2">
         <img src="{{ asset('images/logo-StuntGuard.png') }}" alt="StuntGuard Jember" class="w-full h-full object-contain">
       </div>
 
       <!-- App Title -->
-      <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-stone-900 flex items-center justify-center gap-2 mb-1 relative z-10">
+      <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-stone-900 flex items-center justify-center gap-2 mb-1 relative z-10">
         StuntGuard
       </h1>
-      <p class="text-[11px] font-bold text-pink-600 uppercase tracking-wider relative z-10">Kabupaten Jember</p>
+      <p class="text-[11px] font-bold text-pink-700 uppercase tracking-wider relative z-10">Kabupaten Jember</p>
       <p class="text-xs sm:text-sm text-stone-600 mt-1 relative z-10">Monitoring Gizi &amp; MPASI Balita</p>
     </div>
 
@@ -87,7 +90,7 @@
           <label for="email" class="block text-xs font-semibold text-stone-900 mb-1.5">Email</label>
           <div class="relative group">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-              <i data-lucide="mail" class="w-4 h-4 {{ $errors->has('email') ? 'text-red-500' : 'text-stone-600 group-focus-within:text-pink-700' }} transition-colors"></i>
+              <i data-lucide="mail" class="w-4 h-4 {{ $errors->has('email') ? 'text-red-500' : 'text-stone-400 group-focus-within:text-pink-700' }} transition-colors"></i>
             </div>
             <input
               type="text"
@@ -97,7 +100,7 @@
               required
               autofocus
               placeholder="nama@gmail.com"
-              class="input-field w-full pl-10 pr-3.5 py-2.5 text-sm bg-stone-100 border {{ $errors->has('email') ? 'border-red-300 ring-1 ring-red-300 bg-red-50/30' : 'border-pink-200 focus:border-pink-700' }} rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:bg-white transition-all shadow-sm"
+              class="input-field w-full pl-10 pr-3.5 py-2.5 text-sm bg-stone-50 border {{ $errors->has('email') ? 'border-red-300 ring-1 ring-red-300 bg-red-50/30' : 'border-stone-200 focus:border-pink-600' }} rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:bg-white transition-all shadow-xs"
             >
           </div>
           @error('email')
@@ -115,7 +118,7 @@
           </div>
           <div class="relative group">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-              <i data-lucide="lock" class="w-4 h-4 {{ $errors->has('password') ? 'text-red-500' : 'text-stone-600 group-focus-within:text-pink-700' }} transition-colors"></i>
+              <i data-lucide="lock" class="w-4 h-4 {{ $errors->has('password') ? 'text-red-500' : 'text-stone-400 group-focus-within:text-pink-700' }} transition-colors"></i>
             </div>
             <input
               type="password"
@@ -123,12 +126,12 @@
               name="password"
               required
               placeholder="minimal 6 karakter"
-              class="input-field w-full pl-10 pr-10 py-2.5 text-sm bg-stone-100 border {{ $errors->has('password') ? 'border-red-300 ring-1 ring-red-300 bg-red-50/30' : 'border-pink-200 focus:border-pink-700' }} rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:bg-white transition-all shadow-sm"
+              class="input-field w-full pl-10 pr-10 py-2.5 text-sm bg-stone-50 border {{ $errors->has('password') ? 'border-red-300 ring-1 ring-red-300 bg-red-50/30' : 'border-stone-200 focus:border-pink-600' }} rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:bg-white transition-all shadow-xs"
             >
             <button
               type="button"
               onclick="togglePassword()"
-              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-600 hover:text-pink-700 focus:outline-none p-1.5 cursor-pointer transition-colors"
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-pink-700 focus:outline-none p-1.5 cursor-pointer transition-colors"
               tabindex="-1"
               aria-label="Toggle password visibility"
             >
@@ -147,7 +150,7 @@
         <div class="pt-2">
           <button
             type="submit"
-            class="btn-primary w-full flex items-center justify-center gap-2 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-700 cursor-pointer text-sm sm:text-base"
+            class="btn-primary w-full flex items-center justify-center gap-2 text-white font-bold py-2.5 sm:py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-700 cursor-pointer text-sm sm:text-base shadow-sm hover:shadow transition-all"
           >
             <span>Masuk ke Dashboard</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -157,7 +160,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="px-4 sm:px-8 py-3.5 bg-pink-50 border-t border-pink-100 text-center">
+    <div class="px-4 sm:px-8 py-3.5 bg-pink-50/70 border-t border-stone-200 text-center">
       <p class="text-[11px] sm:text-xs text-stone-600">
         &copy; {{ date('Y') }} StuntGuard. Dibuat oleh kelompok 2.
       </p>

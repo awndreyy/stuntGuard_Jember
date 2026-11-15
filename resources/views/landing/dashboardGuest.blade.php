@@ -25,7 +25,7 @@
     </section>
 
     <section id="kalkulator-widget" class="py-16 bg-white border-y border-pink-100 scroll-mt-20">
-        <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
+        <div class="max-w-300 mx-auto px-4 md:px-8 lg:px-12">
             <div class="sg-section-heading text-center max-w-2xl mx-auto mb-10">
                 <div class="sg-eyebrow">
                     <span>Kenali Pertumbuhan Si Kecil</span>
@@ -63,7 +63,7 @@
                                 <div>
                                     <label for="inputAge" class="block text-sm font-bold text-stone-700 mb-1.5">Usia Saat Ini</label>
                                     <div class="relative">
-                                        <input id="inputAge" type="number" min="0" max="60" value="14" required class="w-full h-12 bg-stone-50 border border-stone-200 rounded-xl px-4 pr-14 text-base font-bold text-stone-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all">
+                                        <input id="inputAge" type="number" step="1" min="0" max="60" value="14" required class="w-full h-12 bg-stone-50 border border-stone-200 rounded-xl px-4 pr-14 text-base font-bold text-stone-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all">
                                         <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-stone-400">Bulan</span>
                                     </div>
                                 </div>
@@ -176,8 +176,8 @@
                         <div class="mt-5 px-2">
                             <div class="relative h-3 rounded-full bg-stone-200" aria-hidden="true">
                                 <div class="absolute inset-y-0 left-0 w-[16.6667%] rounded-l-full bg-rose-200"></div>
-                                <div class="absolute -top-1 bottom-[-4px] left-[16.6667%] border-l-2 border-dashed border-rose-500"></div>
-                                <span id="zScoreMarker" class="absolute -top-[5px] hidden h-[22px] w-[4px] -translate-x-1/2 rounded-full bg-stone-900 ring-2 ring-white" style="left: 50%"></span>
+                                <div class="absolute -top-1 -bottom-1 left-[16.6667%] border-l-2 border-dashed border-rose-500"></div>
+                                <span id="zScoreMarker" class="absolute -top-1.25 hidden h-5.5 w-1 -translate-x-1/2 rounded-full bg-stone-900 ring-2 ring-white" style="left: 50%"></span>
                             </div>
                             <div class="relative mt-2 h-4 text-[11px] font-semibold tabular-nums text-stone-600">
                                 <span class="absolute left-0">−3</span>
@@ -204,7 +204,7 @@
     </section>
 
     <section id="resep-mpasi" class="py-16 bg-pink-50/60 scroll-mt-20">
-        <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
+        <div class="max-w-300 mx-auto px-4 md:px-8 lg:px-12">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                 <div>
                     <span class="sg-eyebrow">Inspirasi Menu Si Kecil</span>
@@ -220,7 +220,7 @@
                     <p class="text-sm mt-1">Resep akan tampil setelah admin menambahkannya.</p>
                 </div>
             @else
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
                     @foreach ($resepTerbaru as $resep)
                         @include('landing.partials.recipeCard', ['resep' => $resep])
                     @endforeach
@@ -230,7 +230,7 @@
     </section>
 
     <section id="informasi-kesehatan" class="py-16 bg-white border-y border-pink-100 scroll-mt-20">
-        <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
+        <div class="max-w-300 mx-auto px-4 md:px-8 lg:px-12">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
                 <div>
                     <span class="sg-eyebrow">Pengetahuan untuk Orang Tua</span>
@@ -246,7 +246,7 @@
                     <p class="text-sm mt-1">Artikel akan tampil setelah admin menambahkannya.</p>
                 </div>
             @else
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
                     @foreach ($artikelTerbaru as $artikel)
                         @include('landing.partials.articleCard', ['artikel' => $artikel])
                     @endforeach

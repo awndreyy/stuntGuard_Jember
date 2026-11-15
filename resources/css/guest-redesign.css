@@ -308,6 +308,10 @@
     .sg-guest :is(#kalkulator-widget, #resep-mpasi, #informasi-kesehatan) { padding-block: 56px; }
     .sg-guest :is(#kalkulator-widget, #resep-mpasi, #informasi-kesehatan) h2 { font-size: 33px; }
     .sg-guest .sg-calculator-input, .sg-guest #resultBox { padding: 24px; }
+    .sg-guest :is(.sg-recipe-card, .sg-article-card) > .sg-card-media { height: 140px; }
+    .sg-guest .sg-card-body { padding: 14px; }
+    .sg-guest :is(.sg-recipe-card, .sg-article-card) h3 { font-size: 15px; line-height: 1.35; }
+    .sg-placeholder-art { height: 120px; }
     .sg-mobile { flex-direction: column; align-items: flex-start; margin: 0 20px 48px; padding: 28px; }
     .sg-mobile-icon { flex: auto; align-self: center; }
     .sg-mobile-icon svg { width: 150px; height: 184px; }
@@ -320,7 +324,7 @@
     .sg-guest .sg-navbar > div,
     .sg-guest .sg-footer > div,
     .sg-guest :is(#kalkulator-widget, #resep-mpasi, #informasi-kesehatan) > div,
-    .sg-guest :is(.sg-public-list, .sg-public-detail) { padding-inline: 20px; }
+    .sg-guest :is(.sg-public-list, .sg-public-detail) { padding-inline: 16px; }
     .sg-hero h1 { font-size: 40px; letter-spacing: -1.6px; }
     .sg-hero-art { height: 345px; }
     .sg-lead { font-size: 15px; }
@@ -333,9 +337,13 @@
     .sg-art-note { top: 25px; font-size: 11px; }
     .sg-art-caption { left: 10px; bottom: 18px; font-size: 11px; }
     .sg-guest .sg-calculator-input, .sg-guest #resultBox { padding: 22px 17px; }
-    .sg-guest .sg-card-media { min-height: 190px; }
-    .sg-guest .sg-card-body { padding: 20px; }
-    .sg-page-heading { padding: 24px; }
+    .sg-guest :is(.sg-recipe-card, .sg-article-card) { border-radius: 16px; }
+    .sg-guest :is(.sg-recipe-card, .sg-article-card) > .sg-card-media,
+    .sg-guest .sg-card-media { min-height: 0; height: 115px; }
+    .sg-guest .sg-card-body { padding: 10px 12px; }
+    .sg-guest :is(.sg-recipe-card, .sg-article-card) h3 { font-size: 13px; line-height: 1.35; }
+    .sg-placeholder-art { height: 95px; }
+    .sg-page-heading { padding: 20px; }
     .sg-mobile h2 { font-size: 27px; }
     .sg-footer-brand { font-size: 21px; }
     .sg-guest .sg-recipe-filters :is(input, select) { font-size: 16px; }

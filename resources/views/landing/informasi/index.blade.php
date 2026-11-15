@@ -20,7 +20,7 @@
             <p class="text-sm text-stone-500 mt-1">Artikel akan muncul setelah ditambahkan oleh admin.</p>
         </div>
     @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
             @foreach ($artikel as $item)
                 @include('landing.partials.articleCard', ['artikel' => $item])
             @endforeach

@@ -14,8 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        if (! app()->environment(['local', 'testing'])) {
+            $this->command?->warn('Akun demo hanya dibuat pada lingkungan local/testing.');
+
+            return;
+        }
+
         // admin
-        User::updateOrCreate(
+        User::firstOrCreate(
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Admin',
@@ -26,7 +32,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
         // ortu
-        User::updateOrCreate(
+        User::firstOrCreate(
             ['email' => 'ortu@gmail.com'],
             [
                 'name' => 'Budi',

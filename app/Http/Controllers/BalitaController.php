@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Balita;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class BalitaController extends Controller
 {
     // lihat riwayat pengukuran balita
-    public function riwayat(Balita $balita)
+    public function riwayat(Balita $balita): \Illuminate\View\View
     {
         $balita->load('orangTua');
         $user = $balita->orangTua;
@@ -29,7 +29,7 @@ class BalitaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\Http\RedirectResponse
     {
         return redirect()->route('kelolaUser');
     }
@@ -45,9 +45,11 @@ class BalitaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $request->validate([
+        abort_unless($request->user()?->role === 'Admin', 403);
+
+        $data = $request->validate([
             'user_id' => ['required', Rule::exists(User::class, 'id')->where('role', 'Orang Tua')],
             'nama_balita' => ['required', 'string', 'min:3', 'max:60'],
             'nik' => ['nullable', 'digits:16', Rule::unique(Balita::class, 'nik')],
@@ -65,13 +67,7 @@ class BalitaController extends Controller
             'jenis_kelamin.required' => 'Jenis Kelamin wajib diisi',
         ]);
 
-        Balita::create([
-            'user_id' => $request->user_id,
-            'nama_balita' => $request->nama_balita,
-            'nik' => $request->nik ?: null,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-        ]);
+        Balita::create($data);
 
         return redirect()->route('kelolaUser', ['tab' => 'anak'])->with('success', 'Data Balita berhasil ditambahkan');
     }
@@ -95,32 +91,31 @@ class BalitaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): \Illuminate\Http\RedirectResponse
     {
         $balita = Balita::findOrFail($id);
 
-        $request->validate([
-            'user_id' => ['required', Rule::exists(User::class, 'id')],
-            'nama_balita' => ['required', 'string','min:3', 'max:60'],
-            'nik' => ['nullable', 'digits:16', Rule::unique(Balita::class, 'nik')->ignore($balita->id_balita, 'id_balita')],
+        abort_unless($request->user()?->role === 'Admin', 403);
+
+        $data = $request->validate([
+            'user_id' => ['required', Rule::exists(User::class, 'id')->where('role', 'Orang Tua')],
+            'nama_balita' => ['required', 'string', 'min:3', 'max:60'],
+            'nik' => ['nullable', 'digits:16', Rule::unique(Balita::class, 'nik')->ignore($balita->getKey(), 'id_balita')],
             'tanggal_lahir' => ['required', 'date', 'before_or_equal:today'],
             'jenis_kelamin' => ['required', Rule::in(['Laki-laki', 'Perempuan'])],
         ], [
             'user_id.required' => 'Orang tua wajib dipilih',
+            'user_id.exists' => 'Akun orang tua tidak valid atau bukan pengguna dengan role Orang Tua.',
             'nama_balita.required' => 'Nama Balita wajib diisi',
+            'nama_balita.min' => 'Nama Balita minimal 3 karakter',
+            'nama_balita.max' => 'Nama Balita maksimal 60 karakter',
             'nik.unique' => 'NIK Balita sudah terdaftar',
-            'nik.size' => 'NIK Balita harus tepat 16 digit',
+            'nik.digits' => 'NIK Balita harus tepat 16 digit',
             'tanggal_lahir.required' => 'Tanggal Lahir wajib diisi',
             'jenis_kelamin.required' => 'Jenis Kelamin wajib diisi',
         ]);
 
-        $balita->update([
-            'user_id' => $request->user_id,
-            'nama_balita' => $request->nama_balita,
-            'nik' => $request->nik ?: null,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-        ]);
+        $balita->update($data);
 
         return redirect()->route('kelolaUser', ['tab' => 'anak'])->with('success', 'Data Balita berhasil diperbarui');
     }
@@ -128,7 +123,7 @@ class BalitaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): \Illuminate\Http\RedirectResponse
     {
         $balita = Balita::findOrFail($id);
         if ($balita->pengukurans()->exists()) {
@@ -137,7 +132,7 @@ class BalitaController extends Controller
                 'Balita tidak dapat dihapus karena masih memiliki riwayat pengukuran.'
             );
         }
-    
+
         $balita->delete();
 
         return redirect()-> route('kelolaUser', ['tab' => 'anak'])->with('success', 'Data balita berhasil dihapus.');

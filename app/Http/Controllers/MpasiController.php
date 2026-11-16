@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mpasi;
+use App\Services\PublicImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class MpasiController extends Controller
@@ -12,7 +12,7 @@ class MpasiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\View\View
     {
         $filters = $request->validate([
             'kategori_usia' => ['nullable', Rule::in(['all', '6-8', '9-11', '12-23'])],
@@ -43,7 +43,7 @@ class MpasiController extends Controller
     /**
      * Show the page for creating an MPASI recipe.
      */
-    public function create()
+    public function create(): \Illuminate\View\View
     {
         return view('admin.formMpasi');
     }
@@ -51,7 +51,7 @@ class MpasiController extends Controller
     /**
      * Show the page for editing an existing MPASI recipe.
      */
-    public function edit(string $id)
+    public function edit(string $id): \Illuminate\View\View
     {
         $mpasi = Mpasi::findOrFail($id);
 
@@ -61,9 +61,11 @@ class MpasiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, PublicImageService $images): \Illuminate\Http\RedirectResponse
     {
-        $request->validate([
+        abort_unless($request->user()?->role === 'Admin', 403);
+
+        $data = $request->validate([
             'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', Rule::unique(Mpasi::class, 'nama_resep')],
             'kategori_usia' => ['required', 'string', 'in:6-8,9-11,12-23'],
             'waktu_memasak' => ['required', 'integer', 'min:1', 'max:100'],
@@ -75,9 +77,9 @@ class MpasiController extends Controller
             'zat_besi' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:10'],
             'seng' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:8'],
             'bahan' => ['required', 'array', 'min:1'],
-            'bahan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s\/]+$/'], //regex hanya boleh huruf, angka, simbol /
+            'bahan.*' => ['required', 'string', 'regex:/^[a-zA-Z0-9\s\/]+$/'], //regex hanya boleh huruf, angka, simbol /
             'cara_pembuatan' => ['required', 'array', 'min:1'],
-            'cara_pembuatan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'], //regex hanya boleh huruf dan angka
+            'cara_pembuatan.*' => ['required', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'], //regex hanya boleh huruf dan angka
             'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
         ], [
             'nama_resep.required' => 'Nama resep wajib diisi.',
@@ -106,46 +108,21 @@ class MpasiController extends Controller
             'seng.numeric' => 'Nilai seng harus berupa angka.',
             'seng.decimal' => 'Nilai seng maksimal 2 angka desimal.',
             'bahan.required' => 'Minimal 1 bahan wajib diisi.',
+            'bahan.*.required' => 'Setiap bahan wajib diisi.',
             'bahan.*.regex' => 'Bahan hanya boleh berisi huruf, angka, spasi, dan simbol garis miring (/).',
             'cara_pembuatan.required' => 'Minimal 1 langkah pembuatan wajib diisi.',
+            'cara_pembuatan.*.required' => 'Setiap langkah pembuatan wajib diisi.',
             'cara_pembuatan.*.regex' => 'Langkah pembuatan hanya boleh berisi huruf dan angka (tidak boleh simbol).',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, webp, atau gif.',
             'gambar.max' => 'Ukuran gambar maksimal 3MB.',
         ]);
 
-        $gambarPath = null;
-        if ($request->hasFile('gambar')) {
-            $path = $request->file('gambar')->store('mpasi', 'public');
-            $gambarPath = '/storage/'.$path;
+        unset($data['gambar']);
+        foreach (['kalori', 'karbohidrat', 'lemak', 'protein', 'zat_besi', 'seng'] as $field) {
+            $data[$field] = $data[$field] ?? 0;
         }
-
-        $bahanCleaned = array_values(array_filter((array) $request->bahan, fn ($b) => trim((string) $b) !== ''));
-        $langkahCleaned = array_values(array_filter((array) $request->cara_pembuatan, fn ($c) => trim((string) $c) !== ''));
-
-        if (empty($bahanCleaned)) {
-            return redirect()->back()->withErrors(['bahan' => 'Minimal 1 bahan harus diisi.'])->withInput();
-        }
-
-        if (empty($langkahCleaned)) {
-            return redirect()->back()->withErrors(['cara_pembuatan' => 'Minimal 1 langkah pembuatan harus diisi.'])->withInput();
-        }
-
-        Mpasi::create([
-            'nama_resep' => $request->nama_resep,
-            'kategori_usia' => $request->kategori_usia,
-            'waktu_memasak' => $request->waktu_memasak,
-            'porsi' => $request->porsi,
-            'kalori' => $request->filled('kalori') ? $request->kalori : 0,
-            'karbohidrat' => $request->filled('karbohidrat') ? $request->karbohidrat : 0,
-            'lemak' => $request->filled('lemak') ? $request->lemak : 0,
-            'protein' => $request->filled('protein') ? $request->protein : 0,
-            'zat_besi' => $request->filled('zat_besi') ? $request->zat_besi : 0,
-            'seng' => $request->filled('seng') ? $request->seng : 0,
-            'bahan' => $bahanCleaned,
-            'cara_pembuatan' => $langkahCleaned,
-            'gambar' => $gambarPath,
-        ]);
+        $images->save(new Mpasi, $data, $request->file('gambar'), 'mpasi', 'gambar');
 
         return redirect()->route('kelolaMpasi')->with('success', 'Resep MPASI berhasil ditambahkan!');
     }
@@ -153,12 +130,14 @@ class MpasiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id, PublicImageService $images): \Illuminate\Http\RedirectResponse
     {
         $mpasi = Mpasi::findOrFail($id);
 
-        $request->validate([
-            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', Rule::unique(Mpasi::class, 'nama_resep')->ignore($mpasi->getKey(), $mpasi->getKeyName())],
+        abort_unless($request->user()?->role === 'Admin', 403);
+
+        $data = $request->validate([
+            'nama_resep' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z\s]+$/', Rule::unique(Mpasi::class, 'nama_resep')->ignore($mpasi->getKey(), 'id_resep')],
             'kategori_usia' => ['required', 'string', 'in:6-8,9-11,12-23'],
             'waktu_memasak' => ['required', 'integer', 'min:1', 'max:100'],
             'porsi' => ['required', 'integer', 'min:1', 'max:10'],
@@ -169,9 +148,9 @@ class MpasiController extends Controller
             'zat_besi' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:10'],
             'seng' => ['nullable', 'numeric', 'decimal:0,2', 'min:0', 'max:8'],
             'bahan' => ['required', 'array', 'min:1'],
-            'bahan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s\/]+$/'],
+            'bahan.*' => ['required', 'string', 'regex:/^[a-zA-Z0-9\s\/]+$/'], //regex hanya boleh huruf, angka, simbol /
             'cara_pembuatan' => ['required', 'array', 'min:1'],
-            'cara_pembuatan.*' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'],
+            'cara_pembuatan.*' => ['required', 'string', 'regex:/^[a-zA-Z0-9\s]+$/'], //regex hanya boleh huruf dan angka
             'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
         ], [
             'nama_resep.required' => 'Nama resep wajib diisi.',
@@ -200,47 +179,21 @@ class MpasiController extends Controller
             'seng.numeric' => 'Nilai seng harus berupa angka.',
             'seng.decimal' => 'Nilai seng maksimal 2 angka desimal.',
             'bahan.required' => 'Minimal 1 bahan wajib diisi.',
+            'bahan.*.required' => 'Setiap bahan wajib diisi.',
             'bahan.*.regex' => 'Bahan hanya boleh berisi huruf, angka, spasi, dan simbol garis miring (/).',
             'cara_pembuatan.required' => 'Minimal 1 langkah pembuatan wajib diisi.',
+            'cara_pembuatan.*.required' => 'Setiap langkah pembuatan wajib diisi.',
             'cara_pembuatan.*.regex' => 'Langkah pembuatan hanya boleh berisi huruf dan angka (tidak boleh simbol).',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, webp, atau gif.',
             'gambar.max' => 'Ukuran gambar maksimal 3MB.',
         ]);
 
-        if ($request->hasFile('gambar')) {
-            if ($mpasi->gambar && str_starts_with($mpasi->gambar, '/storage/')) {
-                $relative = str_replace('/storage/', '', $mpasi->gambar);
-                Storage::disk('public')->delete($relative);
-            }
-            $path = $request->file('gambar')->store('mpasi', 'public');
-            $mpasi->gambar = '/storage/'.$path;
+        unset($data['gambar']);
+        foreach (['kalori', 'karbohidrat', 'lemak', 'protein', 'zat_besi', 'seng'] as $field) {
+            $data[$field] = $data[$field] ?? 0;
         }
-
-        $bahanCleaned = array_values(array_filter((array) $request->bahan, fn ($b) => trim((string) $b) !== ''));
-        $langkahCleaned = array_values(array_filter((array) $request->cara_pembuatan, fn ($c) => trim((string) $c) !== ''));
-
-        if (empty($bahanCleaned)) {
-            return redirect()->back()->withErrors(['bahan' => 'Minimal 1 bahan harus diisi.'])->withInput();
-        }
-
-        if (empty($langkahCleaned)) {
-            return redirect()->back()->withErrors(['cara_pembuatan' => 'Minimal 1 langkah pembuatan harus diisi.'])->withInput();
-        }
-
-        $mpasi->nama_resep = $request->nama_resep;
-        $mpasi->kategori_usia = $request->kategori_usia;
-        $mpasi->waktu_memasak = $request->waktu_memasak;
-        $mpasi->porsi = $request->porsi;
-        $mpasi->kalori = $request->filled('kalori') ? $request->kalori : 0;
-        $mpasi->karbohidrat = $request->filled('karbohidrat') ? $request->karbohidrat : 0;
-        $mpasi->lemak = $request->filled('lemak') ? $request->lemak : 0;
-        $mpasi->protein = $request->filled('protein') ? $request->protein : 0;
-        $mpasi->zat_besi = $request->filled('zat_besi') ? $request->zat_besi : 0;
-        $mpasi->seng = $request->filled('seng') ? $request->seng : 0;
-        $mpasi->bahan = $bahanCleaned;
-        $mpasi->cara_pembuatan = $langkahCleaned;
-        $mpasi->save();
+        $images->save($mpasi, $data, $request->file('gambar'), 'mpasi', 'gambar');
 
         return redirect()->route('kelolaMpasi')->with('success', 'Resep MPASI berhasil diperbarui!');
     }
@@ -248,16 +201,11 @@ class MpasiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, PublicImageService $images): \Illuminate\Http\RedirectResponse
     {
         $mpasi = Mpasi::findOrFail($id);
 
-        if ($mpasi->gambar && str_starts_with($mpasi->gambar, '/storage/')) {
-            $relative = str_replace('/storage/', '', $mpasi->gambar);
-            Storage::disk('public')->delete($relative);
-        }
-
-        $mpasi->delete();
+        $images->delete($mpasi, 'gambar');
 
         return redirect()->route('kelolaMpasi')->with('success', 'Resep MPASI berhasil dihapus!');
     }

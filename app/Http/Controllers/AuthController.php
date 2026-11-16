@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     // Login
-    public function showLogin()
+    public function showLogin(): \Illuminate\View\View
     {
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function login(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'email'],
@@ -28,7 +28,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return back()
                 ->withErrors($validator)
-                ->withInput();
+                ->onlyInput('email');
         }
 
         $credentials = [
@@ -39,7 +39,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-        
+
             return redirect()
                 ->route('dashboardAdmin')
                 ->with('success', 'Selamat datang ' . Auth::user()->name);
@@ -53,7 +53,7 @@ class AuthController extends Controller
     }
 
     // Logout
-    public function logout(Request $request)
+    public function logout(Request $request): \Illuminate\Http\RedirectResponse
     {
         Auth::logout();
         $request->session()->invalidate();

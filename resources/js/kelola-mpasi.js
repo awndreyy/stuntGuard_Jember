@@ -361,5 +361,4 @@ Object.assign(window, {
     addStepRow,
     removeStepRow,
     updateStepNumbers,
-    showToast,
 });

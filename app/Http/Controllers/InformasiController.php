@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Informasi;
+use App\Services\PublicImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class InformasiController extends Controller
@@ -12,7 +12,7 @@ class InformasiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
         $informations = Informasi::latest('created_at')->orderByDesc('id_informasi')->paginate(6)->withQueryString();
 
@@ -22,9 +22,9 @@ class InformasiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, PublicImageService $images): \Illuminate\Http\RedirectResponse
     {
-        $request->validate([
+        $data = $request->validate([
             'judul' => ['required_without:title', 'nullable', 'string', 'max:50'],
             'title' => ['required_without:judul', 'nullable', 'string', 'max:50'],
             'category' => ['required', Rule::in([
@@ -48,19 +48,9 @@ class InformasiController extends Controller
             'thumbnail.max' => 'Ukuran thumbnail maksimal 3MB.',
         ]);
 
-        $thumbnailPath = null;
-        if ($request->hasFile('thumbnail')) {
-            $path = $request->file('thumbnail')->store('informasi', 'public');
-            $thumbnailPath = '/storage/'.$path;
-        }
-
-        Informasi::create([
-            'judul' => $request->input('judul', $request->input('title')),
-            'category' => $request->category,
-            'summary' => $request->summary,
-            'content' => $request->input('content'),
-            'thumbnail' => $thumbnailPath,
-        ]);
+        $data['judul'] = $data['judul'] ?? $data['title'];
+        unset($data['title'], $data['thumbnail']);
+        $images->save(new Informasi, $data, $request->file('thumbnail'), 'informasi', 'thumbnail');
 
         return redirect()->route('kelolaInformasi')->with('success', 'Informasi & edukasi berhasil ditambahkan!');
     }
@@ -79,11 +69,11 @@ class InformasiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id, PublicImageService $images): \Illuminate\Http\RedirectResponse
     {
         $informasi = Informasi::findOrFail($id);
 
-        $request->validate([
+        $data = $request->validate([
             'judul' => ['required_without:title', 'nullable', 'string', 'max:50'],
             'title' => ['required_without:judul', 'nullable', 'string', 'max:50'],
             'category' => ['required', Rule::in([
@@ -107,20 +97,9 @@ class InformasiController extends Controller
             'thumbnail.max' => 'Ukuran thumbnail maksimal 3MB.',
         ]);
 
-        if ($request->hasFile('thumbnail')) {
-            if ($informasi->thumbnail && str_starts_with($informasi->thumbnail, '/storage/')) {
-                $relative = str_replace('/storage/', '', $informasi->thumbnail);
-                Storage::disk('public')->delete($relative);
-            }
-            $path = $request->file('thumbnail')->store('informasi', 'public');
-            $informasi->thumbnail = '/storage/'.$path;
-        }
-
-        $informasi->judul = $request->input('judul', $request->input('title'));
-        $informasi->category = $request->category;
-        $informasi->summary = $request->summary;
-        $informasi->content = $request->input('content');
-        $informasi->save();
+        $data['judul'] = $data['judul'] ?? $data['title'];
+        unset($data['title'], $data['thumbnail']);
+        $images->save($informasi, $data, $request->file('thumbnail'), 'informasi', 'thumbnail');
 
         return redirect()->route('kelolaInformasi')->with('success', 'Informasi & edukasi berhasil diperbarui!');
     }
@@ -128,16 +107,11 @@ class InformasiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, PublicImageService $images): \Illuminate\Http\RedirectResponse
     {
         $informasi = Informasi::findOrFail($id);
 
-        if ($informasi->thumbnail && str_starts_with($informasi->thumbnail, '/storage/')) {
-            $relative = str_replace('/storage/', '', $informasi->thumbnail);
-            Storage::disk('public')->delete($relative);
-        }
-
-        $informasi->delete();
+        $images->delete($informasi, 'thumbnail');
 
         return redirect()->route('kelolaInformasi')->with('success', 'Informasi & edukasi berhasil dihapus!');
     }

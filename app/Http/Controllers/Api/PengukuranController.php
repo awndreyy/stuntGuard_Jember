@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Balita;
 use App\Models\Pengukuran;
+use App\Services\GrowthStatusService;
 use App\Services\PengukuranService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,9 +42,9 @@ class PengukuranController extends Controller
         // Verifikasi kepemilikan balita oleh orang tua yang sedang login
         $balita = $this->ownedBalita($request, (string) $request->input('balita_id'));
 
-        $tanggal = (string) $request->input('tanggal_pengukuran', today()->toDateString());
-        $berat = (float) $request->input('berat_badan', $request->input('berat', $request->input('weight')));
-        $tinggi = (float) $request->input('tinggi_badan', $request->input('tinggi', $request->input('height')));
+        $tanggal = (string) ($request->input('tanggal_pengukuran') ?? today()->toDateString());
+        $berat = (float) ($request->input('berat_badan') ?? $request->input('berat') ?? $request->input('weight'));
+        $tinggi = (float) ($request->input('tinggi_badan') ?? $request->input('tinggi') ?? $request->input('height'));
 
         // Perhitungan antropometri WHO menggunakan data anak dari DB (tgl lahir, JK)
         $hasil = $measurements->calculateForBalita($balita, $tanggal, [
@@ -55,24 +56,10 @@ class PengukuranController extends Controller
         ]);
 
         $bbu = $hasil['z_bbu'];
-        $statusBerat = match (true) {
-            $bbu === null => 'Di luar rentang referensi WHO',
-            $bbu < -3 => 'Berat badan sangat kurang',
-            $bbu < -2 => 'Berat badan kurang',
-            $bbu <= 1 => 'Berat badan normal',
-            default => 'Risiko berat badan lebih',
-        };
+        $statusBerat = GrowthStatusService::weight($bbu, 'Di luar rentang referensi WHO');
 
         $bbpb = $hasil['z_bb_tb'];
-        $statusProporsi = match (true) {
-            $bbpb === null => 'Di luar rentang referensi WHO',
-            $bbpb < -3 => 'Gizi buruk',
-            $bbpb < -2 => 'Gizi kurang',
-            $bbpb <= 1 => 'Gizi baik',
-            $bbpb <= 2 => 'Berisiko gizi lebih',
-            $bbpb <= 3 => 'Gizi lebih',
-            default => 'Obesitas',
-        };
+        $statusProporsi = GrowthStatusService::proportion($bbpb, 'Di luar rentang referensi WHO');
 
         // Mengembalikan hasil kalkulasi langsung tanpa menyimpan ke database
         return response()->json([
@@ -131,7 +118,11 @@ class PengukuranController extends Controller
             $query->where('balita_id', $balitaId);
         }
 
-        $perPage = (int) $request->input('per_page', 15);
+        $pagination = $request->validate([
+            'per_page' => ['nullable', 'integer', 'between:1,50'],
+            'page' => ['nullable', 'integer', 'min:1'],
+        ]);
+        $perPage = (int) ($pagination['per_page'] ?? 15);
 
         $pengukurans = $query->orderByDesc('tanggal_pengukuran')
             ->orderByDesc('created_at')
@@ -150,7 +141,11 @@ class PengukuranController extends Controller
     {
         $balita = $this->ownedBalita($request, $balitaId);
 
-        $perPage = (int) $request->input('per_page', 20);
+        $pagination = $request->validate([
+            'per_page' => ['nullable', 'integer', 'between:1,50'],
+            'page' => ['nullable', 'integer', 'min:1'],
+        ]);
+        $perPage = (int) ($pagination['per_page'] ?? 20);
 
         $pengukurans = $balita->pengukurans()
             ->orderByDesc('tanggal_pengukuran')
@@ -222,38 +217,13 @@ class PengukuranController extends Controller
         $bbu = $pengukuran->z_score_bbu !== null ? (float) $pengukuran->z_score_bbu : null;
         $bbtb = $pengukuran->z_score_bbtb !== null ? (float) $pengukuran->z_score_bbtb : null;
 
-        $statusStunting = match (true) {
-            $tbu === null => 'Tidak dihitung',
-            $tbu < -3 => 'Sangat Pendek',
-            $tbu < -2 => 'Pendek (Stunted)',
-            $tbu <= 3 => 'Normal',
-            default => 'Tinggi',
-        };
+        $statusStunting = GrowthStatusService::height($tbu);
 
-        $badgeColor = match (true) {
-            $tbu === null || $tbu < -3 => 'rose',
-            $tbu < -2 => 'amber',
-            $tbu <= 3 => 'emerald',
-            default => 'teal',
-        };
+        $badgeColor = GrowthStatusService::badge($tbu);
 
-        $statusBeratBadan = match (true) {
-            $bbu === null => 'Tidak dihitung',
-            $bbu < -3 => 'Berat badan sangat kurang',
-            $bbu < -2 => 'Berat badan kurang',
-            $bbu <= 1 => 'Berat badan normal',
-            default => 'Risiko berat badan lebih',
-        };
+        $statusBeratBadan = GrowthStatusService::weight($bbu);
 
-        $statusGizi = match (true) {
-            $bbtb === null => 'Tidak dihitung',
-            $bbtb < -3 => 'Gizi buruk',
-            $bbtb < -2 => 'Gizi kurang',
-            $bbtb <= 1 => 'Gizi baik',
-            $bbtb <= 2 => 'Berisiko gizi lebih',
-            $bbtb <= 3 => 'Gizi lebih',
-            default => 'Obesitas',
-        };
+        $statusGizi = GrowthStatusService::proportion($bbtb);
 
         return [
             'id' => $pengukuran->id,

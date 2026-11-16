@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\GrowthStatusService;
 use App\Services\PengukuranService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -39,22 +40,8 @@ class GuestKalkulatorController extends Controller
         $bbu = $hasil['z_bbu'];
         $pbu = $hasil['z_score'];
         $bbpb = $hasil['z_bb_tb'];
-        $statusBerat = match (true) {
-            $bbu === null => 'Di luar rentang referensi WHO',
-            $bbu < -3 => 'Berat badan sangat kurang',
-            $bbu < -2 => 'Berat badan kurang',
-            $bbu <= 1 => 'Berat badan normal',
-            default => 'Risiko berat badan lebih',
-        };
-        $statusProporsi = match (true) {
-            $bbpb === null => 'Di luar rentang referensi WHO',
-            $bbpb < -3 => 'Gizi buruk',
-            $bbpb < -2 => 'Gizi kurang',
-            $bbpb <= 1 => 'Gizi baik',
-            $bbpb <= 2 => 'Berisiko gizi lebih',
-            $bbpb <= 3 => 'Gizi lebih',
-            default => 'Obesitas',
-        };
+        $statusBerat = GrowthStatusService::weight($bbu, 'Di luar rentang referensi WHO');
+        $statusProporsi = GrowthStatusService::proportion($bbpb, 'Di luar rentang referensi WHO');
 
         return response()->json([
             'nama_anak' => $hasil['nama'],

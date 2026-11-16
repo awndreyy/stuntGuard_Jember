@@ -22,7 +22,7 @@
             <span class="rounded-lg bg-pink-50 px-3 py-2 text-xs font-semibold text-pink-700">{{ $riwayat->total() }} pengukuran</span>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full min-w-[1000px] text-left text-xs">
+            <table class="w-full min-w-250 text-left text-xs">
                 <thead class="bg-stone-50 text-[10px] uppercase text-stone-500">
                     <tr>
                         <th class="px-4 py-3">Nama</th>
@@ -36,7 +36,7 @@
                     @forelse ($riwayat as $ukur)
                         @php
                             $zTinggi = $ukur->z_score_tbu;
-                            $status = is_null($zTinggi) ? 'Tidak tersedia' : ($zTinggi < -3 ? 'Sangat Pendek' : ($zTinggi < -2 ? 'Pendek' : ($zTinggi <= 3 ? 'Normal' : 'Tinggi')));
+                            $status = \App\Services\GrowthStatusService::height($zTinggi === null ? null : (float) $zTinggi, 'Tidak tersedia');
                         @endphp
                         <tr class="align-top hover:bg-pink-50/40">
                             <td class="px-4 py-3 font-semibold text-stone-800">

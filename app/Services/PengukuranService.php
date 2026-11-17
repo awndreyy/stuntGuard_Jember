@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Balita;
 use App\Models\Pengukuran;
+use App\Services\GrowthStatusService;
 use App\Services\WhoGrowthService;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
@@ -14,9 +15,7 @@ use Illuminate\Validation\ValidationException;
  */
 class PengukuranService
 {
-    public function __construct(private readonly WhoGrowthService $who)
-    {
-    }
+    public function __construct(private readonly WhoGrowthService $who) {}
 
     /**
      * Hitung tanpa menyimpan (untuk simulasi balita yang belum terdaftar).
@@ -109,8 +108,8 @@ class PengukuranService
             (float) $measurements['berat'],
             (float) $measurements['tinggi'],
             (string) $measurements['posisi_badan'],
-            isset($measurements['lingkar_kepala']) ? (float) $measurements['lingkar_kepala'] : null,
-            isset($measurements['lila']) ? (float) $measurements['lila'] : null,
+            ! empty($measurements['lingkar_kepala']) ? (float) $measurements['lingkar_kepala'] : null,
+            ! empty($measurements['lila']) ? (float) $measurements['lila'] : null,
         );
     }
 
@@ -164,7 +163,7 @@ class PengukuranService
         // Bulan kalender penuh, konsisten untuk tanggal lahir di akhir bulan.
         $age = ($date->year - $birth->year) * 12 + ($date->month - $birth->month);
         if ($date->day < $birth->day) {
-            --$age;
+            $age--;
         }
 
         if ($age > 60) {

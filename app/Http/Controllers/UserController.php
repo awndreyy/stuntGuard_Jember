@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Balita;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): \Illuminate\View\View
+    public function index(Request $request): View
     {
         $filters = $request->validate([
             'role' => ['nullable', Rule::in(['all', 'Admin', 'Orang Tua'])],
@@ -33,7 +35,7 @@ class UserController extends Controller
         return view('admin.kelolaUser', compact('users', 'balita', 'orangTua'));
     }
 
-    public function balitas(User $user): \Illuminate\View\View
+    public function balitas(User $user): View
     {
         abort_unless($user->role === 'Orang Tua', 404);
 
@@ -46,7 +48,7 @@ class UserController extends Controller
     }
 
     /** Riwayat hanya untuk balita yang menjadi milik akun Orang Tua ini. */
-    public function riwayatBalita(User $user, Balita $balita): \Illuminate\View\View
+    public function riwayatBalita(User $user, Balita $balita): View
     {
         abort_unless($user->role === 'Orang Tua' && $balita->user_id === $user->id, 404);
 
@@ -69,7 +71,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         abort_unless($request->user()?->role === 'Admin', 403);
 
@@ -117,7 +119,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, string $id): RedirectResponse
     {
         $user = User::findOrFail($id);
         abort_unless($request->user()?->role === 'Admin', 403);
@@ -146,13 +148,14 @@ class UserController extends Controller
         }
 
         DB::transaction(function () use ($request, $id, $data): void {
+            $currentAdminId = $request->user()->id;
             // Serialize role changes/deletions so concurrent requests cannot remove all admins.
             $admins = User::where('role', 'Admin')->orderBy('id')->lockForUpdate()->get();
             $user = User::whereKey($id)->lockForUpdate()->firstOrFail();
-            abort_unless($admins->contains('id', $request->user()->id), 403);
+            abort_unless($admins->contains(fn ($admin) => $admin->id === $currentAdminId), 403);
 
             if ($user->role !== $data['role']) {
-                if ($user->role === 'Admin' && ($admins->count() <= 1 || $user->id === $request->user()->id)) {
+                if ($user->role === 'Admin' && ($admins->count() <= 1 || $user->id === $currentAdminId)) {
                     throw ValidationException::withMessages([
                         'role' => 'Role admin terakhir atau akun Anda sendiri tidak dapat diubah.',
                     ]);
@@ -170,14 +173,17 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Data User berhasil diperbarui');
     }
 
-    public function destroy(string $id): \Illuminate\Http\RedirectResponse
+    public function destroy(Request $request, string $id): RedirectResponse
     {
-        $error = DB::transaction(function () use ($id): ?string {
+        abort_unless($request->user()?->role === 'Admin', 403);
+
+        $error = DB::transaction(function () use ($request, $id): ?string {
+            $currentAdminId = $request->user()->id;
             $admins = User::where('role', 'Admin')->orderBy('id')->lockForUpdate()->get();
             $user = User::whereKey($id)->lockForUpdate()->firstOrFail();
-            abort_unless($admins->contains('id', auth()->id()), 403);
+            abort_unless($admins->contains(fn ($admin) => $admin->id === $currentAdminId), 403);
 
-            if ($user->id === auth()->id()) {
+            if ($user->id === $currentAdminId) {
                 return 'Anda tidak dapat menghapus akun sendiri.';
             }
             if ($user->role === 'Admin' && $admins->count() <= 1) {

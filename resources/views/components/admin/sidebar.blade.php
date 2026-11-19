@@ -111,13 +111,13 @@
         <div class="p-3 border-t border-stone-100 shrink-0">
             <form action="{{ route('logout') }}" method="POST" data-confirm="logout">
                 @csrf
-                <button type="submit" class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-stone-600 hover:text-pink-700 hover:bg-pink-50 border border-stone-200/80 hover:border-pink-200 transition-all font-semibold text-xs cursor-pointer group">
-                    <div class="w-7 h-7 rounded-lg bg-stone-100 group-hover:bg-pink-100 text-stone-500 group-hover:text-pink-700 flex items-center justify-center transition-colors shrink-0">
+                <button type="submit" class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-red-600 hover:text-red-800 bg-red-50 hover:bg-red-100 border border-red-200 hover:border-red-300 transition-all font-semibold text-xs cursor-pointer group">
+                    <div class="w-7 h-7 rounded-lg bg-red-100 group-hover:bg-red-200 text-red-600 group-hover:text-red-800 flex items-center justify-center transition-colors shrink-0">
                         <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
                     </div>
                     <div class="text-left min-w-0">
                         <span class="block leading-tight text-xs font-semibold">Logout Akun</span>
-                        <span class="block text-[10px] text-stone-400 group-hover:text-pink-600/70 font-normal leading-tight mt-0.5">Keluar dari sistem</span>
+                        <span class="block text-[10px] text-red-400 group-hover:text-red-600 font-normal leading-tight mt-0.5">Keluar dari sistem</span>
                     </div>
                 </button>
             </form>

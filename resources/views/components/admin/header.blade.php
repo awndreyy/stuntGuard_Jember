@@ -30,7 +30,7 @@
             </div>
             <div class="hidden sm:block text-left">
                 <p class="text-xs font-bold text-stone-800 leading-none">{{ auth()->user()->name }}</p>
-                <p class="text-[10px] text-stone-400 font-medium leading-none mt-0.5">{{ auth()->user()->role }}</p>
+                <p class="text-xs text-stone-500 font-medium leading-none mt-0.5">{{ auth()->user()->role }}</p>
             </div>
         </div>
     </div>

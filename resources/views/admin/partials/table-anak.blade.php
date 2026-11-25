@@ -25,8 +25,8 @@
 
     {{-- Data Table Container (Scrollable Area) --}}
     <div class="w-full overflow-x-auto">
-        <table class="w-full text-left border-collapse min-w-[640px]">
-            <thead class="bg-stone-50 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
+        <table class="w-full text-left border-collapse min-w-160">
+            <thead class="bg-stone-50 backdrop-blur-xs border-b border-stone-100 text-[11px] font-bold text-stone-500 uppercase tracking-wider z-10">
                 <tr>
                     <th class="py-3 px-4 whitespace-nowrap">Nama Balita</th>
                     <th class="py-3 px-4 whitespace-nowrap">NIK Anak</th>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div>
                                     <span class="block text-xs font-semibold text-stone-800">{{ $anak->nama_balita }}</span>
-                                    <span class="block text-[10px] text-stone-400">Lahir: {{ \Carbon\Carbon::parse($anak->tanggal_lahir)->translatedFormat('d M Y') }}</span>
+                                    <span class="block text-[11px] text-stone-400">Lahir: {{ \Carbon\Carbon::parse($anak->tanggal_lahir)->translatedFormat('d M Y') }}</span>
                                 </div>
                             </div>
                         </td>
@@ -55,10 +55,10 @@
                         </td>
                         <td class="py-3 px-4 whitespace-nowrap">
                             <span class="block text-xs font-medium text-stone-800">{{ $anak->orangTua->name ?? 'Tidak ada data' }}</span>
-                            <span class="block text-[10px] text-stone-400">NIK: {{ $anak->orangTua->nik ?? '-' }}</span>
+                            <span class="block text-xs text-stone-500">NIK: {{ $anak->orangTua->nik ?? '-' }}</span>
                         </td>
                         <td class="py-3 px-4 whitespace-nowrap">
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold {{ $anak->jenis_kelamin === 'Laki-laki' ? 'bg-blue-50 text-blue-700 border border-blue-200/60' : 'bg-pink-50 text-pink-700 border border-pink-200/60' }}">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold {{ $anak->jenis_kelamin === 'Laki-laki' ? 'bg-blue-50 text-blue-700 border border-blue-200/60' : 'bg-pink-50 text-pink-700 border border-pink-200/60' }}">
                                 {{ $anak->jenis_kelamin }}
                             </span>
                         </td>

@@ -11,7 +11,7 @@
             </h1>
             <p class="text-xs text-stone-500 mt-0.5">
                 Monitoring gizi anak & pengelolaan resep MPASI StuntGuard Kabupaten Jember.
-        `    </p>
+            </p>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
                 <div class="mt-2.5 flex items-baseline justify-between">
                     <span class="text-2xl font-bold text-stone-900 tracking-tight">{{ number_format($totalUsers) }}</span>
                 </div>
-                <p class="text-[10px] text-stone-400 mt-1">Akun orang tua yang terdaftar</p>
+                <p class="text-xs text-stone-500 mt-1">Akun orang tua yang terdaftar</p>
             </div>
 
             <!-- KPI 2: Anak Terindikasi Stunting -->
@@ -43,7 +43,7 @@
                 <div class="mt-2.5 flex items-baseline justify-between">
                     <span class="text-2xl font-bold text-stone-900 tracking-tight">{{ number_format($totalStunting) }}</span>
                 </div>
-                <p class="text-[10px] text-stone-400 mt-1">Berdasarkan pengukuran PB/U atau TB/U terakhir</p>
+                <p class="text-xs text-stone-500 mt-1">Berdasarkan pengukuran PB/U atau TB/U terakhir</p>
             </div>
 
             <!-- KPI 3: Basis Data Resep MPASI -->
@@ -57,7 +57,7 @@
                 <div class="mt-2.5 flex items-baseline justify-between">
                     <span class="text-2xl font-bold text-stone-900 tracking-tight">{{ number_format($totalResep) }}</span>
                 </div>
-                <p class="text-[10px] text-stone-400 mt-1">Resep lokal pangan bergizi tinggi</p>
+                <p class="text-xs text-stone-500 mt-1">Resep lokal pangan bergizi tinggi</p>
             </div>
 
         </section>
@@ -66,7 +66,7 @@
         <section class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3.5 min-h-0">
 
             <!-- Left Panel: Kelola Resep MPASI Terbaru (lg:col-span-7) -->
-            <div class="lg:col-span-7 bg-white rounded-xl border border-stone-200/80 shadow-2xs flex flex-col min-h-[320px] lg:min-h-[320px] overflow-hidden">
+            <div class="lg:col-span-7 bg-white rounded-xl border border-stone-200/80 shadow-2xs flex flex-col min-h-80 lg:min-h-80 overflow-hidden">
 
                 <!-- Card Header with Category Tabs -->
                 <div class="px-4 py-3 border-b border-stone-100 flex flex-wrap items-center justify-between gap-2 shrink-0">
@@ -76,7 +76,7 @@
                         </div>
                         <div>
                             <h2 class="text-sm font-bold text-stone-900">Kelola Resep MPASI Terbaru</h2>
-                            <p class="text-[10px] text-stone-400 font-normal">Daftar menu bergizi berdasarkan usia</p>
+                            <p class="text-[11px] text-stone-500 font-normal">Daftar menu bergizi berdasarkan usia</p>
                         </div>
                     </div>
 
@@ -95,8 +95,8 @@
 
                 <!-- Data Table Container -->
                 <div class="flex-1 overflow-x-auto overflow-y-auto min-h-0">
-                    <table class="w-full text-left border-collapse min-w-[500px]">
-                        <thead class="sticky top-0 bg-stone-50/90 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
+                    <table class="w-full text-left border-collapse min-w-125">
+                        <thead class="sticky top-0 bg-stone-50/90 backdrop-blur-xs border-b border-stone-100 text-[11px] font-bold text-stone-500 uppercase tracking-wider z-10">
                             <tr>
                                 <th class="py-2.5 px-4 whitespace-nowrap">Judul Resep</th>
                                 <th class="py-2.5 px-3 whitespace-nowrap">Kategori</th>
@@ -156,7 +156,7 @@
                 </div>
 
             <!-- Card Footer -->
-            <div class="px-4 py-2 bg-stone-50 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500 shrink-0">
+            <div class="px-4 py-2 bg-stone-50 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 shrink-0">
                 <span>Menampilkan {{ count($resepList) }} dari {{ $totalResep }} resep</span>
                 <a href="{{ route('kelolaMpasi') }}" class="font-semibold text-pink-800 hover:underline flex items-center gap-1">
                 Lihat Semua <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
@@ -166,7 +166,7 @@
             </div>
 
             <!-- Right Panel: Riwayat Pengukuran Balita Pengguna (lg:col-span-5) -->
-            <div class="lg:col-span-5 bg-white rounded-xl border border-stone-200/80 shadow-2xs flex flex-col min-h-[300px] lg:min-h-[320px] overflow-hidden">
+            <div class="lg:col-span-5 bg-white rounded-xl border border-stone-200/80 shadow-2xs flex flex-col min-h-75 lg:min-h-80 overflow-hidden">
 
             <!-- Card Header -->
             <div class="px-4 py-3 border-b border-stone-100 flex items-center justify-between shrink-0">
@@ -176,7 +176,7 @@
                 </div>
                 <div>
                     <h2 class="text-sm font-bold text-stone-900">Riwayat Pengukuran Balita</h2>
-                    <p class="text-[10px] text-stone-400 font-normal">Antropometri Standar WHO</p>
+                    <p class="text-[11px] text-stone-500 font-normal">Antropometri Standar WHO</p>
                 </div>
                 </div>
                 <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
@@ -186,8 +186,8 @@
 
             <!-- Table Container -->
             <div class="flex-1 overflow-x-auto overflow-y-auto min-h-0">
-                <table class="w-full text-left border-collapse min-w-[380px]">
-                <thead class="sticky top-0 bg-stone-50/90 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
+                <table class="w-full text-left border-collapse min-w-95">
+                <thead class="sticky top-0 bg-stone-50/90 backdrop-blur-xs border-b border-stone-100 text-[11px] font-bold text-stone-500 uppercase tracking-wider z-10">
                     <tr>
                     <th class="py-2.5 px-4 whitespace-nowrap">Nama Anak</th>
                     <th class="py-2.5 px-2 whitespace-nowrap">Usia</th>
@@ -212,18 +212,18 @@
                         <td class="py-2.5 px-2 text-[11px] font-medium text-stone-600 whitespace-nowrap">{{ $log->umur_bulan }} bln</td>
                         <td class="py-2.5 px-3 whitespace-nowrap">
                         @if($log->z_score_tbu === null)
-                            <span class="text-stone-500 text-[10px]">Belum tersedia</span>
+                            <span class="text-stone-500 text-[11px]">Belum tersedia</span>
                         @elseif($log->z_score_tbu < -3)
-                            <span class="text-red-700 font-semibold text-[10px]">Sangat pendek</span>
+                            <span class="text-red-700 font-semibold text-[11px]">Sangat pendek</span>
                         @elseif($log->z_score_tbu < -2)
-                            <span class="text-red-700 font-semibold text-[10px]">Pendek (stunting)</span>
+                            <span class="text-red-700 font-semibold text-[11px]">Pendek (stunting)</span>
                         @elseif($log->z_score_tbu <= 3)
-                            <span class="text-emerald-700 font-semibold text-[10px]">Normal</span>
+                            <span class="text-emerald-700 font-semibold text-[11px]">Normal</span>
                         @else
-                            <span class="text-amber-700 font-semibold text-[10px]">Tinggi</span>
+                            <span class="text-amber-700 font-semibold text-[11px]">Tinggi</span>
                         @endif
                         </td>
-                        <td class="py-2.5 px-4 text-right text-[10px] text-stone-400 whitespace-nowrap">{{ $log->tanggal_pengukuran?->format('d/m/Y') ?? $log->created_at?->format('d/m/Y') }}</td>
+                        <td class="py-2.5 px-4 text-right text-xs text-stone-500 whitespace-nowrap">{{ $log->tanggal_pengukuran?->format('d/m/Y') ?? $log->created_at?->format('d/m/Y') }}</td>
                     </tr>
                     @empty
                     <tr>

@@ -26,8 +26,8 @@
 
     {{-- Data Table Container (Scrollable Area) --}}
     <div class="w-full overflow-x-auto">
-        <table class="w-full text-left border-collapse min-w-[560px]">
-            <thead class="bg-stone-50 backdrop-blur-xs border-b border-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wider z-10">
+        <table class="w-full text-left border-collapse min-w-140">
+            <thead class="bg-stone-50 backdrop-blur-xs border-b border-stone-100 text-[11px] font-bold text-stone-500 uppercase tracking-wider z-10">
                 <tr>
                     <th class="py-3 px-4 whitespace-nowrap">Informasi Pengguna</th>
                     <th class="py-3 px-4 whitespace-nowrap">Kontak</th>
@@ -47,7 +47,7 @@
                                 </div>
                                 <div>
                                     <span class="block text-xs font-semibold text-stone-800">{{ $user->name }}</span>
-                                    <span class="block text-[10px] text-stone-400">NIK: {{ $user->nik ?? '-' }}</span>
+                                    <span class="block text-xs text-stone-400">NIK: {{ $user->nik ?? '-' }}</span>
                                 </div>
                             </div>
                         </td>
@@ -55,7 +55,7 @@
                             <span class="block text-xs text-stone-700">{{ $user->email }}</span>
                         </td>
                         <td class="py-3 px-4 whitespace-nowrap">
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold {{ $user->role === 'Administrator' || $user->role === 'Admin' ? 'bg-pink-100/70 text-pink-900' : 'bg-emerald-100 text-emerald-800' }}">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold {{ $user->role === 'Administrator' || $user->role === 'Admin' ? 'bg-pink-100/70 text-pink-900' : 'bg-emerald-100 text-emerald-800' }}">
                                 {{ $user->role }}
                             </span>
                         </td>

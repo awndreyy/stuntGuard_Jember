@@ -37,7 +37,7 @@
     <div class="flex flex-col gap-3">
         <div class="overflow-hidden rounded-2xl border border-stone-200 bg-white">
             <div class="overflow-x-auto">
-                <table class="w-full min-w-[720px] border-collapse text-left">
+                <table class="w-full min-w-180 border-collapse text-left">
                     <thead class="border-b border-stone-200 bg-stone-50/80 text-[11px] font-bold uppercase tracking-wider text-stone-400">
                         <tr>
                             <th class="p-4 pl-6">Judul Artikel</th>

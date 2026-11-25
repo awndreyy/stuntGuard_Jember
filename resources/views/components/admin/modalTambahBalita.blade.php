@@ -11,7 +11,7 @@
                 </div>
                 <div>
                     <h3 id="modalBalitaTitle" class="text-sm font-bold text-stone-900">Tambah Data Balita Baru</h3>
-                    <p class="text-[11px] text-stone-500">Lengkapi data informasi anak/balita untuk pemantauan tumbuh kembang</p>
+                    <p class="text-sm text-stone-500">Lengkapi data informasi balita untuk pemantauan tumbuh kembang</p>
                 </div>
             </div>
             <!-- Tombol Tutup Modal -->
@@ -127,7 +127,7 @@
                     <label class="block text-xs font-semibold text-stone-700">
                         NIK Anak <span class="text-stone-400 font-normal">(Opsional)</span>
                     </label>
-                    <span id="nikBalitaCounter" class="text-[10px] font-medium text-stone-400">0/16 Digit</span>
+                    <span id="nikBalitaCounter" class="text-sm font-medium text-stone-500">0/16 Digit</span>
                 </div>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
@@ -143,7 +143,7 @@
                         class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all tracking-wide"
                     >
                 </div>
-                <p id="nikBalitaHelp" class="text-[10px] text-stone-400 mt-1">Isi 16 digit jika anak sudah memiliki KIA/NIK</p>
+                <p id="nikBalitaHelp" class="text-sm text-stone-500 mt-1">Isi 16 digit jika anak sudah memiliki KIA/NIK</p>
             </div>
 
             <!-- 4. Grid 2 Kolom: Tanggal Lahir & Jenis Kelamin -->

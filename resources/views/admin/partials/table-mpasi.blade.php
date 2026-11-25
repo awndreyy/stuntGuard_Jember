@@ -1,5 +1,3 @@
-{{-- resources/views/admin/partials/table-mpasi.blade.php --}}
-{{-- RECIPES TABLE CONTAINER --}}
 <div id="recipesContainer" class="flex flex-col gap-3">
     <div id="tableViewWrapper" class="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col">
         <div class="overflow-x-auto min-w-full">
@@ -49,14 +47,14 @@
                                 </div>
                             </td>
                             <td class="py-3 px-3">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border {{ $badgeClass }}">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold border {{ $badgeClass }}">
                                     {{ $kategoriLabel }}
                                 </span>
                             </td>   
                             <td class="py-3 px-3 font-medium text-stone-600">{{ $tekstur }}</td>
                             <td class="py-3 px-3">
                                 <span class="font-bold text-pink-700">{{ $recipe->kalori }} kkal</span>
-                                <span class="text-stone-400 text-[10px] block">Protein {{ $recipe->protein }}g</span>
+                                <span class="text-stone-500 text-[11px] block">Protein {{ $recipe->protein }}g</span>
                             </td>
                             <td class="py-3 px-3 text-stone-500 text-[11px]">
                                 <span>{{ $recipe->waktu_memasak }} mnt / {{ $recipe->porsi }} porsi</span>

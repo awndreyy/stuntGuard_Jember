@@ -12,7 +12,7 @@
                 </h1>
             </div>
             <p class="text-xs text-stone-500 mt-0.5">
-                Kelola direktori menu dan resep Makanan Pendamping ASI bergizi untuk balita usia 6–23 bulan.
+                Kelola menu dan resep Makanan Pendamping ASI bergizi untuk balita.
             </p>
         </div>
 
@@ -33,22 +33,22 @@
         <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
             <a href="{{ route('kelolaMpasi', request()->except('kategori_usia', 'page')) }}" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === 'all' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
                 <span>Semua Usia</span>
-                <span class="px-1.5 py-0.2 rounded-md bg-white/20 text-[10px]">{{ $totalResep }}</span>
+                <span class="px-1.5 py-0.2 rounded-md bg-white/20 text-[10px] text-stone-600">{{ $totalResep }}</span>
             </a>
             <a href="{{ route('kelolaMpasi', array_merge(request()->except('page'), ['kategori_usia' => '6-8'])) }}" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === '6-8' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
                 <span class="w-2 h-2 rounded-full bg-blue-500"></span>
                 <span>6-8 Bulan</span>
-                <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-500">{{ $total68 }}</span>
+                <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-600">{{ $total68 }}</span>
             </a>
             <a href="{{ route('kelolaMpasi', array_merge(request()->except('page'), ['kategori_usia' => '9-11'])) }}" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === '9-11' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
                 <span class="w-2 h-2 rounded-full bg-amber-500"></span>
                 <span>9-11 Bulan</span>
-                <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-500">{{ $total911 }}</span>
+                <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-600">{{ $total911 }}</span>
             </a>
             <a href="{{ route('kelolaMpasi', array_merge(request()->except('page'), ['kategori_usia' => '12-23'])) }}" class="category-tab px-3 py-1.5 rounded-xl text-xs font-semibold  transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer {{ request('kategori_usia', 'all') === '12-23' ? 'active-tab bg-brand text-white shadow-xs' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' }}">
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                 <span>12-23 Bulan</span>
-                <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-500">{{ $total1223 }}</span>
+                <span class="px-1.5 py-0.2 rounded-md bg-stone-100 text-[10px] text-stone-600">{{ $total1223 }}</span>
             </a>
         </div>
 

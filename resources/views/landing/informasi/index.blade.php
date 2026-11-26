@@ -3,11 +3,11 @@
 @section('title', 'Informasi Kesehatan Balita - StuntGuard Jember')
 
 @section('content')
-    <div class="sg-public-list mx-auto max-w-[1200px] px-4 pb-16 pt-7 sm:px-6 md:px-8 lg:px-12">
+    <div class="sg-public-list mx-auto max-w-300 px-4 pb-16 pt-7 sm:px-6 md:px-8 lg:px-12">
     <div class="sg-page-heading mb-10">
-        <a href="{{ route('home') }}#informasi-kesehatan" class="sg-back-link">
+        <a href="{{ route('home') }}#informasi-kesehatan" class="mb-6 inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-pink-700 transition-colors hover:bg-pink-50">
             <span class="material-symbols-outlined text-lg">arrow_back</span> Kembali ke Beranda
-        </a>
+        </a><br>
         <p class="sg-eyebrow">Pengetahuan untuk Orang Tua</p>
         <h1 class="text-3xl font-extrabold text-stone-900">Edukasi Kesehatan Anak</h1>
         <p class="text-sm text-stone-600 mt-2">Informasi praktis untuk mendukung kesehatan dan tumbuh kembang si kecil.</p>

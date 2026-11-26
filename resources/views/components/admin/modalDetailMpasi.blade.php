@@ -5,7 +5,7 @@
         <!-- Banner Image Preview -->
         <div class="relative h-44 sm:h-52 w-full bg-stone-100 shrink-0 overflow-hidden">
             <img id="prevImage" alt="Preview" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
             
             <button type="button" onclick="closePreviewModal()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-colors cursor-pointer z-10">
                 <i data-lucide="x" class="w-4 h-4"></i>

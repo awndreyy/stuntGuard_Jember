@@ -52,7 +52,7 @@
     backdrop-filter: blur(12px);
 }
 .sg-guest .sg-navbar > div { height: 86px; gap: 22px; }
-.sg-guest .sg-navbar img { width: 46px; height: 46px; border-radius: 50%; }
+.sg-guest .sg-navbar img { width: auto; height: 50px; max-height: 54px; max-width: 180px; border-radius: 0; object-fit: contain; }
 .sg-guest .sg-brand-name {
     color: var(--sg-hover);
     font-size: 23px;
@@ -300,6 +300,7 @@
 @media (max-width: 767px) {
     .sg-guest > main { padding-top: 76px; }
     .sg-guest .sg-navbar > div { height: 76px; gap: 10px; }
+    .sg-guest .sg-navbar img { height: 48px; max-width: 220px; }
     .sg-guest main section[id] { scroll-margin-top: 96px; }
     .sg-stats { margin-top: 32px; }
     .sg-stats > div { padding-inline: 14px; gap: 10px; }

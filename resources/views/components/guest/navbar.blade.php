@@ -1,11 +1,7 @@
 <header class="sg-navbar fixed top-0 inset-x-0 z-50 bg-white border-b border-pink-100">
   <div class="max-w-300 mx-auto px-4 md:px-8 lg:px-12 h-20 flex items-center justify-between">
-    <a href="{{ url('/') }}" class="flex items-center gap-2.5" aria-label="StuntGuard Jember - Beranda">
-      <img src="{{ asset('images/logo-StuntGuard.png') }}" alt="Logo StuntGuard" class="w-12 h-12 object-contain">
-      <div>
-        <span class="sg-brand-name text-lg font-extrabold text-stone-900 tracking-tight block leading-none">StuntGuard</span>
-        <span class="sg-brand-location text-[11px] font-bold text-pink-600 tracking-wider uppercase">Kabupaten Jember</span>
-      </div>
+    <a href="{{ url('/') }}" class="flex items-center py-1" aria-label="StuntGuard Jember - Beranda">
+      <img src="{{ asset('images/logo-stuntguard-panjang.png') }}" alt="StuntGuard Jember" class="h-12 sm:h-14 md:h-16 w-auto max-w-55 sm:max-w-70 md:max-w-[320px] object-contain">
     </a>
     <nav id="desktopNav" class="hidden md:flex items-center gap-7 text-sm font-semibold text-stone-600">
       <a data-guest-section="beranda" href="{{ route('home') }}#beranda" class="hover:text-pink-600 transition-colors">Beranda</a>

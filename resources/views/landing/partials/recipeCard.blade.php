@@ -21,7 +21,7 @@
 
     <div class="sg-card-body flex flex-1 flex-col p-3 sm:p-5">
         <div>
-            <p class="mb-1.5 sm:mb-2 flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wide text-pink-700">
+            <p class="mb-1.5 sm:mb-2 flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold tracking-wide text-pink-700">
                 <span class="material-symbols-outlined text-[14px] sm:text-[16px]" aria-hidden="true">nutrition</span>
                 Resep MPASI
             </p>

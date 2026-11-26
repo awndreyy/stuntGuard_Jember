@@ -5,10 +5,10 @@
 @section('content')
     <div class="sg-public-list mx-auto max-w-300 px-4 pb-16 pt-7 sm:px-6 md:px-8 md:pb-20 md:pt-10 lg:px-12">
         <div class="sg-page-heading">
-            <a href="{{ route('home') }}#resep-mpasi" class="sg-back-link">
-                <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_back</span>
+            <a href="{{ route('home') }}#resep-mpasi" class="mb-6 inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-pink-700 transition-colors hover:bg-pink-50">
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
                 Kembali ke Beranda
-            </a>
+            </a><br>
             <p class="sg-eyebrow">Inspirasi Menu Si Kecil</p>
             <h1>Resep MPASI Sehat</h1>
             <p>Temukan ide menu sesuai usia si kecil, lengkap dengan bahan, langkah memasak, dan informasi gizi.</p>

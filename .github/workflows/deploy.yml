@@ -43,7 +43,8 @@ jobs:
             set ftp:passive-mode true;
             set net:timeout 30;
             set net:max-retries 3;
-            mirror -R --verbose --parallel=10 --no-perms --ignore-time \
+            rm -f vendor/composer/platform_check.php;
+            mirror -R --verbose --parallel=10 --no-perms \
               --exclude-glob .git* \
               --exclude-glob .git/ \
               --exclude-glob node_modules/ \

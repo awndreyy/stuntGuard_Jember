@@ -34,16 +34,20 @@ jobs:
           ${{ secrets.ENV_FILE }}
           EOF
 
-      - name: 6. Upload ke server FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ./
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.github/**
-            storage/logs/**
+      - name: 6. Upload ke server FTP (Parallel)
+        run: |
+          sudo apt-get update && sudo apt-get install -y lftp
+          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" ${{ secrets.FTP_SERVER }} -e "
+            set ftp:ssl-allow yes;
+            set ssl:verify-certificate no;
+            set net:timeout 30;
+            set net:max-retries 3;
+            mirror -R --parallel=10 --no-perms --ignore-time \
+              --exclude-glob .git* \
+              --exclude-glob .git/ \
+              --exclude-glob node_modules/ \
+              --exclude-glob .github/ \
+              --exclude-glob storage/logs/ \
+              ./ ./ ;
+            quit
+          "

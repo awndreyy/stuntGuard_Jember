@@ -51,4 +51,4 @@ jobs:
               --exclude-glob storage/logs/ \
               ./ ./ ;
             quit
-          ""
+          "

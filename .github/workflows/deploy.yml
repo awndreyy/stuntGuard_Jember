@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: npm ci && npm run build
+      - run: npm install && npm run build
 
       - name: 5. Buat file .env production
         run: |

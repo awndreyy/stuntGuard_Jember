@@ -209,7 +209,6 @@
 <div class="pt-1 space-y-2">
     <div class="flex items-center justify-between">
         <label class="block font-semibold text-stone-700">Foto Resep</label>
-        <span class="text-[10px] font-medium text-stone-400">Opsional (File atau Link URL)</span>
     </div>
 
 

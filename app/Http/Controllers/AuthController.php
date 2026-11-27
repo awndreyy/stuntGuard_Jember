@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
     // Login
-    public function showLogin()
+    public function showLogin(): \Illuminate\View\View
     {
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function login(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'email'],
@@ -30,84 +28,32 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return back()
                 ->withErrors($validator)
-                ->withInput();
+                ->onlyInput('email');
         }
 
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
+            'role' => 'Admin'
         ];
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            $user = Auth::user();
-
-            if ($user->role === 'Admin') {
-                return redirect()
-                    ->to('/dashboardAdmin')
-                    ->with('success', 'Selamat datang '.$user->name);
-            }
-
-            if ($user->role === 'Orang Tua') {
-                return redirect()
-                    ->to('/dashboardUser')
-                    ->with('success', 'Selamat datang '.$user->name);
-            }
-
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-
-            return back()
-                ->withErrors([
-                    'email' => 'Role pengguna tidak dikenali.',
-                ])
-                ->withInput();
+            return redirect()
+                ->route('dashboardAdmin')
+                ->with('success', 'Selamat datang ' . Auth::user()->name);
         }
 
         return back()
-            ->withErrors([
-                'email' => 'Email atau password salah.',
-            ])
-            ->withInput();
-    }
-
-    // Daftar
-    public function showRegister()
-    {
-        return view('auth.register');
-    }
-
-    public function register(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:30'],
-            'nik' => ['required', 'digits:16', 'unique:users,nik'],
-            'email' => ['required', 'email', 'max:30', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:6'],
-        ], [
-            'nik.unique' => 'NIK ini sudah terdaftar dalam sistem.',
-            'nik.digits' => 'NIK harus berjumlah tepat 16 digit.',
-            'email.unique' => 'Email ini sudah terdaftar.',
-            'password.min' => 'Password minimal 6 karakter.',
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'nik' => $request->nik,
-            'email' => $request->email,
-            'role' => 'Orang Tua',
-            'password' => Hash::make($request->password),
-        ]);
-
-        Auth::login($user);
-
-        return redirect()->to('/dashboardUser')->with('success', 'Registrasi berhasil! Selamat datang, '.$user->name);
+        ->withErrors([
+            'email' => 'Email, password salah, atau akun tidak memiliki akses admin.',
+        ])
+        ->onlyInput('email');
     }
 
     // Logout
-    public function logout(Request $request)
+    public function logout(Request $request): \Illuminate\Http\RedirectResponse
     {
         Auth::logout();
         $request->session()->invalidate();

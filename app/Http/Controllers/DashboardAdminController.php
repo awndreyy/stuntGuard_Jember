@@ -18,22 +18,30 @@ class DashboardAdminController extends Controller
 
         $resepList = Mpasi::query()
             ->when($kategori !== 'semua', fn ($q) => $q->where('kategori_usia', $kategori))
-            ->latest('id_resep')
+            ->latest('created_at')
             ->limit(10)
             ->get();
 
         // Hanya riwayat balita terdaftar, bukan simulasi kalkulator tamu.
+        $measurementTable = (new Pengukuran())->getTable();
+
         $latestMeasurements = Pengukuran::query()
             ->whereNotNull('balita_id')
-            ->whereNotExists(function ($query) {
+            ->whereNotExists(function ($query) use ($measurementTable) {
                 $query->selectRaw('1')
-                    ->from('pengukurans as lebih_baru')
-                    ->whereColumn('lebih_baru.balita_id', 'pengukurans.balita_id')
-                    ->where(function ($q) {
-                        $q->whereColumn('lebih_baru.tanggal_pengukuran', '>', 'pengukurans.tanggal_pengukuran')
-                            ->orWhere(function ($sameDay) {
-                                $sameDay->whereColumn('lebih_baru.tanggal_pengukuran', '=', 'pengukurans.tanggal_pengukuran')
-                                    ->whereColumn('lebih_baru.id', '>', 'pengukurans.id');
+                    ->from($measurementTable.' as lebih_baru')
+                    ->whereColumn('lebih_baru.balita_id', $measurementTable.'.balita_id')
+                    ->where(function ($q) use ($measurementTable) {
+                        $q->whereColumn('lebih_baru.tanggal_pengukuran', '>', $measurementTable.'.tanggal_pengukuran')
+                            ->orWhere(function ($sameDay) use ($measurementTable) {
+                                $sameDay->whereColumn('lebih_baru.tanggal_pengukuran', '=', $measurementTable.'.tanggal_pengukuran')
+                                    ->where(function ($ties) use ($measurementTable) {
+                                        $ties->whereColumn('lebih_baru.created_at', '>', $measurementTable.'.created_at')
+                                            ->orWhere(function ($sameSecond) use ($measurementTable) {
+                                                $sameSecond->whereColumn('lebih_baru.created_at', '=', $measurementTable.'.created_at')
+                                                    ->whereColumn('lebih_baru.id', '>', $measurementTable.'.id');
+                                            });
+                                    });
                             });
                     });
             });
@@ -48,7 +56,7 @@ class DashboardAdminController extends Controller
                 ->with('balita')
                 ->whereNotNull('balita_id')
                 ->orderByDesc('tanggal_pengukuran')
-                ->orderByDesc('id')
+                ->orderByDesc('created_at')->orderByDesc('id')
                 ->limit(10)
                 ->get(),
         ]);

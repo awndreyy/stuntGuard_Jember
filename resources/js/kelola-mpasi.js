@@ -1,88 +1,91 @@
-// Filter Category Tabs
-function filterCategory(category, button) {
-    document.querySelectorAll('.category-tab').forEach(btn => {
-        btn.classList.remove('active-tab', 'bg-rose-700', 'text-white');
-        btn.classList.add('text-stone-600', 'hover:bg-stone-100');
-    });
-    button.classList.add('active-tab', 'bg-rose-700', 'text-white');
-    button.classList.remove('text-stone-600', 'hover:bg-stone-100');
+// Filter MPASI: query tetap dijalankan Laravel untuk seluruh database,
+// tetapi hasil tabel diperbarui tanpa reload halaman.
+let mpasiRequest = null;
+let mpasiSearchTimer = null;
 
-    applyAllFilters();
+async function loadMpasiPage(url, addHistory = true) {
+    const target = new URL(url, window.location.href);
+    if (target.origin !== window.location.origin) return;
+
+    if (mpasiRequest) mpasiRequest.abort();
+    const controller = new AbortController();
+    mpasiRequest = controller;
+    const container = document.getElementById('recipesContainer');
+    if (container) container.setAttribute('aria-busy', 'true');
+
+    try {
+        const response = await fetch(target.toString(), {
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'text/html' },
+            credentials: 'same-origin',
+            signal: controller.signal,
+        });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+        const nextTable = doc.getElementById('recipesContainer');
+        const nextToolbar = doc.getElementById('mpasiFilterToolbar');
+        const currentTable = document.getElementById('recipesContainer');
+        const currentToolbar = document.getElementById('mpasiFilterToolbar');
+        if (!nextTable || !nextToolbar || !currentTable || !currentToolbar) {
+            throw new Error('Markup tabel MPASI tidak ditemukan');
+        }
+
+        currentTable.replaceWith(nextTable);
+        currentToolbar.replaceWith(nextToolbar);
+        const json = nextTable.querySelector('#mpasi-recipes-json');
+        if (json) window.recipesData = JSON.parse(json.textContent);
+        if (addHistory) window.history.pushState({ mpasi: true }, '', target.toString());
+        if (window.lucide) window.lucide.createIcons();
+    } catch (error) {
+        if (error.name === 'AbortError') return;
+        console.error('Filter MPASI gagal:', error);
+        // Fallback: tetap bisa menggunakan server-side filter bila AJAX gagal.
+        window.location.assign(target.toString());
+    } finally {
+        if (mpasiRequest === controller) {
+            mpasiRequest = null;
+            document.getElementById('recipesContainer')?.removeAttribute('aria-busy');
+        }
+    }
 }
 
-// Search Recipe by Keyword
+function filterCategory(category) {
+    const url = new URL(window.location.href);
+    if (category === 'all') url.searchParams.delete('kategori_usia');
+    else url.searchParams.set('kategori_usia', category);
+    url.searchParams.delete('page');
+    loadMpasiPage(url);
+}
+
 function searchRecipes() {
-    applyAllFilters();
+    clearTimeout(mpasiSearchTimer);
+    mpasiSearchTimer = setTimeout(() => {
+        const url = new URL(window.location.href);
+        const query = document.getElementById('recipeSearchInput')?.value.trim() || '';
+        if (query) url.searchParams.set('q', query);
+        else url.searchParams.delete('q');
+        url.searchParams.delete('page');
+        loadMpasiPage(url);
+    }, 450);
 }
 
-function applyAllFilters() {
-    const activeTab = document.querySelector('.category-tab.active-tab');
-    let selectedCategory = 'all';
-    if (activeTab) {
-        const text = activeTab.innerText.toLowerCase();
-        if (text.includes('6-8')) selectedCategory = '6-8';
-        else if (text.includes('9-11')) selectedCategory = '9-11';
-        else if (text.includes('12-23')) selectedCategory = '12-23';
-    }
-
-    const searchInput = document.getElementById('recipeSearchInput');
-    const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
-    const tableRows = document.querySelectorAll('.table-recipe-row');
-    let visibleCount = 0;
-
-    // Filter table rows
-    tableRows.forEach(row => {
-        const rowCat = row.getAttribute('data-category');
-        const rowName = (row.getAttribute('data-name') || '').toLowerCase();
-
-        const matchesCat = (selectedCategory === 'all' || rowCat === selectedCategory);
-        const matchesSearch = (!searchQuery || rowName.includes(searchQuery));
-
-        if (matchesCat && matchesSearch) {
-            row.style.display = '';
-            visibleCount++;
-        } else {
-            row.style.display = 'none';
-        }
-    });
-
-    // Empty state
-    const emptyState = document.getElementById('emptySearchState');
-    const tableWrapper = document.getElementById('tableViewWrapper');
-    if (tableRows.length > 0) {
-        if (visibleCount === 0) {
-            if (emptyState) {
-                emptyState.classList.remove('hidden');
-                emptyState.classList.add('flex');
-            }
-            if (tableWrapper) tableWrapper.classList.add('hidden');
-        } else {
-            if (emptyState) {
-                emptyState.classList.add('hidden');
-                emptyState.classList.remove('flex');
-            }
-            if (tableWrapper) tableWrapper.classList.remove('hidden');
-        }
-    }
-}
+function applyAllFilters() { searchRecipes(); }
 
 function previewRecipe(id) {
     const recipesData = window.recipesData || {};
     const recipe = recipesData[id];
     if (recipe) {
-        // Image
+        // Preview gambar lokal
         const img = document.getElementById('prevImage');
+
         if (img) {
-            let imageUrl = recipe.gambar;
-            if (!imageUrl) {
+            const imagePath = recipe.gambar;
+
+            if (imagePath) {
+                img.src = '/' + imagePath.replace(/^\/+/, '');
+                img.classList.remove('hidden');
+            } else {
                 img.removeAttribute('src');
                 img.classList.add('hidden');
-            } else {
-                if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
-                    imageUrl = '/' + imageUrl.replace(/^\//, '');
-                }
-                img.src = imageUrl;
-                img.classList.remove('hidden');
             }
         }
 
@@ -127,37 +130,87 @@ function previewRecipe(id) {
         const prevSeng = document.getElementById('prevSeng');
         if (prevSeng) prevSeng.innerText = `${recipe.seng} mg`;
 
-        // Bahan
+        
+        // Bahan - render aman tanpa innerHTML
         const ingList = document.getElementById('prevIngredientsList');
+
         if (ingList) {
-            let bahanArr = Array.isArray(recipe.bahan) ? recipe.bahan : [];
+            let bahanArr = Array.isArray(recipe.bahan)
+                ? recipe.bahan
+                : [];
+
             if (typeof recipe.bahan === 'string') {
-                try { bahanArr = JSON.parse(recipe.bahan); } catch(e) { bahanArr = [recipe.bahan]; }
+                try {
+                    bahanArr = JSON.parse(recipe.bahan);
+                } catch (e) {
+                    bahanArr = [recipe.bahan];
+                }
             }
 
-            ingList.innerHTML = bahanArr.map(b => `
-                <li class="flex items-center gap-2 text-stone-700">
-                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-                    <span>${b}</span>
-                </li>
-            `).join('');
+            ingList.replaceChildren();
+
+            if (!Array.isArray(bahanArr)) {
+                bahanArr = [bahanArr];
+            }
+
+            bahanArr.forEach(bahan => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center gap-2 text-stone-700';
+
+                const bullet = document.createElement('span');
+                bullet.className =
+                    'w-1.5 h-1.5 rounded-full bg-pink-500 shrink-0';
+
+                const text = document.createElement('span');
+                text.textContent = String(bahan ?? '');
+
+                li.append(bullet, text);
+                ingList.appendChild(li);
+            });
         }
 
-        // Langkah
+        
+        // Langkah pembuatan - render aman
         const stepsList = document.getElementById('prevStepsList');
+
         if (stepsList) {
-            let langkahArr = Array.isArray(recipe.cara_pembuatan) ? recipe.cara_pembuatan : [];
+            let langkahArr = Array.isArray(recipe.cara_pembuatan)
+                ? recipe.cara_pembuatan
+                : [];
+
             if (typeof recipe.cara_pembuatan === 'string') {
-                try { langkahArr = JSON.parse(recipe.cara_pembuatan); } catch(e) { langkahArr = [recipe.cara_pembuatan]; }
+                try {
+                    langkahArr = JSON.parse(recipe.cara_pembuatan);
+                } catch (e) {
+                    langkahArr = [recipe.cara_pembuatan];
+                }
             }
 
-            stepsList.innerHTML = langkahArr.map((s, idx) => `
-                <li class="flex items-start gap-2.5 bg-stone-50/50 p-2.5 rounded-xl border border-stone-100">
-                    <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
-                    <span class="leading-relaxed">${s}</span>
-                </li>
-            `).join('');
+            stepsList.replaceChildren();
+
+            if (!Array.isArray(langkahArr)) {
+                langkahArr = [langkahArr];
+            }
+
+            langkahArr.forEach((langkah, index) => {
+                const li = document.createElement('li');
+                li.className =
+                    'flex items-start gap-2.5 bg-stone-50/50 p-2.5 rounded-xl border border-stone-100';
+
+                const number = document.createElement('span');
+                number.className =
+                    'w-5 h-5 rounded-full bg-pink-100 text-pink-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5';
+                number.textContent = String(index + 1);
+
+                const text = document.createElement('span');
+                text.className = 'leading-relaxed';
+                text.textContent = String(langkah ?? '');
+
+                li.append(number, text);
+                stepsList.appendChild(li);
+            });
         }
+
     }
 
     const modal = document.getElementById('previewModal');
@@ -177,13 +230,12 @@ function closePreviewModal() {
 }
 
 function deleteRecipe(id, name) {
-    if (confirm(`Apakah Anda yakin ingin menghapus resep "${name}"?`)) {
-        const form = document.getElementById('globalDeleteForm');
-        if (form) {
-            form.action = `/mpasi/${id}`;
-            form.submit();
-        }
-    }
+    const form = document.getElementById('globalDeleteForm');
+    if (!form) return;
+
+    form.action = `/mpasi/${encodeURIComponent(id)}`;
+    form.dataset.confirmName = name;
+    form.requestSubmit();
 }
 
 function addIngredientRow() {
@@ -193,8 +245,8 @@ function addIngredientRow() {
     row.className = 'space-y-1';
     row.innerHTML = `
         <div class="flex items-center gap-2 ingredient-row">
-            <input type="text" name="bahan[]" required placeholder="Contoh: 30 gr Beras Merah Organik" class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-rose-700/20">
-            <button type="button" onclick="removeIngredientRow(this)" class="p-1.5 text-stone-400 hover:text-rose-600 rounded-lg cursor-pointer"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+            <input type="text" name="bahan[]" required placeholder="Contoh: 30 gr Beras Merah Organik" class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-pink-700/20">
+            <button type="button" onclick="removeIngredientRow(this)" class="p-1.5 text-stone-400 hover:text-pink-600 rounded-lg cursor-pointer"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
         </div>
     `;
     list.appendChild(row);
@@ -225,8 +277,8 @@ function addStepRow() {
     row.innerHTML = `
         <div class="flex items-start gap-2 step-row">
             <span class="w-5 h-5 rounded-full bg-stone-100 text-stone-600 font-bold text-[10px] flex items-center justify-center shrink-0 mt-1 step-num">${stepNum}</span>
-            <textarea name="cara_pembuatan[]" required rows="2" placeholder="Tuliskan petunjuk memasak langkah ini..." class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-rose-700/20"></textarea>
-            <button type="button" onclick="removeStepRow(this)" class="p-1.5 text-stone-400 hover:text-rose-600 rounded-lg cursor-pointer mt-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+            <textarea name="cara_pembuatan[]" required rows="2" placeholder="Tuliskan petunjuk memasak langkah ini..." class="flex-1 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 text-xs focus:outline-none focus:ring-2 focus:ring-pink-700/20"></textarea>
+            <button type="button" onclick="removeStepRow(this)" class="p-1.5 text-stone-400 hover:text-pink-600 rounded-lg cursor-pointer mt-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
         </div>
     `;
     list.appendChild(row);
@@ -256,39 +308,6 @@ function updateStepNumbers() {
     });
 }
 
-function showToast(title, message, type = 'success') {
-    const toast = document.getElementById('toastNotification');
-    const iconContainer = document.getElementById('toastIcon');
-    const toastTitle = document.getElementById('toastTitle');
-    const toastMessage = document.getElementById('toastMessage');
-
-    if (toastTitle) toastTitle.innerText = title;
-    if (toastMessage) toastMessage.innerText = message;
-
-    if (iconContainer) {
-        if (type === 'error') {
-            iconContainer.className = 'w-6 h-6 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center';
-            iconContainer.innerHTML = '<i data-lucide="alert-circle" class="w-4 h-4"></i>';
-        } else {
-            iconContainer.className = 'w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center';
-            iconContainer.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i>';
-        }
-    }
-
-    if (toast) {
-        toast.classList.remove('hidden');
-        toast.classList.add('flex');
-    }
-    if (window.lucide) lucide.createIcons();
-
-    setTimeout(() => {
-        if (toast) {
-            toast.classList.add('hidden');
-            toast.classList.remove('flex');
-        }
-    }, 4000);
-}
-
 // Modal preview tetap dipakai pada halaman daftar.
 document.addEventListener('DOMContentLoaded', () => {
     const previewModal = document.getElementById('previewModal');
@@ -299,6 +318,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Event delegation: tetap aktif setelah toolbar/tabel diganti melalui AJAX.
+document.addEventListener('click', event => {
+    const anchor = event.target.closest('#mpasiFilterToolbar .category-tab, #mpasiFilterToolbar a[href], #recipesContainer nav a[href]');
+    if (!anchor || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    if (!anchor.href || new URL(anchor.href).origin !== window.location.origin) return;
+    event.preventDefault();
+    clearTimeout(mpasiSearchTimer);
+    loadMpasiPage(anchor.href);
+});
+
+document.addEventListener('input', event => {
+    if (event.target.id === 'recipeSearchInput') searchRecipes();
+});
+
+document.addEventListener('submit', event => {
+    if (event.target.id !== 'mpasiSearchForm') return;
+    event.preventDefault();
+    clearTimeout(mpasiSearchTimer);
+    const url = new URL(event.target.action);
+    const data = new FormData(event.target);
+    const q = String(data.get('q') || '').trim();
+    const age = data.get('kategori_usia');
+    if (q) url.searchParams.set('q', q);
+    if (age) url.searchParams.set('kategori_usia', String(age));
+    loadMpasiPage(url);
+});
+
+window.addEventListener('popstate', () => loadMpasiPage(window.location.href, false));
 
 // Expose functions to inline handlers (Vite bundles this file as a module)
 Object.assign(window, {
@@ -313,5 +361,4 @@ Object.assign(window, {
     addStepRow,
     removeStepRow,
     updateStepNumbers,
-    showToast,
 });

@@ -5,7 +5,7 @@
 @section('content')
 <div class="space-y-5">
     <div>
-        <a href="{{ ($backUrl ?? route('detailBalita', $user)) }}" class="mb-2 inline-flex items-center gap-1 text-xs text-rose-700 hover:text-rose-900">
+        <a href="{{ ($backUrl ?? route('detailBalita', $user)) }}" class="mb-2 inline-flex items-center gap-1 text-xs text-pink-700 hover:text-pink-900">
             <i data-lucide="arrow-left" class="h-3.5 w-3.5"></i>
             Kembali
         </a>
@@ -16,13 +16,13 @@
     <section class="overflow-hidden rounded-2xl border border-stone-200 bg-white">
         <div class="flex items-center justify-between border-b border-stone-100 px-4 py-3">
             <div class="flex items-center gap-2">
-                <i data-lucide="clipboard-list" class="h-4 w-4 text-rose-700"></i>
+                <i data-lucide="clipboard-list" class="h-4 w-4 text-pink-700"></i>
                 <h2 class="text-sm font-bold text-stone-900">Daftar Riwayat Pengukuran</h2>
             </div>
-            <span class="rounded-lg bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700">{{ $riwayat->total() }} pengukuran</span>
+            <span class="rounded-lg bg-pink-50 px-3 py-2 text-xs font-semibold text-pink-700">{{ $riwayat->total() }} pengukuran</span>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full min-w-[1000px] text-left text-xs">
+            <table class="w-full min-w-250 text-left text-xs">
                 <thead class="bg-stone-50 text-[10px] uppercase text-stone-500">
                     <tr>
                         <th class="px-4 py-3">Nama</th>
@@ -36,13 +36,21 @@
                     @forelse ($riwayat as $ukur)
                         @php
                             $zTinggi = $ukur->z_score_tbu;
-                            $status = is_null($zTinggi) ? 'Tidak tersedia' : ($zTinggi < -3 ? 'Sangat Pendek' : ($zTinggi < -2 ? 'Pendek' : ($zTinggi <= 3 ? 'Normal' : 'Tinggi')));
+                            $status = \App\Services\GrowthStatusService::height($zTinggi === null ? null : (float) $zTinggi, 'Tidak tersedia');
                         @endphp
-                        <tr class="align-top hover:bg-rose-50/40">
-                            <td class="px-4 py-3 font-semibold text-stone-800">{{ $ukur->nama_balita ?: $balita->nama_balita }}</td>
-                            <td class="px-4 py-3 text-stone-600">{{ $ukur->jenis_kelamin ?: $balita->jenis_kelamin }}</td>
-                            <td class="px-4 py-3 text-stone-600">{{ $ukur->umur_bulan }} bulan</td>
-                            <td class="px-4 py-3 text-stone-600">{{ $ukur->tanggal_pengukuran?->translatedFormat('d M Y') ?? '-' }}</td>
+                        <tr class="align-top hover:bg-pink-50/40">
+                            <td class="px-4 py-3 font-semibold text-stone-800">
+                                {{ $balita->nama_balita }}
+                            </td>
+                            <td class="px-4 py-3 text-stone-600">
+                                {{ $balita->jenis_kelamin }}
+                            </td>
+                            <td class="px-4 py-3 text-stone-600">
+                                {{ $ukur->umur_bulan }} bulan
+                            </td>
+                            <td class="px-4 py-3 text-stone-600">
+                                {{ $ukur->tanggal_pengukuran?->translatedFormat('d M Y') ?? '-' }}
+                            </td>
                             <td class="px-4 py-3 text-stone-700">
                                 <div class="space-y-1">
                                     <p>BB: <span class="font-semibold">{{ number_format((float) $ukur->berat_badan, 2, ',', '.') }} kg</span> · PB/TB: <span class="font-semibold">{{ number_format((float) $ukur->tinggi_badan, 2, ',', '.') }} cm</span></p>

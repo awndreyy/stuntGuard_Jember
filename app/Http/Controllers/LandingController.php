@@ -13,15 +13,15 @@ class LandingController extends Controller
 {
     public function index(): View|RedirectResponse
     {
-        if (Auth::check()) {
-            return redirect()->route(Auth::user()->role === 'Admin' ? 'dashboardAdmin' : 'dashboardUser');
+        if (Auth::check() && Auth::user()->role === 'Admin') {
+            return redirect()->route('dashboardAdmin');
         }
 
         return view('landing.dashboardGuest', [
             'jumlahBalita' => Balita::count(),
             'jumlahResep' => Mpasi::count(),
             'jumlahArtikel' => Informasi::count(),
-            'resepTerbaru' => Mpasi::orderByDesc('created_at')->orderByDesc('id_resep')->limit(3)->get(),
+            'resepTerbaru' => Mpasi::orderByDesc('created_at')->orderByDesc('id_resep')->limit(6)->get(),
             'artikelTerbaru' => Informasi::orderByDesc('created_at')->orderByDesc('id_informasi')->limit(4)->get(),
         ]);
     }

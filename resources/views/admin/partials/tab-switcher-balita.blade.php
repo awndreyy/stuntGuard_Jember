@@ -5,7 +5,7 @@
         role="tab"
         aria-selected="true"
         onclick="switchTab('user')"
-        class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-rose-700 border-b-2 border-rose-700 -mb-px transition-colors cursor-pointer"
+        class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-pink-700 border-b-2 border-pink-700 -mb-px transition-colors cursor-pointer"
     >
         <i data-lucide="users" class="w-3.5 h-3.5"></i>
         Data Pengguna

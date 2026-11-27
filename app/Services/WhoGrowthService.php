@@ -10,14 +10,14 @@ class WhoGrowthService
 
     private function table(string $indicator): array
     {
-        if (!in_array($indicator, ['wfa', 'lfa', 'hfa', 'wfl', 'wfh', 'hcfa', 'acfa'], true)) {
+        if (! in_array($indicator, ['wfa', 'lfa', 'hfa', 'wfl', 'wfh', 'hcfa', 'acfa'], true)) {
             throw new RuntimeException('Indikator WHO tidak dikenal.');
         }
         if (isset($this->tables[$indicator])) {
             return $this->tables[$indicator];
         }
         $path = storage_path("app/who/{$indicator}.csv");
-        if (!is_readable($path)) {
+        if (! is_readable($path)) {
             throw new RuntimeException("Data WHO {$indicator} belum tersedia.");
         }
         $handle = fopen($path, 'r');
@@ -31,11 +31,11 @@ class WhoGrowthService
             }
             $table = ['L' => [], 'P' => []];
             while (($row = fgetcsv($handle)) !== false) {
-                if (count($row) !== 5 || !in_array($row[0], ['L', 'P'], true)) {
+                if (count($row) !== 5 || ! in_array($row[0], ['L', 'P'], true)) {
                     throw new RuntimeException('Baris CSV WHO rusak.');
                 }
                 foreach (array_slice($row, 1) as $number) {
-                    if (!is_numeric($number)) {
+                    if (! is_numeric($number)) {
                         throw new RuntimeException('Parameter WHO bukan angka.');
                     }
                 }
@@ -50,6 +50,7 @@ class WhoGrowthService
                 ksort($series, SORT_NUMERIC);
             }
             unset($series);
+
             return $this->tables[$indicator] = $table;
         } finally {
             fclose($handle);
@@ -58,11 +59,11 @@ class WhoGrowthService
 
     public function zScore(string $indicator, string $sex, float $key, float $value): ?float
     {
-        if ($value <= 0 || !in_array($sex, ['L', 'P'], true)) {
+        if ($value <= 0 || ! in_array($sex, ['L', 'P'], true)) {
             throw new RuntimeException('Pengukuran atau jenis kelamin tidak valid.');
         }
         $series = $this->table($indicator)[$sex];
-        if (!$series) {
+        if (! $series) {
             return null;
         }
         $keys = array_map('floatval', array_keys($series));
@@ -91,12 +92,13 @@ class WhoGrowthService
         for ($i = 0; $i < 3; $i++) {
             $params[] = $first[1][$i] + $ratio * ($second[1][$i] - $first[1][$i]);
         }
+
         return $this->calculateLms($value, ...$params);
     }
 
     private function calculateLms(float $x, float $l, float $m, float $s): float
     {
-        $raw = fn(float $v): float => abs($l) < 1e-10
+        $raw = fn (float $v): float => abs($l) < 1e-10
             ? log($v / $m) / $s
             : (pow($v / $m, $l) - 1) / ($l * $s);
         $z = $raw($x);
@@ -104,23 +106,37 @@ class WhoGrowthService
         if ($z > 3) {
             $p3 = abs($l) < 1e-10 ? $m * exp(3 * $s) : $m * pow(1 + 3 * $l * $s, 1 / $l);
             $p2 = abs($l) < 1e-10 ? $m * exp(2 * $s) : $m * pow(1 + 2 * $l * $s, 1 / $l);
+
             return 3 + ($x - $p3) / ($p3 - $p2);
         }
         if ($z < -3) {
             $n3 = abs($l) < 1e-10 ? $m * exp(-3 * $s) : $m * pow(1 - 3 * $l * $s, 1 / $l);
             $n2 = abs($l) < 1e-10 ? $m * exp(-2 * $s) : $m * pow(1 - 2 * $l * $s, 1 / $l);
+
             return -3 + ($x - $n3) / ($n2 - $n3);
         }
+
         return $z;
     }
 
     public function lilaScreening(?float $cm, int $age): ?string
     {
-        if ($cm === null) return null;
-        if ($age < 6) return 'Pengukuran dicatat; penilaian bayi <6 bulan memerlukan usia lebih rinci dan pemeriksaan klinis.';
-        if ($age > 59) return 'Ambang skrining LiLA 6–59 bulan tidak berlaku pada usia 60 bulan.';
-        if ($cm < 11.5) return 'LiLA <11,5 cm: indikasi gizi buruk akut; perlu pemeriksaan segera.';
-        if ($cm < 12.5) return 'LiLA 11,5–<12,5 cm: indikasi gizi kurang akut; perlu pemeriksaan.';
+        if ($cm === null) {
+            return null;
+        }
+        if ($age < 6) {
+            return 'Pengukuran dicatat; penilaian bayi <6 bulan memerlukan usia lebih rinci dan pemeriksaan klinis.';
+        }
+        if ($age > 59) {
+            return 'Ambang skrining LiLA 6–59 bulan tidak berlaku pada usia 60 bulan.';
+        }
+        if ($cm < 11.5) {
+            return 'LiLA <11,5 cm: indikasi gizi buruk akut; perlu pemeriksaan segera.';
+        }
+        if ($cm < 12.5) {
+            return 'LiLA 11,5–<12,5 cm: indikasi gizi kurang akut; perlu pemeriksaan.';
+        }
+
         return 'LiLA ≥12,5 cm: tidak memenuhi ambang skrining LiLA gizi akut.';
     }
 }

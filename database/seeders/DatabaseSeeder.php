@@ -3,21 +3,25 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
 
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
+        if (! app()->environment(['local', 'testing'])) {
+            $this->command?->warn('Akun demo hanya dibuat pada lingkungan local/testing.');
+
+            return;
+        }
+
         // admin
-        User::updateOrCreate(
+        User::firstOrCreate(
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Admin',
@@ -28,7 +32,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
         // ortu
-        User::updateOrCreate(
+        User::firstOrCreate(
             ['email' => 'ortu@gmail.com'],
             [
                 'name' => 'Budi',

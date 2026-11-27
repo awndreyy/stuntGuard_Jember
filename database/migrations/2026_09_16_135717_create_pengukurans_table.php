@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pengukurans', function (Blueprint $table) {
-            $table->id();
+            $table->string('id', 24)->primary();
             $table->string('nama_balita', 100); // Maksimal 100 karakter
             $table->char('nik', 16)->unique();
             $table->string('jenis_kelamin', 15);

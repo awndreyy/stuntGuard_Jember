@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Informasi;
+use App\Services\PublicImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class InformasiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
-        $informations = Informasi::latest('id_informasi')->get();
+        $informations = Informasi::latest('created_at')->orderByDesc('id_informasi')->paginate(6)->withQueryString();
 
         return view('admin.kelolaInformasi', compact('informations'));
     }
@@ -21,20 +22,25 @@ class InformasiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, PublicImageService $images): \Illuminate\Http\RedirectResponse
     {
-        $request->validate([
-            'judul' => ['required_without:title', 'nullable', 'string', 'max:255'],
-            'title' => ['required_without:judul', 'nullable', 'string', 'max:255'],
-            'category' => ['required', 'string', 'max:100'],
+        $data = $request->validate([
+            'judul' => ['required_without:title', 'nullable', 'string', 'max:50'],
+            'title' => ['required_without:judul', 'nullable', 'string', 'max:50'],
+            'category' => ['required', Rule::in([
+                'Trimester 1',
+                'Trimester 2',
+                'Trimester 3',
+                'Edukasi Gizi',
+                'Pencegahan Stunting',]),],
             'summary' => ['required', 'string'],
             'content' => ['nullable', 'string'],
             'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
         ], [
             'judul.required_without' => 'Judul informasi wajib diisi.',
             'title.required_without' => 'Judul informasi wajib diisi.',
-            'judul.max' => 'Judul informasi maksimal 255 karakter.',
-            'title.max' => 'Judul informasi maksimal 255 karakter.',
+            'judul.max' => 'Judul informasi maksimal 50 karakter.',
+            'title.max' => 'Judul informasi maksimal 50 karakter.',
             'category.required' => 'Kategori wajib dipilih.',
             'summary.required' => 'Ringkasan singkat wajib diisi.',
             'thumbnail.image' => 'File thumbnail harus berupa gambar.',
@@ -42,19 +48,9 @@ class InformasiController extends Controller
             'thumbnail.max' => 'Ukuran thumbnail maksimal 3MB.',
         ]);
 
-        $thumbnailPath = null;
-        if ($request->hasFile('thumbnail')) {
-            $path = $request->file('thumbnail')->store('informasi', 'public');
-            $thumbnailPath = '/storage/'.$path;
-        }
-
-        Informasi::create([
-            'judul' => $request->input('judul', $request->input('title')),
-            'category' => $request->category,
-            'summary' => $request->summary,
-            'content' => $request->content,
-            'thumbnail' => $thumbnailPath,
-        ]);
+        $data['judul'] = $data['judul'] ?? $data['title'];
+        unset($data['title'], $data['thumbnail']);
+        $images->save(new Informasi, $data, $request->file('thumbnail'), 'informasi', 'thumbnail');
 
         return redirect()->route('kelolaInformasi')->with('success', 'Informasi & edukasi berhasil ditambahkan!');
     }
@@ -64,7 +60,7 @@ class InformasiController extends Controller
      */
     public function edit(string $id)
     {
-        $informations = Informasi::latest('id_informasi')->get();
+        $informations = Informasi::latest('created_at')->get();
         $editInformation = Informasi::findOrFail($id);
 
         return view('admin.kelolaInformasi', compact('informations', 'editInformation'));
@@ -73,22 +69,27 @@ class InformasiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id, PublicImageService $images): \Illuminate\Http\RedirectResponse
     {
         $informasi = Informasi::findOrFail($id);
 
-        $request->validate([
-            'judul' => ['required_without:title', 'nullable', 'string', 'max:255'],
-            'title' => ['required_without:judul', 'nullable', 'string', 'max:255'],
-            'category' => ['required', 'string', 'max:100'],
+        $data = $request->validate([
+            'judul' => ['required_without:title', 'nullable', 'string', 'max:50'],
+            'title' => ['required_without:judul', 'nullable', 'string', 'max:50'],
+            'category' => ['required', Rule::in([
+                'Trimester 1',
+                'Trimester 2',
+                'Trimester 3',
+                'Edukasi Gizi',
+                'Pencegahan Stunting',]),],
             'summary' => ['required', 'string'],
             'content' => ['nullable', 'string'],
             'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:3072'],
         ], [
             'judul.required_without' => 'Judul informasi wajib diisi.',
             'title.required_without' => 'Judul informasi wajib diisi.',
-            'judul.max' => 'Judul informasi maksimal 255 karakter.',
-            'title.max' => 'Judul informasi maksimal 255 karakter.',
+            'judul.max' => 'Judul informasi maksimal 50 karakter.',
+            'title.max' => 'Judul informasi maksimal 50 karakter.',
             'category.required' => 'Kategori wajib dipilih.',
             'summary.required' => 'Ringkasan singkat wajib diisi.',
             'thumbnail.image' => 'File thumbnail harus berupa gambar.',
@@ -96,20 +97,9 @@ class InformasiController extends Controller
             'thumbnail.max' => 'Ukuran thumbnail maksimal 3MB.',
         ]);
 
-        if ($request->hasFile('thumbnail')) {
-            if ($informasi->thumbnail && str_starts_with($informasi->thumbnail, '/storage/')) {
-                $relative = str_replace('/storage/', '', $informasi->thumbnail);
-                Storage::disk('public')->delete($relative);
-            }
-            $path = $request->file('thumbnail')->store('informasi', 'public');
-            $informasi->thumbnail = '/storage/'.$path;
-        }
-
-        $informasi->judul = $request->input('judul', $request->input('title'));
-        $informasi->category = $request->category;
-        $informasi->summary = $request->summary;
-        $informasi->content = $request->content;
-        $informasi->save();
+        $data['judul'] = $data['judul'] ?? $data['title'];
+        unset($data['title'], $data['thumbnail']);
+        $images->save($informasi, $data, $request->file('thumbnail'), 'informasi', 'thumbnail');
 
         return redirect()->route('kelolaInformasi')->with('success', 'Informasi & edukasi berhasil diperbarui!');
     }
@@ -117,16 +107,11 @@ class InformasiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, PublicImageService $images): \Illuminate\Http\RedirectResponse
     {
         $informasi = Informasi::findOrFail($id);
 
-        if ($informasi->thumbnail && str_starts_with($informasi->thumbnail, '/storage/')) {
-            $relative = str_replace('/storage/', '', $informasi->thumbnail);
-            Storage::disk('public')->delete($relative);
-        }
-
-        $informasi->delete();
+        $images->delete($informasi, 'thumbnail');
 
         return redirect()->route('kelolaInformasi')->with('success', 'Informasi & edukasi berhasil dihapus!');
     }

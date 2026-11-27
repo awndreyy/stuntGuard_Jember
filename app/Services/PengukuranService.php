@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Balita;
 use App\Models\Pengukuran;
+use App\Services\GrowthStatusService;
+use App\Services\WhoGrowthService;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
 
@@ -13,9 +15,7 @@ use Illuminate\Validation\ValidationException;
  */
 class PengukuranService
 {
-    public function __construct(private readonly WhoGrowthService $who)
-    {
-    }
+    public function __construct(private readonly WhoGrowthService $who) {}
 
     /**
      * Hitung tanpa menyimpan (untuk simulasi balita yang belum terdaftar).
@@ -53,13 +53,7 @@ class PengukuranService
             ? $this->who->zScore('acfa', $sex, $age, $arm)
             : null;
 
-        $status = match (true) {
-            $zHeight === null => 'Tidak dapat dihitung: data di luar rentang referensi',
-            $zHeight < -3 => 'Sangat Pendek',
-            $zHeight < -2 => 'Pendek (Stunted)',
-            $zHeight <= 3 => 'Normal',
-            default => 'Tinggi',
-        };
+        $status = GrowthStatusService::height($zHeight, 'Tidak dapat dihitung: data di luar rentang referensi');
 
         return [
             'nama' => $nama,
@@ -71,17 +65,15 @@ class PengukuranService
             'posisi_badan' => $position,
             'lingkar_kepala' => $head,
             'lila' => $arm,
-            'z_score' => $this->roundedZScore($zHeight),
+            'z_score' => $zHeight,
             'status_stunting' => $status,
-            'badge_color' => $zHeight === null || $zHeight < -3
-                ? 'rose'
-                : ($zHeight < -2 ? 'amber' : ($zHeight <= 3 ? 'emerald' : 'teal')),
+            'badge_color' => GrowthStatusService::badge($zHeight),
             'indikator_tinggi' => $isLength ? 'PB/U' : 'TB/U',
             'indikator_berat_tinggi' => $isLength ? 'BB/PB' : 'BB/TB',
-            'z_bbu' => $this->roundedZScore($zWfa),
-            'z_bb_tb' => $this->roundedZScore($zWfh),
-            'z_lku' => $this->roundedZScore($zHead),
-            'z_lilau' => $this->roundedZScore($zArm),
+            'z_bbu' => $zWfa,
+            'z_bb_tb' => $zWfh,
+            'z_lku' => $zHead,
+            'z_lilau' => $zArm,
             'skrining_lila' => $this->who->lilaScreening($arm, $age),
         ];
     }
@@ -116,8 +108,8 @@ class PengukuranService
             (float) $measurements['berat'],
             (float) $measurements['tinggi'],
             (string) $measurements['posisi_badan'],
-            isset($measurements['lingkar_kepala']) ? (float) $measurements['lingkar_kepala'] : null,
-            isset($measurements['lila']) ? (float) $measurements['lila'] : null,
+            ! empty($measurements['lingkar_kepala']) ? (float) $measurements['lingkar_kepala'] : null,
+            ! empty($measurements['lila']) ? (float) $measurements['lila'] : null,
         );
     }
 
@@ -138,9 +130,6 @@ class PengukuranService
         $pengukuran = Pengukuran::create([
             'balita_id' => $balita->id_balita,
             'tanggal_pengukuran' => $measurementDate,
-            'nama_balita' => $balita->nama_balita,
-            'nik' => $balita->nik,
-            'jenis_kelamin' => $balita->jenis_kelamin,
             'berat_badan' => $hasil['berat'],
             'tinggi_badan' => $hasil['tinggi'],
             'umur_bulan' => $hasil['usia_bulan'],
@@ -174,7 +163,7 @@ class PengukuranService
         // Bulan kalender penuh, konsisten untuk tanggal lahir di akhir bulan.
         $age = ($date->year - $birth->year) * 12 + ($date->month - $birth->month);
         if ($date->day < $birth->day) {
-            --$age;
+            $age--;
         }
 
         if ($age > 60) {
@@ -184,10 +173,5 @@ class PengukuranService
         }
 
         return $age;
-    }
-
-    private function roundedZScore(?float $score): ?float
-    {
-        return $score === null ? null : round($score, 2);
     }
 }

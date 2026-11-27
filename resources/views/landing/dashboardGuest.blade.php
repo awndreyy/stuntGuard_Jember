@@ -2,90 +2,52 @@
 @section('title', 'StuntGuard Jember - Pemantauan Tumbuh Kembang & Gizi Balita')
 
 @section('content')
-    {{-- Hero: warna solid, ilustrasi dari aset lokal, CTA tetap menuju bagian yang sama. --}}
-    <section class="border-b border-pink-100 bg-[#FFF8FB] py-12 sm:py-16 lg:py-20">
-        <div class="mx-auto max-w-[1200px] px-4 md:px-8 lg:px-12">
-            <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
-                <div class="lg:col-span-7">
-                    <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-pink-200 bg-white px-4 py-2 text-xs font-bold text-pink-700">
-                        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">favorite</span>
-                        Inovasi Posyandu Cerdas Kabupaten Jember
+    <section class="sg-hero">
+        <div class="sg-container">
+            <div class="sg-hero-grid">
+                <div>
+                    <h1>Langkah kecil hari ini,<br><em>masa depan hebat.</em></h1>
+                    <p class="sg-lead">Temani perjalanan si kecil dengan lebih percaya diri. Cek pertumbuhan, temukan inspirasi MPASI, dan pelajari kesehatan keluarga dalam satu tempat.</p>
+                    <div class="sg-actions">
+                        <a href="#kalkulator-widget" class="sg-primary">Cek Gizi Si Kecil <span aria-hidden="true">↗</span></a>
+                        <a href="#resep-mpasi" class="sg-secondary">Jelajahi Resep MPASI</a>
                     </div>
-                    <h1 class="max-w-[720px] text-3xl font-extrabold leading-tight tracking-tight text-stone-900 sm:text-4xl lg:text-[44px] lg:leading-[1.16]">
-                        Pantau Tumbuh Kembang &amp; Gizi Si Kecil dengan
-                        <span class="text-pink-600">Kasih Sayang</span>
-                    </h1>
-                    <p class="mt-5 max-w-xl text-sm leading-7 text-stone-700 sm:text-base">
-                        Aplikasi kesehatan digital untuk Ayah &amp; Bunda di Jember. Cek status gizi balita berdasarkan referensi pertumbuhan WHO dan temukan inspirasi resep MPASI.
-                    </p>
-                    <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                        <a href="#kalkulator-widget" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-pink-600 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-pink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600">
-                            <span class="material-symbols-outlined text-[21px]" aria-hidden="true">calculate</span>
-                            Cek Gizi Anak Sekarang
-                        </a>
-                        <a href="#resep-mpasi" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-pink-200 bg-white px-6 py-3 text-sm font-bold text-pink-700 transition-colors hover:border-pink-300 hover:bg-pink-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600">
-                            <span class="material-symbols-outlined text-[21px]" aria-hidden="true">restaurant_menu</span>
-                            Lihat Resep MPASI
-                        </a>
-                    </div>
+                    <div class="sg-trust"><span>Referensi pertumbuhan WHO</span><span>Resep &amp; edukasi keluarga</span></div>
                 </div>
-                <div class="lg:col-span-5">
-                    <div class="mx-auto max-w-[380px] rounded-[28px] border border-pink-200 bg-white p-5 sm:p-7">
-                        <div class="rounded-2xl bg-pink-50 p-6 sm:p-8">
-                            <img src="{{ asset('images/logo-StuntGuard.png') }}" alt="Ilustrasi anak sehat StuntGuard" class="mx-auto aspect-square w-full max-w-[245px] rounded-2xl object-contain" decoding="async">
-                        </div>
-                        <div class="mt-5 flex items-center justify-between gap-3">
-                            <div>
-                                <p class="text-xs font-bold uppercase tracking-wider text-pink-700">Pendamping keluarga</p>
-                                <p class="mt-1 text-sm font-semibold text-stone-800">Ukur, pahami, dan pantau tumbuh kembang</p>
-                            </div>
-                            <span class="material-symbols-outlined shrink-0 text-[30px] text-pink-600" aria-hidden="true">child_care</span>
-                        </div>
-                    </div>
-                </div>
+                <div class="sg-hero-art"><svg class="family-art" viewBox="0 0 480 440" role="img" aria-label="Ilustrasi ibu mendampingi anak dengan penuh kasih"><circle cx="364" cy="104" r="40" fill="#f5d9a4"/><path d="M58 327Q15 245 72 222Q91 262 84 323M405 330q63-67 32-109-40 32-32 109" fill="#9da98f"/><path d="M60 355q172-57 360 0v85H60" fill="#cbd6c0"/><path d="M139 403q-22-116 19-180 46-29 97 5 42 67 30 175" fill="#b66072"/><path d="M165 242q-36-64-5-131 23-48 77-24 46 25 33 97l-13 59z" fill="#4e3938"/><ellipse cx="210" cy="155" rx="47" ry="61" fill="#edbea0"/><path d="M159 145q-3-65 54-66 58 9 57 66-40-9-64-43-9 29-47 43" fill="#4e3938"/><path d="M197 179q14 12 28-1" fill="none" stroke="#955f52" stroke-width="3" stroke-linecap="round"/><path d="M187 152h2m36 0h2" stroke="#4e3938" stroke-width="4" stroke-linecap="round"/><path d="M259 405q-16-75 10-124 32-23 65 3 30 49 17 121" fill="#f4d28e"/><ellipse cx="301" cy="250" rx="36" ry="43" fill="#edbea0"/><path d="M266 239q-5-51 37-43 35-7 36 42-19-3-30-19-11 18-43 20" fill="#513d35"/><path d="M289 266q12 10 23-1" fill="none" stroke="#955f52" stroke-width="3" stroke-linecap="round"/><path d="M283 246h1m29 0h1" stroke="#513d35" stroke-width="4" stroke-linecap="round"/><path d="M169 264q-21 74 72 87l47-17" fill="none" stroke="#edbea0" stroke-width="26" stroke-linecap="round"/><path d="M335 303q18 29-13 47" fill="none" stroke="#edbea0" stroke-width="20" stroke-linecap="round"/><path d="M94 112q10-23 21 0 11-23 21 0 2 14-21 29-23-15-21-29" fill="#b66072"/><path d="M354 171h20m-10-10v20" stroke="#fffdf9" stroke-width="4" stroke-linecap="round"/></svg><div class="sg-art-note"><b>Setiap langkah berarti.</b>Temani masa tumbuh si kecil</div><div class="sg-art-caption"><b>Tumbuh bersama, penuh cinta</b>Dari masa kehamilan hingga balita.</div></div>
             </div>
-            <div class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <div class="flex items-center gap-3 rounded-2xl border border-pink-100 bg-white px-5 py-4">
-                    <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-pink-50 text-pink-700"><span class="material-symbols-outlined" aria-hidden="true">child_care</span></span>
-                    <div><p class="text-xl font-extrabold text-stone-900">{{ number_format($jumlahBalita, 0, ',', '.') }}</p><p class="text-xs font-medium text-stone-600">Balita terpantau</p></div>
-                </div>
-                <div class="flex items-center gap-3 rounded-2xl border border-pink-100 bg-white px-5 py-4">
-                    <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-pink-50 text-pink-700"><span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span></span>
-                    <div><p class="text-xl font-extrabold text-stone-900">{{ number_format($jumlahResep, 0, ',', '.') }}</p><p class="text-xs font-medium text-stone-600">Resep MPASI tersedia</p></div>
-                </div>
-                <div class="flex items-center gap-3 rounded-2xl border border-pink-100 bg-white px-5 py-4">
-                    <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-pink-50 text-pink-700"><span class="material-symbols-outlined" aria-hidden="true">article</span></span>
-                    <div><p class="text-xl font-extrabold text-stone-900">{{ number_format($jumlahArtikel, 0, ',', '.') }}</p><p class="text-xs font-medium text-stone-600">Artikel kesehatan</p></div>
-                </div>
+            <div class="sg-stats">
+                <div><span class="material-symbols-outlined" aria-hidden="true">child_care</span><p><strong>{{ number_format($jumlahBalita, 0, ',', '.') }}</strong><small>Balita terpantau</small></p></div>
+                <div><span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span><p><strong>{{ number_format($jumlahResep, 0, ',', '.') }}</strong><small>Resep MPASI tersedia</small></p></div>
+                <div><span class="material-symbols-outlined" aria-hidden="true">article</span><p><strong>{{ number_format($jumlahArtikel, 0, ',', '.') }}</strong><small>Artikel kesehatan</small></p></div>
             </div>
         </div>
     </section>
 
     <section id="kalkulator-widget" class="py-16 bg-white border-y border-pink-100 scroll-mt-20">
-        <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <div class="inline-flex items-center gap-1.5 bg-pink-100 text-pink-700 px-3.5 py-1 rounded-full text-xs font-bold mb-3">
-                    <span class="material-symbols-outlined text-[16px]">verified</span>
-                    <span>Referensi pertumbuhan WHO</span>
+        <div class="max-w-300 mx-auto px-4 md:px-8 lg:px-12">
+            <div class="sg-section-heading text-center max-w-2xl mx-auto mb-10">
+                <div class="sg-eyebrow">
+                    <span>Kenali Pertumbuhan Si Kecil</span>
                 </div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900">Kalkulator Cek Gizi Balita</h2>
                 <p class="text-sm text-stone-600 mt-2">
-                    Masukkan data pengukuran untuk melihat hasil Z-score berdasarkan tabel WHO. Hasil ini merupakan skrining awal, bukan diagnosis medis.
+                    Masukkan data pengukuran untuk melihat hasil Z-score berdasarkan tabel WHO.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch bg-pink-50 p-5 sm:p-8 rounded-3xl border border-pink-200/80">
-                <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-pink-100 flex flex-col justify-between">
+            <div class="sg-calculator grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start bg-pink-50 p-5 sm:p-8 rounded-3xl border border-pink-200/80">
+                <div class="sg-calculator-input lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-pink-100 flex flex-col">
                     <div>
                         <div class="flex items-center gap-2.5 pb-4 mb-6 border-b border-pink-100">
-                            <span class="w-7 h-7 rounded-full bg-pink-500 text-white text-xs font-bold flex items-center justify-center">1</span>
+                            <span class="sg-step w-7 h-7 rounded-full bg-pink-500 text-white text-xs font-bold flex items-center justify-center">1</span>
                             <h3 class="text-base sm:text-lg font-bold text-stone-900">Masukkan Data Ukuran Anak</h3>
                         </div>
 
                         <form id="nutriForm" class="space-y-5">
                             <div>
-                                <label class="block text-sm font-bold text-stone-700 mb-2">Pilih Jenis Kelamin Anak</label>
-                                <div class="grid grid-cols-2 gap-2.5 bg-pink-50/70 p-1.5 rounded-2xl border border-pink-100">
+                                <label id="gender-label" class="block text-sm font-bold text-stone-700 mb-2">Pilih Jenis Kelamin Anak</label>
+                                <div role="group" aria-labelledby="gender-label" class="sg-gender grid grid-cols-2 gap-2.5 bg-pink-50/70 p-1.5 rounded-2xl border border-pink-100">
                                     <button id="btnBoy" type="button" onclick="setGender('boy')" class="py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 bg-pink-600 text-white transition-colors cursor-pointer" aria-pressed="true">
                                         <span class="material-symbols-outlined text-[18px]">male</span>
                                         <span>Laki-laki</span>
@@ -101,7 +63,7 @@
                                 <div>
                                     <label for="inputAge" class="block text-sm font-bold text-stone-700 mb-1.5">Usia Saat Ini</label>
                                     <div class="relative">
-                                        <input id="inputAge" type="number" min="0" max="60" value="14" required class="w-full h-12 bg-stone-50 border border-stone-200 rounded-xl px-4 pr-14 text-base font-bold text-stone-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all">
+                                        <input id="inputAge" type="number" step="1" min="0" max="60" value="14" required class="w-full h-12 bg-stone-50 border border-stone-200 rounded-xl px-4 pr-14 text-base font-bold text-stone-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all">
                                         <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-stone-400">Bulan</span>
                                     </div>
                                 </div>
@@ -127,7 +89,7 @@
                                     <option value="terlentang">Terlentang (panjang badan)</option>
                                     <option value="berdiri">Berdiri (tinggi badan)</option>
                                 </select>
-                                <p class="text-xs text-stone-600 mt-1">Untuk usia di bawah 24 bulan gunakan panjang badan; usia 24 bulan ke atas gunakan tinggi badan. Sistem melakukan koreksi 0,7 cm jika posisi tidak sesuai.</p>
+                                <p class="text-xs text-stone-600 mt-1">Untuk usia di bawah 24 bulan gunakan panjang badan; usia 24 bulan ke atas gunakan tinggi badan.</p>
                             </div>
 
                             <p id="guestCalcError" role="alert" aria-live="polite" class="hidden text-xs text-rose-700"></p>
@@ -149,8 +111,8 @@
 
                 <div id="resultBox" class="lg:col-span-5 bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 transition-all duration-300">
                     <div class="flex items-start gap-2.5 mb-3">
-                        <div class="w-9 h-9 rounded-xl bg-stone-100 text-stone-600 flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[20px]">monitor_heart</span>
+                        <div class="sg-step w-9 h-9 rounded-xl bg-stone-100 text-stone-600 flex items-center justify-center shrink-0">
+                            <span>2</span>
                         </div>
                         <div>
                             <h3 class="text-sm sm:text-base font-bold text-stone-900">Hasil Analisis</h3>
@@ -158,7 +120,7 @@
                         </div>
                     </div>
 
-                    <div class="rounded-xl bg-stone-50 border border-stone-200 p-4 sm:p-5">
+                    <div class="sg-result-summary rounded-xl bg-stone-50 border border-stone-200 p-4 sm:p-5">
                         <div class="grid grid-cols-[minmax(110px,auto)_1fr] gap-x-3 gap-y-1.5 text-xs sm:text-sm">
                             <div class="text-stone-700">Jenis Kelamin:</div>
                             <div id="resultGender" class="text-stone-900 text-right">-</div>
@@ -214,8 +176,8 @@
                         <div class="mt-5 px-2">
                             <div class="relative h-3 rounded-full bg-stone-200" aria-hidden="true">
                                 <div class="absolute inset-y-0 left-0 w-[16.6667%] rounded-l-full bg-rose-200"></div>
-                                <div class="absolute -top-1 bottom-[-4px] left-[16.6667%] border-l-2 border-dashed border-rose-500"></div>
-                                <span id="zScoreMarker" class="absolute -top-[5px] hidden h-[22px] w-[4px] -translate-x-1/2 rounded-full bg-stone-900 ring-2 ring-white" style="left: 50%"></span>
+                                <div class="absolute -top-1 -bottom-1 left-[16.6667%] border-l-2 border-dashed border-rose-500"></div>
+                                <span id="zScoreMarker" class="absolute -top-1.25 hidden h-5.5 w-1 -translate-x-1/2 rounded-full bg-stone-900 ring-2 ring-white" style="left: 50%"></span>
                             </div>
                             <div class="relative mt-2 h-4 text-[11px] font-semibold tabular-nums text-stone-600">
                                 <span class="absolute left-0">−3</span>
@@ -232,9 +194,9 @@
                         <p class="mt-1 text-xs leading-relaxed text-stone-700">PB/U dan TB/U dipakai untuk skrining pertumbuhan linier menurut usia. Hasil ini bukan diagnosis medis; diskusikan hasil yang mengkhawatirkan dengan tenaga kesehatan.</p>
                         <a href="https://www.who.int/tools/child-growth-standards" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-xs font-bold text-pink-700 hover:text-pink-800">Lihat referensi pertumbuhan WHO <span class="material-symbols-outlined text-[16px]" aria-hidden="true">open_in_new</span></a>
                     </div>
-                    <div id="statusCard" class="mt-3 rounded-2xl border px-4 py-4 text-center bg-cyan-50 border-cyan-200">
-                        <p id="statusCardLabel" class="text-xs sm:text-xs font-bold uppercase tracking-wide text-cyan-700">Indikator Stunting (PB/U)</p>
-                        <p id="statusCardValue" class="text-lg sm:text-xl font-extrabold text-cyan-900 mt-1">Belum dihitung</p>
+                    <div id="statusCard" class="mt-3 rounded-2xl border px-4 py-4 text-center bg-pink-50 border-pink-200">
+                        <p id="statusCardLabel" class="text-xs sm:text-xs font-bold uppercase tracking-wide text-pink-700">Indikator Stunting (PB/U)</p>
+                        <p id="statusCardValue" class="text-lg sm:text-xl font-extrabold text-pink-900 mt-1">Belum dihitung</p>
                     </div>
                 </div>
             </div>
@@ -242,12 +204,12 @@
     </section>
 
     <section id="resep-mpasi" class="py-16 bg-pink-50/60 scroll-mt-20">
-        <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
+        <div class="max-w-300 mx-auto px-4 md:px-8 lg:px-12">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                 <div>
-                    <span class="inline-block bg-pink-100 text-pink-700 text-xs font-bold px-3 py-1 rounded-full mb-2">Menu MPASI</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900">Inspirasi MPASI Sehat &amp; Bergizi</h2>
-                    <p class="text-sm text-stone-600 mt-2 max-w-xl">Resep terbaru yang dikelola admin StuntGuard Jember.</p>
+                    <span class="sg-eyebrow">Inspirasi Menu Si Kecil</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900">Resep MPASI Sehat</h2>
+                    <p class="text-sm text-stone-600 mt-2 max-w-xl">Ide menu sesuai tahapan usia dan kebutuhan buah hati.</p>
                 </div>
                 <a href="{{ route('public.resep.index') }}" class="inline-flex items-center gap-1.5 text-sm font-bold text-pink-700 hover:text-pink-800">Lihat Semua Resep <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
             </div>
@@ -258,7 +220,7 @@
                     <p class="text-sm mt-1">Resep akan tampil setelah admin menambahkannya.</p>
                 </div>
             @else
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
                     @foreach ($resepTerbaru as $resep)
                         @include('landing.partials.recipeCard', ['resep' => $resep])
                     @endforeach
@@ -268,12 +230,12 @@
     </section>
 
     <section id="informasi-kesehatan" class="py-16 bg-white border-y border-pink-100 scroll-mt-20">
-        <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
+        <div class="max-w-300 mx-auto px-4 md:px-8 lg:px-12">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
                 <div>
-                    <span class="inline-block bg-pink-100 text-pink-700 text-xs font-bold px-3 py-1 rounded-full mb-2">Pojok Edukasi Keluarga</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900">Informasi Kesehatan &amp; Tumbuh Kembang</h2>
-                    <p class="text-sm text-stone-600 mt-2">Artikel terbaru yang dikelola admin StuntGuard Jember.</p>
+                    <span class="sg-eyebrow">Pengetahuan untuk Orang Tua</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900">Edukasi Kesehatan Anak</h2>
+                    <p class="text-sm text-stone-600 mt-2">Informasi praktis untuk mendukung tumbuh kembang anak.</p>
                 </div>
                 <a href="{{ route('public.informasi.index') }}" class="inline-flex items-center gap-1.5 text-sm font-bold text-pink-700 hover:text-pink-800">Baca Semua Artikel <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
             </div>
@@ -284,56 +246,21 @@
                     <p class="text-sm mt-1">Artikel akan tampil setelah admin menambahkannya.</p>
                 </div>
             @else
-                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 {{ $artikelTerbaru->count() === 1 ? 'sm:grid-cols-1' : ($artikelTerbaru->count() === 2 ? 'lg:grid-cols-2' : ($artikelTerbaru->count() === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4')) }}">
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
                     @foreach ($artikelTerbaru as $artikel)
-                        @include('landing.partials.articleCard', ['artikel' => $artikel, 'featured' => $artikelTerbaru->count() === 1])
+                        @include('landing.partials.articleCard', ['artikel' => $artikel])
                     @endforeach
                 </div>
             @endif
         </div>
     </section>
 
-    <section class="py-16 bg-pink-50 border-t border-pink-100">
-        <div class="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
-            <div class="text-center max-w-xl mx-auto mb-12">
-                <span class="text-xs font-bold text-pink-600 uppercase tracking-wider">Sahabat Keluarga Jember</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900 mt-1">Mengapa Memilih StuntGuard?</h2>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="bg-white p-6 rounded-3xl border border-pink-100">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center mb-4">
-                        <span class="material-symbols-outlined text-[26px]">verified</span>
-                    </div>
-                    <h3 class="text-base font-bold text-stone-900">Mengacu pada WHO</h3>
-                    <p class="text-sm text-stone-700 mt-2 leading-relaxed">Kalkulator menggunakan referensi standar pertumbuhan WHO untuk skrining awal; bukan pengganti pemeriksaan tenaga kesehatan.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-3xl border border-pink-100">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center mb-4">
-                        <span class="material-symbols-outlined text-[26px]">sync</span>
-                    </div>
-                    <h3 class="text-base font-bold text-stone-900">Terhubung Posyandu</h3>
-                    <p class="text-sm text-stone-700 mt-2 leading-relaxed">Membantu orang tua memahami pentingnya pencatatan pengukuran dan konsultasi rutin di Posyandu.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-3xl border border-pink-100">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center mb-4">
-                        <span class="material-symbols-outlined text-[26px]">restaurant</span>
-                    </div>
-                    <h3 class="text-base font-bold text-stone-900">Pangan Lokal Terjangkau</h3>
-                    <p class="text-sm text-stone-700 mt-2 leading-relaxed">Temukan inspirasi menu MPASI dengan bahan pangan yang mudah ditemukan di sekitar keluarga.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-3xl border border-pink-100">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center mb-4">
-                        <span class="material-symbols-outlined text-[26px]">touch_app</span>
-                    </div>
-                    <h3 class="text-base font-bold text-stone-900">Mudah Digunakan</h3>
-                    <p class="text-sm text-stone-700 mt-2 leading-relaxed">Tampilan sederhana yang dirancang agar langsung dipahami oleh orang tua tanpa perlu bingung.</p>
-                </div>
-            </div>
+<section class="sg-mobile" id="aplikasi-mobile" aria-labelledby="mobile-heading">
+        <div class="sg-mobile-copy"><p class="sg-eyebrow">STUNTGUARD DI GENGGAMAN</p>
+            <h2 id="mobile-heading">Temani tumbuh kembangnya,<br>dari aplikasi mobile.</h2>
+            <p>Orang tua dapat mengakses resep MPASI, artikel kesehatan, data anak, dan riwayat pengukuran melalui aplikasi StuntGuard Mobile.</p>
         </div>
+        <div class="sg-mobile-icon"><svg viewBox="0 0 180 220" role="img" aria-label="Ilustrasi aplikasi StuntGuard di ponsel"><circle cx="90" cy="112" r="83" fill="#efd7df"/><rect x="43" y="9" width="94" height="192" rx="19" fill="#852641"/><rect x="49" y="16" width="82" height="178" rx="14" fill="#fffaf8"/><rect x="72" y="17" width="36" height="7" rx="3.5" fill="#852641"/><rect x="49" y="39" width="82" height="51" fill="#ac3156"/><path d="M90 76s-17-10-17-20c0-9 12-12 17-3 5-9 17-6 17 3 0 10-17 20-17 20Z" fill="#fffaf8"/><rect x="59" y="103" width="62" height="25" rx="6" fill="#f6e3e7"/><rect x="59" y="138" width="27" height="27" rx="6" fill="#e4e9dd"/><rect x="94" y="138" width="27" height="27" rx="6" fill="#f6e3e7"/><path d="M67 116h17m8 0h21" stroke="#ac3156" stroke-width="3" stroke-linecap="round"/><rect x="77" y="182" width="26" height="3" rx="1.5" fill="#852641"/></svg><span>StuntGuard Mobile</span></div>
     </section>
 @endsection
 

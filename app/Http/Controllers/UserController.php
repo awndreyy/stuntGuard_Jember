@@ -4,43 +4,57 @@ namespace App\Http\Controllers;
 
 use App\Models\Balita;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): View
     {
-        $users = User::latest()->get();
-        $balita = Balita::with('orangTua')->latest()->get();
+        $filters = $request->validate([
+            'role' => ['nullable', Rule::in(['all', 'Admin', 'Orang Tua'])],
+            'gender' => ['nullable', Rule::in(['all', 'Laki-laki', 'Perempuan'])],
+        ]);
+        $users = User::query()
+            ->when(($filters['role'] ?? 'all') !== 'all', fn ($query) => $query->where('role', $filters['role']))
+            ->latest()->orderByDesc('id')
+            ->paginate(6, ['*'], 'users_page')->withQueryString()->appends(['tab' => 'user'])->fragment('tab-user');
+        $orangTua = User::query()->where('role', 'Orang Tua')->orderBy('name')->get();
+        $balita = Balita::with('orangTua')
+            ->when(($filters['gender'] ?? 'all') !== 'all', fn ($query) => $query->where('jenis_kelamin', $filters['gender']))
+            ->latest()->orderByDesc('id_balita')
+            ->paginate(6, ['*'], 'balita_page')->withQueryString()->appends(['tab' => 'anak'])->fragment('tab-anak');
 
-        return view('admin.kelolaUser', compact('users', 'balita'));
+        return view('admin.kelolaUser', compact('users', 'balita', 'orangTua'));
     }
 
-    public function balitas(User $user)
+    public function balitas(User $user): View
     {
         abort_unless($user->role === 'Orang Tua', 404);
 
         $balitas = $user->balitas()
             ->withCount('pengukurans')
             ->orderBy('nama_balita')
-            ->paginate(10);
+            ->paginate(6);
 
         return view('admin.detailBalita', compact('user', 'balitas'));
     }
 
     /** Riwayat hanya untuk balita yang menjadi milik akun Orang Tua ini. */
-    public function riwayatBalita(User $user, Balita $balita)
+    public function riwayatBalita(User $user, Balita $balita): View
     {
         abort_unless($user->role === 'Orang Tua' && $balita->user_id === $user->id, 404);
 
         $riwayat = $balita->pengukurans()
             ->orderByDesc('tanggal_pengukuran')
-            ->orderByDesc('id')
+            ->orderByDesc('created_at')->orderByDesc('id')
             ->paginate(10);
 
         return view('admin.riwayatBalita', compact('user', 'balita', 'riwayat'));
@@ -57,34 +71,31 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:30'],
-            'nik' => ['required', 'string', 'size:16', 'unique:users,nik'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'role' => ['required', 'in:Orang Tua,Admin'],
-            'password' => ['required', 'min:6'],
+        abort_unless($request->user()?->role === 'Admin', 403);
+
+        $data = $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:60'],
+            'nik' => ['required', 'digits:16', Rule::unique(User::class, 'nik')],
+            'email' => ['required', 'email', 'max:100', Rule::unique(User::class, 'email')],
+            'role' => ['required', Rule::in(['Admin', 'Orang Tua'])],
+            'password' => ['required', 'string', 'min:6'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'nik.required' => 'NIK wajib diisi.',
-            'nik.size' => 'NIK harus berjumlah tepat 16 digit.',
+            'nik.digits' => 'NIK harus berjumlah tepat 16 digit.',
             'nik.unique' => 'Gagal! NIK ini sudah terdaftar dalam sistem.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Gagal! Email ini sudah digunakan oleh pengguna lain.',
-            'role.required' => 'Peran / Role wajib dipilih.',
+            'email.max' => 'Email maksimal 100 karakter',
+            'role.required' => 'Role wajib dipilih.',
             'password.required' => 'Password wajib diisi.',
             'password.min' => 'Password minimal 6 karakter.',
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'nik' => $request->nik,
-            'email' => $request->email,
-            'role' => $request->role,
-            'password' => Hash::make($request->password),
-        ]);
+        User::create($data);
 
         return redirect()->back()->with('success', 'User baru berhasil ditambahkan');
     }
@@ -108,49 +119,89 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
         $user = User::findOrFail($id);
+        abort_unless($request->user()?->role === 'Admin', 403);
 
-        $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:30'],
-            'nik' => ['required', 'digits:16', Rule::unique('users', 'nik')->ignore($user->id)],
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
-            'role' => ['required', 'in:Orang Tua,Admin'],
-            'password' => 'nullable|min:6',
+        $data = $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:60'],
+            'nik' => ['required', 'digits:16', Rule::unique(User::class, 'nik')->ignore($user->getKey(), 'id')],
+            'email' => ['required', 'email', 'max:100', Rule::unique(User::class, 'email')->ignore($user->getKey(), 'id')],
+            'role' => ['required', Rule::in(['Admin', 'Orang Tua'])],
+            'password' => ['nullable', 'string', 'min:6'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
-            'name.min' => 'Nama minimal 3 karakter.',
             'nik.required' => 'NIK wajib diisi.',
             'nik.digits' => 'NIK harus berjumlah tepat 16 digit.',
-            'nik.unique' => 'Gagal! NIK ini sudah digunakan oleh akun lain.',
+            'nik.unique' => 'Gagal! NIK ini sudah terdaftar dalam sistem.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
-            'email.unique' => 'Gagal! Email ini sudah digunakan oleh akun lain.',
-            'role.required' => 'Peran / Role wajib dipilih.',
-            'password.min' => 'Password minimal 6 karakter jika diisi.',
+            'email.unique' => 'Gagal! Email ini sudah digunakan oleh pengguna lain.',
+            'email.max' => 'Email maksimal 100 karakter',
+            'role.required' => 'Role wajib dipilih.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
         ]);
-
-        $user->name = $request->name;
-        $user->nik = $request->nik;
-        $user->email = $request->email;
-        $user->role = $request->role;
-
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+        if (! $request->filled('password')) {
+            unset($data['password']);
         }
 
-        $user->save();
+        DB::transaction(function () use ($request, $id, $data): void {
+            $currentAdminId = $request->user()->id;
+            // Serialize role changes/deletions so concurrent requests cannot remove all admins.
+            $admins = User::where('role', 'Admin')->orderBy('id')->lockForUpdate()->get();
+            $user = User::whereKey($id)->lockForUpdate()->firstOrFail();
+            abort_unless($admins->contains(fn ($admin) => $admin->id === $currentAdminId), 403);
+
+            if ($user->role !== $data['role']) {
+                if ($user->role === 'Admin' && ($admins->count() <= 1 || $user->id === $currentAdminId)) {
+                    throw ValidationException::withMessages([
+                        'role' => 'Role admin terakhir atau akun Anda sendiri tidak dapat diubah.',
+                    ]);
+                }
+                if ($user->balitas()->exists()) {
+                    throw ValidationException::withMessages([
+                        'role' => 'Role orang tua yang masih memiliki data balita tidak dapat diubah.',
+                    ]);
+                }
+                $user->tokens()->delete();
+            }
+            $user->fill($data)->save();
+        }, 5);
 
         return redirect()->back()->with('success', 'Data User berhasil diperbarui');
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id): RedirectResponse
     {
-        // cari data user dengan id
-        $user = User::findOrFail($id);
-        $user->delete();
+        abort_unless($request->user()?->role === 'Admin', 403);
 
-        return redirect()->back()->with('success', 'Data berhasil dihapus');
+        $error = DB::transaction(function () use ($request, $id): ?string {
+            $currentAdminId = $request->user()->id;
+            $admins = User::where('role', 'Admin')->orderBy('id')->lockForUpdate()->get();
+            $user = User::whereKey($id)->lockForUpdate()->firstOrFail();
+            abort_unless($admins->contains(fn ($admin) => $admin->id === $currentAdminId), 403);
+
+            if ($user->id === $currentAdminId) {
+                return 'Anda tidak dapat menghapus akun sendiri.';
+            }
+            if ($user->role === 'Admin' && $admins->count() <= 1) {
+                return 'Admin terakhir tidak dapat dihapus.';
+            }
+            if ($user->balitas()->exists()) {
+                return 'Akun tidak dapat dihapus karena masih memiliki data balita.';
+            }
+            $user->tokens()->delete();
+            $user->delete();
+
+            return null;
+        }, 5);
+
+        if ($error !== null) {
+            return back()->with('error', $error);
+        }
+
+        return back()->with('success', 'Data pengguna berhasil dihapus.');
     }
 }

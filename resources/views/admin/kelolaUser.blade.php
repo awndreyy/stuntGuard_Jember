@@ -16,37 +16,26 @@
             </p>
         </div>
         {{-- Tombol Tambah (teks berubah sesuai tab aktif) --}}
-        <button id="btn-tambah" onclick="tambahData()" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl transition-all shadow-sm hover:shadow cursor-pointer w-full sm:w-auto">
+        <button id="btn-tambah" onclick="tambahData()" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-brand hover:bg-brand-hover text-white text-xs font-semibold rounded-xl transition-all shadow-sm hover:shadow cursor-pointer w-full sm:w-auto">
             <i id="btn-tambah-icon" data-lucide="plus" class="w-4 h-4"></i>
             <span id="btn-tambah-label">Tambah User Baru</span>
         </button>
     </div>
 
     {{-- Alert Notifikasi Sukses / Error --}}
-    @if (session('success'))
-        <div class="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl flex items-center justify-between gap-2 shrink-0 shadow-xs">
-            <div class="flex items-center gap-2">
-                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-700 shrink-0"></i>
-                <span class="font-medium">{{ session('success') }}</span>
-            </div>
-            <button onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-800 p-1 cursor-pointer">
-                <i data-lucide="x" class="w-3.5 h-3.5"></i>
-            </button>
-        </div>
-    @endif
 
     @if (session('error') || (isset($errors) && $errors->any()))
-        <div class="p-3 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-xl flex items-center justify-between gap-2 shrink-0 shadow-xs">
+        <div class="p-3 bg-pink-50 border border-pink-200 text-pink-800 text-xs rounded-xl flex items-center justify-between gap-2 shrink-0 shadow-xs">
             <div class="flex items-center gap-2">
-                <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600 shrink-0"></i>
+                <i data-lucide="alert-circle" class="w-4 h-4 text-pink-600 shrink-0"></i>
                 <div>
                     <span class="font-semibold block">{{ session('error') ?? 'Gagal menyimpan data!' }}</span>
                     @if (isset($errors) && $errors->any())
-                        <span class="text-[11px] text-rose-700 block mt-0.5">{{ $errors->first() }}</span>
+                        <span class="text-[11px] text-pink-700 block mt-0.5">{{ $errors->first() }}</span>
                     @endif
                 </div>
             </div>
-            <button onclick="this.parentElement.remove()" class="text-rose-600 hover:text-rose-800 p-1 cursor-pointer">
+            <button onclick="this.parentElement.remove()" class="text-pink-600 hover:text-pink-800 p-1 cursor-pointer">
                 <i data-lucide="x" class="w-3.5 h-3.5"></i>
             </button>
         </div>
@@ -55,11 +44,11 @@
     {{-- Tab Switcher --}}
     @include('admin.partials.tab-switcher-balita')
 
-    {{-- Table Section --}}
-    <section class="flex-1 bg-white rounded-2xl border border-stone-200 flex flex-col min-h-0 overflow-hidden">
+    {{-- Table Section: setiap tab memiliki card tabel dan pagination terpisah --}}
+    <div class="flex flex-col gap-3">
         @include('admin.partials.table-users')
         @include('admin.partials.table-anak')
-    </section>
+    </div>
 
     <!-- Modal Tambah User Baru  -->
     @include('components.admin.modalTambahUser')
@@ -188,12 +177,17 @@
 
     // Tab Switcher
     function switchTab(tab) {
+        const currentUrl = new URL(window.location.href);
+        if (currentUrl.searchParams.get('tab') !== tab) {
+            currentUrl.searchParams.set('tab', tab);
+            history.replaceState(null, '', currentUrl.toString());
+        }
         const tabUser = document.getElementById('tab-user');
         const tabAnak = document.getElementById('tab-anak');
         const btnUser = document.getElementById('tab-btn-user');
         const btnAnak = document.getElementById('tab-btn-anak');
 
-        const activeTabCls   = ['text-rose-700', 'font-semibold', 'border-rose-700'];
+        const activeTabCls   = ['text-pink-700', 'font-semibold', 'border-pink-700'];
         const inactiveTabCls = ['text-stone-500', 'font-medium',  'border-transparent'];
 
         // Tombol Tambah
@@ -249,110 +243,28 @@
         if (window.lucide) lucide.createIcons();
     }
 
-    // Filter User berdasarkan Role
-    function filterUserRole(role, button) {
-        document.querySelectorAll('.user-role-tab').forEach(btn => {
-            btn.classList.remove('bg-white', 'text-rose-700', 'shadow-2xs', 'font-semibold');
-            btn.classList.add('text-stone-600', 'hover:text-stone-900');
-        });
-        button.classList.add('bg-white', 'text-rose-700', 'shadow-2xs', 'font-semibold');
-        button.classList.remove('text-stone-600', 'hover:text-stone-900');
+    // Pulihkan tab setelah halaman selesai dimuat (di luar switchTab).
+    document.addEventListener('DOMContentLoaded', function () {
+        const params = new URLSearchParams(window.location.search);
+        switchTab(params.get('tab') === 'anak' ? 'anak' : 'user');
+    });
 
-        const rows = document.querySelectorAll('.table-user-row');
-        let visibleCount = 0;
-        const totalCount = rows.length;
-
-        rows.forEach(row => {
-            const userRole = (row.getAttribute('data-role') || '').trim().toLowerCase();
-            const targetRole = role.toLowerCase();
-            
-            let matches = false;
-            if (targetRole === 'all') {
-                matches = true;
-            } else if (targetRole === 'admin') {
-                matches = userRole === 'admin' || userRole === 'administrator';
-            } else if (targetRole === 'orang tua' || targetRole === 'orangtua') {
-                matches = userRole === 'orang tua' || userRole === 'orangtua';
-            } else {
-                matches = userRole === targetRole;
-            }
-
-            if (matches) {
-                row.style.display = '';
-                visibleCount++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        // Toggle Empty Filter Row
-        const emptyRow = document.getElementById('emptyUserFilterRow');
-        if (emptyRow) {
-            if (visibleCount === 0 && totalCount > 0) {
-                emptyRow.classList.remove('hidden');
-            } else {
-                emptyRow.classList.add('hidden');
-            }
-        }
-
-        // Update count display
-        const countDisplay = document.getElementById('userCountDisplay');
-        if (countDisplay) {
-            countDisplay.innerHTML = `Menampilkan <strong class="font-semibold text-stone-700">${visibleCount}</strong> dari <strong class="font-semibold text-stone-700">${totalCount}</strong> pengguna`;
-        }
-
-        if (window.lucide) lucide.createIcons();
+    // Filter data melalui Laravel agar mencakup SELURUH database, bukan 6 baris di halaman aktif.
+    function applyTableFilter(key, value, tab) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('tab', tab);
+        if (value === 'all') url.searchParams.delete(key);
+        else url.searchParams.set(key, value);
+        url.searchParams.delete(tab === 'anak' ? 'balita_page' : 'users_page');
+        window.location.assign(url.toString());
     }
 
-    // Filter Balita berdasarkan Jenis Kelamin
+    function filterUserRole(role, button) {
+        applyTableFilter('role', role, 'user');
+    }
+
     function filterBalitaGender(gender, button) {
-        document.querySelectorAll('.balita-gender-tab').forEach(btn => {
-            btn.classList.remove('bg-white', 'text-rose-700', 'shadow-2xs', 'font-semibold');
-            btn.classList.add('text-stone-600', 'hover:text-stone-900');
-        });
-        button.classList.add('bg-white', 'text-rose-700', 'shadow-2xs', 'font-semibold');
-        button.classList.remove('text-stone-600', 'hover:text-stone-900');
-
-        const rows = document.querySelectorAll('.table-balita-row');
-        let visibleCount = 0;
-        const totalCount = rows.length;
-
-        rows.forEach(row => {
-            const rowGender = (row.getAttribute('data-gender') || '').trim().toLowerCase();
-            const targetGender = gender.toLowerCase();
-
-            let matches = false;
-            if (targetGender === 'all') {
-                matches = true;
-            } else {
-                matches = rowGender === targetGender;
-            }
-
-            if (matches) {
-                row.style.display = '';
-                visibleCount++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        // Toggle Empty Filter Row
-        const emptyRow = document.getElementById('emptyBalitaFilterRow');
-        if (emptyRow) {
-            if (visibleCount === 0 && totalCount > 0) {
-                emptyRow.classList.remove('hidden');
-            } else {
-                emptyRow.classList.add('hidden');
-            }
-        }
-
-        // Update count display
-        const countDisplay = document.getElementById('balitaCountDisplay');
-        if (countDisplay) {
-            countDisplay.innerHTML = `Menampilkan <strong class="font-semibold text-stone-700">${visibleCount}</strong> data anak/balita`;
-        }
-
-        if (window.lucide) lucide.createIcons();
+        applyTableFilter('gender', gender, 'anak');
     }
 </script>
 @endpush

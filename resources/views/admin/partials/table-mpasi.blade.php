@@ -1,10 +1,8 @@
-{{-- resources/views/admin/partials/table-mpasi.blade.php --}}
-{{-- RECIPES TABLE CONTAINER --}}
-<div id="recipesContainer" class="flex-1 min-h-0 flex flex-col">
-    <div id="tableViewWrapper" class="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col flex-1">
-        <div class="overflow-x-auto min-w-full flex-1">
+<div id="recipesContainer" class="flex flex-col gap-3">
+    <div id="tableViewWrapper" class="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col">
+        <div class="overflow-x-auto min-w-full">
             <table class="w-full text-left border-collapse">
-                <thead class="bg-stone-50 border-b border-stone-200 text-[11px] font-bold text-stone-500 uppercase tracking-wider sticky top-0 z-10">
+                <thead class="bg-stone-50 border-b border-stone-200 text-[11px] font-bold text-stone-500 uppercase tracking-wider z-10">
                     <tr>
                         <th class="py-3 px-4">Nama Resep MPASI</th>
                         <th class="py-3 px-3">Kategori Usia</th>
@@ -35,9 +33,9 @@
                                 '12-23' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
                                 default => 'bg-stone-50 text-stone-700 border-stone-200'
                             };
-                            $imageUrl = $recipe->gambar ? (str_starts_with($recipe->gambar, 'http') ? $recipe->gambar : asset($recipe->gambar)) : null;
+                            $imageUrl = $recipe->gambar? asset(ltrim($recipe->gambar, '/')): null;
                         @endphp
-                        <tr class="table-recipe-row hover:bg-rose-50/30 transition-colors" data-category="{{ $recipe->kategori_usia }}" data-name="{{ strtolower($recipe->nama_resep) }}">
+                        <tr class="table-recipe-row hover:bg-pink-50/30 transition-colors" data-category="{{ $recipe->kategori_usia }}" data-name="{{ strtolower($recipe->nama_resep) }}">
                             <td class="py-3 px-4">
                                 <div class="flex items-center gap-3">
                                     @if ($imageUrl)
@@ -49,35 +47,35 @@
                                 </div>
                             </td>
                             <td class="py-3 px-3">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border {{ $badgeClass }}">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold border {{ $badgeClass }}">
                                     {{ $kategoriLabel }}
                                 </span>
                             </td>   
                             <td class="py-3 px-3 font-medium text-stone-600">{{ $tekstur }}</td>
                             <td class="py-3 px-3">
-                                <span class="font-bold text-rose-700">{{ $recipe->kalori }} kkal</span>
-                                <span class="text-stone-400 text-[10px] block">Protein {{ $recipe->protein }}g</span>
+                                <span class="font-bold text-pink-700">{{ $recipe->kalori }} kkal</span>
+                                <span class="text-stone-500 text-[11px] block">Protein {{ $recipe->protein }}g</span>
                             </td>
                             <td class="py-3 px-3 text-stone-500 text-[11px]">
                                 <span>{{ $recipe->waktu_memasak }} mnt / {{ $recipe->porsi }} porsi</span>
                             </td>
                             <td class="py-3 px-4 text-right">
                                 <div class="inline-flex items-center gap-1">
-                                    <button onclick="previewRecipe({{ $recipe->id_resep }})" class="p-1.5 text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors cursor-pointer" title="Preview"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                                    <a href="{{ route('mpasi.edit', $recipe->id_resep) }}" class="p-1.5 text-stone-400 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer" title="Edit" aria-label="Edit resep {{ $recipe->nama_resep }}"><i data-lucide="pencil" class="w-4 h-4"></i></a>
-                                    <button onclick="deleteRecipe({{ $recipe->id_resep }}, '{{ addslashes($recipe->nama_resep) }}')" class="p-1.5 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                    <button data-id="{{ $recipe->id_resep }}" onclick="previewRecipe(this.dataset.id)" class="p-1.5 text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors cursor-pointer" title="Preview"><i data-lucide="eye" class="w-4 h-4"></i></button>
+                                    <a href="{{ route('mpasi.edit', $recipe->id_resep) }}" class="p-1.5 text-stone-400 hover:text-pink-700 hover:bg-pink-50 rounded-lg transition-colors cursor-pointer" title="Edit" aria-label="Edit resep {{ $recipe->nama_resep }}"><i data-lucide="pencil" class="w-4 h-4"></i></a>
+                                    <button data-id="{{ $recipe->id_resep }}" data-name="{{ $recipe->nama_resep }}" onclick="deleteRecipe(this.dataset.id, this.dataset.name)" class="p-1.5 text-stone-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-colors cursor-pointer" title="Hapus"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="py-12 text-center text-stone-400 text-xs">
+                            <td colspan="6" class="py-12 text-center text-stone-400 text-xs">
                                 <div class="flex flex-col items-center justify-center">
                                     <div class="w-12 h-12 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mb-3">
                                         <i data-lucide="utensils" class="w-6 h-6"></i>
                                     </div>
-                                    <h4 class="text-sm font-bold text-stone-800">Belum ada resep MPASI</h4>
-                                    <p class="text-xs text-stone-500 mt-1 max-w-sm">Klik tombol "Tambah Resep Baru" di atas untuk menambahkan resep MPASI pertama.</p>
+                                    <h4 class="text-sm font-bold text-stone-800">{{ request()->filled('q') || (request()->filled('kategori_usia') && request('kategori_usia') !== 'all') ? 'Tidak ada resep yang cocok' : 'Belum ada resep MPASI' }}</h4>
+                                    <p class="text-xs text-stone-500 mt-1 max-w-sm">{{ request()->filled('q') || (request()->filled('kategori_usia') && request('kategori_usia') !== 'all') ? 'Coba kata kunci lain atau ganti kategori usia.' : 'Klik tombol Tambah Resep Baru di atas untuk menambahkan resep MPASI pertama.' }}</p>
                                 </div>
                             </td>
                         </tr>
@@ -87,12 +85,7 @@
         </div>
     </div>
 
-    <!-- Empty State Search Placeholder -->
-    <div id="emptySearchState" class="hidden bg-white rounded-2xl border border-stone-200 p-8 text-center flex-col items-center justify-center my-auto">
-        <div class="w-12 h-12 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mb-3">
-            <i data-lucide="utensils" class="w-6 h-6"></i>
-        </div>
-        <h4 class="text-sm font-bold text-stone-800">Tidak ada resep yang cocok</h4>
-        <p class="text-xs text-stone-500 mt-1 max-w-sm">Coba kata kunci lain atau ubah filter kategori usia di atas.</p>
-    </div>
+    @include('admin.partials.pagination', ['paginator' => $mpasis, 'label' => 'resep'])
 </div>
+{{-- Data preview untuk hasil filter/pagination AJAX --}}
+<script id="mpasi-recipes-json" type="application/json">@json($mpasis->keyBy('id_resep'))</script>

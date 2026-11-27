@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
 use App\Models\Balita;
 use App\Services\PengukuranService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class PengukuranController extends Controller
-{
-    public function store(Request $request, PengukuranService $measurements): JsonResponse|RedirectResponse
-    {
+class PengukuranController extends Controller{
+    public function store(Request $request, PengukuranService $measurements): JsonResponse|RedirectResponse{
         $data = $request->validate([
-            'balita_id' => ['required', 'integer', 'exists:balitas,id_balita'],
+            'balita_id' => ['required', 'string', Rule::exists(Balita::class, 'id_balita')],
             'tanggal_pengukuran' => ['required', 'date', 'before_or_equal:today'],
             'weight' => ['required', 'numeric', 'between:1,50'],
             'height' => ['required', 'numeric', 'between:20,150'],
@@ -42,11 +41,10 @@ class PengukuranController extends Controller
             ->with('success', 'Pengukuran berhasil disimpan.');
     }
 
-    public function history(Balita $balita): JsonResponse
-    {
+    public function history(Balita $balita): JsonResponse{
         return response()->json($balita->pengukurans()
             ->orderByDesc('tanggal_pengukuran')
-            ->orderByDesc('id')
+            ->orderByDesc('created_at')->orderByDesc('id')
             ->paginate(20));
     }
 }

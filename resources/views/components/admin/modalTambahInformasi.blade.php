@@ -8,7 +8,7 @@
         <!-- Modal Header -->
         <div class="px-5 py-4 bg-stone-50/80 border-b border-stone-100 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0">
+                <div class="w-8 h-8 rounded-lg bg-pink-100 text-pink-700 flex items-center justify-center shrink-0">
                     <i id="modalInformasiIcon" data-lucide="{{ old('_method') === 'PUT' ? 'file-edit' : 'book-open' }}" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -35,7 +35,7 @@
             <!-- 1. Judul Artikel / Informasi -->
             <div>
                 <label class="block text-xs font-semibold text-stone-700 mb-1">
-                    Judul Artikel / Informasi <span class="text-rose-500">*</span>
+                    Judul Artikel / Informasi <span class="text-pink-500">*</span>
                 </label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
@@ -50,17 +50,17 @@
                         required 
                         oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
                         placeholder="Contoh: Pentingnya Asupan Asam Folat" 
-                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ (isset($errors) && ($errors->has('judul') || $errors->has('title'))) ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all"
+                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ (isset($errors) && ($errors->has('judul') || $errors->has('title'))) ? 'border-red-400 ring-1 ring-red-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all"
                     >
                 </div>
                 @error('judul')
-                    <p class="text-[10px] text-rose-600 mt-1 flex items-center gap-1 font-medium">
+                    <p class="text-[10px] text-red-600 mt-1 flex items-center gap-1 font-medium">
                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
                         <span>{{ $message }}</span>
                     </p>
                 @enderror
                 @error('title')
-                    <p class="text-[10px] text-rose-600 mt-1 flex items-center gap-1 font-medium">
+                    <p class="text-[10px] text-red-600 mt-1 flex items-center gap-1 font-medium">
                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
                         <span>{{ $message }}</span>
                     </p>
@@ -70,7 +70,7 @@
             <!-- 2. Kategori -->
             <div>
                 <label class="block text-xs font-semibold text-stone-700 mb-1">
-                    Kategori <span class="text-rose-500">*</span>
+                    Kategori <span class="text-pink-500">*</span>
                 </label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
@@ -80,7 +80,7 @@
                         id="selectInformasiCategory" 
                         name="category" 
                         required 
-                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ (isset($errors) && $errors->has('category')) ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all cursor-pointer"
+                        class="w-full pl-9 pr-3 py-2 text-xs bg-stone-50 border {{ (isset($errors) && $errors->has('category')) ? 'border-red-400 ring-1 ring-red-400' : 'border-stone-200' }} rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all cursor-pointer"
                     >
                         <option value="" disabled selected>-- Pilih Kategori --</option>
                         <option value="Trimester 1" {{ old('category') === 'Trimester 1' ? 'selected' : '' }}>Trimester 1</option>
@@ -91,7 +91,7 @@
                     </select>
                 </div>
                 @error('category')
-                    <p class="text-[10px] text-rose-600 mt-1 flex items-center gap-1 font-medium">
+                    <p class="text-[10px] text-red-600 mt-1 flex items-center gap-1 font-medium">
                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
                         <span>{{ $message }}</span>
                     </p>
@@ -101,7 +101,7 @@
             <!-- 3. Ringkasan Singkat -->
             <div>
                 <label class="block text-xs font-semibold text-stone-700 mb-1">
-                    Ringkasan Singkat <span class="text-rose-500">*</span>
+                    Ringkasan Singkat <span class="text-pink-500">*</span>
                 </label>
                 <textarea 
                     id="inputInformasiSummary" 
@@ -109,10 +109,10 @@
                     rows="3" 
                     required 
                     placeholder="Tuliskan ringkasan singkat edukasi di sini..." 
-                    class="w-full px-3 py-2 text-xs bg-stone-50 border {{ (isset($errors) && $errors->has('summary')) ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all"
+                    class="w-full px-3 py-2 text-xs bg-stone-50 border {{ (isset($errors) && $errors->has('summary')) ? 'border-red-400 ring-1 ring-red-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all"
                 >{{ old('summary') }}</textarea>
                 @error('summary')
-                    <p class="text-[10px] text-rose-600 mt-1 flex items-center gap-1 font-medium">
+                    <p class="text-[10px] text-red-600 mt-1 flex items-center gap-1 font-medium">
                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
                         <span>{{ $message }}</span>
                     </p>
@@ -129,10 +129,10 @@
                     name="content" 
                     rows="5" 
                     placeholder="Tuliskan isi lengkap artikel edukasi di sini..." 
-                    class="w-full px-3 py-2 text-xs bg-stone-50 border {{ (isset($errors) && $errors->has('content')) ? 'border-rose-400 ring-1 ring-rose-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-rose-700/20 focus:border-rose-700 focus:bg-white transition-all"
+                    class="w-full px-3 py-2 text-xs bg-stone-50 border {{ (isset($errors) && $errors->has('content')) ? 'border-red-400 ring-1 ring-red-400' : 'border-stone-200' }} rounded-lg text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-pink-700/20 focus:border-pink-700 focus:bg-white transition-all"
                 >{{ old('content') }}</textarea>
                 @error('content')
-                    <p class="text-[10px] text-rose-600 mt-1 flex items-center gap-1 font-medium">
+                    <p class="text-[10px] text-red-600 mt-1 flex items-center gap-1 font-medium">
                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
                         <span>{{ $message }}</span>
                     </p>
@@ -161,11 +161,11 @@
                         name="thumbnail" 
                         accept="image/*" 
                         onchange="previewInformasiThumbnail(event)" 
-                        class="w-full text-xs text-stone-500 file:mr-3 file:rounded-lg file:border-0 file:bg-rose-50 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-rose-700 hover:file:bg-rose-100 transition-all cursor-pointer"
+                        class="w-full text-xs text-stone-500 file:mr-3 file:rounded-lg file:border-0 file:bg-pink-50 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-100 transition-all cursor-pointer"
                     >
                 </div>
                 @error('thumbnail')
-                    <p class="text-[10px] text-rose-600 mt-1 flex items-center gap-1 font-medium">
+                    <p class="text-[10px] text-red-600 mt-1 flex items-center gap-1 font-medium">
                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
                         <span>{{ $message }}</span>
                     </p>
@@ -185,7 +185,7 @@
                 </button>
                 <button 
                     type="submit" 
-                    class="inline-flex items-center gap-1.5 px-4 py-2 bg-rose-700 hover:bg-rose-800 text-white text-xs font-semibold rounded-lg transition-colors shadow-xs cursor-pointer"
+                    class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand hover:bg-brand-hover text-white text-xs font-semibold rounded-lg transition-colors shadow-xs cursor-pointer"
                 >
                     <i data-lucide="check" class="w-4 h-4"></i>
                     <span id="submitInformasiBtnText">{{ old('_method') === 'PUT' ? 'Perbarui Informasi' : 'Simpan Informasi' }}</span>

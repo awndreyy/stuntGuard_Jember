@@ -24,8 +24,6 @@ Route::get('/resep/{mpasi}', [LandingController::class, 'detailResep'])->name('p
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login.perform');
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register'])->name('register.perform');
 });
 
 Route::middleware(['auth', 'role:Admin'])->group(function () {
@@ -47,12 +45,6 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::post('/kalkulatorGizi', [KalkulatorGiziController::class, 'calculate'])->name('kalkulator.calculate');
     Route::post('/simpan-pengukuran', [PengukuranController::class, 'store'])->name('pengukuran.store');
     Route::get('/balita/{balita}/riwayat', [PengukuranController::class, 'history'])->name('pengukuran.history');
-});
-
-Route::middleware(['auth', 'role:Orang Tua'])->group(function () {
-    Route::get('/dashboardUser', function () {
-        return view('user.dashboardUser');
-    })->name('dashboardUser');
 });
 
 Route::middleware(['auth'])->group(function () {

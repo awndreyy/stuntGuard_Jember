@@ -40,9 +40,10 @@ jobs:
           lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" ${{ secrets.FTP_SERVER }} -e "
             set ftp:ssl-allow yes;
             set ssl:verify-certificate no;
+            set ftp:passive-mode true;
             set net:timeout 30;
             set net:max-retries 3;
-            mirror -R --parallel=10 --no-perms --ignore-time \
+            mirror -R --verbose --parallel=10 --no-perms --ignore-time \
               --exclude-glob .git* \
               --exclude-glob .git/ \
               --exclude-glob node_modules/ \
@@ -50,4 +51,4 @@ jobs:
               --exclude-glob storage/logs/ \
               ./ ./ ;
             quit
-          "
+          ""

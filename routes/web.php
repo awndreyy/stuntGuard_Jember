@@ -51,7 +51,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-Route::get('/buat-symlink', function () {
-    \Illuminate\Support\Facades\Artisan::call('storage:link');
-    return 'Symlink berhasil dibuat!';
-});
+Route::get('/storage/{path}', function (string $path) {
+    $basePath = realpath(storage_path('app/public'));
+    $fullPath = realpath($basePath . DIRECTORY_SEPARATOR . $path);
+
+    abort_unless($fullPath && str_starts_with($fullPath, $basePath) && is_file($fullPath), 404);
+
+    return response()->file($fullPath);
+})->where('path', '.*');

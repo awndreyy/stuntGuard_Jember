@@ -50,3 +50,8 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+Route::get('/buat-symlink', function () {
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    return 'Symlink berhasil dibuat!';
+});

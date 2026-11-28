@@ -52,10 +52,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/storage/{path}', function (string $path) {
-    $basePath = realpath(storage_path('app/public'));
-    $fullPath = realpath($basePath . DIRECTORY_SEPARATOR . $path);
+    $path = ltrim($path, '/');
+    abort_if(str_contains($path, '..'), 404);
 
-    abort_unless($fullPath && str_starts_with($fullPath, $basePath) && is_file($fullPath), 404);
+    $fullPath = storage_path('app/public/' . $path);
+    abort_unless(file_exists($fullPath), 404);
 
     return response()->file($fullPath);
 })->where('path', '.*');

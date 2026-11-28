@@ -53,10 +53,17 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/storage/{path}', function (string $path) {
     $path = ltrim($path, '/');
-    abort_if(str_contains($path, '..'), 404);
-
     $fullPath = storage_path('app/public/' . $path);
-    abort_unless(file_exists($fullPath), 404);
+
+    if (!file_exists($fullPath)) {
+        return response()->json([
+            'masuk_route' => true,
+            'path_diminta' => $path,
+            'full_path_dicari' => $fullPath,
+            'folder_ada' => is_dir(dirname($fullPath)),
+            'isi_folder' => is_dir(dirname($fullPath)) ? scandir(dirname($fullPath)) : [],
+        ]);
+    }
 
     return response()->file($fullPath);
 })->where('path', '.*');
